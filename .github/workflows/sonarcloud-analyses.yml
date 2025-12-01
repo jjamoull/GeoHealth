@@ -22,8 +22,4 @@ jobs:
       - name: Build and Analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn clean verify sonar:sonar \
-          -Dsonar.projectKey=jjamoull \
-          -Dsonar.organization=jjamoull \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=$SONAR_TOKEN
+        run: mvn clean verify sonar:sonar -Dsonar.projectKey=jjamoull -Dsonar.organization=jjamoull -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
