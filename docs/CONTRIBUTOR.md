@@ -82,6 +82,99 @@ Type :
 
 ## 4 Review conventions 
 
+### 4.1 Goal
+Code reviews aim to:
+
+- Maintain high code quality and consistency
+- Detect bugs and security issues early
+- Improve readability and maintainability
+- Share knowledge across the team
+- Encourage constructive collaboration
+All reviews should be respectful, constructive, and focused on the code, not the author.
+
+### 4.2 When should a PR be reviewed ? 
+
+A pull request is ready for review once: 
+- The code compiles and all tests pass
+- The PR is focused on one single feature or concern
+- The description of the PR clearly explains _what_ is does as well as _why_ it is relevant to the project
+- No more unfinished work remains (no more todo's)
+
+### 4.3 PR Guidelines
+
+#### Title
+The title of a PR should always follow this template: 
+
+\<type\> : \<short description\>
+
+Examples : 
+- fix: prevent null pointer in user service
+- feat: add PDF export
+- docs: updated documentation with last added feature
+
+#### Description 
+Each PR should include :
+- **Context**: why is this change needed
+- **Summary** of the changes
+- **Tests performed**
+- (**Related issues)**: if any
+
+The content of a PR should always follow this template:
+##### Context
+Explain the motivation of this PR
+##### Changes 
+Bullet list of main changes
+##### Testing
+- Bullet list of unit tests performed
+- Bullet list of manuel tests performed
+##### Related Issues
+
+### 4.4 Responsibilities of the reviewer 
+Reviewers should: 
+- Review PRs as soons as possible
+- Focus on the code, not its author
+- Ask questions instead of making assumptions
+- Suggest improvements, not demands
+- Only approve a PR when 100% confident that the code is ready
+
+### 4.5 What to review ?
+
+#### Code quality
+- Is it readable ?
+- Is it well-structured ?
+- Are names (functions, variables,...) meaningful and consistent ?
+- Is the logic easy to understand ?
+- Are all functions well specified ?
+
+#### Code correctness
+- Does the code do what it claims to do ?
+- Are edge cases handled ?
+- Are error cases handled ?
+
+#### Tests 
+- Are tests present and relevant ?
+- Do they cover most important scenarios ?
+- Are they readable ?
+
+#### Performance and secrurity 
+- Any obvious performance bottlenecks?
+- Any security concerns ?
+
+### 4.6 Approval guidelines 
+A PR may be merged once: 
+- All required reviewers have approved it
+- All requested changes have been done
+- CI checks are passing
+- The PR is up-to-date with the target branch
+
+### 4.7 Disagreements
+If a disagreement occurs:
+- Discuss it in the PR comments
+- Provide technical arguments
+- Prefer consistency over personal preference
+
+
 ## 5 Code conventions to respect
+
 
 ## 6 Dummy issues explanations
