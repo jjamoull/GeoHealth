@@ -35,20 +35,35 @@ Here are the main steps you should follow when you want to add a new feature:
 ### 2.2 Branch name policy
 To name the branch correctly, here is the template you must follow for each type of contribution :
 
-For features (new functionnality) :
-feature/name-of-the-feature
+For features (new functionality) :
+
+`feature/name-of-the-feature`
+
+example : 
+
+`feature/authentification`
 
 For bugfix :
-bugfix/name-of-the-fixed-problem
+
+`bugfix/name-of-the-fixed-problem`
+
+example : 
+
+`bugfix/null-pointer-exception-fixed`
 
 For documents :
-doc/part-of-documentation-updated
+
+`doc/part-of-documentation-updated`
+
+example : 
+
+`doc/issue-part-updated`
 
 In general, make sure you have only lower case and Hyphens-separeted word, use only one hyphen and do not put it at the end of the name. Use only alphanumeric character and try to make as descriptive and concive name as possible.
 
 
 ### 2.3 Where does a branch shoud be placed 
-You should clone "main" and so, the branch is  
+After cloning the repository, the new branch is created from "main" and can evolve independently.
 ### 2.4 When a branch can be merged
 You want your branch to be merged but you don’t know what the necessary steps are. Here is the checklist:
 
@@ -61,14 +76,15 @@ You want your branch to be merged but you don’t know what the necessary steps 
 If any of these steps is not completed, your branch won’t be merged.
 ## 3 Commit conventions
 To commit your changes correctly, here is the general template you must follow for each commit, it must be written in English :
-
+```
 Summary : 
+
 <type> : Short description of your changes
 
 Description : 
 Changed file : The file(s) that you changed
 Detailed description of what you did
-
+```
 Type : 
 - feat : Commits that add, adjust or remove a new feature to the API or UI
 - fix : Commits that fix an API or UI bug of a preceded feat commit
@@ -78,6 +94,78 @@ Type :
 - build : Commits that affect build-related components such as build tools, dependencies, project version, CI/CD pipelines,...
 - ops : Commits that affect operational components like infrastructure, deployment, backup, recovery procedures, ...
 - chore : Commits that represent tasks like initial commit, modifying .gitignore, ...
+
+### Example :
+
+```
+Summary : 
+feat : Add user registration form
+
+Description : 
+Changed file : src/components/RegisterForm.py
+Adding a registration form for the user authentification
+```
+```
+Summary : 
+fix : Prevent crash when submitting empty login form
+
+Description : 
+Changed file : src/components/LoginForm.py
+Fixed a bug that caused the crash when submitting the login form
+```
+```
+Summary : 
+style : Reformating the login file
+
+Description : 
+Changed file : src/components/LoginForm.py
+Reformating the entire file to follow the projet coding standards
+```
+
+```
+Summary : 
+test : add unit tests for user validation
+
+Description : 
+Changed file : tests/userValidation.test.py
+Test the validation of user input
+```
+
+```
+Summary :
+docs : Update the login method information in README
+
+Description : 
+Changed file : README.md
+Update the wrong explanation of the login method 
+```
+
+```
+Summary :   
+build : Update project dependencies
+
+Description : 
+Changed file : package.json
+Update dependencies to their lated versions
+```
+
+```
+Summary :   
+ops : Configure a backup for the database
+
+Description : 
+Changed file :scripts/backup_db.sh
+Added an automated script to prevent problems and ensure data recovery 
+```
+
+```
+Summary :   
+chore : Add gitignore
+
+Description : 
+Changed file : .gitignore
+Added a gitignore file
+```
 
 
 ## 4 Review conventions 
