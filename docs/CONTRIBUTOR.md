@@ -217,6 +217,19 @@ Bullet list of main changes
 - Bullet list of manuel tests performed
 ##### Related Issues
 
+
+
+### 4.4 Review Template
+(For all four points, see 4.5)
+#### Code quality
+Review of the code quality
+#### Code Correctness
+Review of the code correctness
+#### Tests
+Review of the tests
+#### Performance and Security
+Review of the performance and security
+
 ### 4.4 Responsibilities of the reviewer 
 Reviewers should: 
 - Review PRs as soons as possible
