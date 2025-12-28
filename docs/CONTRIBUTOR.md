@@ -176,5 +176,73 @@ If a disagreement occurs:
 
 ## 5 Code conventions to respect
 
+### 5.1 Main Principles
+
+- Code must be clear, readable, and maintainable
+- Prefer simplicity over cleverness
+- Follow the principle of least surprise
+- Consistency is more important than personal preference
+
+### 5.2 Naming Conventions
+
+- Use meaningful and descriptive names
+- Avoid abbreviations unless they are widely accepted
+- Names should reflect intent, not implementation
+Examples
+
+- Functions: getUserById, parseCertificate
+- Variables: userCount, certificatePath
+- Booleans: isValid, hasAccess
+
+### 5.3 Formatting and Style
+
+- Respect the project’s formatting rules (linters / formatters)
+- Keep line length reasonable
+- Use consistent indentation
+- One logical instruction per line
+
+### 5.4 Functions and Methods
+
+- Functions should do one thing only
+- Keep functions short and focused
+- Avoid deeply nested logic
+- Prefer early returns over long if/else chains
+
+5.5 Comments and Documentation
+
+- Code should be self-explanatory
+- Comments should explain why, not what
+- Remove outdated or redundant comments
+- Public APIs must be documented
+
+### 5.6 Error Handling
+
+- Handle errors explicitly
+- Never silently ignore errors
+- Provide meaningful error messages
+- Use appropriate exception/error types
+
+### 5.7 Tests
+
+- New features must include tests
+- Bug fixes must include regression tests
+- Tests should be:
+  - Readable
+  - Deterministic
+  - Independent
+
+### 5.8 Performance and Simplicity
+
+- Avoid premature optimisation
+- Do not introduce unnecessary complexity
+- Prefer readable solutions unless performance is critical
+- Justify complex logic with comments
+
+### 5.9 Security 
+
+- Never hardcode secrets or credentials
+- Always validate external inputs
+- Follow least-privilege principles ([PoLP](https://en.wikipedia.org/wiki/Principle_of_least_privilege))
+- Be cautious with file systems and network operations
 
 ## 6 Dummy issues explanations
