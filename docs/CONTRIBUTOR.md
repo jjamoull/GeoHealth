@@ -225,6 +225,21 @@ Reviewers should:
 - Suggest improvements, not demands
 - Only approve a PR when 100% confident that the code is ready
 
+
+### 4.4 Review Template
+(For all four points, see 4.5)
+#### Code quality
+Review of the code quality
+#### Code Correctness
+Review of the code correctness
+#### Tests
+Review of the tests
+#### Performance and Security
+Review of the performance and security
+
+
+
+
 ### 4.5 What to review ?
 
 #### Code quality
