@@ -338,65 +338,12 @@ Examples
 Dummy issues are artificial or simplified issues created for educational, testing, or demonstration purposes.
 They are not real bugs or feature requests, but are used to practice workflows such as issue tracking, pull requests, and code reviews.
 
-### 6.1 Purpose of Dummy Issues
+Two examples of pull requests are available for new contributors to understand how the pull 
+requests are managed on our repository. 
 
-Dummy issues are used to:
-- Learn and practice GitHub workflows
-- Simulate real-world development scenarios
-- Test review and contribution conventions
-- Provide examples for students or contributors
-- They help contributors focus on process and collaboration, rather than production impact.
 
-### 6.2 Identification of Dummy Issues
+- Test pull request for contributing2 :
+This pull request illustrates the case when a pull request did not meet the expectations but is later refined and approved by the reviewer for merging
 
-Dummy issues must be clearly identifiable.
-They should:
-- Contain the label dummy
-- Include [DUMMY] in the issue title
-- Mention explicitly that the issue is artificial in the description
-Example title:
-
-- [DUMMY] Fix null pointer in certificate service
-
-### 6.3 Content of a Dummy Issue
-
-A dummy issue should include:
-- A short description of the fictional problem
-- Clear and simple steps to reproduce it
-- Expected vs actual behavior (even if fictional)
-- Scope limitations (what is intentionally ignored)
-- Dummy issues should remain simple and focused on a specific aspect/feature
-
-### 6.4 How Dummy Issues Should Be Treated
-
-When working on a dummy issue:
-- Follow the same conventions as real issues
-- Create a proper branch and pull request
-- Respect all review and code conventions
-- Treat feedback seriously
-- Even though the issue is dummy, use the real workflow
-
-### 6.5 What Dummy Issues Should NOT Be Used For
-
-Dummy issues must not be used to:
-- Track real bugs or production problems
-- Introduce breaking or unsafe changes
-- Bypass review or quality standards
-- Justify poor or incomplete implementations
-
-### 6.6 Closing Dummy Issues
-
-A dummy issue can be closed when:
-- The associated pull request is merged
-- The learning objective is achieved
-- The example has been sufficiently demonstrated
-- The closing comment should mention that the issue was a dummy exercise.
-
-### 6.7 Dummy Issues in Reviews
-
-Reviewers should:
-
-- Apply the same review standards as for real issues
-- Focus on conventions, clarity, and correctness
-- Avoid over optimising or over engineering a dummy issue
-- The goal is learning and consistency, not perfection.
+- Test pull request for contributing :
+This pull request illustrates the case when a pull request does not met the expectations regarding one or multiple quality criteria
