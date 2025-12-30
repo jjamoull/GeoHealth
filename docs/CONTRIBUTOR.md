@@ -236,6 +236,76 @@ Review of the tests
 #### Performance and Security
 Review of the performance and security
 
+### Review checklist:
+
+
+1. Code Quality & Readability
+- [ ] Code is clear and easy to understand
+- [ ] Naming is meaningful and consistent
+- [ ] No unnecessary complexity
+- [ ] No dead code
+
+
+2. Correctness & Logic
+- [ ] The implementation matches the PR description
+- [ ] Edge cases are handled
+- [ ] Error handling is appropriate
+- [ ] No obvious bugs or logical flaws
+
+
+3. Conventions & Style
+- [ ] Code follows project code conventions
+- [ ] Formatting is consistent
+- [ ] Existing architecture and patterns are respected
+
+
+4. Tests
+- [ ] Tests are present (if applicable)
+- [ ] Tests cover relevant scenarios
+- [ ] Tests are readable and deterministic
+- [ ] All tests pass
+
+
+5. Documentation & Comments
+- [ ] Public APIs are documented
+- [ ] Code is self-explanatory
+- [ ] Comments explain *why*, not *what*
+- [ ] No outdated or misleading comments
+
+
+6. Performance & Security (if applicable)
+- [ ] No obvious performance issues
+- [ ] No hardcoded secrets
+- [ ] No unsafe operations
+- [ ] Inputs are validated where necessary (especially external inputs)
+
+
+Review Comments
+
+Blocking Issues
+List issues that **must be fixed before merge**:
+- Issue 1:
+- Issue 2:
+…
+
+
+Suggestions & Improvements
+Optional improvements or refactoring ideas:
+- Suggestion 1:
+- Suggestion 2:
+…
+
+
+#### Positive Feedback
+What is done well
+
+### 🧾 Final Decision
+- [ ] ✅ Approved
+- [ ] 🟡 Approved with minor comments
+- [ ] ❌ Denied -> request changes
+
+**Reviewer signature:**  
+<your-github-username>
 
 
 
