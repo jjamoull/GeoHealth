@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './map.html',
   styleUrl: './map.css',
+  standalone: true,
 })
 export class Map {
 

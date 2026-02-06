@@ -8,7 +8,8 @@ import {Map} from './components/map/map';
   selector: 'app-root',
   imports: [RouterOutlet, Home, Authentication, Map],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  standalone: true,
 })
 export class App {
   protected readonly title = signal('GeoHealth_Angular');
