@@ -18,11 +18,6 @@ export const routes: Routes = [
   },{
     path:'navigation',
     component: Navigation,
-  }
-  ,{
-  path: '',
-  redirectTo: 'home',
-  pathMatch: 'full'
   },{
     path:'login',
     component: Login,
@@ -35,6 +30,10 @@ export const routes: Routes = [
   },{
     path:'reset-password',
     component: Resetpassword,
+  },{
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },{
     path: '**',
     redirectTo: 'home',

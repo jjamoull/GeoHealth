@@ -26,7 +26,7 @@ export class App {
   }
 
   goToLogging(){
-    this.router.navigate(['logging'])
+    this.router.navigate(['login'])
   }
 
 
