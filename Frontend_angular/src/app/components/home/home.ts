@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,5 +10,13 @@ import { Component } from '@angular/core';
   standalone: true,
 })
 export class Home {
+  constructor(public route: ActivatedRoute, private router: Router) {}
+
+  /**
+   * Go to "…:navigation/"
+   * */
+  goToNavigation(){
+      this.router.navigate(['/navigation']);
+  }
 
 }

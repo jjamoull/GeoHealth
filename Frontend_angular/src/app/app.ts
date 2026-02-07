@@ -6,7 +6,7 @@ import {Map} from './components/map/map';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Home, Authentication, Map],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
   standalone: true,
