@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {Home} from './components/home/home';
-import {Authentication} from './components/authentication/authentication';
 import {Map} from './components/map/map';
 
 @Component({
