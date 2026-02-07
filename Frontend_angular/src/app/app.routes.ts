@@ -6,7 +6,6 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { Forgotpassword } from './components/forgotpassword/forgotpassword';
 import { Resetpassword } from './components/resetpassword/resetpassword';
-import { Logout } from './components/logout/logout';
 
 
 export const routes: Routes = [
@@ -36,9 +35,6 @@ export const routes: Routes = [
   },{
     path:'reset-password',
     component: Resetpassword,
-  },{
-    path:'logout',
-    component: Logout,
   },{
     path: '**',
     redirectTo: 'home',
