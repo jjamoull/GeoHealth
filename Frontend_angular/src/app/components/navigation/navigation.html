@@ -40,15 +40,27 @@
     </form>
   </div>
 
+  <div class="div2">
+      <!-- ------------------------------------ -->
+      <!-- Lines about the recent modified maps -->
+      <!-- ------------------------------------ -->
+     <div class="div3"> 3 </div>
 
-  <!-- ------------------------------------ -->
-  <!-- Lines about the recent modified maps -->
-  <!-- ------------------------------------ -->
-  <div class="div2">2</div>
 
+      <!-- ------------------------ -->
+      <!-- Lines about all the maps -->
+      <!-- ------------------------ -->
+    <div class="div4"> 4
+      <div class="AllTheMaps">
+        @for (map of listOfAllMaps; track map.id){
+          <div class="newCase">
+            <h4 style="text-align: center">{{map.titre}}</h4>
+            <h6 style="text-align: center">{{map.description}}</h6>
+          </div>
+        }
+      </div>
+    </div>
 
-  <!-- ------------------------ -->
-  <!-- Lines about all the maps -->
-  <!-- ------------------------ -->
-  <div class="div3">3</div>
+  </div>
+
 </div>

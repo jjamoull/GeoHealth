@@ -8,25 +8,40 @@ html, body {
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
   gap: 8px;
-  height: 100vh;
+  height: 89vh;
   margin-top: 10px;
 }
 
 .div1 {
   grid-row: span 5;
   border: 2px solid black;
+  margin-left: 1px ;
+  position: relative;
 }
 
 .div2 {
   grid-column: span 4;
-  grid-row: span 2;
+  grid-row: span 5;
   border: 2px solid black;
+  width: 100%;
+  height: 100%;
+  margin-right: 2px;
+
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 8px;
+  overflow-y: auto;
+
+
 }
 
-.div3 {
-  grid-column: 2 / span 4;
-  grid-row: 3 / span 3;
-  border: 2px solid black;
+.div3{
+  grid-row: span 1;
+}
+
+.div4{
+  grid-row: 2 / span 4;
 }
 
 .titleOfCheckBox{
@@ -34,4 +49,10 @@ html, body {
   border-bottom: 1px solid black;
   background: #F4D47A ;
   text-align: center;
+}
+
+
+.newCase{
+  border: 1px solid black;
+  margin: 2px ;
 }

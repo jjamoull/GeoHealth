@@ -12,6 +12,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 })
 export class PopUp implements OnInit{
   constructor(private dialog: MatDialogRef <PopUp>) {}
+
   /**
    * Allow the user to close the pop-up
    * */
@@ -20,6 +21,9 @@ export class PopUp implements OnInit{
     this.dialog.close();
   }
 
+  /**
+   * Init the form to add the new map on the list of map
+   */
   formGroup!: FormGroup;
   ngOnInit():void {
     this.formGroup = new FormGroup({
