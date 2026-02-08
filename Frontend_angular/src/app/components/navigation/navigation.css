@@ -28,3 +28,10 @@ html, body {
   grid-row: 3 / span 3;
   border: 2px solid black;
 }
+
+.titleOfCheckBox{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background: #F4D47A ;
+  text-align: center;
+}
