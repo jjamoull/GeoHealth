@@ -1,16 +1,35 @@
 <div class="pop-up">
-  <h2 align="center" style=" border-bottom: 2px solid rgb(23, 22, 18);">
-  a que coucou
+  <h2 align="center" style=" border-bottom: 2px solid black;">
+    Configure your new map to add
   </h2>
 
-  <h6 class="explicationTransfo">
-  </h6>
-  <h6 class="explicationTransfo">
-  </h6>
-  <h6 class="explicationTransfo">
-  </h6>
+  <form [formGroup]="formGroup"  class="enterDataOnNewMap">
+    <label for="title" class="my-3">Title</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="Map on …" formControlName ="title" />
+    @if(isFieldValid("title")){
+      <div class="error">
+        The minimum length of the title is incorrect
+      </div>
+    }
 
-  <button (click)="closePopUp()" style="margin-left: 90%; margin-bottom: 1.5%" class="btn btn-dark" >
-    OK
+    <label for="description" class="my-3">Description</label>
+    <input type="text" class="form-control" id="description" name="description" placeholder="About the map …" formControlName ="description" />
+    @if(isFieldValid("description")){
+      <div class="error">
+        The minimum length of the description is incorrect
+      </div>
+    }
+
+    <label for="file" class="my-3">File</label>
+    <input type="text" class="form-control" id="file" name="file" placeholder="The file …" formControlName ="file" />
+    @if(isFieldValid("file")){
+      <div class="error">
+        The file is incorrect
+      </div>
+    }
+  </form>
+
+  <button (click)="closePopUp()" [disabled]="formGroup.invalid">
+    Create the new map
   </button>
 </div>
