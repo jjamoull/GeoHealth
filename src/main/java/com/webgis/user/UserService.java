@@ -80,14 +80,12 @@ public class UserService {
         if (findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email already exists");
         }
-        else{
 
-            final String hashedPassword = passwordEncoder.encode(password);
-            final User user = new User(username, firstName, lastName, email, hashedPassword);
-            return userRepository.save(user);
+        final String hashedPassword = passwordEncoder.encode(password);
 
-        }
+        final User user = new User(username, firstName, lastName, email, hashedPassword);
 
+        return userRepository.save(user);
     }
 
     /**
@@ -129,13 +127,11 @@ public class UserService {
      * @param id The id of the user you want to delete
      */
     public void deleteUser(long id){
-        if (!findById(id).isEmpty()) {
+        if (findById(id).isEmpty()) {
             throw new IllegalArgumentException("User does not exist");
         }
-        else {
         final User user = findById(id).get();
         userRepository.delete(user);
-        }
     }
 
 
