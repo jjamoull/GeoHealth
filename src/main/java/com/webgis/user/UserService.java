@@ -81,9 +81,9 @@ public class UserService {
             throw new IllegalArgumentException("Email already exists");
         }
 
-        String hashedPassword = passwordEncoder.encode(password);
+        final String hashedPassword = passwordEncoder.encode(password);
 
-        User user = new User(username, firstName, lastName, email, hashedPassword);
+        final User user = new User(username, firstName, lastName, email, hashedPassword);
 
         return userRepository.save(user);
     }
@@ -110,12 +110,12 @@ public class UserService {
             throw new IllegalArgumentException("Email already exists");
         }
 
-        User user = findById(id).get();
+        final User user = findById(id).get();
         user.setUsername(username);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
-        String hashedPassword = passwordEncoder.encode(password);
+        final String hashedPassword = passwordEncoder.encode(password);
         user.setPassword(hashedPassword);
 
         return userRepository.save(user);
@@ -130,7 +130,7 @@ public class UserService {
         if (findById(id).isEmpty()) {
             throw new IllegalArgumentException("User does not exist");
         }
-        User user = findById(id).get();
+        final User user = findById(id).get();
         userRepository.delete(user);
     }
 
