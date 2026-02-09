@@ -6,7 +6,7 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { Forgotpassword } from './components/forgotpassword/forgotpassword';
 import { Resetpassword } from './components/resetpassword/resetpassword';
-
+import {UsersList} from './components/users-list/users-list';
 
 export const routes: Routes = [
   {
@@ -18,8 +18,10 @@ export const routes: Routes = [
   },{
     path:'navigation',
     component: Navigation,
-  }
-  ,{
+  },{
+    path: 'usersList',
+    component: UsersList,
+  },{
   path: '',
   redirectTo: 'home',
   pathMatch: 'full'
