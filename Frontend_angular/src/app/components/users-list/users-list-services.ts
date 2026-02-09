@@ -1,0 +1,37 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {Observable} from "rxjs";
+import {User} from './User';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UsersListServices{
+  private userListURL: string= "http://localhost:8080/users";
+
+
+  constructor(private HttpClient: HttpClient) {
+    this.userListURL = "http://localhost:8080/users";
+  }
+
+  /**
+   * @return : Retrieves all users in dataBase Springboot at URL : "http://localhost:8080/users"
+   * */
+  public getAllUsers():Observable<User[]>{
+    return this.HttpClient.get<User[]>(`${this.userListURL}/all`);
+  }
+
+
+  /**
+   * @return user in database from their username
+   * */
+  public getUserByUsername(username : string):Observable<User>{
+    return this.HttpClient.get<User>(`${this.userListURL}/${username}`);
+  }
+
+
+
+
+}
+
