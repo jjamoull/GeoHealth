@@ -12,7 +12,7 @@ public class UserEntityTest {
     @Test
     public void GetterTest(){
         // Arrange
-        User user = new User("pseudo","Julien","Jamal", "julien.jamal@outlook.be","password");
+        User user = new User("pseudo","Julien","Jamal", "julien.jamal@outlook.be","password", "Admin");
 
         //Act
         assertEquals("pseudo", user.getUsername());
@@ -32,6 +32,7 @@ public class UserEntityTest {
         user.setLastName("Jamal");
         user.setEmail("julien.jamal@outlook.be");
         user.setPassword("password");
+        user.setRole("Admin");
 
         //Assert
         assertEquals("pseudo", user.getUsername());
@@ -39,6 +40,8 @@ public class UserEntityTest {
         assertEquals("Jamal", user.getLastName());
         assertEquals("julien.jamal@outlook.be", user.getEmail());
         assertEquals("password", user.getPassword());
+        assertEquals("Admin", user.getRole());
+
     }
 
 
