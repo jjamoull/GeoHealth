@@ -1,8 +1,5 @@
-package unitest.usertest;
+package com.webgis.user;
 
-import com.webgis.user.User;
-import com.webgis.user.UserRepository;
-import com.webgis.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
