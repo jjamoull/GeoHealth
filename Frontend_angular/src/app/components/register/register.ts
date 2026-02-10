@@ -59,11 +59,15 @@ export class Register implements  OnInit {
     }
 
     //retrieves confirmPassword from the form to match the User format
-    const {confirmPassword, content} = this.formGroup.value;
+    const formValue = this.formGroup.value;
     const user: User = {
       id: 0,
-      role: 'Admin',
-      ...content
+      username: formValue.username,
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      email: formValue.email,
+      password: formValue.password,
+      role: 'Admin'
     };
 
     this.LoginService.addUser(user).subscribe({
