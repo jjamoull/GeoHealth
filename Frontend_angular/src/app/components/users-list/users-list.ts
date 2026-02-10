@@ -11,7 +11,6 @@ import {UsersListServices} from '../Service/UserListService/users-list-services'
   styleUrl: './users-list.css',
 })
 export class UsersList implements  OnInit{
-
   Users: User[] = [];
 
   constructor(private UsersListServices: UsersListServices) {}
@@ -21,6 +20,10 @@ export class UsersList implements  OnInit{
     this.getAllUsers();
   }
 
+  /**
+   * @effect : modifies variable under the name of "Users" with data of all users in database Springboot
+   * @return : Retrieves all users in dataBase Springboot at URL : "http://localhost:8080/users"
+   * */
   private getAllUsers(){
     this.UsersListServices.getAllUsers().subscribe(
       data =>{

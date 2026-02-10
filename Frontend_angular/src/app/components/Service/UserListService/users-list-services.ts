@@ -8,18 +8,18 @@ import {User} from '../../Model/UserListModel/User';
   providedIn: 'root'
 })
 export class UsersListServices{
-  private userListURL: string= "http://localhost:8080/users";
+  private UserListURL: string= "http://localhost:8080/users";
 
 
   constructor(private HttpClient: HttpClient) {
-    this.userListURL = "http://localhost:8080/users";
+    this.UserListURL = "http://localhost:8080/users";
   }
 
   /**
    * @return : Retrieves all users in dataBase Springboot at URL : "http://localhost:8080/users"
    * */
   public getAllUsers():Observable<User[]>{
-    return this.HttpClient.get<User[]>(`${this.userListURL}/all`);
+    return this.HttpClient.get<User[]>(`${this.UserListURL}/all`);
   }
 
 
@@ -27,7 +27,7 @@ export class UsersListServices{
    * @return user in database from their username
    * */
   public getUserByUsername(username : string):Observable<User>{
-    return this.HttpClient.get<User>(`${this.userListURL}/${username}`);
+    return this.HttpClient.get<User>(`${this.UserListURL}/${username}`);
   }
 
 
