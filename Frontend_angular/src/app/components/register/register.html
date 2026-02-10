@@ -68,14 +68,14 @@
   </span>
   </div>
 
-  <label for="password" class="my-3">confirmPassword</label>
+  <label for="confirmPassword" class="my-3">confirmPassword</label>
   <div class="password-wrapper">
     <input
-      [type]="showPassword ? 'text' : 'password'"
+      [type]="showPassword ? 'text' : 'Confirm your password'"
       class="form-control"
-      id="password"
-      placeholder="Your password …"
-      formControlName="password"
+      id="confirmPassword"
+      placeholder="Confirm your password"
+      formControlName="confirmPassword"
     />
 
     <span class="password-icon" (click)="togglePassword()">
@@ -99,7 +99,7 @@
   </span>
   </div>
 
-  <button type="submit" [disabled]="formGroup.invalid">
+  <button type="submit" [disabled]="formGroup.invalid || !checkPasswordConformity()" >
     Create the new user
   </button>
 </form>

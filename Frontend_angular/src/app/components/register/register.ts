@@ -27,10 +27,8 @@ export class Register implements  OnInit {
     role: "Admin"
   };
 
-  confirmPassword: string = "anonymous";
-
   /**
-   * Init the form to add the new map on the list of map
+   * Init the form to add a new user/account to the database
    */
   formGroup!: FormGroup;
 
@@ -41,8 +39,8 @@ export class Register implements  OnInit {
       firstName: new FormControl('', [Validators.required, Validators.minLength(1)]),
       lastName: new FormControl('', [Validators.required, Validators.minLength(1)]),
       email: new FormControl('', [Validators.required, Validators.minLength(3), Validators.email]),
-      password: new FormControl('', [ Validators.minLength(8)]),
-      confirmPassword : new FormControl('', [Validators.minLength(8)])
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword : new FormControl('', [Validators.required, Validators.minLength(8)])
     });
   }
 
@@ -60,10 +58,12 @@ export class Register implements  OnInit {
       return;
     }
 
+    //retrieves confirmPassword from the form to match the User format
+    const {confirmPassword, content} = this.formGroup.value;
     const user: User = {
       id: 0,
       role: 'Admin',
-      ...this.formGroup.value
+      ...content
     };
 
     this.LoginService.addUser(user).subscribe({
