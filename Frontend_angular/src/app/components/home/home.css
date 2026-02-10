@@ -1,0 +1,39 @@
+.body {
+  font-family: "Lato", sans-serif
+}
+
+.carousel {
+  margin: 50px auto;
+  width: 90%;
+  display : flex;
+  overflow-x : auto;
+  gap: 1em;
+}
+.carousel::-webkit-scrollbar{
+  display: none;
+}
+.group{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  animation: spin 20s infinite linear;
+  padding-right: 1em;
+}
+.card {
+  flex: 0 0 5em;
+  height: 5em;
+  padding: 1em;
+  background-image: url("/assets/Worldmap.png");
+  font-size: 3rem;
+  border-radius: .2em;
+  text-align: center;
+  align-content: center;
+}
+
+@keyframes spin {
+  from {translate: 0;}
+  to {translate: -100%}
+}
+
+
