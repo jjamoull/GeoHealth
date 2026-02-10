@@ -1,1 +1,107 @@
-<p>register works!</p>
+<h2 align="center" style=" border-bottom: 2px solid black;">
+  Configure your new map to add
+</h2>
+
+<form [formGroup]="formGroup"
+      (ngSubmit)="addUser()"
+      class="enterDataOnNewMap">
+  <label for="username" class="my-3">username</label>
+  <input type="text" class="form-control" id="username" name="username" placeholder="Your username …" formControlName ="username" />
+  @if(isFieldValid("username")){
+    <div class="error">
+      The username must be at least 1 character long.
+    </div>
+  }
+
+  <label for="firstName" class="my-3">firstName</label>
+  <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Your firstName …" formControlName ="firstName" />
+  @if(isFieldValid("firstName")){
+    <div class="error">
+      The first name must be at least 1 character long.    </div>
+  }
+
+  <label for="lastName" class="my-3">lastName</label>
+  <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Your lastName …" formControlName ="lastName" />
+  @if(isFieldValid("lastName")){
+    <div class="error">
+      The last name must be at least 1 character long.
+    </div>
+  }
+
+
+  <label for="email" class="my-3">email</label>
+  <input type="text" class="form-control" id="email" name="email" placeholder="Your email …" formControlName ="email" />
+  @if(isFieldValid("email")){
+    <div class="error">
+      The email does not match the classic email format. E.g. example@foo.com
+    </div>
+  }
+
+  <label for="password" class="my-3">password</label>
+  <div class="password-wrapper">
+    <input
+      [type]="showPassword ? 'text' : 'password'"
+      class="form-control"
+      id="password"
+      placeholder="Your password …"
+      formControlName="password"
+    />
+
+    <span class="password-icon" (click)="togglePassword()">
+    <img
+      *ngIf="!showPassword"
+      src="assets/icons/eye.png"
+      alt="Show password"
+      width="20"
+    />
+    <img
+      *ngIf="showPassword"
+      src="assets/icons/eye-off.png"
+      alt="Hide password"
+      width="20"
+    />
+      @if(isFieldValid("password")){
+        <div class="error">
+          The password does not contain at least 8 characters or does not match the required format. E.g. Tot-o1919#%
+        </div>
+      }
+  </span>
+  </div>
+
+  <label for="password" class="my-3">confirmPassword</label>
+  <div class="password-wrapper">
+    <input
+      [type]="showPassword ? 'text' : 'password'"
+      class="form-control"
+      id="password"
+      placeholder="Your password …"
+      formControlName="password"
+    />
+
+    <span class="password-icon" (click)="togglePassword()">
+    <img
+      *ngIf="!showPassword"
+      src="assets/icons/eye.png"
+      alt="Show password"
+      width="20"
+    />
+    <img
+      *ngIf="showPassword"
+      src="assets/icons/eye-off.png"
+      alt="Hide password"
+      width="20"
+    />
+      @if(isFieldValid("confirmPassword")){
+        <div class="error">
+          The confirmPassword does not contain at least 8 characters or does not match the required format. E.g. Toto@123.com
+        </div>
+      }
+  </span>
+  </div>
+
+  <button type="submit" [disabled]="formGroup.invalid">
+    Create the new user
+  </button>
+</form>
+
+
