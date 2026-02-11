@@ -37,9 +37,9 @@ public class UserController {
 
     @GetMapping("/isAdmin/{id}")
     public Boolean getUser(@PathVariable long id){
-        Optional<User> userTemp = userService.findById(id);
+        final Optional<User> userTemp = userService.findById(id);
         if (userTemp.isPresent()){
-            User user = userTemp.get();
+            final User user = userTemp.get();
             if (user.getRole().equals("Admin")){
                 return true;
             }

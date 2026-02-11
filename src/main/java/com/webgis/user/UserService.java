@@ -146,12 +146,8 @@ public class UserService {
             throw new IllegalArgumentException("User does not exist");
         }
         final User user = findById(id).get();
-        String userRole = user.getRole();
-        if (userRole.equals("Admin")){
-            return true;
-        }else{
-            return false;
-        }
+        final String userRole = user.getRole();
+        return userRole.equals("Admin");
     }
 
 
