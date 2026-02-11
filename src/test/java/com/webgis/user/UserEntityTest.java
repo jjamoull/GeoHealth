@@ -1,4 +1,4 @@
-package unitest.usertest;
+package com.webgis.user;
 
 import com.webgis.user.User;
 import org.junit.jupiter.api.Test;
