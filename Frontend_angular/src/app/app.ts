@@ -16,7 +16,6 @@ export class App {
   constructor(public route: ActivatedRoute, private router: Router) {}
 
 
-
   goToHome() {
     this.router.navigate(['home'])
   }
@@ -25,8 +24,12 @@ export class App {
     this.router.navigate(['navigation'])
   }
 
+  goToRegister(){
+      this.router.navigate(['register'])
+    }
+
   goToLogin(){
-    this.router.navigate(['register'])
+    this.router.navigate(['login'])
   }
 
 

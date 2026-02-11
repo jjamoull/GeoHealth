@@ -3,13 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import {Observable} from "rxjs";
 import {User} from '../../Model/UserListModel/User';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService{
   private userListUrl: string= "http://localhost:8080/users";
-  private userSaveUrl:string = "http://localhost:8080/users/save";
+  private userSaveUrl:string = "http://localhost:8080/auth/register";
 
 
   constructor(private HttpClient: HttpClient) {
@@ -17,10 +16,15 @@ export class LoginService{
     this.userSaveUrl = "http://localhost:8080/users/save";
   }
 
-  public addUser(user: User): Observable<User> {
-    return this.HttpClient.post<User>(this.userSaveUrl, user);
+  register(registerDto: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : undefined;
+    return this.HttpClient.post('http://localhost:8080/auth/register', registerDto, { headers });
   }
 
-
-
+  login(loginDto: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : undefined;
+    return this.HttpClient.post('http://localhost:8080/auth/login', loginDto, { headers });
+  }
 }

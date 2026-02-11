@@ -63,7 +63,7 @@ public class UserService {
     }
 
     /**
-     * Add a user to the db
+     * Registers a user to the db
      *
      * @param username username of the new user
      * @param firstName firstName of the new user
@@ -72,7 +72,7 @@ public class UserService {
      * @param password password of the new user
      * @return Saved user
      */
-    public User saveUser(String username, String firstName, String lastName, String email, String password, String role){
+    public User register(String username, String firstName, String lastName, String email, String password, String role){
 
         if (findByUsername(username).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
@@ -87,6 +87,19 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
+
+    public User login(String username, String password) {
+        if (findByUsername(username).isEmpty()) {
+            throw new IllegalArgumentException("Username does not exist");
+        }
+        final User user = findByUsername(username).get();
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("Invalid password");
+        }
+        return user;
+    }
+
 
     /**
      * Update user which identifier equals id
