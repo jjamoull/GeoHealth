@@ -72,7 +72,7 @@ public class UserService {
      * @param password password of the new user
      * @return Saved user
      */
-    public User saveUser(String username, String firstName, String lastName, String email, String password){
+    public User saveUser(String username, String firstName, String lastName, String email, String password, String role){
 
         if (findByUsername(username).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
@@ -83,7 +83,7 @@ public class UserService {
 
         final String hashedPassword = passwordEncoder.encode(password);
 
-        final User user = new User(username, firstName, lastName, email, hashedPassword);
+        final User user = new User(username, firstName, lastName, email, hashedPassword, role);
 
         return userRepository.save(user);
     }
@@ -99,7 +99,7 @@ public class UserService {
      * @param password New password of the user
      * @return Updated user
      */
-    public User updateUser(long id, String username, String firstName, String lastName, String email, String password){
+    public User updateUser(long id, String username, String firstName, String lastName, String email, String password, String role){
         if (findById(id).isEmpty()) {
             throw new IllegalArgumentException("User does not exist");
         }
@@ -117,6 +117,7 @@ public class UserService {
         user.setEmail(email);
         final String hashedPassword = passwordEncoder.encode(password);
         user.setPassword(hashedPassword);
+        user.setRole(role);
 
         return userRepository.save(user);
     }
@@ -132,6 +133,21 @@ public class UserService {
         }
         final User user = findById(id).get();
         userRepository.delete(user);
+    }
+
+    /**
+     * Check if the user is admin
+     *
+     * @param id The id of the user you want to check if is an admin
+     * @return true if the user is admin, false otherwise
+    * */
+    public Boolean isAdmin(long id){
+        if (findById(id).isEmpty()) {
+            throw new IllegalArgumentException("User does not exist");
+        }
+        final User user = findById(id).get();
+        final String userRole = user.getRole();
+        return userRole.equals("Admin");
     }
 
 

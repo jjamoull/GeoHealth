@@ -35,6 +35,18 @@ public class UserController {
         return userService.findByUsername(username);
     }
 
+    @GetMapping("/isAdmin/{id}")
+    public Boolean getUser(@PathVariable long id){
+        final Optional<User> userTemp = userService.findById(id);
+        if (userTemp.isPresent()){
+            final User user = userTemp.get();
+            if (user.getRole().equals("Admin")){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @PostMapping("/save")
     public User addUser(@RequestBody User user){
         return userService.saveUser(
@@ -42,7 +54,8 @@ public class UserController {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getPassword()
+                user.getPassword(),
+                user.getRole()
         );
     }
 
@@ -54,7 +67,8 @@ public class UserController {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                user.getPassword()
+                user.getPassword(),
+                user.getRole()
         );
     }
 

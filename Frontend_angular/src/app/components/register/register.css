@@ -1,0 +1,15 @@
+.password-wrapper {
+  position: relative;
+  width: 350px;
+}
+
+.password-icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  width: 20px;
+  height: 20px;
+}
