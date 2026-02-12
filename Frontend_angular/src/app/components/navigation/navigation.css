@@ -12,16 +12,17 @@ html, body {
   margin-top: 10px;
 }
 
-.div1 {
+.filters {
   grid-row: span 5;
   border: 2px solid black;
   margin-left: 1px ;
   position: relative;
 }
 
-.div2 {
+.allMaps {
   grid-column: span 4;
   grid-row: span 5;
+  grid-gap: 12px;
   border: 2px solid black;
   width: 100%;
   height: 100%;
@@ -32,15 +33,13 @@ html, body {
   grid-template-rows: repeat(5, 1fr);
   gap: 8px;
   overflow-y: auto;
-
-
 }
 
-.div3{
+.recentMaps{
   grid-row: span 1;
 }
 
-.div4{
+.allAvailableMaps{
   grid-row: 2 / span 4;
 }
 
@@ -51,8 +50,17 @@ html, body {
   text-align: center;
 }
 
-
 .newCase{
   border: 1px solid black;
   margin: 2px ;
+  padding: 7%;
+  width: 25%;
+  height: 25%;
+}
+
+.AllTheMaps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5%;
+  justify-content: center;
 }

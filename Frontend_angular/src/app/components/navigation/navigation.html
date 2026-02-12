@@ -6,7 +6,7 @@
   <!-- -------------------------------------------------------------- -->
   <!-- Lines of filters concerning the visualisation of different map -->
   <!-- -------------------------------------------------------------- -->
-  <div class="div1">
+  <div class="filters">
     <p style="text-align: center"><strong>Filters for geographical maps</strong></p>
 
     <form>
@@ -40,17 +40,28 @@
     </form>
   </div>
 
-  <div class="div2">
+  <div class="allMaps">
       <!-- ------------------------------------ -->
       <!-- Lines about the recent modified maps -->
       <!-- ------------------------------------ -->
-     <div class="div3"> 3 </div>
+     <div class="recentMaps">
+       <h3>Recent maps modified</h3>
+       <div class="AllTheMaps">
+         @for (map of listOfAllRecentMaps; track map.id){
+           <div class="newCase">
+             <h4 style="text-align: center">{{map.titre}}</h4>
+             <h6 style="text-align: center">{{map.description}}</h6>
+           </div>
+         }
+       </div>
+     </div>
 
 
       <!-- ------------------------ -->
       <!-- Lines about all the maps -->
       <!-- ------------------------ -->
-    <div class="div4"> 4
+    <div class="allAvailableMaps">
+      <h3>All the available maps</h3>
       <div class="AllTheMaps">
         @for (map of listOfAllMaps; track map.id){
           <div class="newCase">

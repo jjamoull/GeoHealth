@@ -50,6 +50,17 @@ export class Navigation {
     titre: 'test2', description:'description du test2', id: 1
   }]
 
+  /*
+* Set of all global variables of this file
+* */
+  listOfAllRecentMaps:ListOfAllMaps[] = [{
+    titre: 'testRecent2', description:'description du testRecent2', id: 1
+  }, {
+    titre: 'testRecent2', description:'description du testRecent2', id: 1
+  }, {
+    titre: 'testRecent2', description:'description du testRecent2', id: 1
+  }]
+
   //----------------------------------------------------
 
   /**
