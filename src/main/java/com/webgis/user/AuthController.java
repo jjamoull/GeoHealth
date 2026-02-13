@@ -29,6 +29,14 @@ public class AuthController {
         this.cookieService = cookieService;
     }
 
+    /**
+     * Registers a new user account.
+     *
+     * @param registerDto the registration data
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return user information if successful, error message otherwise
+     */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(
             @RequestBody @Valid RegisterDto registerDto,
@@ -55,6 +63,14 @@ public class AuthController {
         }
     }
 
+    /**
+     * Authenticates an existing user.
+     *
+     * @param loginDto the login credentials
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return user information if successful, error message otherwise
+     */
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(
             @RequestBody @Valid LoginDto loginDto,
@@ -75,6 +91,12 @@ public class AuthController {
         }
     }
 
+    /**
+     * Checks whether a user is authenticated.
+     *
+     * @param request the HTTP request
+     * @return message indicating authentication status
+     */
     @GetMapping("/status")
     public ResponseEntity<?> checkAuthStatus(HttpServletRequest request){
         String existingCookie = cookieService.getJwtFromCookie(request);
@@ -84,6 +106,12 @@ public class AuthController {
         return ResponseEntity.status(401).body(new MessageDto("You are not logged in"));
     }
 
+    /**
+     * Logs out the user.
+     *
+     * @param response the HTTP response
+     * @return confirmation message
+     */
     @PostMapping("/logout")
     public ResponseEntity<?> logoutUser(HttpServletResponse response){
         String cookie = cookieService.deleteCookie();
@@ -91,18 +119,25 @@ public class AuthController {
         return ResponseEntity.status(200).body(new MessageDto("Logged out successfully"));
     }
 
+    /**
+     * Creates a response with user information and authentication cookie.
+     *
+     * @param user the authenticated user
+     * @param response the HTTP response
+     * @return user information response
+     */
     private ResponseEntity<UserResponseDto> createResponse(User user, HttpServletResponse response) {
         String token = jwtService.generateToken(user);
         String cookie = cookieService.generateCookie(token);
         System.out.println("Setting cookie: " + cookie);
         response.addHeader(HttpHeaders.SET_COOKIE, cookie);
 
-        UserResponseDto responsedto = new UserResponseDto(
+        UserResponseDto userResponseDto = new UserResponseDto(
                 user.getUsername(),
                 user.getFirstName(),
                 user.getLastName()
         );
-        return ResponseEntity.status(200).body(responsedto);
+        return ResponseEntity.status(200).body(userResponseDto);
     }
 
 }

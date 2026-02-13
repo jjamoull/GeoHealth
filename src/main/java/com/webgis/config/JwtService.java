@@ -13,6 +13,12 @@ public class JwtService {
     private final SecretKey key = Jwts.SIG.HS256.key().build();
     public static final int EXPIRATION = 10 * 60 * 1000;
 
+    /**
+     * Generates a JWT token for a given user
+     *
+     * @param user the user used to generate the token
+     * @return the generated JWT token as a string
+     */
     public String generateToken(User user) {
         return Jwts.builder()
                 .subject(user.getUsername())
@@ -22,6 +28,12 @@ public class JwtService {
                 .compact();
     }
 
+    /**
+     * Validates if a JWT token is valid
+     *
+     * @param token the JWT token to validate
+     * @return true fi token is valide, false otherwise
+     */
     public boolean isTokenValid(String token) {
         try {
             Jwts.parser()
@@ -34,6 +46,12 @@ public class JwtService {
         }
     }
 
+    /**
+     * Extracts the username from a JWT token
+     *
+     * @param token the JWT token to extract the username from
+     * @return the username if extraction is successful, null otherwise
+     */
     public String getUsernameFromToken(String token) {
         try {
             return Jwts.parser()
