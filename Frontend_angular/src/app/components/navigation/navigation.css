@@ -1,0 +1,79 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 8px;
+  height: 89vh;
+  margin-top: 10px;
+}
+
+.filters {
+  grid-row: span 5;
+  border: 2px solid black;
+  margin-left: 1px ;
+  position: relative;
+}
+
+.allMaps {
+  grid-column: span 4;
+  grid-row: span 5;
+  grid-gap: 12px;
+  border: 2px solid black;
+  width: 100%;
+  height: 100%;
+  margin-right: 2px;
+
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.recentMaps{
+  grid-row: span 1;
+}
+
+.allAvailableMaps{
+  grid-row: 2 / span 4;
+}
+
+.titleOfCheckBox{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background: #F4D47A ;
+  text-align: center;
+}
+
+.newCase{
+  border: 1.2px solid black;
+  margin: 1% ;
+  padding: 7%;
+  width: 25%;
+  height: 25%;
+}
+
+.AllTheMaps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5%;
+  justify-content: center;
+}
+
+.Titre{
+  margin-left: 7px;
+  margin-top: 7px;
+}
+
+
+.newCase {
+  transition: transform 0.3s ease-in-out;
+}
+.newCase:hover {
+  transform: scale(1.05);
+}

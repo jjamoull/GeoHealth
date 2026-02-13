@@ -1,0 +1,10 @@
+.pop-up{
+  width: 50vh;
+  height: 50vh;
+  border: 2px solid black;
+}
+
+.enterDataOnNewMap{
+  margin-left: 1%;
+  margin-right: 1%;
+}
