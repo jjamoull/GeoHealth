@@ -1,0 +1,25 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: rgba(248, 247, 247, 0.6);
+  backdrop-filter: blur(5px);
+  transition: background 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.item {
+  color: black;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+.item:hover {
+  color: gray;
+}
