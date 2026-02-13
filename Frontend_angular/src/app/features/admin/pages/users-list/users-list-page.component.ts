@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {User} from '../../../../components/Model/UserListModel/User';
+import {UserModel} from '../../../../shared/models/user-list-model/user.model';
 import {OnInit} from '@angular/core';
-import {UsersListServices} from '../../../../components/Service/UserListService/users-list-services';
+import {UsersListService} from '../../../../shared/services/user-list-service/users-list.service';
 
 
 @Component({
@@ -11,9 +11,9 @@ import {UsersListServices} from '../../../../components/Service/UserListService/
   styleUrl: './users-list-page.component.css',
 })
 export class UsersListPageComponent implements  OnInit{
-  Users: User[] = [];
+  Users: UserModel[] = [];
 
-  constructor(private UsersListServices: UsersListServices) {}
+  constructor(private UsersListServices: UsersListService) {}
 
 
   ngOnInit() {

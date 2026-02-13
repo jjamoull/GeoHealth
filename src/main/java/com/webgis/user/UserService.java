@@ -27,7 +27,7 @@ public class UserService {
      * Search for a user in db using its identifier
      *
      * @param id identifier of the user you want to retrieve from the db
-     * @return User which identifier equals to id, empty otherwise
+     * @return UserModel which identifier equals to id, empty otherwise
      */
     public Optional<User> findById(long id){
         return userRepository.findById(id);
@@ -37,7 +37,7 @@ public class UserService {
      * Search for a user in db using its username
      *
      * @param username username of the user you want to retrieve from the db
-     * @return User which username equals to username, empty otherwise
+     * @return UserModel which username equals to username, empty otherwise
      */
     public Optional<User> findByUsername(String username){
         return userRepository.findByUsername(username);
@@ -47,7 +47,7 @@ public class UserService {
      * Search for a user in db using its email
      *
      * @param email email of the user you want to retrieve from the db
-     * @return  User which email equals to username, empty otherwise
+     * @return  UserModel which email equals to username, empty otherwise
      */
     public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
@@ -101,7 +101,7 @@ public class UserService {
      */
     public User updateUser(long id, String username, String firstName, String lastName, String email, String password, String role){
         if (findById(id).isEmpty()) {
-            throw new IllegalArgumentException("User does not exist");
+            throw new IllegalArgumentException("UserModel does not exist");
         }
         if (findByUsername(username).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
@@ -129,7 +129,7 @@ public class UserService {
      */
     public void deleteUser(long id){
         if (findById(id).isEmpty()) {
-            throw new IllegalArgumentException("User does not exist");
+            throw new IllegalArgumentException("UserModel does not exist");
         }
         final User user = findById(id).get();
         userRepository.delete(user);
@@ -143,7 +143,7 @@ public class UserService {
     * */
     public Boolean isAdmin(long id){
         if (findById(id).isEmpty()) {
-            throw new IllegalArgumentException("User does not exist");
+            throw new IllegalArgumentException("UserModel does not exist");
         }
         final User user = findById(id).get();
         final String userRole = user.getRole();

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from '../Service/LoginService/loginService';
-import {User} from '../Model/UserListModel/User';
+import {LoginService} from '../../services/login/login.service';
+import {UserModel} from '../../../../shared/models/user-list-model/user.model';
+
 import {throwError} from "rxjs";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -17,7 +18,7 @@ import { CommonModule } from '@angular/common';
 })
 export class RegisterPageComponent implements  OnInit {
 
-  Users: User = {
+  Users: UserModel = {
     id: 0,
     username: "anonymous",
     firstName: "anonymous",
@@ -49,7 +50,7 @@ export class RegisterPageComponent implements  OnInit {
   }
 
   /**
-   * @modifies : User with the new data that the user has recorded
+   * @modifies : UserModel with the new data that the user has recorded
    * */
   public addUser(): void {
 
@@ -58,9 +59,9 @@ export class RegisterPageComponent implements  OnInit {
       return;
     }
 
-    //retrieves confirmPassword from the form to match the User format
+    //retrieves confirmPassword from the form to match the UserModel format
     const formValue = this.formGroup.value;
-    const user: User = {
+    const user: UserModel = {
       id: 0,
       username: formValue.username,
       firstName: formValue.firstName,
@@ -73,7 +74,7 @@ export class RegisterPageComponent implements  OnInit {
     this.LoginService.addUser(user).subscribe({
       next: data => {
         this.Users = data;
-        console.log('User created', data);
+        console.log('UserModel created', data);
       },
       error: err => {
         console.error('Error while creating user', err);
