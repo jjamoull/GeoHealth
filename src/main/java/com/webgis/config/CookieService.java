@@ -19,7 +19,7 @@ public class CookieService {
      * @return cookie as a string
      */
     public String generateCookie(String token) {
-        ResponseCookie cookie = ResponseCookie.from(COOKIENAME, token)
+        final ResponseCookie cookie = ResponseCookie.from(COOKIENAME, token)
                 .httpOnly(true)
                 .secure(false)
                 .path("/")
@@ -36,7 +36,7 @@ public class CookieService {
      * @return cookie as an empty String
      */
     public String deleteCookie() {
-        ResponseCookie cookie = ResponseCookie.from(COOKIENAME, "")
+        final ResponseCookie cookie = ResponseCookie.from(COOKIENAME, "")
                 .httpOnly(true)
                 .secure(false)
                 .path("/")

@@ -40,8 +40,8 @@ public class SecurityConfig {
 
     @Bean
     public FilterRegistrationBean corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:4200");
@@ -58,7 +58,7 @@ public class SecurityConfig {
 
         config.setMaxAge(LIFETIME);
         source.registerCorsConfiguration("/**", config);
-        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        final FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
 
         // should be set order to -100 because we need to CorsFilter before SpringSecurityFilter
         bean.setOrder(CORSFILTERORDER);
