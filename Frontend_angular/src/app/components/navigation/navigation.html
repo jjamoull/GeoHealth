@@ -45,10 +45,10 @@
       <!-- Lines about the recent modified maps -->
       <!-- ------------------------------------ -->
      <div class="recentMaps">
-       <h3>Recent maps modified</h3>
+       <h3 class="Titre">Recent maps modified</h3>
        <div class="AllTheMaps">
          @for (map of listOfAllRecentMaps; track map.id){
-           <div class="newCase">
+           <div class="newCase" (click)="goToMap(map.id)">
              <h4 style="text-align: center">{{map.titre}}</h4>
              <h6 style="text-align: center">{{map.description}}</h6>
            </div>
@@ -61,10 +61,10 @@
       <!-- Lines about all the maps -->
       <!-- ------------------------ -->
     <div class="allAvailableMaps">
-      <h3>All the available maps</h3>
+      <h3 class="Titre">All the available maps</h3>
       <div class="AllTheMaps">
         @for (map of listOfAllMaps; track map.id){
-          <div class="newCase">
+          <div class="newCase" (click)="goToMap(map.id)">
             <h4 style="text-align: center">{{map.titre}}</h4>
             <h6 style="text-align: center">{{map.description}}</h6>
           </div>

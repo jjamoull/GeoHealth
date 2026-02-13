@@ -13,7 +13,7 @@ export const routes: Routes = [
     path: 'home',
     component: Home,
   },{
-    path: 'map',
+    path: 'map/:id',
     component: Map,
   },{
     path:'navigation',

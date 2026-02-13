@@ -51,8 +51,8 @@ html, body {
 }
 
 .newCase{
-  border: 1px solid black;
-  margin: 2px ;
+  border: 1.2px solid black;
+  margin: 1% ;
   padding: 7%;
   width: 25%;
   height: 25%;
@@ -63,4 +63,17 @@ html, body {
   flex-wrap: wrap;
   gap: 5%;
   justify-content: center;
+}
+
+.Titre{
+  margin-left: 7px;
+  margin-top: 7px;
+}
+
+
+.newCase {
+  transition: transform 0.3s ease-in-out;
+}
+.newCase:hover {
+  transform: scale(1.05);
 }
