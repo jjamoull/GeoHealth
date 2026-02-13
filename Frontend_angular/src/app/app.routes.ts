@@ -42,10 +42,6 @@ export const routes: Routes = [
     path:'reset-password',
     component: Resetpassword,
   },{
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },{
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
