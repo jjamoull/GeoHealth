@@ -49,7 +49,7 @@ public class UserController {
 
     @PostMapping("/save")
     public User addUser(@RequestBody User user){
-        return userService.saveUser(
+        return userService.register(
                 user.getUsername(),
                 user.getFirstName(),
                 user.getLastName(),

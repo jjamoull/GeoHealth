@@ -51,31 +51,32 @@ export class Register implements  OnInit {
   /**
    * @modifies : User with the new data that the user has recorded
    * */
-  public addUser(): void {
-
+  public register(): void {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
       return;
     }
 
-    //retrieves confirmPassword from the form to match the User format
+    if (!this.checkPasswordConformity()) {
+      console.error('Passwords do not match');
+      return;
+    }
+
     const formValue = this.formGroup.value;
-    const user: User = {
-      id: 0,
+
+    const registerDto = {
       username: formValue.username,
       firstName: formValue.firstName,
       lastName: formValue.lastName,
       email: formValue.email,
-      password: formValue.password,
-      role: 'Admin'
+      password: formValue.password
     };
 
-    this.LoginService.addUser(user).subscribe({
-      next: data => {
-        this.Users = data;
-        console.log('User created', data);
+    this.LoginService.register(registerDto).subscribe({
+      next: (response) => {
+        console.log('Registration successful!', response);
       },
-      error: err => {
+      error: (err) => {
         console.error('Error while creating user', err);
       }
     });
@@ -97,7 +98,6 @@ export class Register implements  OnInit {
 
     return confirmPasswordControl.value == passwordControl.value;
   }
-
 
   showPassword = false;
 
