@@ -1,11 +1,98 @@
-<a (click)="goToNavigation()" style="border: 20px" class="btn btn-dark">
-  List of the maps
-</a>
+<!-- Header -->
+<section class="homeSection" >
+  <div class = "visual">
+    <img class="image" src="/assets/background/homeBackground.png" alt="Map">
+    <div class="rectangle">
+      <h1>GEOHEALT<span>TEXT</span></h1>
+    </div>
+  </div>
+</section>
 
-<a (click)="logout()" class="btn btn-primary">
-  logout
-</a>
+<!-- The recent card Section -->
+<section class="carouselSection" >
+  <h2 class="cardTitle">Cartes</h2>
+  <div class="radio-button">
+    <button type="button" class="btn btn-primary">Récemment consultées</button>
+    <button type="button" class="btn btn-primary">Récemment modifiées</button>
+    <button type="button" class="btn btn-primary">Favoris</button>
+  </div>
+  <div class="cards" id="Card">
+    <div class ="carousel">
+      <div class ="group">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+      </div>
+      <div aria-hidden="hidden" class ="group">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<a (click)="checkStatus()" class="btn btn-primary">
-  checkstatus
-</a>
+
+<!-- The comments Section -->
+
+<section class="commentSection">
+  <div class="commentContent">
+    <h3 class="commentTitle">Commentaires récents</h3>
+
+    <div class="cardSection">
+
+      <div class="commentCard">
+        <img src="/assets/background/worldMap.png" alt="Map">
+        <div class="cardUserContent">
+          <p><b>User</b></p>
+          <p class="cardCommentDateContent">Date</p>
+          <p>Comments.</p>
+          <button class="commentButton">Voir</button>
+        </div>
+      </div>
+
+      <div class="commentCard">
+        <img src="/assets/background/worldMap.png" alt="Map">
+        <div class="cardUserContent">
+          <p><b>User</b></p>
+          <p class="cardCommentDateContent">Date</p>
+          <p>Comments.</p>
+          <button class="commentButton">Voir</button>
+        </div>
+      </div>
+
+      <div class="commentCard">
+        <img src="/assets/background/worldMap.png" alt="Map" >
+        <div class="cardUserContent">
+          <p><b>User</b></p>
+          <p class="cardCommentDateContent">Date</p>
+          <p>Comments.</p>
+          <button class="commentButton">Voir</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- The Contact Section -->
+<div class="contactSection">
+  <h4 class="contactTitle">CONTACT</h4>
+  <div class="contactContent">
+    <i class="fa fa-map-marker" ></i> Location<br>
+    <i class="fa fa-phone" ></i> Phone: +00 151515<br>
+    <i class="fa fa-envelope" > </i> Email: mail.com<br>
+  </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="footer">
+  <p class="copyright">Copyright</p>
+</footer>
