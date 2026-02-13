@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   imports: [],
-  templateUrl: './home.html',
-  styleUrl: './home.css',
+  templateUrl: './expert-home-page.component.html',
+  styleUrl: './expert-home-page.component.css',
   standalone: true,
 })
-export class Home {
+export class ExpertHomePageComponent {
   constructor(public route: ActivatedRoute, private router: Router) {}
 
   /**

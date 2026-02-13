@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import {User} from '../Model/UserListModel/User';
+import {User} from '../../../../components/Model/UserListModel/User';
 import {OnInit} from '@angular/core';
-import {UsersListServices} from '../Service/UserListService/users-list-services';
+import {UsersListServices} from '../../../../components/Service/UserListService/users-list-services';
 
 
 @Component({
   selector: 'app-users-list',
   imports: [],
-  templateUrl: './users-list.html',
-  styleUrl: './users-list.css',
+  templateUrl: './users-list-page.component.html',
+  styleUrl: './users-list-page.component.css',
 })
-export class UsersList implements  OnInit{
+export class UsersListPageComponent implements  OnInit{
   Users: User[] = [];
 
   constructor(private UsersListServices: UsersListServices) {}

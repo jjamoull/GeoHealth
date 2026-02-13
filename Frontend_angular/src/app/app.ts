@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
-import {Home} from './components/home/home';
-import {Map} from './components/map/map';
+import {ExpertHomePageComponent} from './features/home/pages/expert-home/expert-home-page.component';
+import {Map} from './shared/components/map/map';
 
 @Component({
   selector: 'app-root',

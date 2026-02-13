@@ -1,0 +1,4 @@
+2026-02-13 16:26:50.528 - Debug - Connect to wss://gamification.thibber.be/ws
+2026-02-13 16:26:50.528 - Debug - Web socket state : Connecting
+2026-02-13 16:26:50.584 - Error - Websocket failure : gamification.thibber.be: nodename nor servname provided, or not known
+2026-02-13 16:26:50.584 - Debug - Web socket state : Error

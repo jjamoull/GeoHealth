@@ -12,10 +12,10 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     CommonModule
   ],
-  templateUrl: './register.html',
-  styleUrl: './register.css',
+  templateUrl: './register-page.component.html',
+  styleUrl: './register-page.component.css',
 })
-export class Register implements  OnInit {
+export class RegisterPageComponent implements  OnInit {
 
   Users: User = {
     id: 0,
