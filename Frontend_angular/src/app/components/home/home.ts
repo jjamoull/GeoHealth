@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
+import {LoginService} from '../Service/LoginService/loginService';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,11 @@ import { Router } from '@angular/router';
   standalone: true,
 })
 export class Home {
-  constructor(public route: ActivatedRoute, private router: Router) {}
+  constructor(
+    public route: ActivatedRoute,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
   /**
    * Go to "…:navigation/"
@@ -19,4 +24,29 @@ export class Home {
       this.router.navigate(['/navigation']);
   }
 
+  logout(): void {
+    this.loginService.logout().subscribe({
+      next: (response) => {
+        console.log("logged out");
+        },
+      error: (err) => {
+        console.error('Error while logging out', err);
+      }
+    });
+  }
+
+  checkStatus(): void {
+    this.loginService.checkStatus().subscribe({
+      next: (response) => {
+        console.log('Status:', response);
+      },
+      error: (err) => {
+        if (err.status === 401){
+          console.log('User is not authenticated');
+        } else {
+          console.error('Error while checking status', err);
+        }
+      }
+    });
+  }
 }

@@ -49,10 +49,6 @@ export class Login implements OnInit {
     this.LoginService.login(loginDto).subscribe({
       next: (response) => {
         console.log('Login successful!', response);
-        console.log('TOKEN:', response.token);
-
-        localStorage.setItem('token', response.token);
-        console.log(localStorage.getItem('token'));
       },
       error: (err) => {
         console.error('Error while logging in', err);

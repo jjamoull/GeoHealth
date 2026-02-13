@@ -17,14 +17,26 @@ export class LoginService{
   }
 
   register(registerDto: any): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = token ? { 'Authorization': `Bearer ${token}` } : undefined;
-    return this.HttpClient.post('http://localhost:8080/auth/register', registerDto, { headers });
+    return this.HttpClient.post('http://localhost:8080/auth/register', registerDto,
+            { withCredentials: true }
+          );
   }
 
   login(loginDto: any): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = token ? { 'Authorization': `Bearer ${token}` } : undefined;
-    return this.HttpClient.post('http://localhost:8080/auth/login', loginDto, { headers });
+    return this.HttpClient.post('http://localhost:8080/auth/login', loginDto,
+        { withCredentials: true }
+      );
+  }
+
+  logout(): Observable<any> {
+    return this.HttpClient.post('http://localhost:8080/auth/logout', {},
+      { withCredentials: true }
+    );
+  }
+
+  checkStatus(): Observable<any> {
+    return this.HttpClient.get('http://localhost:8080/auth/status',
+      { withCredentials: true }
+    );
   }
 }

@@ -75,9 +75,6 @@ export class Register implements  OnInit {
     this.LoginService.register(registerDto).subscribe({
       next: (response) => {
         console.log('Registration successful!', response);
-        console.log('TOKEN:', response.token);
-
-        localStorage.setItem('token', response.token);
       },
       error: (err) => {
         console.error('Error while creating user', err);

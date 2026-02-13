@@ -7,23 +7,27 @@ import { Register } from './components/register/register';
 import { Forgotpassword } from './components/forgotpassword/forgotpassword';
 import { Resetpassword } from './components/resetpassword/resetpassword';
 import {UsersList} from './components/users-list/users-list';
+import { authGuard } from './components/authguard/authguard-guard';
 
 export const routes: Routes = [
   {
     path: 'home',
     component: Home,
+    canActivate: [authGuard],
   },{
     path: 'map',
     component: Map,
+    canActivate: [authGuard],
   },{
     path:'navigation',
     component: Navigation,
   },{
     path: 'usersList',
     component: UsersList,
+    canActivate: [authGuard],
   },{
   path: '',
-  redirectTo: 'home',
+  redirectTo: 'login',
   pathMatch: 'full'
   },{
     path:'login',
@@ -39,7 +43,7 @@ export const routes: Routes = [
     component: Resetpassword,
   },{
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   }
 ];
