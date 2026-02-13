@@ -1,0 +1,15 @@
+###
+POST http://localhost:8080/users/save
+Content-Type: application/json
+
+{
+  "username": "julien",
+  "firstName": "Julien",
+  "lastName": "Dupont",
+  "email": "julien@test.com",
+  "password": "1234",
+  "role" : "Admin"
+}
+
+###
+GET http://localhost:8080/users/all

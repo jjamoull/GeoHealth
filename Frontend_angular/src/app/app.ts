@@ -25,8 +25,8 @@ export class App {
     this.router.navigate(['navigation'])
   }
 
-  goToLogging(){
-    this.router.navigate(['login'])
+  goToLogin(){
+    this.router.navigate(['register'])
   }
 
 
