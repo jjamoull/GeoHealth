@@ -9,7 +9,6 @@ import com.webgis.user.dto.UserResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -145,5 +144,5 @@ public class AuthController {
         );
         return ResponseEntity.status(200).body(userResponseDto);
     }
-
+    
 }
