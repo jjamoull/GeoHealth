@@ -2,16 +2,37 @@ package com.webgis.security;
 
 import com.webgis.user.User;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.Date;
 
 @Service
 public class JwtService {
 
-    private final SecretKey key = Jwts.SIG.HS256.key().build();
-    public static final int EXPIRATION = 3600 * 1000;
+    @Value("${jwt.secret}")
+    private String secret;
+
+    private SecretKey key;
+
+    @Value("${jwt.expiration.seconds}")
+    private int expirationSeconds;
+
+    @PostConstruct
+    public void init() {
+        try {
+            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+            byte[] keyBytes = sha256.digest(secret.getBytes(StandardCharsets.UTF_8));
+            this.key = Keys.hmacShaKeyFor(keyBytes);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to hash", e);
+        }
+    }
 
     /**
      * Generates a JWT token for a given user
@@ -23,7 +44,7 @@ public class JwtService {
         return Jwts.builder()
                 .subject(user.getUsername())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .expiration(new Date(System.currentTimeMillis() + expirationSeconds * 1000L))
                 .signWith(key)
                 .compact();
     }
@@ -63,6 +84,15 @@ public class JwtService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * Gets the token expiration
+     *
+     * @return expiration time in seconds
+     */
+    public int getExpirationSeconds() {
+        return expirationSeconds;
     }
 
 }

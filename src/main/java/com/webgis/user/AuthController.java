@@ -146,4 +146,9 @@ public class AuthController {
         return ResponseEntity.status(200).body(userResponseDto);
     }
 
+    @GetMapping("/test")
+    public ResponseEntity<?> testUser(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return ResponseEntity.ok(new MessageDto("Hello " + user.getUsername() + "! You are a " + user.getRole()));
+    }
 }
