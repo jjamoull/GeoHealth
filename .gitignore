@@ -34,3 +34,6 @@ build/
 
 ### Secrets ###
 .env
+
+### Node modules ###
+Frontend_angular/node_modules
