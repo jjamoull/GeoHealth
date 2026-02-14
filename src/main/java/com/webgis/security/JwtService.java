@@ -26,9 +26,9 @@ public class JwtService {
     @PostConstruct
     public void init() {
         try {
-            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-            byte[] keyBytes = sha256.digest(secret.getBytes(StandardCharsets.UTF_8));
-            this.key = Keys.hmacShaKeyFor(keyBytes);
+            final MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+            final byte[] Bytes = sha256.digest(secret.getBytes(StandardCharsets.UTF_8));
+            this.key = Keys.hmacShaKeyFor(Bytes);
         } catch (Exception e) {
             throw new RuntimeException("Failed to hash", e);
         }

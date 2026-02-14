@@ -16,7 +16,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -36,11 +35,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException
     {
-        String token = cookieService.getJwtFromCookie(request);
+        final String token = cookieService.getJwtFromCookie(request);
         if (token != null && jwtService.isTokenValid(token)) {
-            String username = jwtService.extractUsername(token);
+            final String username = jwtService.extractUsername(token);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                User user = userService.findByUsername(username).orElse(null);
+                final User user = userService.findByUsername(username).orElse(null);
                 if (user != null) {
                     authenticateUser(user);
                 }
@@ -50,10 +49,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void authenticateUser(User user) {
-        List<GrantedAuthority> authorities = List.of(
+        final List<GrantedAuthority> authorities = List.of(
                 new SimpleGrantedAuthority("ROLE_" + user.getRole().toUpperCase())
         );
-        UsernamePasswordAuthenticationToken authToken =
+        final UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(user, null, authorities);
 
         SecurityContextHolder.getContext().setAuthentication(authToken);
