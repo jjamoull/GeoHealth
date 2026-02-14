@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../Service/LoginService/loginService';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,7 @@ export class Login implements OnInit {
     });
   }
 
-  constructor(private LoginService: LoginService) {}
+  constructor(private LoginService: LoginService, private router: Router) {}
 
   /**
    * Login user
@@ -54,6 +55,10 @@ export class Login implements OnInit {
         console.error('Error while logging in', err);
       }
     });
+  }
+
+  goToRegister(){
+    this.router.navigate(['register'])
   }
 
 }

@@ -1,13 +1,32 @@
-<form [formGroup]="formGroup" (ngSubmit)="login()">
+<div class="loginPage">
+  <img class="image" src="/assets/background/loginBackgroundPlanet.png">
+</div>
 
-  <label for="username" class="my-3">Username</label>
-  <input formControlName="username" type="text" class="form-control" id="username" name="username" placeholder="Your username..." />
+<div class="login">
+  <h1 class="loginTitle"> Login </h1>
 
-  <label for="password" class="my-3">Password</label>
-  <input formControlName="password" type="password" class="form-control" id="password" name="password" placeholder="Your password..." />
+  <form [formGroup]="formGroup" (ngSubmit)="login()">
 
-  <button type="submit">
-    Login
-  </button>
+    <div class="form_field">
+      <input formControlName="username" type="username" placeholder="Username">
+    </div>
 
-</form>
+    <div class="form_field">
+      <input formControlName="password" type="password" placeholder="••••••••••••">
+    </div>
+
+    <div class="forgotPassword">
+      <label><input type="checkbox">Remember me</label>
+      <a href="#">Forgot password ?</a>
+    </div>
+
+    <button type="submit" class="btn">Login</button>
+
+    <div class="registerlink">
+      <p>Don't have an account ?  <a (click)="goToRegister()">Register</a></p>
+    </div>
+
+
+
+  </form>
+</div>
