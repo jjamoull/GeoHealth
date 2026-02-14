@@ -1,4 +1,4 @@
-package com.webgis.config;
+package com.webgis.security;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +21,7 @@ public class CookieService {
     public String generateCookie(String token) {
         final ResponseCookie cookie = ResponseCookie.from(COOKIENAME, token)
                 .httpOnly(true)
+                //todo change .secure to true in production
                 .secure(false)
                 .path("/")
                 .maxAge(COOKIEAGE)
@@ -38,6 +39,7 @@ public class CookieService {
     public String deleteCookie() {
         final ResponseCookie cookie = ResponseCookie.from(COOKIENAME, "")
                 .httpOnly(true)
+                //todo change .secure to true in production
                 .secure(false)
                 .path("/")
                 .maxAge(0)

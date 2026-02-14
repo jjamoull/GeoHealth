@@ -1,7 +1,7 @@
 package com.webgis.user;
 
-import com.webgis.config.CookieService;
-import com.webgis.config.JwtService;
+import com.webgis.security.CookieService;
+import com.webgis.security.JwtService;
 import com.webgis.user.dto.LoginDto;
 import com.webgis.MessageDto;
 import com.webgis.user.dto.RegisterDto;
@@ -9,6 +9,7 @@ import com.webgis.user.dto.UserResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 

@@ -1,4 +1,4 @@
-package com.webgis.config;
+package com.webgis.security;
 
 import com.webgis.user.User;
 import io.jsonwebtoken.Jwts;
@@ -11,7 +11,7 @@ import java.util.Date;
 public class JwtService {
 
     private final SecretKey key = Jwts.SIG.HS256.key().build();
-    public static final int EXPIRATION = 10 * 60 * 1000;
+    public static final int EXPIRATION = 3600 * 1000;
 
     /**
      * Generates a JWT token for a given user
@@ -37,9 +37,9 @@ public class JwtService {
     public boolean isTokenValid(String token) {
         try {
             Jwts.parser()
-            .verifyWith(key).
-            build().
-            parseSignedClaims(token);
+            .verifyWith(key)
+            .build()
+            .parseSignedClaims(token);
             return true;
         } catch (Exception e) {
             return false;
@@ -52,7 +52,7 @@ public class JwtService {
      * @param token the JWT token to extract the username from
      * @return the username if extraction is successful, null otherwise
      */
-    public String getUsernameFromToken(String token) {
+    public String extractUsername(String token) {
         try {
             return Jwts.parser()
                     .verifyWith(key)
