@@ -1,7 +1,7 @@
 package com.webgis.user;
 
-import com.webgis.config.CookieService;
-import com.webgis.config.JwtService;
+import com.webgis.security.CookieService;
+import com.webgis.security.JwtService;
 import com.webgis.user.dto.LoginDto;
 import com.webgis.MessageDto;
 import com.webgis.user.dto.RegisterDto;
@@ -144,5 +144,5 @@ public class AuthController {
         );
         return ResponseEntity.status(200).body(userResponseDto);
     }
-
+    
 }
