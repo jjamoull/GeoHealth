@@ -37,19 +37,11 @@ public class MapController {
     @PostMapping(value = "/uploadShapeFile", consumes = "multipart/form-data" )
     public Map postGeoJsonFile(
             @RequestParam("name") String name,
-            @RequestParam("fileShp") MultipartFile fileShp,
-            @RequestParam("fileShx") MultipartFile fileShx,
-            @RequestParam("filePrj") MultipartFile filePrj,
-            @RequestParam("fileDbf") MultipartFile fileDbf,
-            @RequestParam("fileCpg") MultipartFile fileCpg,
+            @RequestParam("zipFile") MultipartFile zipFile,
             @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile) throws IOException {
 
         Map map = new Map(name,
-                fileShp.getBytes(),
-                fileShx.getBytes(),
-                filePrj.getBytes(),
-                fileDbf.getBytes(),
-                fileCpg.getBytes(),
+                zipFile.getBytes(),
                 null);
         if (geoJsonFile != null){
             map.setFileGeoJson(geoJsonFile.getBytes());

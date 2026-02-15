@@ -14,27 +14,7 @@ public class Map {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
-    private byte[] fileShp;
-
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition="BYTEA")
-    private byte[] fileShx;
-
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition="BYTEA")
-    private byte[] filePrj;
-
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition="BYTEA")
-    private byte[] fileDbf;
-
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition="BYTEA")
-    private byte[] fileCpg;
+    private byte[] zipFile;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
@@ -44,18 +24,10 @@ public class Map {
     public Map(){}
 
     public Map(String name,
-               byte[] fileShp,
-               byte[] fileShx,
-               byte[] filePrj,
-               byte[] fileDbf,
-               byte[] fileCpg,
+               byte[] zipFile,
                byte[] fileGeoJson){
         this.name=name;
-        this.fileShp = fileShp;
-        this.fileShx = fileShx;
-        this.filePrj = filePrj;
-        this.fileDbf = fileDbf;
-        this.fileCpg = fileCpg;
+        this.zipFile = zipFile;
         this.fileGeoJson = fileGeoJson;
     }
 
@@ -70,23 +42,7 @@ public class Map {
         return name;
     }
 
-    public byte[] getFileShp() {
-        return fileShp;
-    }
-
-    public byte[] getFileShx() {
-        return fileShx;
-    }
-
-    public byte[] getFilePrj() {
-        return filePrj;
-    }
-
-    public byte[] getFileDbf() {
-        return fileDbf;
-    }
-
-    public byte[] getFileCpg(){return fileCpg;}
+    public byte[] getZipFile(){return zipFile;}
 
     public byte[] getFileGeoJson() {
         return fileGeoJson;
@@ -101,25 +57,10 @@ public class Map {
 
     public void setName(String name) {this.name = name;}
 
-    public void setFileShp(byte[] fileShp) {
-        this.fileShp = fileShp;
+    public void setZipFile(byte[] zipFile) {
+        this.zipFile = zipFile;
     }
 
-    public void setFileShx(byte[] fileShx) {
-        this.fileShx = fileShx;
-    }
-
-    public void setFilePrj(byte[] filePrj) {
-        this.filePrj = filePrj;
-    }
-
-    public void setFileDbf(byte[] fileDbf) {
-        this.fileDbf = fileDbf;
-    }
-
-    public void setFileCpg(byte[] fileCpg) {
-        this.fileCpg = fileCpg;
-    }
 
     public void setFileGeoJson(byte[] fileGeoJson) {
         this.fileGeoJson = fileGeoJson;
