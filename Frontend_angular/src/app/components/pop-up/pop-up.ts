@@ -1,6 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {MatDialog,MatDialogRef, MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {finalize, Subscription} from 'rxjs';
+import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
+import {MapService} from '../Service/MapService/mapService';
 
 @Component({
   selector: 'app-pop-up',
@@ -11,7 +14,65 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
   styleUrl: './pop-up.css',
 })
 export class PopUp implements OnInit{
-  constructor(private dialog: MatDialogRef <PopUp>) {}
+  constructor(private dialog: MatDialogRef <PopUp>, private http: HttpClient, private MapService: MapService) {}
+
+  @Input()
+  requiredFileType:string = '';
+
+  fileName:string = 'No file uploaded yet.';
+
+  uploadProgress =  0;
+  uploadSub: Subscription | undefined;
+
+  /**
+   * Handles the file upload component contained in a pop-up
+   * */
+  onFileSelected(event:Event) {
+
+    const input = event.target as HTMLInputElement;
+    const file: File | undefined = input.files?.[0];
+
+    if (file) {
+      this.fileName = file.name;
+
+      const formData = new FormData();
+      formData.append("name", this.fileName);
+      formData.append("zipFile", file);
+
+      // missing geoJson file but optional so shouldn't raise issues
+
+      const upload$ = this.http.post("http://localhost:8080/maps/uploadShapeFile", formData, {
+        reportProgress: true,
+        observe: 'events'
+      })
+        .pipe(
+          finalize(() => this.reset())
+        );
+
+      this.uploadSub = upload$.subscribe(event => {
+        if (event.type == HttpEventType.UploadProgress && event.total) {
+          this.uploadProgress = Math.round(100 * (event.loaded / event.total));
+        }
+      })
+    }
+  }
+
+  /**
+   * Cancel upload, user-centered
+   * */
+  cancelUpload() {
+    if (this.uploadSub){
+    this.uploadSub.unsubscribe();}
+    this.reset();
+  }
+
+  /**
+   * Reset the subscription to flux and reset the current progress
+   * */
+  reset() {
+    this.uploadProgress = 0;
+    this.uploadSub = undefined;
+  }
 
   /**
    * Allow the user to close the pop-up
@@ -41,5 +102,8 @@ export class PopUp implements OnInit{
     const formControl = this.formGroup.get(name);
     return formControl?.invalid && formControl?.dirty;
   }
+
+
+
 
 }

@@ -3,7 +3,7 @@
     Configure your new map to add
   </h2>
 
-  <form [formGroup]="formGroup"  class="enterDataOnNewMap">
+  <form [formGroup]="formGroup" (ngSubmit)="closePopUp()">
     <label for="title" class="my-3">Title</label>
     <input type="text" class="form-control" id="title" name="title" placeholder="Map on …" formControlName ="title" />
     @if(isFieldValid("title")){
@@ -20,16 +20,32 @@
       </div>
     }
 
-    <label for="file" class="my-3">File</label>
-    <input type="text" class="form-control" id="file" name="file" placeholder="The file …" formControlName ="file" />
+    <input type="file"
+           class="file-input"
+           formControlName="file"
+           (change)="onFileSelected($event)"
+           #fileUpload>
+
+    <div class="file-upload">
+      {{fileName || "No file uploaded yet."}}
+      <button type="button"
+              mat-mini-fab
+              color="primary"
+              class="upload-btn"
+              (click)="fileUpload.click()">
+      </button>
+    </div>
+
+
     @if(isFieldValid("file")){
+
       <div class="error">
         The file is incorrect
       </div>
     }
   </form>
 
-  <button (click)="closePopUp()" [disabled]="formGroup.invalid">
+  <button type="submit" [disabled]="formGroup.invalid">
     Create the new map
   </button>
 </div>
