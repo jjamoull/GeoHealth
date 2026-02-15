@@ -1,107 +1,84 @@
-<h2 align="center" style=" border-bottom: 2px solid black;">
-  Configure your new map to add
-</h2>
+<div class="registerPage">
+  <img class="image" src="/assets/background/registerBackgroungPlanet.png">
+</div>
 
-<form [formGroup]="formGroup"
-      (ngSubmit)="register()"
-      class="enterDataOnNewMap">
-  <label for="username" class="my-3">username</label>
-  <input type="text" class="form-control" id="username" name="username" placeholder="Your username …" formControlName ="username" />
-  @if(isFieldValid("username")){
-    <div class="error">
-      The username must be at least 1 character long.
+<div class="register">
+  <h1 class="registerTitle"> Register </h1>
+
+  <form [formGroup]="formGroup"
+        (ngSubmit)="register()"
+        class="form">
+
+    <div class="form_field">
+      <input type="Username" placeholder="Username" formControlName ="username">
     </div>
-  }
+    @if(isFieldValid("username")){
+      <div class="error">
+        The username must be at least 1 character long.
+      </div>
+    }
 
-  <label for="firstName" class="my-3">firstName</label>
-  <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Your firstName …" formControlName ="firstName" />
-  @if(isFieldValid("firstName")){
-    <div class="error">
-      The first name must be at least 1 character long.    </div>
-  }
-
-  <label for="lastName" class="my-3">lastName</label>
-  <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Your lastName …" formControlName ="lastName" />
-  @if(isFieldValid("lastName")){
-    <div class="error">
-      The last name must be at least 1 character long.
+    <div class="form_field">
+      <input type="Firstname" placeholder="First name" formControlName ="firstName">
     </div>
-  }
+    @if(isFieldValid("firstName")){
+      <div class="error">
+        The first name must be at least 1 character long.    </div>
+    }
 
-
-  <label for="email" class="my-3">email</label>
-  <input type="text" class="form-control" id="email" name="email" placeholder="Your email …" formControlName ="email" />
-  @if(isFieldValid("email")){
-    <div class="error">
-      The email does not match the classic email format. E.g. example@foo.com
+    <div class="form_field">
+      <input type="Lastname" placeholder="Last name" formControlName ="lastName">
     </div>
-  }
+    @if(isFieldValid("lastName")){
+      <div class="error">
+        The last name must be at least 1 character long.
+      </div>
+    }
 
-  <label for="password" class="my-3">password</label>
-  <div class="password-wrapper">
-    <input
-      [type]="showPassword ? 'text' : 'password'"
-      class="form-control"
-      id="password"
-      placeholder="Your password …"
-      formControlName="password"
-    />
+    <div class="form_field">
+      <input type="Email" placeholder="info@mailaddress.com" formControlName ="email">
+    </div>
+    @if(isFieldValid("email")){
+      <div class="error">
+        doesn't match
+      </div>
+    }
 
-    <span class="password-icon" (click)="togglePassword()">
-    <img
-      *ngIf="!showPassword"
-      src="assets/icons/eye.png"
-      alt="Show password"
-      width="20"
-    />
-    <img
-      *ngIf="showPassword"
-      src="assets/icons/eye-off.png"
-      alt="Hide password"
-      width="20"
-    />
-      @if(isFieldValid("password")){
-        <div class="error">
-          The password does not contain at least 8 characters or does not match the required format. E.g. Tot-o1919#%
-        </div>
-      }
-  </span>
-  </div>
+    <div class="form_field">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+    </div>
+    @if(isFieldValid("password")){
+      <div class="error">
+        The password does not contain at least 8 characters or does not match the required format. E.g. Toto#123.com
+      </div>
+    }
 
-  <label for="confirmPassword" class="my-3">confirmPassword</label>
-  <div class="password-wrapper">
-    <input
-      [type]="showPassword ? 'text' : 'Confirm your password'"
-      class="form-control"
-      id="confirmPassword"
-      placeholder="Confirm your password"
-      formControlName="confirmPassword"
-    />
+    <div class="form_field">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="confirmPassword"
+        placeholder="Confirm password"
+        formControlName="confirmPassword"
+      />
+    </div>
+    @if(isFieldValid("confirmPassword")){
+      <div class="error">
+        The confirmPassword does not contain at least 8 characters or does not match the required format. E.g. Toto#123.com
+      </div>
+    }
 
-    <span class="password-icon" (click)="togglePassword()">
-    <img
-      *ngIf="!showPassword"
-      src="assets/icons/eye.png"
-      alt="Show password"
-      width="20"
-    />
-    <img
-      *ngIf="showPassword"
-      src="assets/icons/eye-off.png"
-      alt="Hide password"
-      width="20"
-    />
-      @if(isFieldValid("confirmPassword")){
-        <div class="error">
-          The confirmPassword does not contain at least 8 characters or does not match the required format. E.g. Toto#123.com
-        </div>
-      }
-  </span>
-  </div>
+    <button class="btn" type="submit" [disabled]="formGroup.invalid || !checkPasswordConformity()" >
+      Register
+    </button>
 
-  <button type="submit" [disabled]="formGroup.invalid || !checkPasswordConformity()" >
-    Create the new user
-  </button>
-</form>
+    <div class="loginLink">
+      <p>Already have an account ? <a (click)="goToLogin()">Login</a></p>
+    </div>
 
-
+  </form>
+</div>

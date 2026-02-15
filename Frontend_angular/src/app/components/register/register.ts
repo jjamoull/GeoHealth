@@ -4,6 +4,7 @@ import {User} from '../Model/UserListModel/User';
 import {throwError} from "rxjs";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -45,7 +46,13 @@ export class Register implements  OnInit {
   }
 
 
-  constructor(private LoginService: LoginService) {
+  constructor(private LoginService: LoginService, private router: Router) {
+  }
+  /**
+   * Redirection to login page
+   */
+  goToLogin(){
+    this.router.navigate(['login'])
   }
 
   /**
