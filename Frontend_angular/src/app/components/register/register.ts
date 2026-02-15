@@ -48,7 +48,9 @@ export class Register implements  OnInit {
 
   constructor(private LoginService: LoginService, private router: Router) {
   }
-
+  /**
+   * Redirection to login page
+   */
   goToLogin(){
     this.router.navigate(['login'])
   }

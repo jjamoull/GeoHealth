@@ -57,6 +57,9 @@ export class Login implements OnInit {
     });
   }
 
+  /**
+   * Redirection to register page
+   */
   goToRegister(){
     this.router.navigate(['register'])
   }
