@@ -15,25 +15,38 @@
   left: 5%
 }
 
-.loginTitle{
+.title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-title{
   font-size: 36px;
   text-align: center;
-  font-weight: 100;
+  font-weight: 600;
   margin: 0 0 1rem;
-  text-transform: uppercase;
   color: black;
 }
-.form_field{
+
+
+.login-message {
+  color: black;
+  font-weight: lighter;
+}
+
+.form-field{
   width: 100%;
   height: 50px;
   background: transparent;
   margin: 30px 0;
   border-radius: 12px;
-  border: 2px solid #90ee90;
+  border: solid 2px #90ee90;
   font-size: 1rem;
 }
 
-.form_field input{
+.form-field input{
   width: 100%;
   height: 100%;
   background: transparent;
@@ -44,57 +57,88 @@
   color: black;
   padding: 20px 45px 20px 20px ;
 }
-.form_field input::placeholder{
+.form-field input::placeholder{
   color: #3a3838;
 }
 
-.forgotPassword{
+.forgot-password{
   display: flex;
   justify-content: space-between;
   font-size: 14.5px;
   margin: -15px 0 15px;
   color: black;
 }
-.forgotPassword label input {
+.forgot-password label input {
   accent-color: darkblue;
   margin-right: 3px;
 }
-.forgotPassword a{
+.forgot-password a{
   color: darkblue;
   text-decoration: none;
 }
-.forgotPassword a:hover{
+.forgot-password a:hover{
   text-decoration: underline;
 }
 
-.btn{
-  width: 100%;
+.login-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.login-button{
+  width: 30%;
   height: 45px;
   background: #90ee90;
-  border: none;
+  border: solid 2px #7ee87e;
   outline: none;
-  border-radius: 40px;
+  border-radius: 12px;
   font-size: 16px;
   cursor: pointer;
   font-weight: 600;
+  transition: box-shadow .2s ease ;
+
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
-.btn:hover{
-  background: darkgreen;
+.login-button:hover{
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  transform: scale(1.01);
 }
-.registerlink{
+.login-button:active{
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  transform: scale(.99);
+}
+.register-link{
   font-size:14.5px;
   text-align: center;
   margin-top: 20px;
 }
-.registerlink p a{
+.register-link p a{
   color: darkblue;
   text-decoration: none;
 }
-.registerlink p {
+.register-link p {
   color: black;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: lighter;
 }
+
+.register-link a {
+  cursor: pointer;
+  font-weight: 500;
+}
+
 .registerlink p a:hover{
   text-decoration: underline;
+}
+
+
+.input-error {
+  border: 2px solid red;
+  background-color: #ffe6e6;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-weight: 500;
 }
