@@ -1,6 +1,5 @@
 package com.webgis.map;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,27 +12,32 @@ public class Map {
     private String name;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
     private byte[] fileShp;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
     private byte[] fileShx;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
     private byte[] filePrj;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
     private byte[] fileDbf;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
     private byte[] fileCpg;
 
     @Lob
-    @JsonProperty(value = "null")
+    @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
     private byte[] fileGeoJson;
 

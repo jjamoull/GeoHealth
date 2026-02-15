@@ -2,8 +2,11 @@ package com.webgis.map;
 
 import com.webgis.user.User;
 import com.webgis.user.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,27 +30,32 @@ public class MapController {
                 return map;
             }
         }
-        return null;
+        return (Map) ResponseEntity.notFound();
     }
 
 
-    @PostMapping("/geoJsonFile")
-    public Map postGeoJsonFile(@RequestBody String name,
-                               @RequestBody byte[] fileShp,
-                               @RequestBody byte[] fileShx,
-                               @RequestBody byte[] filePrj,
-                               @RequestBody byte[] fileDbf,
-                               @RequestBody byte[] fileCpg,
-                               @RequestBody byte[] geoJsonFile){
-        return mapService.save(
-                name,
-                fileShp,
-                fileShx,
-                filePrj,
-                fileDbf,
-                fileCpg,
-                geoJsonFile
-        );
+    @PostMapping(value = "/uploadShapeFile", consumes = "multipart/form-data" )
+    public Map postGeoJsonFile(
+            @RequestParam("name") String name,
+            @RequestParam("fileShp") MultipartFile fileShp,
+            @RequestParam("fileShx") MultipartFile fileShx,
+            @RequestParam("filePrj") MultipartFile filePrj,
+            @RequestParam("fileDbf") MultipartFile fileDbf,
+            @RequestParam("fileCpg") MultipartFile fileCpg,
+            @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile) throws IOException {
+
+        Map map = new Map(name,
+                fileShp.getBytes(),
+                fileShx.getBytes(),
+                filePrj.getBytes(),
+                fileDbf.getBytes(),
+                fileCpg.getBytes(),
+                null);
+        if (geoJsonFile != null){
+            map.setFileGeoJson(geoJsonFile.getBytes());
+        }
+
+        return mapService.save(map);
     }
 
 
@@ -57,15 +65,7 @@ public class MapController {
 
         if (mapTemp.isPresent()) {
             final Map map = mapTemp.get();
-            return mapService.save(
-                    map.getName(),
-                    map.getFileShx(),
-                    map.getFileDbf(),
-                    map.getFileShp(),
-                    map.getFileCpg(),
-                    map.getFilePrj(),
-                    geoJsonFile
-            );
+            return mapService.save(map);
         }
         return null;
     }

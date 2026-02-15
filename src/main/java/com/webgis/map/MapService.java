@@ -38,24 +38,10 @@ public class MapService {
     /**
      * Save the geoJSON file and the files used to create it for a map identified by its id
      *
-     * @param name : name of the map you want to add geoJsonFile from the db
-     * @param fileShp : shp file of the map to save
-     * @param fileShx : shx file of the map to save
-     * @param filePrj : prj file of the map to save
-     * @param fileDbf : dbf file of the map to save
-     * @param fileCpg : cpg file of the map to save
-     * @param geoJsonFile : geoJSON transformation of the map to save
-     *
+     * @param map : the map you want to add geoJsonFile from the db
      * @return Saved map
      * */
-    public Map save(String name,
-                    byte[] fileShp,
-                    byte[] fileShx,
-                    byte[] filePrj,
-                    byte[] fileDbf,
-                    byte[] fileCpg,
-                    byte[] geoJsonFile){
-        final Map map = new Map(name, fileShp, fileShx, filePrj, fileDbf, fileCpg, geoJsonFile);
+    public Map save(Map map){
         return mapRepository.save(map);
     }
 
