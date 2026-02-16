@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../Service/LoginService/loginService';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,45 +14,47 @@ import {Router} from '@angular/router';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-
 export class Login implements OnInit {
 
-  /**
-   * Init the form to login
-   */
   formGroup!: FormGroup;
+  errorMessage: string | null = null;
+  loginError = false;
+
+  constructor(
+    private LoginService: LoginService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(1)])
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
     });
   }
 
-  constructor(private LoginService: LoginService, private router: Router) {}
-
-  /**
-   * Login user
-   */
   public login(): void {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
       return;
     }
 
-    const formValue = this.formGroup.value;
+    this.errorMessage = null;
+    this.loginError = false;
 
-    const loginDto = {
-      username: formValue.username,
-      password: formValue.password
-    };
-
-    this.LoginService.login(loginDto).subscribe({
-      next: (response) => {
-        console.log('Login successful!', response);
+    this.LoginService.login(this.formGroup.value).subscribe({
+      next: () => {
+        // Ok -> redirect to /home
+        this.router.navigate(['/home']);
       },
       error: (err) => {
-        console.error('Error while logging in', err);
+        // Display error message
+        this.loginError = true;
+
+        if (err.status === 401) {
+          this.errorMessage = "Identifiants invalides.";
+        } else {
+          this.errorMessage = "Erreur serveur. Réessayez.";
+        }
       }
     });
   }
@@ -63,5 +65,4 @@ export class Login implements OnInit {
   goToRegister(){
     this.router.navigate(['register'])
   }
-
 }

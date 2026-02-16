@@ -1,28 +1,33 @@
-<div class="loginPage">
+<div class="login-page">
   <img class="image" src="/assets/background/loginBackgroundPlanet.png">
 </div>
 
 <div class="login">
-  <h1 class="loginTitle"> Login </h1>
+  <div class="title-container">
+    <h1 class="login-title"> Login </h1>
+    <p class="login-message">Please log into your account</p>
+  </div>
 
   <form [formGroup]="formGroup" (ngSubmit)="login()">
 
-    <div class="form_field">
-      <input formControlName="username" type="username" placeholder="Username">
+    <div class="form-field">
+      <input formControlName="username" type="text" placeholder="Your username...">
     </div>
 
-    <div class="form_field">
-      <input formControlName="password" type="password" placeholder="••••••••••••">
+    <div class="form-field">
+      <input formControlName="password" type="password" placeholder="Your password...">
     </div>
 
-    <div class="forgotPassword">
+    <div class="forgot-password">
       <label><input type="checkbox">Remember me</label>
       <a href="#">Forgot password ?</a>
     </div>
 
-    <button type="submit" class="btn">Login</button>
+    <div class="login-button-container">
+      <button type="submit" class="login-button">Login</button>
+    </div>
 
-    <div class="registerlink">
+    <div class="register-link">
       <p>Don't have an account ?  <a (click)="goToRegister()">Register</a></p>
     </div>
 
