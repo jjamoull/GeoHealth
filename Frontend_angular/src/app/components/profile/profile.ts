@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {UserResponseDto} from '../Model/UserModel/UserResponseDto';
 import {UsersServices} from '../Service/UserService/users-services';
 import {CommonModule} from '@angular/common';
@@ -12,23 +12,23 @@ import {CommonModule} from '@angular/common';
 })
 export class Profile implements OnInit{
 
-   public user: UserResponseDto={
-  username: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  role: ''
-};
+  public user: UserResponseDto={
+    username: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    role: ''
+  };
 
 
-constructor(private userService:UsersServices) {
-  }
+  constructor(private userService:UsersServices, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.userService.getConnectedUser().subscribe({
       next: user =>{
         console.log(user);
         this.user=user;
+        this.cdr.detectChanges();
       },
       error:(err)=>{
         console.log(err);

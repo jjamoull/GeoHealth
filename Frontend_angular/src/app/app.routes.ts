@@ -22,6 +22,7 @@ export const routes: Routes = [
   },{
     path:'navigation',
     component: Navigation,
+    canActivate: [authGuard]
   },{
     path: 'usersList',
     component: UsersList,
@@ -45,6 +46,7 @@ export const routes: Routes = [
   },{
     path:'profile',
     component: Profile,
+    canActivate: [authGuard]
   },{
     path: '**',
     redirectTo: 'login',
