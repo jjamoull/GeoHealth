@@ -61,6 +61,7 @@ public class UserController {
             HttpServletRequest request,
             @RequestBody UserUpdateDto updateDto
     ){
+        System.out.println("In update controller");
         String token = cookieService.getJwtFromCookie(request);
         String username = jwtService.extractUsername(token);
         Optional<User> userOptional = userService.findByUsername(username);

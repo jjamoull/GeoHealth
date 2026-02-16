@@ -1,9 +1,59 @@
 
 <div class="test-form" style="margin-top: 100px;">
-  <p>Username : {{ user.username }}</p>
-  <p>Prénom : {{user.firstName}}</p>
-  <p>Nom :{{user.lastName}}</p>
-  <p>Email : {{ user.email }}</p>
+  <p>
+    Username:
+    @if(!editing.username){
+        <p>{{ user.username }}<p>
+      }@else if (editing.username){
+        <input  [(ngModel)]="user.username" />
+      }
+    <button (click)="toggleEdit('username')">
+      {{ editing.email ? 'Save' : 'Edit' }}
+    </button>
+  </p>
+
+  <p>
+    Prénom:
+    @if(!editing.firstName){
+        <p>{{ user.firstName }}<p>
+        } @else if (editing.firstName){
+          <input  [(ngModel)]="user.firstName" />
+        }
+
+    <button (click)="toggleEdit('firstName')">
+      {{ editing.email ? 'Save' : 'Edit' }}
+    </button>
+  </p>
+
+  <p>
+    Nom:
+    @if(!editing.lastName){
+      <p>{{ user.lastName }}<p>
+        } @else if (editing.lastName){
+      <input  [(ngModel)]="user.lastName" />
+    }
+
+    <button (click)="toggleEdit('lastName')">
+      {{ editing.email ? 'Save' : 'Edit' }}
+    </button>
+  </p>
+
+  <p>
+    Email:
+    @if(!editing.email){
+      <p>{{ user.email }}<p>
+    } @else if (editing.email){
+      <input  [(ngModel)]="user.email" />
+    }
+
+    <button (click)="toggleEdit('email')">
+      {{ editing.email ? 'Save' : 'Edit' }}
+    </button>
+  </p>
+
   <p>Role : {{ user.role }}</p>
+
+  <button (click)="updateProfile()"> MODIFIER </button>
+
 </div>
 
