@@ -59,7 +59,7 @@ public class MapController {
             @RequestParam("zipFile") MultipartFile zipFile,
             @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile) throws IOException {
 
-        Map map = new Map(title,
+        final Map map = new Map(title,
                 description,
                 zipFile.getBytes(),
                 null);
