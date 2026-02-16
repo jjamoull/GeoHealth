@@ -13,3 +13,9 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8080/users/all
+
+###
+POST http://localhost:8080/maps/uploadShapeFile
+
+###
+GET http://localhost:8080/maps/geoJsonFile/1

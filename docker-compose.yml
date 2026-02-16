@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   db:
-    image: postgres:16
+    image: postgis/postgis:16-3.4
     container_name: postgres-db
     restart: always
     environment:
