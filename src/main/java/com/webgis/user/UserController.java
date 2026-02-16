@@ -2,6 +2,11 @@ package com.webgis.user;
 
 
 
+import com.webgis.security.CookieService;
+import com.webgis.security.JwtService;
+import com.webgis.user.dto.UserResponseDto;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +24,15 @@ import java.util.Optional;
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
-    private final UserService userService;
 
-    public UserController(UserService userService){
+    private final UserService userService;
+    private final JwtService jwtService;
+    private final CookieService cookieService;
+
+    public UserController(UserService userService, JwtService jwtService, CookieService cookieService) {
         this.userService = userService;
+        this.jwtService = jwtService;
+        this.cookieService= cookieService;
     }
 
     @GetMapping("/all")
@@ -30,9 +40,18 @@ public class UserController {
         return userService.findAllUsers();
     }
 
-    @GetMapping("/{username}")
-    public Optional<User> getUserByUsername(@PathVariable String username){
-        return userService.findByUsername(username);
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDto> getUserByUsername(HttpServletRequest request){
+        String token = cookieService.getJwtFromCookie(request);
+        String username = jwtService.extractUsername(token);
+        Optional<User> user= userService.findByUsername(username);
+
+        if(user.isPresent()){
+            UserResponseDto userResponseDto= new UserResponseDto(user.get());
+            return ResponseEntity.ok().body(userResponseDto);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/isAdmin/{id}")

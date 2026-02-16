@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../Service/LoginService/loginService';
-import {User} from '../Model/UserListModel/User';
+import {User} from '../Model/UserModel/User';
 import {throwError} from "rxjs";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';

@@ -1,0 +1,13 @@
+@if (user) {
+  <div class="test-form" style="margin-top: 100px;">
+    <p>Username : {{ user.username }}</p>
+    <p>Prénom : {{user.firstName}}</p>
+    <p>Nom :{{user.lastName}}</p>
+    <p>Email : {{ user.email }}</p>
+    <p>Role : {{ user.role }}</p>
+  </div>
+} @else {
+  <div class="test-form" style="margin-top: 100px;">
+  <p>Utilisateur non connecté</p>
+  </div>
+}

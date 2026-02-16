@@ -9,13 +9,17 @@ import com.webgis.user.User;
 public record UserResponseDto(
         String username,
         String firstName,
-        String lastName
+        String lastName,
+        String email,
+        String role
 ) {
     public UserResponseDto(User user) {
         this(
             user.getUsername(),
             user.getFirstName(),
-            user.getLastName()
+            user.getLastName(),
+            user.getEmail(),
+            user.getRole()
         );
     }
 }

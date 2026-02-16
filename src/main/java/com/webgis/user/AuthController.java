@@ -137,11 +137,7 @@ public class AuthController {
         System.out.println("Setting cookie: " + cookie);
         response.addHeader(HttpHeaders.SET_COOKIE, cookie);
 
-        final UserResponseDto userResponseDto = new UserResponseDto(
-                user.getUsername(),
-                user.getFirstName(),
-                user.getLastName()
-        );
+        final UserResponseDto userResponseDto = new UserResponseDto(user);
         return ResponseEntity.status(200).body(userResponseDto);
     }
     

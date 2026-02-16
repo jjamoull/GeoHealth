@@ -8,6 +8,7 @@ import { Forgotpassword } from './components/forgotpassword/forgotpassword';
 import { Resetpassword } from './components/resetpassword/resetpassword';
 import {UsersList} from './components/users-list/users-list';
 import { authGuard } from './components/authguard/authguard-guard';
+import {Profile} from './components/profile/profile';
 
 export const routes: Routes = [
   {
@@ -42,8 +43,13 @@ export const routes: Routes = [
     path:'reset-password',
     component: Resetpassword,
   },{
+    path:'profile',
+    component: Profile,
+  },{
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
   }
 ];
+
+

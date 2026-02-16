@@ -32,5 +32,7 @@ export class App {
     this.router.navigate(['login'])
   }
 
-
+  goToProfile(){
+    this.router.navigate(['profile'])
+  }
 }
