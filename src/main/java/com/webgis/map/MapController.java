@@ -1,13 +1,10 @@
 package com.webgis.map;
 
-import com.webgis.user.User;
-import com.webgis.user.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -52,7 +49,7 @@ public class MapController {
             @RequestParam("zipFile") MultipartFile zipFile,
             @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile) throws IOException {
 
-        Map map = new Map(title,
+        final Map map = new Map(title,
                 description,
                 zipFile.getBytes(),
                 null);

@@ -1,11 +1,7 @@
 package com.webgis.map;
 
-import com.webgis.user.User;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
-
-import static java.lang.System.err;
 
 @Service
 public class MapService {
