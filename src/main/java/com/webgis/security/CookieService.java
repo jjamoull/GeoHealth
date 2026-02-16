@@ -1,15 +1,23 @@
-package com.webgis.config;
+package com.webgis.security;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CookieService {
+    @Value("${cookie.secure}")
+    private boolean secure;
 
-    private static final int COOKIEAGE = 3600;//1 heure
     private static final String COOKIENAME = "jwt";
+
+    private final JwtService jwtService;
+
+    public CookieService(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
 
     /**
      * Generates a cookie from a given JWT token
@@ -21,9 +29,10 @@ public class CookieService {
     public String generateCookie(String token) {
         final ResponseCookie cookie = ResponseCookie.from(COOKIENAME, token)
                 .httpOnly(true)
-                .secure(false)
+                //todo change .secure to true in production
+                .secure(secure)
                 .path("/")
-                .maxAge(COOKIEAGE)
+                .maxAge(jwtService.getExpirationSeconds())
                 .sameSite("Strict")
                 .build();
 
@@ -38,7 +47,8 @@ public class CookieService {
     public String deleteCookie() {
         final ResponseCookie cookie = ResponseCookie.from(COOKIENAME, "")
                 .httpOnly(true)
-                .secure(false)
+                //todo change .secure to true in production
+                .secure(secure)
                 .path("/")
                 .maxAge(0)
                 .sameSite("Strict")
@@ -62,4 +72,5 @@ public class CookieService {
         }
         return null;
     }
+
 }
