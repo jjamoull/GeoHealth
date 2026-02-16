@@ -14,7 +14,25 @@ import {MapService} from '../Service/MapService/mapService';
   styleUrl: './pop-up.css',
 })
 export class PopUp implements OnInit{
-  constructor(private dialog: MatDialogRef <PopUp>, private http: HttpClient, private MapService: MapService) {}
+  constructor(private dialog: MatDialogRef <PopUp>,
+              private http: HttpClient,
+              private mapService: MapService) {}
+
+  formGroup!: FormGroup;
+  selectedFile: File | null = null;
+  isUploading = false;
+
+  /**
+   * Init the form to add the new map on the list of map
+   */
+  ngOnInit():void {
+    this.formGroup = new FormGroup({
+      title: new FormControl('',[Validators.required, Validators.minLength(1)]),
+      description: new FormControl('', [Validators.required, Validators.minLength(1)]),
+      file: new FormControl(null, [Validators.required])
+    });
+  }
+
 
   @Input()
   requiredFileType:string = '';
@@ -29,19 +47,35 @@ export class PopUp implements OnInit{
    * */
   onFileSelected(event:Event) {
 
+    // This constant recieve the set of data from the event
     const input = event.target as HTMLInputElement;
-    const file: File | undefined = input.files?.[0];
+    //const file: File | undefined = input.files?.[0];
 
-    if (file) {
-      this.fileName = file.name;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.isUploading = true;
 
+      //add all values from the form in FormData to send in DB
       const formData = new FormData();
-      formData.append("name", this.fileName);
-      formData.append("zipFile", file);
+      formData.append("title", this.formGroup.value.title);
+      formData.append("description", this.formGroup.value.description);
+      formData.append("zipFile", this.selectedFile);
+
+
+      this.mapService.uploadNewMap(formData).subscribe(
+        {
+          next:()=>{
+            this.isUploading = false;
+            this.closePopUp()
+          }, error:(error)=>{
+            console.error(error);
+            this.isUploading = false;
+          }
+        }
+      );
 
       // missing geoJson file but optional so shouldn't raise issues
-
-      const upload$ = this.http.post("http://localhost:8080/maps/uploadShapeFile", formData, {
+      /*const upload$ = this.http.post("http://localhost:8080/maps/uploadShapeFile", formData, {
         reportProgress: true,
         observe: 'events'
       })
@@ -53,7 +87,7 @@ export class PopUp implements OnInit{
         if (event.type == HttpEventType.UploadProgress && event.total) {
           this.uploadProgress = Math.round(100 * (event.loaded / event.total));
         }
-      })
+      })*/
     }
   }
 
@@ -82,17 +116,6 @@ export class PopUp implements OnInit{
     this.dialog.close();
   }
 
-  /**
-   * Init the form to add the new map on the list of map
-   */
-  formGroup!: FormGroup;
-  ngOnInit():void {
-    this.formGroup = new FormGroup({
-      title: new FormControl('',[Validators.required, Validators.minLength(1)]),
-      description: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      file: new FormControl()
-    });
-  }
 
   /**
    * Allow to show at the user if his input is correct or not before to send it to the backend

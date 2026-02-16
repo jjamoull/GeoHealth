@@ -9,24 +9,26 @@ public class Map {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
-    @Lob
+    private String description;
+
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
     private byte[] zipFile;
 
-    @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
     private byte[] fileGeoJson;
 
     public Map(){}
 
-    public Map(String name,
+    public Map(String title,
+               String description,
                byte[] zipFile,
                byte[] fileGeoJson){
-        this.name=name;
+        this.title=title;
+        this.description =description;
         this.zipFile = zipFile;
         this.fileGeoJson = fileGeoJson;
     }
@@ -38,8 +40,12 @@ public class Map {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public byte[] getZipFile(){return zipFile;}
@@ -55,7 +61,11 @@ public class Map {
         this.id = id;
     }
 
-    public void setName(String name) {this.name = name;}
+    public void setTitle(String title) {this.title = title;}
+
+    public void setDescription(String description){
+        this.description = description;
+    }
 
     public void setZipFile(byte[] zipFile) {
         this.zipFile = zipFile;

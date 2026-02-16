@@ -20,6 +20,7 @@
       </div>
     }
 
+    <label>The zipFile on shape file here (e.g.: exemple.zip)</label>
     <input type="file"
            class="file-input"
            formControlName="file"
@@ -38,14 +39,16 @@
 
 
     @if(isFieldValid("file")){
-
       <div class="error">
         The file is incorrect
       </div>
     }
-  </form>
 
-  <button type="submit" [disabled]="formGroup.invalid">
+    <button type="submit" [disabled]="formGroup.invalid || isUploading">
     Create the new map
   </button>
+
+  </form>
+
+
 </div>

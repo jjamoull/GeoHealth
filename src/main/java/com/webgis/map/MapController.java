@@ -21,26 +21,39 @@ public class MapController {
     }
 
 
-    @GetMapping("/geoJsonFile/{id}")
+    /*@GetMapping("/geoJsonFile/{id}")
     public Map getGeoJsonFile(@PathVariable long id){
         final Optional<Map> mapTemp = mapService.findById(id);
         if (mapTemp.isPresent()){
-            final Map map = mapTemp.get();
-            if (map.getFileGeoJson()!= null){
-                return map;
-            }
+//            final Map map = mapTemp.get();
+//            if (map.getFileGeoJson()!= null){
+//                return map;
+//            }
+            mapTemp.map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
         }
         return (Map) ResponseEntity.notFound();
+    }*/
+
+    @GetMapping("/geoJsonFile/{id}")
+    public ResponseEntity<Map> getGeoJsonFile(@PathVariable long id) {
+
+        return mapService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
+
 
 
     @PostMapping(value = "/uploadShapeFile", consumes = "multipart/form-data" )
     public Map postGeoJsonFile(
-            @RequestParam("name") String name,
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
             @RequestParam("zipFile") MultipartFile zipFile,
             @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile) throws IOException {
 
-        Map map = new Map(name,
+        Map map = new Map(title,
+                description,
                 zipFile.getBytes(),
                 null);
         if (geoJsonFile != null){
@@ -53,7 +66,7 @@ public class MapController {
 
     @PostMapping("/save_geoJsonFile/{id}")
     public Map addUser(@RequestBody Map mapToAdd, @RequestBody byte[] geoJsonFile){
-        final Optional<Map> mapTemp = mapService.findByName(mapToAdd.getName());
+        final Optional<Map> mapTemp = mapService.findByTitle(mapToAdd.getTitle());
 
         if (mapTemp.isPresent()) {
             final Map map = mapTemp.get();

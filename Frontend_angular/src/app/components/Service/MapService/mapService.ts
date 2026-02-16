@@ -8,12 +8,13 @@ import {Observable} from "rxjs";
 })
 export class MapService{
 
+  private DBMapUrl = 'http://localhost:8080'
 
-  constructor(private HttpClient: HttpClient) {
-  }
+  constructor(private HttpClient: HttpClient) {}
 
-  save(saveDto: any): Observable<any> {
-    return this.HttpClient.post('http://localhost:8080/maps/uploadShapeFile', saveDto,
+  uploadNewMap(saveDto: any): Observable<any> {
+    return this.HttpClient.post(`${this.DBMapUrl}/maps/uploadShapeFile`,
+      saveDto,
       { withCredentials: true }
     );
   }

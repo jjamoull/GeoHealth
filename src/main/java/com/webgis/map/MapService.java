@@ -29,10 +29,10 @@ public class MapService {
     /**
      * Returns a map from the database, find it by searching for specified name
      *
-     * @param name name of the map you want to retrieve from the db
+     * @param title name of the map you want to retrieve from the db
      * @return Map found using its name, empty if there's none
      * */
-    public Optional<Map> findByName(String name){return mapRepository.findByName(name);}
+    public Optional<Map> findByTitle(String title){return mapRepository.findByTitle(title);}
 
 
     /**
