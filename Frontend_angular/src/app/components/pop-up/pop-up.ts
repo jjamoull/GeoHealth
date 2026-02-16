@@ -21,6 +21,12 @@ export class PopUp implements OnInit{
   formGroup!: FormGroup;
   selectedFile: File | null = null;
   isUploading = false;
+  @Input()
+  requiredFileType:string = '';
+  fileName:string = 'No file uploaded yet.';
+  uploadProgress =  0;
+  uploadSub: Subscription | undefined;
+
 
   /**
    * Init the form to add the new map on the list of map
@@ -34,13 +40,6 @@ export class PopUp implements OnInit{
   }
 
 
-  @Input()
-  requiredFileType:string = '';
-
-  fileName:string = 'No file uploaded yet.';
-
-  uploadProgress =  0;
-  uploadSub: Subscription | undefined;
 
   /**
    * Handles the file upload component contained in a pop-up
@@ -49,7 +48,6 @@ export class PopUp implements OnInit{
 
     // This constant recieve the set of data from the event
     const input = event.target as HTMLInputElement;
-    //const file: File | undefined = input.files?.[0];
 
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
@@ -75,19 +73,12 @@ export class PopUp implements OnInit{
       );
 
       // missing geoJson file but optional so shouldn't raise issues
-      /*const upload$ = this.http.post("http://localhost:8080/maps/uploadShapeFile", formData, {
-        reportProgress: true,
-        observe: 'events'
-      })
-        .pipe(
-          finalize(() => this.reset())
-        );
-
-      this.uploadSub = upload$.subscribe(event => {
+      //upload progress bar if we plan to upload a good amount of files at a time
+      /*
         if (event.type == HttpEventType.UploadProgress && event.total) {
           this.uploadProgress = Math.round(100 * (event.loaded / event.total));
         }
-      })*/
+      */
     }
   }
 
