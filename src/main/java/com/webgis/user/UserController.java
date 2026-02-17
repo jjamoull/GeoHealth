@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UserResponseDto> updateUserInfo(
+    public ResponseEntity<?> updateUserInfo(
             HttpServletRequest request,
             @RequestBody UserUpdateDto updateDto
     ){
@@ -68,16 +68,21 @@ public class UserController {
         if(userOptional.isEmpty()){
             return ResponseEntity.status(404).build();
         }
-        User updatedUser = userService.updateUserInfo(
-                username,
-                updateDto.username(),
-                updateDto.firstName(),
-                updateDto.lastName(),
-                updateDto.email()
-        );
 
-        UserResponseDto userResponseDto = new UserResponseDto(updatedUser);
-        return ResponseEntity.status(200).body(userResponseDto);
+        try{
+            User updatedUser = userService.updateUserInfo(
+                    username,
+                    updateDto.username(),
+                    updateDto.firstName(),
+                    updateDto.lastName(),
+                    updateDto.email()
+            );
+
+            UserResponseDto userResponseDto = new UserResponseDto(updatedUser);
+            return ResponseEntity.status(200).body(userResponseDto);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
+        }
     }
 
     @DeleteMapping("/delete")
