@@ -61,7 +61,7 @@ public class UserController {
      * @return updated user information if successful, error message otherwise
      */
     @PutMapping("/update")
-    public ResponseEntity<?> updateUserInfo(
+    public ResponseEntity<Object> updateUserInfo(
             HttpServletRequest request,
             @RequestBody UserUpdateDto updateDto,
             HttpServletResponse response
