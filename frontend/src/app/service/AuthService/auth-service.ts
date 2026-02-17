@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {response} from 'express';
 import {catchError, map, Observable, of} from 'rxjs';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {environment} from '../../../restApiManagement/environement';
-import {API_ENDPOINTS} from '../../../restApiManagement/endpoint';
+import {environment} from '../../restApiManagement/environement';
+import {API_ENDPOINTS} from '../../restApiManagement/endpoint';
 
 
 @Injectable({

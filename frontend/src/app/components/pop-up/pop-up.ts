@@ -3,7 +3,7 @@ import {MatDialog,MatDialogRef, MatDialogModule, MAT_DIALOG_DATA} from '@angular
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {finalize, Subscription} from 'rxjs';
 import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
-import {MapService} from '../Service/MapService/mapService';
+import {MapService} from '../../service/MapService/mapService';
 
 @Component({
   selector: 'app-pop-up',

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {catchError, Observable, of} from "rxjs";
-import {User} from '../../Model/UserModel/User';
-import {UserResponseDto} from '../../Model/UserModel/UserResponseDto';
-import {UserUpdateDto} from '../../Model/UserModel/UserUpdateDto';
-import {environment} from '../../../restApiManagement/environement';
-import {API_ENDPOINTS} from '../../../restApiManagement/endpoint';
+import {User} from '../../model/UserModel/User';
+import {UserResponseDto} from '../../model/UserModel/UserResponseDto';
+import {UserUpdateDto} from '../../model/UserModel/UserUpdateDto';
+import {environment} from '../../restApiManagement/environement';
+import {API_ENDPOINTS} from '../../restApiManagement/endpoint';
 
 
 @Injectable({

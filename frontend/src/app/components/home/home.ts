@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
-import {LoginService} from '../Service/LoginService/loginService';
+import {LoginService} from '../../service/LoginService/loginService';
 
 @Component({
   selector: 'app-home',
