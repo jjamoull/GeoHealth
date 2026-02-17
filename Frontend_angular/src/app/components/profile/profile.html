@@ -1,0 +1,63 @@
+<div class="test-form" style="margin-top: 100px;">
+  <p>
+    Username:
+    @if(!isEditingField.username){
+      <p>{{ user.username }}<p>
+        }@else if (isEditingField.username){
+      <input  [(ngModel)]="user.username" />
+    }
+    <button (click)="toggleEdit('username')">
+      {{ isEditingField.email ? 'Save' : 'Edit' }}
+    </button>
+  </p>
+
+  <p>
+    Prénom:
+    @if(!isEditingField.firstName){
+      <p>{{ user.firstName }}<p>
+        } @else if (isEditingField.firstName){
+      <input  [(ngModel)]="user.firstName" />
+    }
+
+    <button (click)="toggleEdit('firstName')">
+      {{ isEditingField.email ? 'Save' : 'Edit' }}
+    </button>
+  </p>
+
+  <p>
+    Nom:
+    @if(!isEditingField.lastName){
+      <p>{{ user.lastName }}<p>
+        } @else if (isEditingField.lastName){
+      <input  [(ngModel)]="user.lastName" />
+    }
+
+    <button (click)="toggleEdit('lastName')">
+      {{ isEditingField.email ? 'Save' : 'Edit' }}
+    </button>
+  </p>
+
+  <p>
+    Email:
+    @if(!isEditingField.email){
+      <p>{{ user.email }}<p>
+        } @else if (isEditingField.email){
+      <input  [(ngModel)]="user.email" />
+    }
+
+    <button (click)="toggleEdit('email')">
+      {{ isEditingField.email ? 'Save' : 'Edit' }}
+    </button>
+  </p>
+
+  <p>Role : {{ user.role }}</p>
+
+  <button (click)="updateProfile()"> MODIFIER </button>
+
+  @if (errorMessage) {
+    <div class="alert alert-danger" style="margin-top: 20px;">
+      {{ errorMessage }}
+    </div>
+  }
+
+</div>

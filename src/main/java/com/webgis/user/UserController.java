@@ -2,78 +2,112 @@ package com.webgis.user;
 
 
 
+import com.webgis.MessageDto;
+import com.webgis.security.CookieService;
+import com.webgis.security.JwtService;
+import com.webgis.user.dto.DeleteAccountDto;
+import com.webgis.user.dto.UserResponseDto;
+import com.webgis.user.dto.UserUpdateDto;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.List;
+
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
+
     private final UserService userService;
+    private final JwtService jwtService;
+    private final CookieService cookieService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService,
+                          JwtService jwtService,
+                          CookieService cookieService,
+                          BCryptPasswordEncoder passwordEncoder){
+
         this.userService = userService;
+        this.jwtService = jwtService;
+        this.cookieService= cookieService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/all")
-    public List<User> getAllUsers(){
-        return userService.findAllUsers();
-    }
+    @GetMapping("/profile")
+    public ResponseEntity<UserResponseDto> getUserByUsername(HttpServletRequest request){
+        final String token = cookieService.getJwtFromCookie(request);
+        final String username = jwtService.extractUsername(token);
+        final Optional<User> user= userService.findByUsername(username);
 
-    @GetMapping("/{username}")
-    public Optional<User> getUserByUsername(@PathVariable String username){
-        return userService.findByUsername(username);
-    }
-
-    @GetMapping("/isAdmin/{id}")
-    public Boolean getUser(@PathVariable long id){
-        final Optional<User> userTemp = userService.findById(id);
-        if (userTemp.isPresent()){
-            final User user = userTemp.get();
-            if (user.getRole().equals("Admin")){
-                return true;
-            }
+        if(user.isPresent()){
+            final UserResponseDto userResponseDto= new UserResponseDto(user.get());
+            return ResponseEntity.status(200).body(userResponseDto);
         }
-        return false;
-    }
 
-    @PostMapping("/save")
-    public User addUser(@RequestBody User user){
-        return userService.register(
-                user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getRole()
-        );
+        return ResponseEntity.status(404).build();
     }
 
     @PutMapping("/update")
-    public User updateUser(@RequestBody User user){
-        return userService.updateUser(
-                user.getId().intValue(),
-                user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getRole()
-        );
+    public ResponseEntity<?> updateUserInfo(
+            HttpServletRequest request,
+            @RequestBody UserUpdateDto updateDto
+    ){
+        final String token = cookieService.getJwtFromCookie(request);
+        final String username = jwtService.extractUsername(token);
+        final Optional<User> userOptional = userService.findByUsername(username);
+
+        if(userOptional.isEmpty()){
+            return ResponseEntity.status(404).build();
+        }
+
+        try{
+            final User updatedUser = userService.updateUserInfo(
+                    username,
+                    updateDto.username(),
+                    updateDto.firstName(),
+                    updateDto.lastName(),
+                    updateDto.email()
+            );
+
+            final UserResponseDto userResponseDto = new UserResponseDto(updatedUser);
+            return ResponseEntity.status(200).body(userResponseDto);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
+        }
     }
 
     @DeleteMapping("/delete")
-    public void deleteUser(@RequestBody User user){
-        userService.deleteUser(user.getId().intValue());
+    public ResponseEntity<?> deleteUser(
+            HttpServletRequest request,
+            @RequestBody DeleteAccountDto deleteAccountDto
+    ){
+
+        final String token = cookieService.getJwtFromCookie(request);
+        final String username = jwtService.extractUsername(token);
+        final Optional<User> userOptional = userService.findByUsername(username);
+
+        if(userOptional.isEmpty()){
+            return ResponseEntity.status(404).build();
+        }
+        final User user = userOptional.get();
+
+        if(!username.equals(deleteAccountDto.username())) {
+            throw new IllegalArgumentException("Wrong username");
+        }
+        if(!Objects.equals(passwordEncoder.encode(deleteAccountDto.password()), user.getPassword())){
+            throw new IllegalArgumentException("Wrong password");
+        }
+        return ResponseEntity.status(200).body(new MessageDto("your account has been deleted successfully"));
     }
 }

@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
-import {Home} from './components/home/home';
-import {Map} from './components/map/map';
+import {LoginService} from './components/Service/LoginService/loginService';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,7 @@ import {Map} from './components/map/map';
 export class App {
   protected readonly title = signal('GeoHealth_Angular');
 
-  constructor(public route: ActivatedRoute, private router: Router) {}
+  constructor(public route: ActivatedRoute, private router: Router, private loginService:LoginService) {}
 
 
   goToHome() {
@@ -32,5 +31,19 @@ export class App {
     this.router.navigate(['login'])
   }
 
+  goToProfile(){
+    this.router.navigate(['profile'])
+  }
 
+  logouth():void {
+    this.loginService.logout().subscribe({
+      next: (response) => {
+        console.log("logge out");
+        this.router.navigate(['login'])
+      },
+      error: (err) => {
+        console.error('Error while loged out', err);
+      }
+    });
+  }
 }

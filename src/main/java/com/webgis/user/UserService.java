@@ -104,33 +104,32 @@ public class UserService {
     /**
      * Update user which identifier equals id
      *
-     * @param id id of the user you want to update
-     * @param username New username of the user
+     * @param currentUsername current username of the user you want to update
+     * @param newUsername New username of the user
      * @param firstName New firstName of the user
      * @param lastName New lastName of the user
      * @param email New email of the user
-     * @param password New password of the user
      * @return Updated user
      */
-    public User updateUser(long id, String username, String firstName, String lastName, String email, String password, String role){
-        if (findById(id).isEmpty()) {
+    public User updateUserInfo(String currentUsername, String newUsername, String firstName, String lastName, String email){
+
+        final Optional<User> optionalUser = findByUsername(currentUsername);
+        if (optionalUser.isEmpty()){
             throw new IllegalArgumentException("User does not exist");
         }
-        if (findByUsername(username).isPresent()) {
+        final User user = optionalUser.get();
+
+        if (!newUsername.equals(currentUsername) && findByUsername(newUsername).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
         }
-        if (findByEmail(email).isPresent()) {
+        if (!email.equals(user.getEmail()) && findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("Email already exists");
         }
 
-        final User user = findById(id).get();
-        user.setUsername(username);
+        user.setUsername(newUsername);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
-        final String hashedPassword = passwordEncoder.encode(password);
-        user.setPassword(hashedPassword);
-        user.setRole(role);
 
         return userRepository.save(user);
     }
@@ -162,6 +161,4 @@ public class UserService {
         final String userRole = user.getRole();
         return userRole.equals("Admin");
     }
-
-
 }
