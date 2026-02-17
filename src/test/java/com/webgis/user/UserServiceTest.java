@@ -36,20 +36,18 @@ public class UserServiceTest {
         //Arrange
         User user = new User("pseudo", "Julien", "Jamal", "julien.jamal@outlook.com", "password", "Admin");
         when(userRepository.save(user)).thenReturn(user);
-        when(userRepository.findByUsername("mypseudo")).thenReturn(Optional.empty());
+        when(userRepository.findByUsername("mypseudo")).thenReturn(Optional.of(user));
         when(userRepository.findByEmail("jean.jamal@outlook.com")).thenReturn(Optional.empty());
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        when(passwordEncoder.encode("password")).thenReturn("hashed_password");
 
         //Act
-        userService.updateUser(1,"mypseudo", "Jean", "Jamal", "jean.jamal@outlook.com", "password", "Admin");
+        userService.updateUserInfo("mypseudo","mypseudo", "Jean", "Jamal", "jean.jamal@outlook.com");
 
         //Assert
         assertEquals("mypseudo", user.getUsername());
         assertEquals("Jean", user.getFirstName());
         assertEquals("Jamal", user.getLastName());
         assertEquals("jean.jamal@outlook.com", user.getEmail());
-        assertEquals("hashed_password", user.getPassword());
         assertEquals("Admin", user.getRole());
 
     }
