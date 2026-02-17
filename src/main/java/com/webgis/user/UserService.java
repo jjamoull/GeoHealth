@@ -100,10 +100,11 @@ public class UserService {
      * @throws IllegalArgumentException if the password is wrong
      */
     public User login(String username, String password) {
-        if (findByUsername(username).isEmpty()) {
+        Optional<User> optionalUser = findByUsername(username);
+        if (optionalUser.isEmpty()) {
             throw new IllegalArgumentException("Username does not exist");
         }
-        final User user = findByUsername(username).get();
+        final User user = optionalUser.get();
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new IllegalArgumentException("Invalid password");
         }
@@ -155,10 +156,11 @@ public class UserService {
      * @throws IllegalArgumentException if the user associated with the username does not exist
      * */
     public Boolean isAdmin(String username){
-        if (findByUsername(username).isEmpty()) {
-            throw new IllegalArgumentException("User does not exist");
+        Optional<User> optionalUser = findByUsername(username);
+        if (optionalUser.isEmpty()) {
+            throw new IllegalArgumentException("Username does not exist");
         }
-        final User user = findByUsername(username).get();
+        final User user = optionalUser.get();
         final String userRole = user.getRole();
         return userRole.equals("Admin");
     }
