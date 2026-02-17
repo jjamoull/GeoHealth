@@ -43,7 +43,7 @@ public class AuthController {
      * @return user information if successful, error message otherwise
      */
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(
+    public ResponseEntity<Object> registerUser(
             @RequestBody @Valid RegisterDto registerDto,
             HttpServletRequest request,
             HttpServletResponse response
@@ -77,7 +77,7 @@ public class AuthController {
      * @return user information if successful, error message otherwise
      */
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(
+    public ResponseEntity<Object> loginUser(
             @RequestBody @Valid LoginDto loginDto,
             HttpServletRequest request,
             HttpServletResponse response
