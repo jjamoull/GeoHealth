@@ -3,7 +3,6 @@ package com.webgis.user;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.List;
 
@@ -114,11 +113,11 @@ public class UserService {
      */
     public User updateUserInfo(String currentUsername, String newUsername, String firstName, String lastName, String email){
 
-        Optional<User> optionalUser = findByUsername(currentUsername);
+        final Optional<User> optionalUser = findByUsername(currentUsername);
         if (optionalUser.isEmpty()){
             throw new IllegalArgumentException("User does not exist");
         }
-        User user = optionalUser.get();
+        final User user = optionalUser.get();
 
         if (!newUsername.equals(currentUsername) && findByUsername(newUsername).isPresent()) {
             throw new IllegalArgumentException("Username already exists");
