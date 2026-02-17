@@ -5,8 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 /**
- * Data Transfer Object for registration requests.
- * Contains all required fields for registration requests.
+ * Data Transfer Object containing needed fields to register a new user.
  */
 public record RegisterDto(
         @NotBlank @Size(min = 3, max = 20) String username,

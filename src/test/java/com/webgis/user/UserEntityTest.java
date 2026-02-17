@@ -1,16 +1,16 @@
 package com.webgis.user;
 
-import com.webgis.user.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserEntityTest {
+class UserEntityTest {
 
+    //empty for now
     public UserEntityTest(){}
 
     @Test
-    public void GetterTest(){
+    void GetterTest(){
         // Arrange
         User user = new User("pseudo","Julien","Jamal", "julien.jamal@outlook.be","password", "Admin");
 
@@ -22,7 +22,7 @@ public class UserEntityTest {
         assertEquals("password", user.getPassword());
     }
     @Test
-    public void SetterTest(){
+    void SetterTest(){
         //Arrange
         User user = new User();
 

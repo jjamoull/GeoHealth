@@ -3,8 +3,7 @@ package com.webgis.user.dto;
 import com.webgis.user.User;
 
 /**
- * Data Transfer Object for User responses.
- * Contains required information after successful login or registration.
+ * Data Transfer Object for the backend to send needed fields to the frontend.
  */
 public record UserResponseDto(
         String username,

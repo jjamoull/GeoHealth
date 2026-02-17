@@ -43,7 +43,7 @@ public class AuthController {
      * @return user information if successful, error message otherwise
      */
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(
+    public ResponseEntity<Object> registerUser(
             @RequestBody @Valid RegisterDto registerDto,
             HttpServletRequest request,
             HttpServletResponse response
@@ -77,13 +77,12 @@ public class AuthController {
      * @return user information if successful, error message otherwise
      */
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(
+    public ResponseEntity<Object> loginUser(
             @RequestBody @Valid LoginDto loginDto,
             HttpServletRequest request,
             HttpServletResponse response
     ){
         final String existingCookie = cookieService.getJwtFromCookie(request);
-        System.out.println("Existing cookie: " + existingCookie);
         if (existingCookie != null && jwtService.isTokenValid(existingCookie)) {
             return ResponseEntity.status(409).body(new MessageDto("You are already logged in"));
         }
@@ -103,7 +102,7 @@ public class AuthController {
      * @return message indicating authentication status
      */
     @GetMapping("/status")
-    public ResponseEntity<?> checkAuthStatus(HttpServletRequest request){
+    public ResponseEntity<Object> checkAuthStatus(HttpServletRequest request){
         final String existingCookie = cookieService.getJwtFromCookie(request);
         if (existingCookie != null && jwtService.isTokenValid(existingCookie)) {
             return ResponseEntity.status(200).body(new MessageDto("You are logged in"));
@@ -118,7 +117,7 @@ public class AuthController {
      * @return confirmation message
      */
     @PostMapping("/logout")
-    public ResponseEntity<?> logoutUser(HttpServletResponse response){
+    public ResponseEntity<Object> logoutUser(HttpServletResponse response){
         final String cookie = cookieService.deleteCookie();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie);
         return ResponseEntity.status(200).body(new MessageDto("Logged out successfully"));
@@ -131,14 +130,13 @@ public class AuthController {
      * @param response the HTTP response
      * @return user information response
      */
-    private ResponseEntity<UserResponseDto> createResponse(User user, HttpServletResponse response) {
+    private ResponseEntity<Object> createResponse(User user, HttpServletResponse response) {
         final String token = jwtService.generateToken(user);
         final String cookie = cookieService.generateCookie(token);
-        System.out.println("Setting cookie: " + cookie);
         response.addHeader(HttpHeaders.SET_COOKIE, cookie);
 
         final UserResponseDto userResponseDto = new UserResponseDto(user);
         return ResponseEntity.status(200).body(userResponseDto);
     }
-    
+
 }
