@@ -83,7 +83,6 @@ public class AuthController {
             HttpServletResponse response
     ){
         final String existingCookie = cookieService.getJwtFromCookie(request);
-        System.out.println("Existing cookie: " + existingCookie);
         if (existingCookie != null && jwtService.isTokenValid(existingCookie)) {
             return ResponseEntity.status(409).body(new MessageDto("You are already logged in"));
         }
@@ -134,11 +133,10 @@ public class AuthController {
     private ResponseEntity<UserResponseDto> createResponse(User user, HttpServletResponse response) {
         final String token = jwtService.generateToken(user);
         final String cookie = cookieService.generateCookie(token);
-        System.out.println("Setting cookie: " + cookie);
         response.addHeader(HttpHeaders.SET_COOKIE, cookie);
 
         final UserResponseDto userResponseDto = new UserResponseDto(user);
         return ResponseEntity.status(200).body(userResponseDto);
     }
-    
+
 }

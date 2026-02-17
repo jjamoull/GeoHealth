@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 public class UserServiceTest {
@@ -32,7 +33,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void UpdateUserServiceTest(){
+    public void updateUserInfoSuccessTest(){
         //Arrange
         User user = new User("pseudo", "Julien", "Jamal", "julien.jamal@outlook.com", "password", "Admin");
         when(userRepository.save(user)).thenReturn(user);
@@ -52,6 +53,15 @@ public class UserServiceTest {
 
     }
 
+    @Test
+    public void updateUserInfoUserNotFoundTest(){
+        //Arrange
+        when(userRepository.findByUsername("nonexistent")).thenReturn(Optional.empty());
 
+        //Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            userService.updateUserInfo("nonexistent", "newpseudo", "Jean", "Jamal", "jean.jamal@outlook.com");
+        });
+    }
 
 }

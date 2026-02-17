@@ -71,6 +71,8 @@ public class UserService {
      * @param email email of the new user
      * @param password password of the new user
      * @return Saved user
+     * @throws IllegalArgumentException if username already exists
+     * @throws IllegalArgumentException if email already exists
      */
     public User register(String username, String firstName, String lastName, String email, String password, String role){
 
@@ -88,7 +90,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
+    /**
+     * Registers a user to the db
+     *
+     * @param username username of the user
+     * @param password password of the user
+     * @return Saved user
+     * @throws IllegalArgumentException if username does not exist
+     * @throws IllegalArgumentException if the password is wrong
+     */
     public User login(String username, String password) {
         if (findByUsername(username).isEmpty()) {
             throw new IllegalArgumentException("Username does not exist");
@@ -106,12 +116,15 @@ public class UserService {
      *
      * @param currentUsername current username of the user you want to update
      * @param newUsername New username of the user
-     * @param firstName New firstName of the user
-     * @param lastName New lastName of the user
-     * @param email New email of the user
+     * @param newFirstName New firstName of the user
+     * @param newLastName New lastName of the user
+     * @param newEmail New email of the user
      * @return Updated user
+     * @throws IllegalArgumentException if the user associated with the username does not exist
+     * @throws IllegalArgumentException if the new username already exist
+     * @throws IllegalArgumentException if email already exist
      */
-    public User updateUserInfo(String currentUsername, String newUsername, String firstName, String lastName, String email){
+    public User updateUserInfo(String currentUsername, String newUsername, String newFirstName, String newLastName, String newEmail){
 
         final Optional<User> optionalUser = findByUsername(currentUsername);
         if (optionalUser.isEmpty()){
@@ -120,44 +133,32 @@ public class UserService {
         final User user = optionalUser.get();
 
         if (!newUsername.equals(currentUsername) && findByUsername(newUsername).isPresent()) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new IllegalArgumentException("Username already exist");
         }
-        if (!email.equals(user.getEmail()) && findByEmail(email).isPresent()) {
-            throw new IllegalArgumentException("Email already exists");
+        if (!newEmail.equals(user.getEmail()) && findByEmail(newEmail).isPresent()) {
+            throw new IllegalArgumentException("Email already exist");
         }
 
         user.setUsername(newUsername);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
+        user.setFirstName(newFirstName);
+        user.setLastName(newLastName);
+        user.setEmail(newEmail);
 
         return userRepository.save(user);
     }
 
     /**
-     * Delete the user which identifier equals id
-     *
-     * @param id The id of the user you want to delete
-     */
-    public void deleteUser(long id){
-        if (findById(id).isEmpty()) {
-            throw new IllegalArgumentException("User does not exist");
-        }
-        final User user = findById(id).get();
-        userRepository.delete(user);
-    }
-
-    /**
      * Check if the user is admin
      *
-     * @param id The id of the user you want to check if is an admin
+     * @param username The username of the user
      * @return true if the user is admin, false otherwise
-    * */
-    public Boolean isAdmin(long id){
-        if (findById(id).isEmpty()) {
+     * @throws IllegalArgumentException if the user associated with the username does not exist
+     * */
+    public Boolean isAdmin(String username){
+        if (findByUsername(username).isEmpty()) {
             throw new IllegalArgumentException("User does not exist");
         }
-        final User user = findById(id).get();
+        final User user = findByUsername(username).get();
         final String userRole = user.getRole();
         return userRole.equals("Admin");
     }
