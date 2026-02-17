@@ -18,7 +18,7 @@ export class UsersServices {
   constructor(private httpClient: HttpClient) {}
 
   /**
-   * @return : Retrieves all users in dataBase Springboot at URL : "http://localhost:8080/users"
+   * @return : Retrieves all users in dataBase
    * */
   public getAllUsers():Observable<User[]>{
     return this.httpClient.get<User[]>(`${this.baseUrl}${API_ENDPOINTS.USER.UPDATE}`,{ withCredentials: true });
@@ -36,7 +36,6 @@ export class UsersServices {
    * Update the currently connected user information
    *
    * @param userUpdateDto new user information
-   * @return https response
    */
   public updateUser(userUpdateDto:UserUpdateDto):Observable<any>{
     return this.httpClient.put(`${this.baseUrl}${API_ENDPOINTS.USER.UPDATE}`,userUpdateDto,{ withCredentials: true })
