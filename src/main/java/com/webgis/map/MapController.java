@@ -72,9 +72,14 @@ public class MapController {
             map.setFileGeoJson(geoJsonFile.getBytes());
         }
 
-        File fileToUnzip = new File(zipFile.getOriginalFilename());
-        zipFile.transferTo(fileToUnzip);
-        unzipper.unzip(map, fileToUnzip);
+        //----------------------------------------------------------------------------------------------
+        //temporary disabling the unzipping to avoid polluting the github, files will be deleted after
+        // transformation into geoJSON but this aspect is not yet implemented
+        
+        //File fileToUnzip = new File(zipFile.getOriginalFilename());
+        //zipFile.transferTo(fileToUnzip);
+        //unzipper.unzip(map, fileToUnzip);
+        //----------------------------------------------------------------------------------------------
 
         return mapService.save(map);
     }
