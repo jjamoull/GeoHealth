@@ -1,63 +1,80 @@
-<div class="test-form" style="margin-top: 100px;">
-  <p>
-    Username:
-    @if(!isEditingField.username){
-      <p>{{ user.username }}<p>
-        }@else if (isEditingField.username){
-      <input  [(ngModel)]="user.username" />
-    }
-    <button (click)="toggleEdit('username')">
-      {{ isEditingField.email ? 'Save' : 'Edit' }}
-    </button>
-  </p>
+<div class="main-container">
+  <div class="title-container">
+    <h1 class="profile-title"> Your profile </h1>
+  </div>
 
-  <p>
-    Prénom:
-    @if(!isEditingField.firstName){
-      <p>{{ user.firstName }}<p>
-        } @else if (isEditingField.firstName){
-      <input  [(ngModel)]="user.firstName" />
-    }
-
-    <button (click)="toggleEdit('firstName')">
-      {{ isEditingField.email ? 'Save' : 'Edit' }}
-    </button>
-  </p>
-
-  <p>
-    Nom:
-    @if(!isEditingField.lastName){
-      <p>{{ user.lastName }}<p>
-        } @else if (isEditingField.lastName){
-      <input  [(ngModel)]="user.lastName" />
-    }
-
-    <button (click)="toggleEdit('lastName')">
-      {{ isEditingField.email ? 'Save' : 'Edit' }}
-    </button>
-  </p>
-
-  <p>
-    Email:
-    @if(!isEditingField.email){
-      <p>{{ user.email }}<p>
-        } @else if (isEditingField.email){
-      <input  [(ngModel)]="user.email" />
-    }
-
-    <button (click)="toggleEdit('email')">
-      {{ isEditingField.email ? 'Save' : 'Edit' }}
-    </button>
-  </p>
-
-  <p>Role : {{ user.role }}</p>
-
-  <button (click)="updateProfile()"> MODIFIER </button>
-
-  @if (errorMessage) {
-    <div class="alert alert-danger" style="margin-top: 20px;">
-      {{ errorMessage }}
+  <div class="info-container">
+    <img src="assets/background/userIcon.png" class="user-icon" alt="icon">
+    <div class="text-container">
+      <h2 class="role">{{ user.role }}</h2>
+      <p class="firstname-lastname">{{ user.firstName }}  {{ user.lastName }}</p>
     </div>
-  }
+  </div>
 
+
+
+  <div class="form-container">
+    <div class="profile-section">
+
+      <div class="form-wrapper">
+        <div class="form">
+          @if(!isEditingField.username){
+            <p>{{ user.username }}<p>
+              }@else if (isEditingField.username){
+            <input  [(ngModel)]="user.username" />
+          }
+        </div>
+        <button (click)="toggleEdit('username')">
+          {{ isEditingField.email ? 'Save' : 'Edit' }}
+        </button>
+      </div>
+
+      <div class="form-wrapper">
+        <div class="form">
+          @if(!isEditingField.firstName){
+            <p>{{ user.firstName }}<p>
+              } @else if (isEditingField.firstName){
+            <input  [(ngModel)]="user.firstName" />
+          }
+        </div>
+        <button (click)="toggleEdit('firstName')">
+          {{ isEditingField.email ? 'Save' : 'Edit' }}
+        </button>
+      </div>
+
+      <div class="form-wrapper">
+        <div class="form">
+          @if(!isEditingField.lastName){
+            <p>{{ user.lastName }}<p>
+              } @else if (isEditingField.lastName){
+            <input  [(ngModel)]="user.lastName" />
+          }
+        </div>
+        <button (click)="toggleEdit('lastName')">
+          {{ isEditingField.email ? 'Save' : 'Edit' }}
+        </button>
+      </div>
+
+      <div class="form-wrapper">
+        <div class="form">
+          @if(!isEditingField.email){
+            <p>{{ user.email }}<p>
+              } @else if (isEditingField.email){
+            <input  [(ngModel)]="user.email" />
+          }
+        </div>
+        <button (click)="toggleEdit('email')">
+          {{ isEditingField.email ? 'Save' : 'Edit' }}
+        </button>
+      </div>
+      <div class="edit-button">
+        <button (click)="updateProfile()"> MODIFIER </button>
+      </div>
+      @if (errorMessage) {
+        <div class="alert alert-danger" style="margin-top: 20px;">
+          {{ errorMessage }}
+        </div>
+      }
+    </div>
+  </div>
 </div>
