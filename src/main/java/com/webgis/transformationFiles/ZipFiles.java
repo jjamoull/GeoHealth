@@ -22,12 +22,12 @@ public class ZipFiles {
      *
      * @param map : Map entity that contains all information about the map
      * @param urlInDB : target directory in DB where files will be extracted
-     * @throws RuntimeException if there is an issue with extraction
+     * @throws IOException if there is an issue with extraction or folder creation
      */
-    public void unzip(Map map, File urlInDB){
+    public void unzip(Map map, File urlInDB) throws IOException {
         byte[] zipFile = map.getZipFile();
 
-        if (urlInDB.exists() == false){urlInDB.mkdirs();}
+        if (!urlInDB.exists() && !urlInDB.mkdirs()){throw new IOException("unzipped folder wasn't created");}
 
         byte[] buffer = new byte[1024];
 
@@ -41,7 +41,7 @@ public class ZipFiles {
             }
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IOException(e);
         }
     }
 
@@ -85,7 +85,7 @@ public class ZipFiles {
     /**
      * Create a new file to increase security and avoid Zip Slip Attacks
      *
-     * @param destinationDir : Traget directory
+     * @param destinationDir : Target directory
      * @param zipEntry : zip entry to unzip
      * @return a new secure File which avoid Zip Slip Attacks
      * @throws IOException if the entry is outside the target directory
