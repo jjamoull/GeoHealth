@@ -25,11 +25,11 @@ public class ZipFiles {
      * @throws IOException if there is an issue with extraction or folder creation
      */
     public void unzip(Map map, File destFilePath) throws IOException {
-        byte[] zipFile = map.getZipFile();
+        final byte[] zipFile = map.getZipFile();
 
         if (!destFilePath.exists() && !destFilePath.mkdirs()){throw new IOException("unzipped folder wasn't created");}
 
-        byte[] buffer = new byte[1024];
+        final byte[] buffer = new byte[1024];
 
         try(ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(zipFile))){
             ZipEntry zipEntry = zis.getNextEntry();
@@ -59,14 +59,14 @@ public class ZipFiles {
                               File destFilePath,
                               ZipInputStream zis) throws IOException {
 
-        File newFile = newFile(destFilePath, zipEntry);
+        final File newFile = newFile(destFilePath, zipEntry);
 
         if (zipEntry.isDirectory()){
             if (!newFile.isDirectory() && !newFile.mkdirs()) {
                 throw new IOException("Unable to create directory " + newFile);
             }
         } else {
-            File parent = newFile.getParentFile();
+            final File parent = newFile.getParentFile();
             if (!parent.isDirectory() && !parent.mkdirs()) {
                 throw new IOException("Unable to create parent folder" + parent);
             }
@@ -91,10 +91,10 @@ public class ZipFiles {
      * @throws IOException if the entry is outside the target directory
      * */
     private static File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
-        File destFile = new File(destinationDir, zipEntry.getName());
+        final File destFile = new File(destinationDir, zipEntry.getName());
 
-        String destDirPath = destinationDir.getCanonicalPath();
-        String destFilePath = destFile.getCanonicalPath();
+        final String destDirPath = destinationDir.getCanonicalPath();
+        final String destFilePath = destFile.getCanonicalPath();
 
         if (!destFilePath.startsWith(destDirPath + File.separator)) {
             throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
