@@ -16,12 +16,12 @@
   z-index: -1; }
 
 .form-container {
-  justify-self: center;
-  width: 150vw;
-  height: 20vh;
-  display: grid;
-  margin-left: 10vw;
-  grid-template-columns: 1fr 1fr;
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 900px;
 }
 
 .title-container{
@@ -62,12 +62,6 @@
   color: black;
 }
 
-.form-container{
-  position: absolute;
-  top: 55%;
-  left: 80%;
-  transform: translate(-50%, -50%);
-}
 .profile-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
