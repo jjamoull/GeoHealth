@@ -15,7 +15,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
@@ -24,7 +24,7 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
@@ -32,6 +32,9 @@ public class User {
 
     @Column(nullable = false)
     private String role;
+
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     public User() {}
 
@@ -75,6 +78,9 @@ public class User {
 
     public String getRole(){return role;}
 
+    public boolean isDeleted() {
+        return deleted;
+    }
     public void setId(Long id) {
         this.id = id;
     }
@@ -101,5 +107,9 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

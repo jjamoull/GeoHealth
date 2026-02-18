@@ -34,8 +34,8 @@ class UserServiceTest {
         //Arrange
         User user = new User("pseudo", "Julien", "Jamal", "julien.jamal@outlook.com", "password", "Admin");
         when(userRepository.save(user)).thenReturn(user);
-        when(userRepository.findByUsername("mypseudo")).thenReturn(Optional.of(user));
-        when(userRepository.findByEmail("jean.jamal@outlook.com")).thenReturn(Optional.empty());
+        when(userRepository.findByUsernameAndDeletedFalse("mypseudo")).thenReturn(Optional.of(user));
+        when(userRepository.findByEmailAndDeletedFalse("jean.jamal@outlook.com")).thenReturn(Optional.empty());
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
 
         //Act
@@ -53,7 +53,7 @@ class UserServiceTest {
     @Test
     void updateUserInfoUserNotFoundTest(){
         //Arrange
-        when(userRepository.findByUsername("nonexistent")).thenReturn(Optional.empty());
+        when(userRepository.findByUsernameAndDeletedFalse("nonexistent")).thenReturn(Optional.empty());
 
         //Act & Assert
         assertThrows(IllegalArgumentException.class, () -> {

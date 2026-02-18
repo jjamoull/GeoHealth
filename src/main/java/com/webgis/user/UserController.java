@@ -3,18 +3,14 @@ package com.webgis.user;
 import com.webgis.MessageDto;
 import com.webgis.security.CookieService;
 import com.webgis.security.JwtService;
+import com.webgis.user.dto.DeleteAccountDto;
 import com.webgis.user.dto.UserResponseDto;
 import com.webgis.user.dto.UserUpdateDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -91,6 +87,28 @@ public class UserController {
             final UserResponseDto userResponseDto = new UserResponseDto(updatedUser);
             return ResponseEntity.status(200).body(userResponseDto);
         } catch (IllegalArgumentException e){
+            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(
+            HttpServletRequest request,
+            @RequestBody DeleteAccountDto deleteAccountDto,
+            HttpServletResponse response
+    ){
+        String token = cookieService.getJwtFromCookie(request);
+        String username = jwtService.extractUsername(token);
+        try{
+            if (!username.equals(deleteAccountDto.username())){
+                throw new IllegalArgumentException("Wrong username");
+            }
+            userService.deleteUser(deleteAccountDto.username(), deleteAccountDto.password());
+            final String cookie = cookieService.deleteCookie();
+            response.addHeader(HttpHeaders.SET_COOKIE, cookie);
+
+            return ResponseEntity.status(200).body(new MessageDto("your account has been deleted successfully"));
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         }
     }
