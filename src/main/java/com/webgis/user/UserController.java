@@ -3,6 +3,7 @@ package com.webgis.user;
 import com.webgis.MessageDto;
 import com.webgis.security.CookieService;
 import com.webgis.security.JwtService;
+import com.webgis.user.dto.UpdatePasswordDto;
 import com.webgis.user.dto.UserResponseDto;
 import com.webgis.user.dto.UserUpdateDto;
 import jakarta.servlet.http.HttpServletRequest;
@@ -81,16 +82,36 @@ public class UserController {
                     updateDto.lastName(),
                     updateDto.email()
             );
-
             if (!username.equals(updateDto.username())) {
                 final String newToken = jwtService.generateToken(updatedUser);
                 final String newCookie = cookieService.generateCookie(newToken);
                 response.addHeader(HttpHeaders.SET_COOKIE, newCookie);
             }
-
             final UserResponseDto userResponseDto = new UserResponseDto(updatedUser);
             return ResponseEntity.status(200).body(userResponseDto);
         } catch (IllegalArgumentException e){
+            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
+        }
+    }
+
+    /**
+     * Update the authenticated user's password
+     *
+     * @param request the Http request containing the JWT token
+     * @param updatePasswordDto information needed to update the password
+     * @return confirmation message if succeeded, error message otherwise
+     */
+    @PutMapping("/change-password")
+    public ResponseEntity<MessageDto> changePassword(
+            HttpServletRequest request,
+            @RequestBody UpdatePasswordDto updatePasswordDto
+    ){
+        String token = cookieService.getJwtFromCookie(request);
+        String username = jwtService.extractUsername(token);
+        try {
+            userService.changePassword(username, updatePasswordDto.oldPassword(), updatePasswordDto.newPassword());
+            return ResponseEntity.status(200).body(new MessageDto("Password changed successfully"));
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         }
     }
