@@ -19,7 +19,7 @@
       <div class="form-wrapper">
         <div class="form">
           @if(!isEditingField.username){
-            <p>{{ user.username }}<p>
+            <p>{{ user.username }}</p>
               }@else if (isEditingField.username){
             <input  [(ngModel)]="user.username" />
           }
@@ -32,7 +32,7 @@
       <div class="form-wrapper">
         <div class="form">
           @if(!isEditingField.firstName){
-            <p>{{ user.firstName }}<p>
+            <p>{{ user.firstName }}</p>
               } @else if (isEditingField.firstName){
             <input  [(ngModel)]="user.firstName" />
           }
@@ -45,7 +45,7 @@
       <div class="form-wrapper">
         <div class="form">
           @if(!isEditingField.lastName){
-            <p>{{ user.lastName }}<p>
+            <p>{{ user.lastName }}</p>
               } @else if (isEditingField.lastName){
             <input  [(ngModel)]="user.lastName" />
           }
@@ -58,7 +58,7 @@
       <div class="form-wrapper">
         <div class="form">
           @if(!isEditingField.email){
-            <p>{{ user.email }}<p>
+            <p>{{ user.email }}</p>
               } @else if (isEditingField.email){
             <input  [(ngModel)]="user.email" />
           }
