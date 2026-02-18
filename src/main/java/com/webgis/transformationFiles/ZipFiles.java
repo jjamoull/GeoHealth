@@ -21,13 +21,13 @@ public class ZipFiles {
      * Extract zip archives stored in DB
      *
      * @param map : Map entity that contains all information about the map
-     * @param urlInDB : target directory in DB where files will be extracted
+     * @param destFilePath : path where the extracted files should be placed
      * @throws IOException if there is an issue with extraction or folder creation
      */
-    public void unzip(Map map, File urlInDB) throws IOException {
+    public void unzip(Map map, File destFilePath) throws IOException {
         byte[] zipFile = map.getZipFile();
 
-        if (!urlInDB.exists() && !urlInDB.mkdirs()){throw new IOException("unzipped folder wasn't created");}
+        if (!destFilePath.exists() && !destFilePath.mkdirs()){throw new IOException("unzipped folder wasn't created");}
 
         byte[] buffer = new byte[1024];
 
@@ -36,7 +36,7 @@ public class ZipFiles {
 
             // iterate through files and folders (entries) in zipfile
             while (zipEntry != null){
-                unzipOneEntry(zipEntry, buffer, urlInDB, zis);
+                unzipOneEntry(zipEntry, buffer, destFilePath, zis);
                 zipEntry = zis.getNextEntry();
             }
         }
@@ -50,16 +50,16 @@ public class ZipFiles {
      *
      * @param zipEntry : zip entry to unzip
      * @param buffer : byte array to store each segment of the entry (if file)
-     * @param urlInDB : url of the zipfile
+     * @param destFilePath : path where the extracted files should be placed
      * @param zis : ZipInputStream to read the current entry
      * @throws IOException if there is an issue in creation of a directory
      * */
     private void unzipOneEntry(ZipEntry zipEntry,
                               byte[] buffer,
-                              File urlInDB,
+                              File destFilePath,
                               ZipInputStream zis) throws IOException {
 
-        File newFile = newFile(urlInDB, zipEntry);
+        File newFile = newFile(destFilePath, zipEntry);
 
         if (zipEntry.isDirectory()){
             if (!newFile.isDirectory() && !newFile.mkdirs()) {

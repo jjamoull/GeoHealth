@@ -51,7 +51,9 @@ export class PopUp implements OnInit{
 
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
-      this.isUploading = true;
+
+      //should be revised, form won't work if set to true
+      this.isUploading = false;
 
       //add all values from the form in FormData to send in DB
       const formData = new FormData();
@@ -64,7 +66,7 @@ export class PopUp implements OnInit{
         {
           next:()=>{
             this.isUploading = false;
-            this.closePopUp()
+            //this.closePopUp()
           }, error:(error)=>{
             console.error(error);
             this.isUploading = false;
