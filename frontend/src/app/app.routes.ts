@@ -9,6 +9,7 @@ import { Resetpassword } from './components/resetpassword/resetpassword';
 import {UsersList} from './components/users-list/users-list';
 import { authGuard } from './components/authguard/authguard-guard';
 import {Profile} from './components/profile/profile';
+import {Changepassword} from './components/changepassword/changepassword';
 
 export const routes: Routes = [
   {
@@ -47,6 +48,9 @@ export const routes: Routes = [
     path:'profile',
     component: Profile,
     canActivate: [authGuard]
+  },{
+    path:'change-password',
+    component: Changepassword,
   },{
     path: '**',
     redirectTo: 'login',
