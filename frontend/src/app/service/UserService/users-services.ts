@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {catchError, Observable, of} from "rxjs";
 import {User} from '../../model/UserModel/User';
+import {Observable} from "rxjs";
 import {UserResponseDto} from '../../model/UserModel/UserResponseDto';
 import {UserUpdateDto} from '../../model/UserModel/UserUpdateDto';
+import {UpdatePasswordDto} from '../../model/UserModel/UpdatePasswordDto';
 import {environment} from '../../restApiManagement/environement';
 import {API_ENDPOINTS} from '../../restApiManagement/endpoint';
 
@@ -41,6 +42,14 @@ export class UsersServices {
     return this.httpClient.put(`${this.baseUrl}${API_ENDPOINTS.USER.UPDATE}`,userUpdateDto,{ withCredentials: true })
   }
 
+  /**
+   * Update the currently connected user password information
+   *
+   * @param userPasswordDto new password information
+   */
+  public changePassword(userPasswordDto: UpdatePasswordDto): Observable<any>{
+    return this.httpClient.put(`${this.baseUrl}${API_ENDPOINTS.USER.CHANGEPASSWORD}`,userPasswordDto, {withCredentials: true})
+  }
 
 
 }
