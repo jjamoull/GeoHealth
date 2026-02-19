@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UserResponseDto} from '../../model/UserModel/UserResponseDto';
 import {UsersServices} from '../../service/UserService/users-services';
@@ -22,15 +22,14 @@ export class Changepassword implements OnInit{
     role:''
   }
 
-  public passwordShowing={
-    oldPassword: false,
-    newPassword: false,
-    confirmNewPassword: false,
-  }
+
+  public messageSuccess:string|null=null;
+
+  public messageError:string|null=null;
 
   public passwordForm!: FormGroup;
 
-  constructor(private userService:UsersServices){}
+  constructor(private userService:UsersServices,private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void{
     this.userService.getConnectedUser().subscribe(
@@ -42,6 +41,8 @@ export class Changepassword implements OnInit{
       newPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmNewPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
     })
+
+    this.cdr.detectChanges();
   }
 
   /**
@@ -53,17 +54,6 @@ export class Changepassword implements OnInit{
   public isFieldValid(name: string):boolean|undefined{
     const formControl = this.passwordForm.get(name);
     return formControl?.invalid && formControl?.dirty;
-  }
-
-  /**
-   * Toggle the value of the field
-   *
-   * @param field the passwordShowing field we want to toggle
-   * @modifies passwordShowing
-   * @effect toggle the value of the selected field
-   */
-  public togglePasswordShowing(field: keyof typeof this.passwordShowing){
-    this.passwordShowing[field] = !this.passwordShowing[field];
   }
 
 
@@ -115,11 +105,19 @@ export class Changepassword implements OnInit{
     this.userService.changePassword(updatePasswordDto).subscribe({
       next: (response) => {
         console.log('Changing password successful!', response);
+        this.messageSuccess='Changing password successful!';
+        this.messageError=null;
+        this.cdr.detectChanges();
+
       },
       error: (err) => {
         console.error('Error while changing password', err);
+        this.messageError=err.error.message;
+        this.messageSuccess=null;
+        this.cdr.detectChanges();
       }
     });
+
 
   }
 
