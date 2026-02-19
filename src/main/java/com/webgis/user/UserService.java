@@ -171,7 +171,7 @@ public class UserService {
         userRepository.save(user);
     }
   
-     /* changes the password of a given user
+    /** changes the password of a given user
      *
      * @param username The username of the user
      * @param oldPassword the password the user wants to change
@@ -179,7 +179,7 @@ public class UserService {
      * @return the user after changing the password
      * @throws IllegalArgumentException if the user associated with the username does not exist
      * @throws IllegalArgumentException if the old password is wrong
-     * */
+     */
     public User changePassword(String username, String oldPassword, String newPassword){
         final Optional<User> useroptional = findByUsername(username);
         if (useroptional.isEmpty()){
@@ -230,6 +230,23 @@ public class UserService {
             throw new IllegalArgumentException("User is not banned");
         }
         user.setBanned(false);
+        userRepository.save(user);
+    }
+
+    /**
+     * Cheange the role of the user
+     *
+     * @param username The username desired to change the role of
+     * @param role The new role
+     * @throws IllegalArgumentException if the user associated with the username does not exist
+     * */
+    public void changeRole(String username, String role){
+        final Optional<User> optionalUser = findByUsername(username);
+        if (optionalUser.isEmpty()){
+            throw new IllegalArgumentException("Username does not exist");
+        }
+        User user = optionalUser.get();
+        user.setRole(role);
         userRepository.save(user);
     }
 

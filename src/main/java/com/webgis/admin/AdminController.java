@@ -1,6 +1,7 @@
 package com.webgis.admin;
 
 import com.webgis.MessageDto;
+import com.webgis.admin.dto.ChangeRoleDto;
 import com.webgis.user.User;
 import com.webgis.user.UserService;
 import com.webgis.user.dto.UserResponseDto;
@@ -20,6 +21,11 @@ public class AdminController {
         this.userService = userService;
     }
 
+    /**
+     * returns all the users info
+     *
+     * @return a list of all the users as a list of UserResponseDto
+     */
     @GetMapping("/users")
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         final List<User> users = userService.findAllUsers();
@@ -30,6 +36,11 @@ public class AdminController {
         return ResponseEntity.status(200).body(result);
     }
 
+    /**
+     * Bans the user
+     * @param username the username of the target to ban
+     * @return confirmation message if succeeded, error message otherwise
+     */
     @PutMapping("/users/{username}/ban")
     public ResponseEntity<Object> banUser(@PathVariable String username){
         try {
@@ -40,11 +51,34 @@ public class AdminController {
         }
     }
 
+    /**
+     * Unbans the user
+     * @param username the username of the target to unban
+     * @return confirmation message if succeeded, error message otherwise
+     */
     @PutMapping("/users/{username}/unban")
-    public ResponseEntity<Object> unbanUser(@PathVariable String username){
+    public ResponseEntity<MessageDto> unbanUser(@PathVariable String username){
         try {
             userService.unbanUser(username);
             return ResponseEntity.status(200).body(new MessageDto("User has been unbanned"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
+        }
+    }
+
+    /**
+     * changes the user's role
+     * @param username the username of the target to unban
+     * @return confirmation message if succeeded, error message otherwise
+     */
+    @PutMapping("/users/{username}/change-role")
+    public ResponseEntity<MessageDto> changeRole(
+            @PathVariable String username,
+            @RequestBody ChangeRoleDto changeRoleDto
+    ){
+        try{
+            userService.changeRole(username, changeRoleDto.role());
+            return ResponseEntity.status(200).body(new MessageDto("role udpated successfully"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         }
