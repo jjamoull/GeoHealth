@@ -30,7 +30,7 @@ public class UserService {
      * @return User which identifier equals to id, empty otherwise
      */
     public Optional<User> findById(long id){
-        return userRepository.findById(id);
+        return userRepository.findByIdAndDeletedFalse(id);
     }
 
     /**
@@ -40,7 +40,7 @@ public class UserService {
      * @return User which username equals to username, empty otherwise
      */
     public Optional<User> findByUsername(String username){
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsernameAndDeletedFalse(username);
     }
 
     /**
@@ -50,7 +50,7 @@ public class UserService {
      * @return  User which email equals to username, empty otherwise
      */
     public Optional<User> findByEmail(String email){
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmailAndDeletedFalse(email);
     }
 
     /**
@@ -59,7 +59,7 @@ public class UserService {
      * @return All users in the db
      */
     public List<User> findAllUsers(){
-        return userRepository.findAll();
+        return userRepository.findAllByDeletedFalse();
     }
 
     /**
@@ -149,7 +149,29 @@ public class UserService {
     }
 
     /**
-     * changes the password of a given user
+     * Delete the user which identifier equals id
+     *
+     * @param username The username of the user you want to delete
+     * @param password the password needed for confirmation
+     * @throws IllegalArgumentException if the user associated with the username does not exist
+     * @throws IllegalArgumentException if the password is wrong
+     */
+    public void deleteUser(String username, String password){
+        final Optional<User> userOptional = findByUsername(username);
+
+        if (userOptional.isEmpty()){
+            throw new IllegalArgumentException("User does not exist");
+        }
+        final User user = userOptional.get();
+
+        if(!passwordEncoder.matches(password, user.getPassword())){
+            throw new IllegalArgumentException("Wrong password");
+        }
+        user.setDeleted(true);
+        userRepository.save(user);
+    }
+  
+     /* changes the password of a given user
      *
      * @param username The username of the user
      * @param oldPassword the password the user wants to change

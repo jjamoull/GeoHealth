@@ -3,6 +3,7 @@ package com.webgis.user;
 import com.webgis.MessageDto;
 import com.webgis.security.CookieService;
 import com.webgis.security.JwtService;
+import com.webgis.user.dto.DeleteAccountDto;
 import com.webgis.user.dto.UpdatePasswordDto;
 import com.webgis.user.dto.UserResponseDto;
 import com.webgis.user.dto.UserUpdateDto;
@@ -10,12 +11,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.Optional;
 
@@ -94,6 +96,34 @@ public class UserController {
         }
     }
 
+    /**
+     * Delete the authenticated user's account after verifying their credentials
+     *
+     * @param request the Http request
+     * @param deleteAccountDto information needed to delete the account
+     * @param response the HTTP response
+     * @return confirmation message if succeeded, error message otherwise
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<Object> deleteUser(
+            HttpServletRequest request,
+            @RequestBody DeleteAccountDto deleteAccountDto,
+            HttpServletResponse response
+    ){
+        final String token = cookieService.getJwtFromCookie(request);
+        final String username = jwtService.extractUsername(token);
+        try {
+            if (!username.equals(deleteAccountDto.username())) {
+                throw new IllegalArgumentException("Wrong username");
+            }
+            userService.deleteUser(deleteAccountDto.username(), deleteAccountDto.password());
+            response.addHeader(HttpHeaders.SET_COOKIE, cookieService.deleteCookie());
+            return ResponseEntity.status(200).body(new MessageDto("Your account has been deleted successfully"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
+        }
+    }
+  
     /**
      * Update the authenticated user's password
      *
