@@ -105,22 +105,22 @@ public class UserController {
      * @return confirmation message if succeeded, error message otherwise
      */
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(
+    public ResponseEntity<Object> deleteUser(
             HttpServletRequest request,
             @RequestBody DeleteAccountDto deleteAccountDto,
             HttpServletResponse response
     ){
         final String token = cookieService.getJwtFromCookie(request);
         final String username = jwtService.extractUsername(token);
-        try{
-            if (!username.equals(deleteAccountDto.username())){
+        try {
+            if (!username.equals(deleteAccountDto.username())) {
                 throw new IllegalArgumentException("Wrong username");
             }
             userService.deleteUser(deleteAccountDto.username(), deleteAccountDto.password());
-            final String cookie = cookieService.deleteCookie();
-            response.addHeader(HttpHeaders.SET_COOKIE, cookie);
-
-            return ResponseEntity.status(200).body(new MessageDto("your account has been deleted successfully"));
+            response.addHeader(HttpHeaders.SET_COOKIE, cookieService.deleteCookie());
+            return ResponseEntity.status(200).body(new MessageDto("Your account has been deleted successfully"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         }
     }
   
