@@ -159,11 +159,11 @@ public class UserService {
      * @throws IllegalArgumentException if the old password is wrong
      * */
     public User changePassword(String username, String oldPassword, String newPassword){
-        Optional<User> useroptional = findByUsername(username);
+        final Optional<User> useroptional = findByUsername(username);
         if (useroptional.isEmpty()){
             throw new IllegalArgumentException("User does not exist");
         }
-        User user = useroptional.get();
+        final User user = useroptional.get();
         if(!passwordEncoder.matches(oldPassword, user.getPassword())){
             throw new IllegalArgumentException("wrong old password");
         }
