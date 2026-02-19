@@ -3,7 +3,8 @@ export const API_ENDPOINTS = {
     UPDATE: '/users/update',
     PROFILE: '/users/profile',
     ALL:'/users/all',
-    CHANGEPASSWORD: '/users/change-password'
+    CHANGEPASSWORD: '/users/change-password',
+    DELETE: '/users/delete'
   },
   AUTH: {
     LOGIN: '/auth/login',

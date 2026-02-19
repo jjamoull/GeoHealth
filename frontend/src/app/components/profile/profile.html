@@ -12,7 +12,6 @@
   </div>
 
 
-
   <div class="form-container">
     <div class="profile-section">
 
@@ -75,6 +74,40 @@
           {{ errorMessage }}
         </div>
 
+      }
+
+
+
+      @if (!showWindow){
+      <button class="danger" (click)="openWindow()">
+        Delete my account
+      </button>
+      }
+
+      @if (showWindow) {
+        <div class="deleteAccountWindow">
+          <div class="window">
+            <h3>Confirmation</h3>
+            <p>Please type and validate your password to confirm</p>
+
+            <input
+              type="password"
+              placeholder="Password"
+              [(ngModel)]="userToDelete.password"
+            />
+
+            <div class="actions">
+              <button (click)="closeWindow()">Cancel</button>
+              <button
+                class="danger"
+                [disabled]="!userToDelete.password"
+                (click)="delete()"
+              >
+                Delete forever
+              </button>
+            </div>
+          </div>
+        </div>
       }
     </div>
   </div>
