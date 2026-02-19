@@ -194,6 +194,46 @@ public class UserService {
     }
 
     /**
+     * Bans a user by username
+     *
+     * @param username the username of the user to ban
+     * @throws IllegalArgumentException if user does not exist
+     * @throws IllegalArgumentException if user is already banned
+     */
+    public User banUser(String username) {
+        final Optional<User> optionalUser = findByUsername(username);
+        if (optionalUser.isEmpty()){
+            throw new IllegalArgumentException("Username does not exist");
+        }
+        User user = optionalUser.get();
+        if (user.isBanned()){
+            throw new IllegalArgumentException("User is already banned");
+        }
+        user.setBanned(true);
+        return userRepository.save(user);
+    }
+
+    /**
+     * Unbans a user by username
+     *
+     * @param username the username of the user to unban
+     * @throws IllegalArgumentException if user does not exist
+     * @throws IllegalArgumentException if user is not banned
+     */
+    public User unbanUser(String username){
+        final Optional<User> optionalUser = findByUsername(username);
+        if (optionalUser.isEmpty()){
+            throw new IllegalArgumentException("Username does not exist");
+        }
+        User user = optionalUser.get();
+        if (!user.isBanned()){
+            throw new IllegalArgumentException("User is not banned");
+        }
+        user.setBanned(false);
+        return userRepository.save(user);
+    }
+
+    /**
      * Check if the user is admin
      *
      * @param username The username of the user
