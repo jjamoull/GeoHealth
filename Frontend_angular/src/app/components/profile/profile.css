@@ -1,6 +1,6 @@
 .main-container {
   display: flex;
-  background-image: url("../../../assets/background/profileBackground.png");
+  background-color: #EBEFFF;
   background-size: cover;
   width: 100vw;
   height: 100vh;
