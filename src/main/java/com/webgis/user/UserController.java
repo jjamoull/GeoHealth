@@ -106,8 +106,8 @@ public class UserController {
             HttpServletRequest request,
             @RequestBody UpdatePasswordDto updatePasswordDto
     ){
-        String token = cookieService.getJwtFromCookie(request);
-        String username = jwtService.extractUsername(token);
+        final String token = cookieService.getJwtFromCookie(request);
+        final String username = jwtService.extractUsername(token);
         try {
             userService.changePassword(username, updatePasswordDto.oldPassword(), updatePasswordDto.newPassword());
             return ResponseEntity.status(200).body(new MessageDto("Password changed successfully"));
