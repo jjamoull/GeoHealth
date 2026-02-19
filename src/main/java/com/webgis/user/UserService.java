@@ -199,6 +199,7 @@ public class UserService {
      * @param username the username of the user to ban
      * @throws IllegalArgumentException if user does not exist
      * @throws IllegalArgumentException if user is already banned
+     * @throws IllegalArgumentException if the user has SuperAdmin role
      */
     public void banUser(String username) {
         final Optional<User> optionalUser = findByUsername(username);
@@ -208,6 +209,9 @@ public class UserService {
         User user = optionalUser.get();
         if (user.isBanned()){
             throw new IllegalArgumentException("User is already banned");
+        }
+        if (user.getRole().equals("SuperAdmin")) {
+            throw new IllegalArgumentException("This user cannot be banned");
         }
         user.setBanned(true);
         userRepository.save(user);
@@ -239,6 +243,7 @@ public class UserService {
      * @param username The username desired to change the role of
      * @param role The new role
      * @throws IllegalArgumentException if the user associated with the username does not exist
+     * @throws IllegalArgumentException if the user has SuperAdmin role
      * */
     public void changeRole(String username, String role){
         final Optional<User> optionalUser = findByUsername(username);
@@ -246,6 +251,9 @@ public class UserService {
             throw new IllegalArgumentException("Username does not exist");
         }
         User user = optionalUser.get();
+        if (user.getRole().equals("SuperAdmin")) {
+            throw new IllegalArgumentException("This user cannot be modified");
+        }
         user.setRole(role);
         userRepository.save(user);
     }
