@@ -200,7 +200,7 @@ public class UserService {
      * @throws IllegalArgumentException if user does not exist
      * @throws IllegalArgumentException if user is already banned
      */
-    public User banUser(String username) {
+    public void banUser(String username) {
         final Optional<User> optionalUser = findByUsername(username);
         if (optionalUser.isEmpty()){
             throw new IllegalArgumentException("Username does not exist");
@@ -210,7 +210,7 @@ public class UserService {
             throw new IllegalArgumentException("User is already banned");
         }
         user.setBanned(true);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     /**
@@ -220,7 +220,7 @@ public class UserService {
      * @throws IllegalArgumentException if user does not exist
      * @throws IllegalArgumentException if user is not banned
      */
-    public User unbanUser(String username){
+    public void unbanUser(String username){
         final Optional<User> optionalUser = findByUsername(username);
         if (optionalUser.isEmpty()){
             throw new IllegalArgumentException("Username does not exist");
@@ -230,7 +230,7 @@ public class UserService {
             throw new IllegalArgumentException("User is not banned");
         }
         user.setBanned(false);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     /**
