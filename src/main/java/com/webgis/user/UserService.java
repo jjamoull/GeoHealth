@@ -157,12 +157,12 @@ public class UserService {
      * @throws IllegalArgumentException if the password is wrong
      */
     public void deleteUser(String username, String password){
-        Optional<User> userOptional = findByUsername(username);
+        final Optional<User> userOptional = findByUsername(username);
 
         if (userOptional.isEmpty()){
             throw new IllegalArgumentException("User does not exist");
         }
-        User user = userOptional.get();
+        final User user = userOptional.get();
 
         if(!passwordEncoder.matches(password, user.getPassword())){
             throw new IllegalArgumentException("Wrong password");
