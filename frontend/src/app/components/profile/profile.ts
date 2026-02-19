@@ -89,4 +89,28 @@ export class Profile implements OnInit{
   }
 
 
+  /**
+   *  Cancel the modifications and restore the original user information
+   */
+  public cancel(){
+
+    console.log("In Cancel");
+
+    this.userService.getConnectedUser().subscribe({
+      next: user =>{
+        this.user=user;
+        console.log("Cancel",user);
+        this.cdr.detectChanges();
+      },
+      error:(err)=>{
+        console.log(err);
+        console.log("Error occured");
+      }
+    })
+
+    this.toggleEdit();
+
+  }
+
+
 }
