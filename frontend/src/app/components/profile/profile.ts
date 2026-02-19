@@ -1,8 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {UserResponseDto} from '../Model/UserModel/UserResponseDto';
-import {UsersServices} from '../Service/UserService/users-services';
+import {UserResponseDto} from '../../model/UserModel/UserResponseDto';
+import {UsersServices} from '../../service/UserService/users-services';
 import {CommonModule} from '@angular/common';
-import {UserUpdateDto} from '../Model/UserModel/UserUpdateDto';
+import {UserUpdateDto} from '../../model/UserModel/UserUpdateDto';
 import {FormsModule} from '@angular/forms';
 
 

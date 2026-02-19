@@ -36,4 +36,4 @@ build/
 .env
 
 ### Node modules ###
-Frontend_angular/node_modules
+frontend/node_modules

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from "rxjs";
-import {User} from '../../Model/UserModel/User';
-import {environment} from '../../../restApiManagement/environement';
-import {API_ENDPOINTS} from '../../../restApiManagement/endpoint';
+import {User} from '../../model/UserModel/User';
+import {environment} from '../../restApiManagement/environement';
+import {API_ENDPOINTS} from '../../restApiManagement/endpoint';
 
 @Injectable({
   providedIn: 'root'

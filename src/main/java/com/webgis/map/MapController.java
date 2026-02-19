@@ -1,5 +1,6 @@
 package com.webgis.map;
 
+import com.webgis.transformationFiles.ZipFiles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 import org.springframework.web.multipart.MultipartFile;
 
+//import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -23,8 +25,11 @@ import java.util.Optional;
 public class MapController {
     private final MapService mapService;
 
+    private final ZipFiles unzipper;
+
     public MapController( MapService mapService){
         this.mapService = mapService;
+        this.unzipper = new ZipFiles();
     }
 
 
@@ -67,12 +72,21 @@ public class MapController {
             map.setFileGeoJson(geoJsonFile.getBytes());
         }
 
+        //----------------------------------------------------------------------------------------------
+        //temporary disabling the unzipping to avoid polluting the github, files will be deleted after
+        // transformation into geoJSON but this aspect is not yet implemented
+        
+        //File fileToUnzip = new File(zipFile.getOriginalFilename());
+        //zipFile.transferTo(fileToUnzip);
+        //unzipper.unzip(map, fileToUnzip);
+        //----------------------------------------------------------------------------------------------
+
         return mapService.save(map);
     }
 
 
     @PostMapping("/save_geoJsonFile/{id}")
-    public Map addUser(@RequestBody Map mapToAdd, @RequestBody byte[] geoJsonFile){
+    public Map addGeoJSONFile(@RequestBody Map mapToAdd, @RequestBody byte[] geoJsonFile){
         final Optional<Map> mapTemp = mapService.findByTitle(mapToAdd.getTitle());
 
         if (mapTemp.isPresent()) {
