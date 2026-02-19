@@ -37,3 +37,8 @@ build/
 
 ### Node modules ###
 frontend/node_modules
+package-lock.json
+frontend/package-lock.json
+frontend/package.json
+/node_modules
+package.json

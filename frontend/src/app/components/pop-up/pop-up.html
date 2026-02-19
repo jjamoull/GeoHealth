@@ -20,21 +20,22 @@
       </div>
     }
 
-    <label>The zipFile on shape file here (e.g.: exemple.zip)</label>
+    <label>The zipFile on shape file here (e.g.: example.zip)</label>
     <input type="file"
            class="file-input"
            formControlName="file"
            (change)="onFileSelected($event)"
            #fileUpload>
 
+
     <div class="file-upload">
-      {{fileName || "No file uploaded yet."}}
       <button type="button"
-              mat-mini-fab
+              mat-fab
               color="primary"
               class="upload-btn"
-              (click)="fileUpload.click()">
+              (click)="fileUpload.click()"> Upload
       </button>
+      {{selectedFile?.name||'No file uploaded yet'}}
     </div>
 
 
