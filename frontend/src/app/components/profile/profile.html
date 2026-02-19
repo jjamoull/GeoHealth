@@ -18,62 +18,63 @@
 
       <div class="form-wrapper">
         <div class="form">
-          @if(!isEditingField.username){
+          @if(!isEditingField){
             <p>{{ user.username }}</p>
-              }@else if (isEditingField.username){
+              }@else if (isEditingField){
             <input  [(ngModel)]="user.username" />
           }
         </div>
-        <button (click)="toggleEdit('username')">
-          {{ isEditingField.email ? 'Save' : 'Edit' }}
-        </button>
       </div>
 
       <div class="form-wrapper">
         <div class="form">
-          @if(!isEditingField.firstName){
+          @if(!isEditingField){
             <p>{{ user.firstName }}</p>
-              } @else if (isEditingField.firstName){
+              } @else if (isEditingField){
             <input  [(ngModel)]="user.firstName" />
           }
         </div>
-        <button (click)="toggleEdit('firstName')">
-          {{ isEditingField.email ? 'Save' : 'Edit' }}
-        </button>
       </div>
 
       <div class="form-wrapper">
         <div class="form">
-          @if(!isEditingField.lastName){
+          @if(!isEditingField){
             <p>{{ user.lastName }}</p>
-              } @else if (isEditingField.lastName){
+              } @else if (isEditingField){
             <input  [(ngModel)]="user.lastName" />
           }
         </div>
-        <button (click)="toggleEdit('lastName')">
-          {{ isEditingField.email ? 'Save' : 'Edit' }}
-        </button>
       </div>
 
       <div class="form-wrapper">
         <div class="form">
-          @if(!isEditingField.email){
+          @if(!isEditingField){
             <p>{{ user.email }}</p>
-              } @else if (isEditingField.email){
+              } @else if (isEditingField){
             <input  [(ngModel)]="user.email" />
           }
         </div>
-        <button (click)="toggleEdit('email')">
-          {{ isEditingField.email ? 'Save' : 'Edit' }}
-        </button>
       </div>
+
+      @if (isEditingField){
       <div class="edit-button">
-        <button (click)="updateProfile()"> MODIFIER </button>
+        <button (click)="updateProfile()"> Save</button>
       </div>
+
+      <div class="cancel-button">
+        <button (click)="toggleEdit()"> Cancel</button>
+      </div>
+      }
+      @else if(!isEditingField){
+      <div class="edit-button">
+        <button (click)="toggleEdit()"> Edit</button>
+      </div>
+      }
       @if (errorMessage) {
         <div class="alert alert-danger" style="margin-top: 20px;">
           {{ errorMessage }}
         </div>
+
       }
     </div>
   </div>

@@ -23,12 +23,8 @@ export class Profile implements OnInit{
     role: ''
   };
 
-  public isEditingField={
-    username: false,
-    firstName: false,
-    lastName: false,
-    email: false,
-  }
+
+  public isEditingField:boolean= false;
 
   public errorMessage: string | null = null;
 
@@ -52,14 +48,13 @@ export class Profile implements OnInit{
   }
 
   /**
-   * Toggle the value of the field
+   * Toggle the value of the isEditingField
    *
-   * @param field the isEditingField field we want to toggle
    * @modifies isEditingField
-   * @effect toggle the value of the selected field
+   * @effect toggle the value
    **/
-  toggleEdit(field: keyof typeof this.isEditingField) {
-    this.isEditingField[field] = !this.isEditingField[field];
+  public toggleEdit() {
+    this.isEditingField= !this.isEditingField
   }
 
   /**
@@ -87,7 +82,10 @@ export class Profile implements OnInit{
         this.errorMessage = err.error.message;
         this.cdr.detectChanges();
       }
+
     });
+
+    this.toggleEdit();
   }
 
 
