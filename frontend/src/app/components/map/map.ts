@@ -18,7 +18,9 @@ export class Map implements AfterViewInit {
   CAMEROON_ZOOM:number = 6.6;
 
 
-
+/**
+* Display the map OSM thanks to Leaflet on Cameron
+*/
   async ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       const L = await import('leaflet');
