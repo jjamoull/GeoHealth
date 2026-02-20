@@ -7,6 +7,7 @@ import {UserUpdateDto} from '../../model/UserModel/UserUpdateDto';
 import {UpdatePasswordDto} from '../../model/UserModel/UpdatePasswordDto';
 import {environment} from '../../restApiManagement/environement';
 import {API_ENDPOINTS} from '../../restApiManagement/endpoint';
+import {DeleteAccountDto} from '../../model/UserModel/DeleteAccountDto';
 
 
 @Injectable({
@@ -51,6 +52,14 @@ export class UsersServices {
     return this.httpClient.put(`${this.baseUrl}${API_ENDPOINTS.USER.CHANGEPASSWORD}`,userPasswordDto, {withCredentials: true})
   }
 
+  /**
+   * Delete the account selected
+   *
+   * @param deleteAccountDto the information on the account you want to delete
+   */
+  public deleteUserAccount(deleteAccountDto:DeleteAccountDto):Observable<any>{
+    return this.httpClient.delete(`${this.baseUrl}${API_ENDPOINTS.USER.DELETE}`,{body:deleteAccountDto, withCredentials: true})
+  }
 
 }
 

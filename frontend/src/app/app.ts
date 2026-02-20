@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import {ChangeDetectorRef, Component, signal} from '@angular/core';
 import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
 import {LoginService} from './service/LoginService/loginService';
+import {catchError, map, Observable, of} from 'rxjs';
+import {AuthService} from './service/AuthService/auth-service';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +14,13 @@ import {LoginService} from './service/LoginService/loginService';
 export class App {
   protected readonly title = signal('GeoHealth_Angular');
 
-  constructor(public route: ActivatedRoute, private router: Router, private loginService:LoginService) {}
+
+  constructor(public route: ActivatedRoute, private router: Router, private loginService:LoginService, private authService: AuthService,private cdr: ChangeDetectorRef) {}
 
 
   goToHome() {
     this.router.navigate(['home'])
   }
-
   goToNavigation(){
     this.router.navigate(['navigation'])
   }
@@ -35,15 +37,16 @@ export class App {
     this.router.navigate(['profile'])
   }
 
-  logouth():void {
+  logout():void {
     this.loginService.logout().subscribe({
       next: (response) => {
-        console.log("logge out");
+        console.log("logout");
         this.router.navigate(['login'])
       },
       error: (err) => {
-        console.error('Error while loged out', err);
+        console.error('Error while logged out', err);
       }
     });
   }
+
 }

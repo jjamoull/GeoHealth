@@ -12,7 +12,6 @@
   </div>
 
 
-
   <div class="form-container">
     <div class="profile-section">
 
@@ -57,13 +56,15 @@
       </div>
 
       @if (isEditingField){
-      <div class="edit-button">
+    <div class="cancel-save-button">
+      <div class="save-button">
         <button (click)="updateProfile()"> Save</button>
       </div>
 
       <div class="cancel-button">
-        <button (click)="cancel()"> Cancel</button>
+        <button (click)="cancel()"> Cancel </button>
       </div>
+    </div>
       }
       @else if(!isEditingField){
       <div class="edit-button">
@@ -75,6 +76,30 @@
           {{ errorMessage }}
         </div>
 
+      }
+
+      @if (!showWindow){
+      <button class="danger" (click)="openWindow()">
+        Delete my account
+      </button>
+      }
+
+      @if (showWindow) {
+        <div class="deleteAccountWindow">
+          <div class="window">
+            <h3>Confirmation</h3>
+            <p>Please type and validate your password to confirm</p>
+
+          <div class="form">
+            <input type="password" placeholder="Password" [(ngModel)]="userToDelete.password">
+          </div>
+
+            <div class="cancel-delete-button">
+              <button (click)="closeWindow()">Cancel</button>
+              <button class="delete" [disabled]="!userToDelete.password" (click)="delete()">Delete forever</button>
+            </div>
+          </div>
+        </div>
       }
     </div>
   </div>

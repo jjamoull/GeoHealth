@@ -17,10 +17,10 @@
 
 .form-container {
   position: absolute;
-  top: 65%;
-  left: 50%;
+  top: 62%;
+  left: 60%;
   transform: translate(-50%, -50%);
-  width: 100%;
+  width: 40%;
   max-width: 900px;
 }
 
@@ -64,8 +64,6 @@
 
 .profile-section {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem 2rem;
 }
 
 
@@ -81,7 +79,7 @@
   background: white;
   margin: 30px 0;
   border-radius: 12px;
-  border: black;
+  border: solid 2px black;
   font-size: 1rem;
   box-sizing: border-box;
   display: flex;
@@ -110,7 +108,7 @@ button{
   width: 30%;
   height: 45px;
   background: #90ee90;
-  border: solid 2px #7ee87e;
+  border: solid 2px black;
   outline: none;
   border-radius: 12px;
   font-size: 16px;
@@ -130,3 +128,60 @@ button:active{
   transform: scale(.99);
 }
 
+.deleteAccountWindow{
+  position: absolute;
+  width: 50%;
+  border-radius: 10px;
+  top: 23%;
+  right: 120%;
+  background-color: white;
+  border: black
+}
+.danger{
+  color: black;
+  background-color: red;
+  font-size: 0.9rem;
+  display: block;
+  margin: 1.5rem auto 0;
+}
+.edit-button{
+  display: flex;
+  justify-content: center;
+}
+
+
+.window h3{
+  display: flex;
+  justify-content: center;
+}
+
+
+.cancel-save-button {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+
+.cancel-save-button button {
+  flex: 1;
+  min-width: 120px;
+  height: 45px;
+  font-size: 1rem;
+}
+
+.cancel-delete-button {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+.cancel-delete-button button {
+  flex: 1;
+}
+
+.delete{
+  color-background: red;
+  color: red;
+}

@@ -4,6 +4,8 @@ import {UsersServices} from '../../service/UserService/users-services';
 import {CommonModule} from '@angular/common';
 import {UserUpdateDto} from '../../model/UserModel/UserUpdateDto';
 import {FormsModule} from '@angular/forms';
+import {DeleteAccountDto} from '../../model/UserModel/DeleteAccountDto';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -23,12 +25,19 @@ export class Profile implements OnInit{
     role: ''
   };
 
+  public userToDelete: DeleteAccountDto={
+    username:'',
+    password:''
+  }
+
+  public showWindow:boolean = false;
+
 
   public isEditingField:boolean= false;
 
   public errorMessage: string | null = null;
 
-  constructor(private userService:UsersServices, private cdr: ChangeDetectorRef) {}
+  constructor(private userService:UsersServices, private cdr: ChangeDetectorRef,private router: Router) {}
 
   /**
    * Collect the user information when the component initialize
@@ -111,6 +120,32 @@ export class Profile implements OnInit{
     this.toggleEdit();
 
   }
+
+
+  public openWindow(){
+    this.showWindow= true;
+  }
+
+  public closeWindow(){
+    this.showWindow=false;
+    this.userToDelete.password='';
+  }
+
+  public delete(){
+    this.userToDelete.username= this.user.username;
+    this.userService.deleteUserAccount(this.userToDelete).subscribe({
+      next: () => {
+      this.closeWindow();
+      this.router.navigate(['/login']);
+      console.log('Account Delete Successfully');
+    },
+      error: () => {
+      console.log('Error while deleting account');
+    }
+    })
+  }
+
+
 
 
 }
