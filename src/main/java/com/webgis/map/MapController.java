@@ -1,6 +1,6 @@
 package com.webgis.map;
 
-import com.webgis.transformationFiles.ZipFiles;
+import com.Converter.ZipFiles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
