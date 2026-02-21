@@ -27,8 +27,8 @@ public class DetectFiles {
      * */
     public static File findShpFile(File fileInParam ) throws IOException{
         for (File file:fileInParam.listFiles()){
-            byte[] byteOfFile = Files.readAllBytes(file.toPath());
-            if (detectShpFile(byteOfFile) == true){
+            final byte[] byteOfFile = Files.readAllBytes(file.toPath());
+            if (detectShpFile(byteOfFile)){
                 logger.info("A .shp file is detected and returned");
                 return file;
             }
