@@ -2,12 +2,12 @@ package com.Converter;
 
 
 
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.slf4j.Logger;
 
 /**
  * @overview This class allow to detect a type of file ".cpg, .dbf, .prj, .shp, .shx" which be used
@@ -15,9 +15,9 @@ import java.util.logging.Logger;
  * */
 public class DetectFiles {
 
-    static Logger logger = Logger.getLogger(DetectFiles.class.getName());
+    static Logger logger = LoggerFactory.getLogger(DetectFiles.class);
 
-    
+
     /**
      * Find the shp file among the set of files receive in params
      *
@@ -29,11 +29,11 @@ public class DetectFiles {
         for (File file:fileInParam.listFiles()){
             byte[] byteOfFile = Files.readAllBytes(file.toPath());
             if (detectShpFile(byteOfFile) == true){
-                logger.setLevel(Level.INFO);
                 logger.info("A .shp file is detected and returned");
                 return file;
             }
         }
+        logger.info("No .shp file detected and returned");
         return null;
     }
 
@@ -44,7 +44,7 @@ public class DetectFiles {
      * @return true  : if it is a .shp file
      *         false : otherwise
      * */
-    private static boolean detectShpFile(byte[] byteOfFile) {
+    public static boolean detectShpFile(byte[] byteOfFile) {
         return byteOfFile[0] == (byte) 0x00 &&
                 byteOfFile[1] == (byte) 0x00 &&
                 byteOfFile[2] == (byte) 0x27 &&
