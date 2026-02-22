@@ -20,7 +20,7 @@ public class ZipFiles {
     /**
      * Extract zip archives stored in DB
      *
-     * @param map : Map entity that contains all information about the map
+     * @param map : MapComponent entity that contains all information about the map
      * @param destFilePath : path where the extracted files should be placed
      * @throws IOException if there is an issue with extraction or folder creation
      */

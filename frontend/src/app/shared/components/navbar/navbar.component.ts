@@ -1,17 +1,17 @@
 import {ChangeDetectorRef, Component, signal} from '@angular/core';
 import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
-import {LoginService} from './core/service/LoginService/loginService';
+import {LoginService} from '../../../core/service/LoginService/loginService';
 import {catchError, map, Observable, of} from 'rxjs';
-import {AuthService} from './core/service/AuthService/auth-service';
+import {AuthService} from '../../../core/service/AuthService/auth-service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-navbar',
   imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css',
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css',
   standalone: true,
 })
-export class App {
+export class NavbarComponent {
   protected readonly title = signal('GeoHealth_Angular');
 
 
@@ -26,8 +26,8 @@ export class App {
   }
 
   goToRegister(){
-      this.router.navigate(['register'])
-    }
+    this.router.navigate(['register'])
+  }
 
   goToLogin(){
     this.router.navigate(['login'])
@@ -50,3 +50,4 @@ export class App {
   }
 
 }
+

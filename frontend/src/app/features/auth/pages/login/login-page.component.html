@@ -1,0 +1,44 @@
+<div class="login-page">
+  <img class="image" src="../../../../frontend/src/assets/background/loginBackgroundPlanet.png">
+  <img src="./assets/background/loginBackgroundPlanet.png" alt="">
+  <div class="image-container">
+    a
+  </div>
+</div>
+
+<div class="login">
+  <div class="title-container">
+    <h1 class="login-title"> Login </h1>
+    <p class="login-message">Please log into your account</p>
+  </div>
+
+  <form [formGroup]="formGroup" (ngSubmit)="login()">
+
+    <div class="form-field">
+      <input formControlName="username" type="text" placeholder="Your username...">
+    </div>
+
+    <div class="form-field">
+      <input formControlName="password" type="password" placeholder="Your password...">
+    </div>
+
+    <div class="forgot-password">
+      <label><input type="checkbox">Remember me</label>
+      <a href="#">Forgot password ?</a>
+    </div>
+
+    <div class="login-button-container">
+      <app-button
+        [text]="'Login'"
+        (clicked)="login()">
+      </app-button>
+    </div>
+
+    <div class="register-link">
+      <p>Don't have an account ?  <a (click)="goToRegister()">Register</a></p>
+    </div>
+
+
+
+  </form>
+</div>

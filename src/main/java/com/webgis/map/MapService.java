@@ -16,7 +16,7 @@ public class MapService {
      * Search for a map in db using its identifier
      *
      * @param id identifier of the map you want to retrieve from the db
-     * @return Map which identifier equals to id, empty otherwise
+     * @return MapComponent which identifier equals to id, empty otherwise
      */
     public Optional<Map> findById(long id){
         return mapRepository.findById(id);
@@ -26,7 +26,7 @@ public class MapService {
      * Returns a map from the database, find it by searching for specified name
      *
      * @param title name of the map you want to retrieve from the db
-     * @return Map found using its name, empty if there's none
+     * @return MapComponent found using its name, empty if there's none
      * */
     public Optional<Map> findByTitle(String title){return mapRepository.findByTitle(title);}
 
@@ -49,7 +49,7 @@ public class MapService {
     public void deleteMap(long id){
         final Optional<Map> map = findById(id);
         if (map.isEmpty()) {
-            throw new IllegalArgumentException("Map does not exist");
+            throw new IllegalArgumentException("MapComponent does not exist");
         }
         final Map mapDel = map.get();
         mapRepository.delete(mapDel);

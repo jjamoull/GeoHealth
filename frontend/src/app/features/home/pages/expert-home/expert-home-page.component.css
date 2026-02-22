@@ -1,0 +1,170 @@
+.body {
+  font-family: "Lato", sans-serif
+}
+
+/*HEADER*/
+
+.visual{
+  min-height: 100vh;
+  position: relative;
+}
+
+.image{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+.rectangle{
+  position: absolute;
+  border: thick double #cccccc;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 250px;
+
+}
+.rectangle h1{
+  text-align: center;
+  font-size: 50px;
+  text-transform: uppercase;
+  color: black;
+  font-family: 'Julius Sans One', sans-serif;
+
+}
+.rectangle h1 span{
+  display: block;
+  margin-top: 10px;
+  color: black;
+}
+/*HEADER*/
+
+/*RECENT SECTION*/
+.carouselSection{
+  padding-top: 4rem;
+  min-height: 70vh;
+}
+.cardTitle{
+  display: flex;
+  justify-content: center;
+  color: black;
+}
+.carousel {
+  margin: 50px auto;
+  width: 90%;
+  display : flex;
+  overflow-x : auto;
+  gap: 1em;
+}
+.carousel::-webkit-scrollbar{
+  /*display: none;*/
+}
+.group{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  animation: spin 40s infinite linear;
+  padding-right: 1em;
+}
+.radio-button{
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+
+}
+.card {
+  flex: 0 0 5em;
+  height: 5em;
+  padding: 1em;
+  background-image: url("/frontend/src/assets/background/worldMap.png");
+  font-size: 3rem;
+  border-radius: .2em;
+  text-align: center;
+  align-content: center;
+}
+
+@keyframes spin {
+  from {translate: 0;}
+  to {translate: -100%}
+}
+/*RECENT SECTION*/
+
+/*COMMENT SECTION*/
+.commentSection{
+  padding-top: 5rem;
+  min-height: 100vh;
+  background-color: black;
+}
+.commentContent{
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.commentTitle{
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.cardSection{
+  display: flex;
+  margin-top: 100px;
+  justify-content: center;
+  gap: 24px;
+}
+.commentCard{
+  background-color: white;
+}
+.commentCard img {
+  width: 100%;
+  display : block;
+  transition: background 0.3s;
+}
+.commentCard img:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+.commentButton {
+  background: black;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s;
+}
+.commentButton:hover {
+  background: #333;
+}
+/*RECENT SECTION*/
+
+
+/*CONTACT SECTION*/
+
+.contactSection{
+  min-height: 40vh;
+  background-color: white;
+  padding-top: 5rem;
+  text-align: center;
+}
+.contactTitle{
+  display: flex;
+  justify-content: center;
+  color: black;
+  text-transform: uppercase;
+}
+.contactContent{
+  margin-top: 70px;
+}
+/*CONTACT SECTION*/
+
+/*FOOTER*/
+.copyright{
+  display: flex;
+  justify-content: center;
+}
