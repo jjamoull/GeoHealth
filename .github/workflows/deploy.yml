@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -35,6 +35,7 @@ jobs:
       - name: Build Spring Boot JAR
         run: |
           cd backend
+          chmod +x mvnw
           ./mvnw package -DskipTests
 
       - name: Copy Angular files to VM
@@ -43,6 +44,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           source: "frontend/dist/GeoHealth_Angular/browser/"
           target: "/opt/geohealth/frontend"
           strip_components: 3
@@ -53,6 +55,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           source: "backend/target/*.jar"
           target: "/opt/geohealth/backend"
           strip_components: 2
@@ -63,6 +66,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           source: "docker-compose.yml"
           target: "/opt/geohealth"
 
@@ -72,12 +76,23 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: |
             cd /opt/geohealth
-            docker compose --env-file .env up -d
-            pkill -f geohealth || true
+            export $(cat .env | xargs)
+            docker-compose --env-file .env up -d
+            sudo pkill -f webgis || true
             sleep 2
             nohup java -jar backend/*.jar \
               --spring.profiles.active=prod \
-              $(cat .env | xargs) \
+              > /opt/geohealth/app.log 2>&1 &
+          script: |
+            cd /opt/geohealth
+            export $(cat .env | xargs)
+            docker-compose --env-file .env up -d
+            sudo pkill -f webgis || true
+            sleep 2
+            cp /opt/geohealth/frontend/browser/index.csr.html /opt/geohealth/frontend/browser/index.html
+            nohup java -jar backend/*.jar \
+              --spring.profiles.active=prod \
               > /opt/geohealth/app.log 2>&1 &
