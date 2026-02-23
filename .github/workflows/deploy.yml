@@ -3,7 +3,7 @@ name: Deploy GeoHealth
 on:
   pull_request:
     branches: [main]
-    types: [opened, synchronize]
+    types: [closed]
 
 jobs:
   deploy:
@@ -80,8 +80,8 @@ jobs:
           script: |
             cd /opt/geohealth
             export $(cat .env | xargs)
-            docker compose up -d
-            sudo pkill -f geohealth || true
+            docker-compose --env-file .env up -d
+            sudo pkill -f webgis || true
             sleep 2
             nohup java -jar backend/*.jar \
               --spring.profiles.active=prod \
