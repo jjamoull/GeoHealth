@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
 import {LoginService} from '../../../../core/service/LoginService/loginService';
+import {NavbarComponent} from '../../../../shared/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './expert-home-page.component.html',
   styleUrl: './expert-home-page.component.css',
   standalone: true,

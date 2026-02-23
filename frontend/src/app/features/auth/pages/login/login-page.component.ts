@@ -4,6 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
+import {NavbarComponent} from '../../../../shared/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,8 @@ import {ButtonComponent} from '../../../../shared/components/button.component/bu
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    ButtonComponent
+    ButtonComponent,
+    NavbarComponent
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
