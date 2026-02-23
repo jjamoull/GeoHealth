@@ -86,3 +86,13 @@ jobs:
             nohup java -jar backend/*.jar \
               --spring.profiles.active=prod \
               > /opt/geohealth/app.log 2>&1 &
+          script: |
+            cd /opt/geohealth
+            export $(cat .env | xargs)
+            docker-compose --env-file .env up -d
+            sudo pkill -f webgis || true
+            sleep 2
+            cp /opt/geohealth/frontend/browser/index.csr.html /opt/geohealth/frontend/browser/index.html
+            nohup java -jar backend/*.jar \
+              --spring.profiles.active=prod \
+              > /opt/geohealth/app.log 2>&1 &
