@@ -4,8 +4,6 @@ import {MapComponent} from './shared/components/map/map.component';
 import {NavigationPageComponent} from './features/navigation/pages/navigation/navigation-page.component';
 import { LoginPageComponent } from './features/auth/pages/login/login-page.component';
 import { RegisterPageComponent } from './features/auth/pages/register/register-page.component';
-import { ForgotPasswordPageComponent } from './features/auth/pages/forgot-password/forgot-password-page.component';
-import { ResetPasswordPageComponent } from './features/auth/pages/reset-password/reset-password-page.component';
 import {UsersListPageComponent} from './features/admin/pages/users-list/users-list-page.component';
 import { authGuard } from './features/auth/services/authguard/authguard-guard';
 import {ProfilePageComponent} from './features/auth/pages/profile/profile-page.component';
@@ -38,12 +36,6 @@ export const routes: Routes = [
   },{
     path:'register',
     component: RegisterPageComponent,
-  },{
-    path:'forgot-password',
-    component: ForgotPasswordPageComponent,
-  },{
-    path:'reset-password',
-    component: ResetPasswordPageComponent,
   },{
     path:'profile',
     component: ProfilePageComponent,

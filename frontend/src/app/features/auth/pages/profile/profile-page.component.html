@@ -14,62 +14,49 @@
 
   <div class="form-container">
     <div class="profile-section">
+      <app-inputbox
+        [label]="'Username'"
+        [(ngModel)]="user.username"
+        [disabled]="!isEditingField">
+      </app-inputbox>
 
-      <div class="form-wrapper">
-        <div class="form">
-          @if(!isEditingField){
-            <p>{{ user.username }}</p>
-              }@else if (isEditingField){
-            <input  [(ngModel)]="user.username" />
-          }
-        </div>
-      </div>
+      <app-inputbox
+        [label]="'Firstname'"
+        [(ngModel)]="user.firstName"
+        [disabled]="!isEditingField">
+      </app-inputbox>
 
-      <div class="form-wrapper">
-        <div class="form">
-          @if(!isEditingField){
-            <p>{{ user.firstName }}</p>
-              } @else if (isEditingField){
-            <input  [(ngModel)]="user.firstName" />
-          }
-        </div>
-      </div>
+      <app-inputbox
+        [label]="'Lastname'"
+        [(ngModel)]="user.lastName"
+        [disabled]="!isEditingField">
+      </app-inputbox>
 
-      <div class="form-wrapper">
-        <div class="form">
-          @if(!isEditingField){
-            <p>{{ user.lastName }}</p>
-              } @else if (isEditingField){
-            <input  [(ngModel)]="user.lastName" />
-          }
-        </div>
-      </div>
+      <app-inputbox
+        [label]="'Email'"
+        [(ngModel)]="user.email"
+        [disabled]="!isEditingField">
+      </app-inputbox>
 
-      <div class="form-wrapper">
-        <div class="form">
-          @if(!isEditingField){
-            <p>{{ user.email }}</p>
-              } @else if (isEditingField){
-            <input  [(ngModel)]="user.email" />
-          }
-        </div>
-      </div>
+    @if(isEditingField){
+      <app-button
+        [text]="'Apply Change'"
+        variant="success"
+        (clicked)="updateProfile()">
+      </app-button>
 
-      @if (isEditingField){
-    <div class="cancel-save-button">
-      <div class="save-button">
-        <button (click)="updateProfile()"> Save</button>
-      </div>
-
-      <div class="cancel-button">
-        <button (click)="cancel()"> Cancel </button>
-      </div>
-    </div>
+      <app-button
+        [text]="'Cancel'"
+        variant="danger"
+        (clicked)="cancel()">
+      </app-button>
       }
       @else if(!isEditingField){
-      <div class="edit-button">
-        <button (click)="toggleEdit()"> Edit</button>
-      </div>
+        <app-button
+          [text]="'Edit'"
+          variant="success"
+          (clicked)="toggleEdit()">
+        </app-button>
       }
       @if (errorMessage) {
         <div class="alert alert-danger" style="margin-top: 20px;">
@@ -79,9 +66,11 @@
       }
 
       @if (!showWindow){
-      <button class="danger" (click)="openWindow()">
-        Delete my account
-      </button>
+        <app-button
+          [text]="'Delete my account'"
+          variant="danger"
+          (clicked)="openWindow()">
+        </app-button>
       }
 
       @if (showWindow) {
@@ -90,14 +79,25 @@
             <h3>Confirmation</h3>
             <p>Please type and validate your password to confirm</p>
 
-          <div class="form">
-            <input type="password" placeholder="Password" [(ngModel)]="userToDelete.password">
-          </div>
+            <app-inputbox
+             [type]="'password'"
+             [placeholder]="'password'"
+             [(ngModel)]="userToDelete.password"
+            >
+            </app-inputbox>
 
-            <div class="cancel-delete-button">
-              <button (click)="closeWindow()">Cancel</button>
-              <button class="delete" [disabled]="!userToDelete.password" (click)="delete()">Delete forever</button>
-            </div>
+            <app-button
+              [text]="'Cancel'"
+              variant="success"
+              (clicked)="closeWindow()">
+            </app-button>
+
+            <app-button
+              [text]="'Delete forever'"
+              variant="danger"
+              (clicked)="delete()"
+              [disabled]="!userToDelete.password">
+            </app-button>
           </div>
         </div>
       }

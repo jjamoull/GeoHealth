@@ -9,73 +9,83 @@
         (ngSubmit)="register()"
         class="form">
 
-    <div class="form_field">
-      <input type="Username" placeholder="Username" formControlName ="username">
-    </div>
+    <app-inputbox
+      [type]="'text'"
+      [placeholder]="'Username'"
+      formControlName="username"
+      [label]="'Username'" >
+    </app-inputbox>
     @if(isFieldValid("username")){
       <div class="error">
         The username must be at least 1 character long.
       </div>
     }
 
-    <div class="form_field">
-      <input type="Firstname" placeholder="First name" formControlName ="firstName">
-    </div>
+    <app-inputbox
+      [type]="'text'"
+      [placeholder]="'Firstname'"
+      formControlName="firstName"
+      [label]="'Firstname'" >
+    </app-inputbox>
     @if(isFieldValid("firstName")){
       <div class="error">
         The first name must be at least 1 character long.    </div>
     }
 
-    <div class="form_field">
-      <input type="Lastname" placeholder="Last name" formControlName ="lastName">
-    </div>
+    <app-inputbox
+      [type]="'text'"
+      [placeholder]="'Lastname'"
+      formControlName="lastName"
+      [label]="'Lastname'" >
+    </app-inputbox>
     @if(isFieldValid("lastName")){
       <div class="error">
         The last name must be at least 1 character long.
       </div>
     }
 
-    <div class="form_field">
-      <input type="Email" placeholder="info@mailaddress.com" formControlName ="email">
-    </div>
+    <app-inputbox
+      [type]="'text'"
+      [placeholder]="'Email'"
+      formControlName="email"
+      [label]="'Email'" >
+    </app-inputbox>
     @if(isFieldValid("email")){
       <div class="error">
         doesn't match
       </div>
     }
 
-    <div class="form_field">
-      <input
-        [type]="showPassword ? 'text' : 'password'"
-        id="password"
-        placeholder="Password"
-        formControlName="password"
-      />
-    </div>
+
+    <app-inputbox
+      [type]="'password'"
+      [placeholder]="'Password'"
+      formControlName="password"
+      [label]="'Password'" >
+    </app-inputbox>
     @if(isFieldValid("password")){
       <div class="error">
         The password does not contain at least 8 characters or does not match the required format. E.g. Toto#123.com
       </div>
     }
 
-    <div class="form_field">
-      <input
-        [type]="showPassword ? 'text' : 'password'"
-        id="confirmPassword"
-        placeholder="Confirm password"
-        formControlName="confirmPassword"
-      />
-    </div>
+    <app-inputbox
+      [type]="'password'"
+      [placeholder]="'Confirm Password'"
+      formControlName="confirmPassword"
+      [label]="'Confirm Password'" >
+    </app-inputbox>
+
     @if(isFieldValid("confirmPassword")){
       <div class="error">
         The confirmPassword does not contain at least 8 characters or does not match the required format. E.g. Toto#123.com
       </div>
     }
 
-
     <div class="register-button-container">
       <app-button
-        [text]="'Register'">
+        [text]="'Register'"
+        variant="success">
       </app-button>
     </div>
 

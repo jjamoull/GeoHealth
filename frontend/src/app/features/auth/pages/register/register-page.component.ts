@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../../../../core/service/LoginService/loginService';
 import {User} from '../../../../shared/models/UserModel/User';
-import {throwError} from "rxjs";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {Router} from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
+import {InputboxComponents} from '../../../../shared/components/inputbox.components.ts/inputbox.components';
+
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,8 @@ import {ButtonComponent} from '../../../../shared/components/button.component/bu
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    ButtonComponent
+    ButtonComponent,
+    InputboxComponents
   ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
@@ -106,12 +108,6 @@ export class RegisterPageComponent implements  OnInit {
     }
 
     return confirmPasswordControl.value == passwordControl.value;
-  }
-
-  showPassword = false;
-
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
   }
 
   isFieldValid(name: string){

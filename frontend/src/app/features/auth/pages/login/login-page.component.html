@@ -1,5 +1,3 @@
-<app-navbar></app-navbar>
-
 <div class="login-page">
   <img class="image" src="/assets/background/loginBackgroundPlanet.png" alt="">
 </div>
@@ -12,30 +10,30 @@
 
   <form [formGroup]="formGroup" (ngSubmit)="login()">
 
-    <div class="form-field">
-      <input formControlName="username" type="text" placeholder="Your username...">
-    </div>
+    <app-inputbox
+      [type]="'text'"
+      [placeholder]="'Your username'"
+      formControlName="username"
+      [label]="'Username'" >
+    </app-inputbox>
 
-    <div class="form-field">
-      <input formControlName="password" type="password" placeholder="Your password...">
-    </div>
+    <app-inputbox
+      [type]="'password'"
+      [placeholder]="'Your password'"
+      formControlName="password"
+      [label]="'Password'" >
+    </app-inputbox>
 
-    <div class="forgot-password">
-      <label><input type="checkbox">Remember me</label>
-      <a href="#">Forgot password ?</a>
-    </div>
 
     <div class="login-button-container">
       <app-button
-        [text]="'Login'">
+        [text]="'Login'"
+        variant="success">
       </app-button>
     </div>
 
     <div class="register-link">
       <p>Don't have an account ?  <a (click)="goToRegister()">Register</a></p>
     </div>
-
-
-
   </form>
 </div>

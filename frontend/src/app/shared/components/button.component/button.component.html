@@ -1,3 +1,3 @@
 <div class="button-container">
-  <button type="submit" (click)="handleClick()" class="button">{{text}}</button>
+  <button type="submit" (click)="handleClick()" [ngClass]="['button', 'button-' + variant]" [disabled]="disabled" >{{text}}</button>
 </div>

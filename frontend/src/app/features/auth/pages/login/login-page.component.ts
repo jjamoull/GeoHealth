@@ -4,7 +4,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
-import {NavbarComponent} from '../../../../shared/components/navbar/navbar.component';
+import {InputboxComponents} from '../../../../shared/components/inputbox.components.ts/inputbox.components';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ import {NavbarComponent} from '../../../../shared/components/navbar/navbar.compo
     ReactiveFormsModule,
     CommonModule,
     ButtonComponent,
-    NavbarComponent
+    InputboxComponents,
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',

@@ -6,11 +6,14 @@ import {UserUpdateDto} from '../../../../shared/models/UserModel/UserUpdateDto';
 import {FormsModule} from '@angular/forms';
 import {DeleteAccountDto} from '../../../../shared/models/UserModel/DeleteAccountDto';
 import {Router} from '@angular/router';
+import {disabled} from '@angular/forms/signals';
+import {InputboxComponents} from '../../../../shared/components/inputbox.components.ts/inputbox.components';
+import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, InputboxComponents, ButtonComponent],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.css',
 })
@@ -146,6 +149,5 @@ export class ProfilePageComponent implements OnInit{
   }
 
 
-
-
+  protected readonly disabled = disabled;
 }
