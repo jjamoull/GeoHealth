@@ -1,5 +1,6 @@
 package com.webgis.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,9 @@ import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -54,7 +58,7 @@ public class SecurityConfig {
         final CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:4200");
+        config.addAllowedOrigin(frontendUrl);
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,
