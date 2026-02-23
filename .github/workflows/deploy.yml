@@ -3,7 +3,7 @@ name: Deploy GeoHealth
 on:
   pull_request:
     branches: [main]
-    types: [closed]
+    types: [opened, synchronize]
 
 jobs:
   deploy:
@@ -35,6 +35,7 @@ jobs:
       - name: Build Spring Boot JAR
         run: |
           cd backend
+          chmod +x mvnw
           ./mvnw package -DskipTests
 
       - name: Copy Angular files to VM
