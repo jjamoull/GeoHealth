@@ -44,6 +44,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           source: "frontend/dist/GeoHealth_Angular/browser/"
           target: "/opt/geohealth/frontend"
           strip_components: 3
@@ -54,6 +55,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           source: "backend/target/*.jar"
           target: "/opt/geohealth/backend"
           strip_components: 2
@@ -64,6 +66,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           source: "docker-compose.yml"
           target: "/opt/geohealth"
 
@@ -73,6 +76,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: |
             cd /opt/geohealth
             docker compose --env-file .env up -d
