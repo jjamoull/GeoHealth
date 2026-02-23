@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from "rxjs";
+import {catchError, map, Observable, of, tap} from "rxjs";
 import {User} from '../../../shared/models/UserModel/User';
 import {environment} from '../../rest-api-management/environement';
 import {API_ENDPOINTS} from '../../rest-api-management/endpoint';
@@ -34,8 +34,8 @@ export class LoginService{
    */
   login(loginDto: any): Observable<any> {
     return this.HttpClient.post(`${this.baseUrl}${API_ENDPOINTS.AUTH.LOGIN}`, loginDto,
-        { withCredentials: true }
-      );
+      { withCredentials: true }
+    );
   }
 
   /**
@@ -51,8 +51,8 @@ export class LoginService{
    * Check wether a user is connected or not
    */
   checkStatus(): Observable<any> {
-    return this.HttpClient.get(`${this.baseUrl}${API_ENDPOINTS.AUTH.STATUS}`,
-      { withCredentials: true }
-    );
+    return this.HttpClient.get(`${this.baseUrl}${API_ENDPOINTS.AUTH.STATUS}`,{ withCredentials: true })
   }
+
+
 }

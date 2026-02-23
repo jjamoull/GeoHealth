@@ -6,16 +6,14 @@ import {AuthService} from '../../../core/service/AuthService/auth-service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterOutlet],
+  imports: [],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
   standalone: true,
 })
 export class NavbarComponent {
-  protected readonly title = signal('GeoHealth_Angular');
 
-
-  constructor(public route: ActivatedRoute, private router: Router, private loginService:LoginService, private authService: AuthService,private cdr: ChangeDetectorRef) {}
+  constructor(private router: Router, public loginService:LoginService) {}
 
 
   goToHome() {
