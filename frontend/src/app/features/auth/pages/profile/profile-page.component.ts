@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {DeleteAccountDto} from '../../../../shared/models/UserModel/DeleteAccountDto';
 import {Router} from '@angular/router';
 import {disabled} from '@angular/forms/signals';
-import {InputboxComponents} from '../../../../shared/components/inputbox.components.ts/inputbox.components';
+import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
 
 

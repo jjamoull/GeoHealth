@@ -5,7 +5,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import { CommonModule } from '@angular/common';
 import {Router} from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
-import {InputboxComponents} from '../../../../shared/components/inputbox.components.ts/inputbox.components';
+import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 
 
 @Component({

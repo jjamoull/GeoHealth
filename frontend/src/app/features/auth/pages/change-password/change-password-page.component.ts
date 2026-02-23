@@ -3,7 +3,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {UserResponseDto} from '../../../../shared/models/UserModel/UserResponseDto';
 import {UsersServices} from '../../../../core/service/UserService/users-services';
 import {UpdatePasswordDto} from '../../../../shared/models/UserModel/UpdatePasswordDto';
-import {InputboxComponents} from '../../../../shared/components/inputbox.components.ts/inputbox.components';
+import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
 
 @Component({

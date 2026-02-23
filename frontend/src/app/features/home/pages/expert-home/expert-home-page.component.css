@@ -82,7 +82,7 @@
   flex: 0 0 5em;
   height: 5em;
   padding: 1em;
-  background-image: url("/frontend/src/assets/background/worldMap.png");
+  background-image: url("/assets/background/worldMap.png");
   font-size: 3rem;
   border-radius: .2em;
   text-align: center;
