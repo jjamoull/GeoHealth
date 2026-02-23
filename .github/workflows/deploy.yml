@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -77,15 +77,6 @@ jobs:
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: |
-            cd /opt/geohealth
-            export $(cat .env | xargs)
-            docker-compose --env-file .env up -d
-            sudo pkill -f webgis || true
-            sleep 2
-            nohup java -jar backend/*.jar \
-              --spring.profiles.active=prod \
-              > /opt/geohealth/app.log 2>&1 &
           script: |
             cd /opt/geohealth
             export $(cat .env | xargs)
