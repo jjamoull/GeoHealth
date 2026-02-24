@@ -222,7 +222,7 @@ public class UserService {
         if (optionalUser.isEmpty()){
             throw new IllegalArgumentException("Username does not exist");
         }
-        User user = optionalUser.get();
+        final User user = optionalUser.get();
         if (user.isBanned()){
             throw new IllegalArgumentException("User is already banned");
         }
@@ -245,7 +245,7 @@ public class UserService {
         if (optionalUser.isEmpty()){
             throw new IllegalArgumentException("Username does not exist");
         }
-        User user = optionalUser.get();
+        final User user = optionalUser.get();
         if (!user.isBanned()){
             throw new IllegalArgumentException("User is not banned");
         }
@@ -266,7 +266,7 @@ public class UserService {
         if (optionalUser.isEmpty()){
             throw new IllegalArgumentException("Username does not exist");
         }
-        User user = optionalUser.get();
+        final User user = optionalUser.get();
         if (user.getRole().equals("SuperAdmin")) {
             throw new IllegalArgumentException("This user cannot be modified");
         }

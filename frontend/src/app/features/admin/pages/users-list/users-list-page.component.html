@@ -1,16 +1,15 @@
 
-@ -1 +1,45 @@
 <div class="admin-page">
 
 </div>
 
 <h1 class="admin-title"> Utilisateurs de Geohealth </h1>
 
-@if (Users.length ==0) {
+@if (users.length ==0) {
     <div> Aucun utilisateur trouvé </div>
 }
 
-@if (Users.length > 0) {
+@if (users.length > 0) {
     <table>
         <tr>
             <th>Username</th>
@@ -21,7 +20,7 @@
             <th>Ban</th>
         </tr>
         <tr>
-            @for(user of Users; track user.id){
+            @for(user of users; track $index){
                 <td>{{ user.username }}</td>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>

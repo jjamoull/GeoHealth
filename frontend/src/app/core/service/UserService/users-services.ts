@@ -19,12 +19,6 @@ export class UsersServices {
 
   constructor(private httpClient: HttpClient) {}
 
-  /**
-   * @return : Retrieves all users in dataBase
-   * */
-  public getAllUsers():Observable<User[]>{
-    return this.httpClient.get<User[]>(`${this.baseUrl}${API_ENDPOINTS.USER.UPDATE}`,{ withCredentials: true });
-  }
 
 
   /**

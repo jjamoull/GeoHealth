@@ -25,7 +25,6 @@ export const routes: Routes = [
   },{
     path: 'usersList',
     component: UsersListPageComponent,
-    canActivate: [authGuard],
   },{
   path: '',
   redirectTo: 'login',

@@ -11,5 +11,8 @@ export const API_ENDPOINTS = {
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
     STATUS: '/auth/status',
+  },
+  ADMIN: {
+    ALLUSER: '/admin/users'
   }
 } as const;
