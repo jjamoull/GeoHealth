@@ -1,0 +1,111 @@
+<div class="main-container">
+  <div class="title-container">
+    <h1 class="profile-title"> Your profile </h1>
+  </div>
+
+  <div class="info-container">
+    <img src="/assets/background/userIcon.png" class="user-icon" alt="icon">
+    <div class="text-container">
+      <h2 class="role">{{ user.role }}</h2>
+      <p class="firstname-lastname">{{ user.firstName }}  {{ user.lastName }}</p>
+    </div>
+  </div>
+
+
+  <div class="form-container">
+    <div class="profile-section">
+      <app-inputbox
+        [label]="'Username'"
+        [(ngModel)]="user.username"
+        [disabled]="!isEditingField">
+      </app-inputbox>
+
+      <app-inputbox
+        [label]="'Firstname'"
+        [(ngModel)]="user.firstName"
+        [disabled]="!isEditingField">
+      </app-inputbox>
+
+      <app-inputbox
+        [label]="'Lastname'"
+        [(ngModel)]="user.lastName"
+        [disabled]="!isEditingField">
+      </app-inputbox>
+
+      <app-inputbox
+        [label]="'Email'"
+        [(ngModel)]="user.email"
+        [disabled]="!isEditingField">
+      </app-inputbox>
+
+    @if(isEditingField){
+      <app-button
+        [text]="'Apply Change'"
+        variant="success"
+        (clicked)="updateProfile()">
+      </app-button>
+
+      <app-button
+        [text]="'Cancel'"
+        variant="danger"
+        (clicked)="cancel()">
+      </app-button>
+      }
+      @else if(!isEditingField){
+        <app-button
+          [text]="'Edit'"
+          variant="success"
+          (clicked)="toggleEdit()">
+        </app-button>
+      }
+      @if (errorMessage) {
+        <div class="alert alert-danger" style="margin-top: 20px;">
+          {{ errorMessage }}
+        </div>
+
+      }
+
+      @if (!showWindow){
+        <app-button
+          [text]="'Delete my account'"
+          variant="danger"
+          (clicked)="openWindow()">
+        </app-button>
+      }
+
+      @if (showWindow) {
+        <div class="deleteAccountWindow">
+          <div class="window">
+            <h3>Confirmation</h3>
+            <p>Please type and validate your password to confirm</p>
+
+            <app-inputbox
+             [type]="'password'"
+             [placeholder]="'password'"
+             [(ngModel)]="userToDelete.password"
+            >
+            </app-inputbox>
+
+            <app-button
+              [text]="'Cancel'"
+              variant="success"
+              (clicked)="closeWindow()">
+            </app-button>
+
+            <app-button
+              [text]="'Delete forever'"
+              variant="danger"
+              (clicked)="delete()"
+              [disabled]="!userToDelete.password">
+            </app-button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="changePasswordLink">
+      <p>You want to change your password ? <a (click)="goToChangePassword()">Change password</a></p>
+    </div>
+    
+  </div>
+</div>

@@ -1,0 +1,16 @@
+
+
+
+<div class="inputbox-container">
+  @if(label){
+    <label >{{label}}</label>
+  }
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [value]="value"
+    (input)="onChange($any($event.target).value)"
+    (blur)="onTouched()">
+
+</div>

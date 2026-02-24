@@ -39,8 +39,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/app/restApiManagement/environement.ts",
-                  "with": "src/app/restApiManagement/environement.prod.ts"
+                  "replace": "src/app/core/rest-api-management/environment.ts",
+                  "with": "src/app/core/rest-api-management/environment.prod.ts"
                 }
               ],
               "budgets": [

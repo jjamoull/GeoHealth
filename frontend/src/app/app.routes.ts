@@ -1,32 +1,30 @@
 import { Routes } from '@angular/router';
-import {Home} from './components/home/home';
-import {Map} from './components/map/map';
-import {Navigation} from './components/navigation/navigation';
-import { Login } from './components/login/login';
-import { Register } from './components/register/register';
-import { Forgotpassword } from './components/forgotpassword/forgotpassword';
-import { Resetpassword } from './components/resetpassword/resetpassword';
-import {UsersList} from './components/users-list/users-list';
-import { authGuard } from './components/authguard/authguard-guard';
-import {Profile} from './components/profile/profile';
-import {Changepassword} from './components/changepassword/changepassword';
+import {ExpertHomePageComponent} from './features/home/pages/expert-home/expert-home-page.component';
+import {MapComponent} from './shared/components/map/map.component';
+import {NavigationPageComponent} from './features/navigation/pages/navigation/navigation-page.component';
+import { LoginPageComponent } from './features/auth/pages/login/login-page.component';
+import { RegisterPageComponent } from './features/auth/pages/register/register-page.component';
+import {UsersListPageComponent} from './features/admin/pages/users-list/users-list-page.component';
+import { authGuard } from './features/auth/services/authguard/authguard-guard';
+import {ProfilePageComponent} from './features/auth/pages/profile/profile-page.component';
+import {ChangePasswordPageComponent} from './features/auth/pages/change-password/change-password-page.component';
 
 export const routes: Routes = [
   {
     path: 'home',
-    component: Home,
+    component: ExpertHomePageComponent,
     canActivate: [authGuard],
   },{
     path: 'map/:id',
-    component: Map,
+    component: MapComponent,
     canActivate: [authGuard],
   },{
     path:'navigation',
-    component: Navigation,
+    component: NavigationPageComponent,
     canActivate: [authGuard]
   },{
     path: 'usersList',
-    component: UsersList,
+    component: UsersListPageComponent,
     canActivate: [authGuard],
   },{
   path: '',
@@ -34,23 +32,17 @@ export const routes: Routes = [
   pathMatch: 'full'
   },{
     path:'login',
-    component: Login,
+    component: LoginPageComponent,
   },{
     path:'register',
-    component: Register,
-  },{
-    path:'forgot-password',
-    component: Forgotpassword,
-  },{
-    path:'reset-password',
-    component: Resetpassword,
+    component: RegisterPageComponent,
   },{
     path:'profile',
-    component: Profile,
+    component: ProfilePageComponent,
     canActivate: [authGuard]
   },{
     path:'change-password',
-    component: Changepassword,
+    component: ChangePasswordPageComponent,
   },{
     path: '**',
     redirectTo: 'login',
