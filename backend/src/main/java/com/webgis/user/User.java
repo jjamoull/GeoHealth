@@ -36,6 +36,9 @@ public class User {
     @Column(nullable = false)
     private boolean deleted = false;
 
+    @Column(nullable = false)
+    private boolean banned = false;
+
     public User() {}
 
     public User(String username,
@@ -81,6 +84,11 @@ public class User {
     public boolean isDeleted() {
         return deleted;
     }
+
+    public boolean isBanned(){
+        return this.banned;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -111,5 +119,9 @@ public class User {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public void setBanned(boolean banned){
+        this.banned = banned;
     }
 }

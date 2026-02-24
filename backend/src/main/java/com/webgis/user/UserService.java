@@ -209,4 +209,69 @@ public class UserService {
         final String userRole = user.getRole();
         return userRole.equals("Admin");
     }
+    /**
+     * Bans a user by username
+     *
+     * @param username the username of the user to ban
+     * @throws IllegalArgumentException if user does not exist
+     * @throws IllegalArgumentException if user is already banned
+     * @throws IllegalArgumentException if the user has SuperAdmin role
+     */
+    public void banUser(String username) {
+        final Optional<User> optionalUser = findByUsername(username);
+        if (optionalUser.isEmpty()){
+            throw new IllegalArgumentException("Username does not exist");
+        }
+        User user = optionalUser.get();
+        if (user.isBanned()){
+            throw new IllegalArgumentException("User is already banned");
+        }
+        if (user.getRole().equals("SuperAdmin")) {
+            throw new IllegalArgumentException("This user cannot be banned");
+        }
+        user.setBanned(true);
+        userRepository.save(user);
+    }
+
+    /**
+     * Unbans a user by username
+     *
+     * @param username the username of the user to unban
+     * @throws IllegalArgumentException if user does not exist
+     * @throws IllegalArgumentException if user is not banned
+     */
+    public void unbanUser(String username){
+        final Optional<User> optionalUser = findByUsername(username);
+        if (optionalUser.isEmpty()){
+            throw new IllegalArgumentException("Username does not exist");
+        }
+        User user = optionalUser.get();
+        if (!user.isBanned()){
+            throw new IllegalArgumentException("User is not banned");
+        }
+        user.setBanned(false);
+        userRepository.save(user);
+    }
+
+    /**
+     * Cheange the role of the user
+     *
+     * @param username The username desired to change the role of
+     * @param role The new role
+     * @throws IllegalArgumentException if the user associated with the username does not exist
+     * @throws IllegalArgumentException if the user has SuperAdmin role
+     * */
+    public void changeRole(String username, String role){
+        final Optional<User> optionalUser = findByUsername(username);
+        if (optionalUser.isEmpty()){
+            throw new IllegalArgumentException("Username does not exist");
+        }
+        User user = optionalUser.get();
+        if (user.getRole().equals("SuperAdmin")) {
+            throw new IllegalArgumentException("This user cannot be modified");
+        }
+        user.setRole(role);
+        userRepository.save(user);
+    }
+
 }
