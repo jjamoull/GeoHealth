@@ -1,1 +1,38 @@
 
+@ -1 +1,45 @@
+<div class="admin-page">
+
+</div>
+
+<h1 class="admin-title"> Utilisateurs de Geohealth </h1>
+
+@if (Users.length ==0) {
+    <div> Aucun utilisateur trouvé </div>
+}
+
+@if (Users.length > 0) {
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Ban</th>
+        </tr>
+        <tr>
+            @for(user of Users; track user.id){
+                <td>{{ user.username }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                </td>
+            }
+        </tr>
+
+    </table>
+
+}
+
