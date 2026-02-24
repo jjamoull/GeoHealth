@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import {UserResponseDto} from '../../../shared/models/UserModel/UserResponseDto';
 import {UserUpdateDto} from '../../../shared/models/UserModel/UserUpdateDto';
 import {UpdatePasswordDto} from '../../../shared/models/UserModel/UpdatePasswordDto';
-import {environment} from '../../rest-api-management/environement';
+import {environment} from '../../rest-api-management/environment';
 import {API_ENDPOINTS} from '../../rest-api-management/endpoint';
 import {DeleteAccountDto} from '../../../shared/models/UserModel/DeleteAccountDto';
 

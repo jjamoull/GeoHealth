@@ -2,7 +2,7 @@ import {Injectable, signal} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {catchError, map, Observable, of, tap} from "rxjs";
 import {User} from '../../../shared/models/UserModel/User';
-import {environment} from '../../rest-api-management/environement';
+import {environment} from '../../rest-api-management/environment';
 import {API_ENDPOINTS} from '../../rest-api-management/endpoint';
 
 @Injectable({

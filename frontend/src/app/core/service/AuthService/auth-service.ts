@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {response} from 'express';
 import {catchError, map, Observable, of} from 'rxjs';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {environment} from '../../rest-api-management/environement';
+import {environment} from '../../rest-api-management/environment';
 import {API_ENDPOINTS} from '../../rest-api-management/endpoint';
 
 
