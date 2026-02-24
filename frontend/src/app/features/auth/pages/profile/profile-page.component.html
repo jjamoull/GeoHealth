@@ -4,7 +4,7 @@
   </div>
 
   <div class="info-container">
-    <img src="../../../../../assets/background/userIcon.png" class="user-icon" alt="icon">
+    <img src="/assets/background/userIcon.png" class="user-icon" alt="icon">
     <div class="text-container">
       <h2 class="role">{{ user.role }}</h2>
       <p class="firstname-lastname">{{ user.firstName }}  {{ user.lastName }}</p>
@@ -102,5 +102,10 @@
         </div>
       }
     </div>
+
+    <div class="changePasswordLink">
+      <p>You want to change your password ? <a (click)="goToChangePassword()">Change password</a></p>
+    </div>
+    
   </div>
 </div>

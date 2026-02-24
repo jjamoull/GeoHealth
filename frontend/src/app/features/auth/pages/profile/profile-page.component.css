@@ -100,3 +100,21 @@
 }
 
 
+.changePasswordLink{
+  font-size:14.5px;
+  text-align: center;
+  margin-top: 20px;
+}
+.changePasswordLink p a{
+  color: darkblue;
+  text-decoration: none;
+}
+.changePasswordLink p {
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+}
+.changePasswordLink p a:hover{
+  text-decoration: underline;
+}
+

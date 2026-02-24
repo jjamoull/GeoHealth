@@ -59,6 +59,14 @@ export class ProfilePageComponent implements OnInit{
     })
   }
 
+
+  /**
+   * Go to the change password page
+   */
+  public goToChangePassword(){
+    this.router.navigate(['change-password'])
+  }
+
   /**
    * Toggle the value of the isEditingField
    *

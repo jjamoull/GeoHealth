@@ -60,6 +60,13 @@ export class RegisterPageComponent implements  OnInit {
   }
 
   /**
+   * Redirection to home page
+   */
+  goToHome(){
+    this.router.navigate(['home'])
+  }
+
+  /**
    * @modifies : User with the new data that the user has recorded
    * */
   public register(): void {
@@ -86,6 +93,7 @@ export class RegisterPageComponent implements  OnInit {
     this.LoginService.register(registerDto).subscribe({
       next: (response) => {
         console.log('Registration successful!', response);
+        this.goToHome()
       },
       error: (err) => {
         console.error('Error while creating user', err);
