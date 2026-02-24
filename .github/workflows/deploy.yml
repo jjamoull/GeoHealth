@@ -1,12 +1,13 @@
 name: Deploy GeoHealth
 
 on:
-  push:
-    branches: [bugfix/map]
+  pull_request:
+    branches: [main]
+    types: [closed]
 
 jobs:
   deploy:
-    #if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
