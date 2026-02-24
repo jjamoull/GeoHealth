@@ -24,9 +24,9 @@ export class MapComponent implements AfterViewInit {
   async ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       const L = await import('leaflet');
-
-      const map = L.map('map').setView(this.CAMEROON_COORDINATES[0], this.CAMEROON_ZOOM);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      const leaflet = L.default ?? L;
+      const map = leaflet.map('map').setView(this.CAMEROON_COORDINATES[0], this.CAMEROON_ZOOM);
+      leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
       }).addTo(map);
     }
