@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {UsersServices} from '../../../../core/service/UserService/users-services';
 import {UserResponseDto} from '../../../../shared/models/UserModel/UserResponseDto'
@@ -14,7 +14,7 @@ import {AdminsServices} from '../../../../core/service/AdminService/admins-servi
 export class UsersListPageComponent implements  OnInit{
   users: UserResponseDto[] = [];
 
-  constructor(private adminsServices: AdminsServices) {}
+  constructor(private adminsServices: AdminsServices, private cdr: ChangeDetectorRef) {}
 
 
   ngOnInit() {
@@ -28,7 +28,9 @@ export class UsersListPageComponent implements  OnInit{
   private getAllUsers(){
     this.adminsServices.getAllUsers().subscribe(
       data =>{
+        console.log(data);
         this.users = data;
+        this.cdr.detectChanges();
       })
   }
 
