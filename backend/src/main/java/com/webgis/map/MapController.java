@@ -34,17 +34,17 @@ public class MapController {
 
 
     /*@GetMapping("/geoJsonFile/{id}")
-    public MapComponent getGeoJsonFile(@PathVariable long id){
-        final Optional<MapComponent> mapTemp = mapService.findById(id);
+    public Map getGeoJsonFile(@PathVariable long id){
+        final Optional<Map> mapTemp = mapService.findById(id);
         if (mapTemp.isPresent()){
-//            final MapComponent map = mapTemp.get();
+//            final Map map = mapTemp.get();
 //            if (map.getFileGeoJson()!= null){
 //                return map;
 //            }
             mapTemp.map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
         }
-        return (MapComponent) ResponseEntity.notFound();
+        return (Map) ResponseEntity.notFound();
     }*/
 
     @GetMapping("/geoJsonFile/{id}")
