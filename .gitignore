@@ -1,6 +1,6 @@
 HELP.md
 target/
-backend/.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -36,9 +36,6 @@ build/
 .env
 
 ### Node modules ###
-frontend/node_modules
-package-lock.json
+frontend/node_modules/
+node_modules/
 frontend/package-lock.json
-frontend/package.json
-/node_modules
-package.json
