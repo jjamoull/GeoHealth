@@ -8,9 +8,17 @@ tr {
 th,
 td {
   padding: 15px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #ccc;
 }
 tr:hover {
   background-color: #cdcdcd;
+}
+
+.admin-title{
+  font-size: 36px;
+  text-align: center;
+  color: black;
+  margin-top: 5rem;
+  margin-bottom: 3rem;
 }
