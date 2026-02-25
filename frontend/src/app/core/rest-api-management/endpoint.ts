@@ -13,6 +13,9 @@ export const API_ENDPOINTS = {
     STATUS: '/auth/status',
   },
   ADMIN: {
-    ALLUSER: '/admin/users'
+    ALLUSER: '/admin/users',
+    BAN: '/admin/users/ban',
+    UNBAN:'/admin/users/unban/',
+    CHANGEROLE:'/admin/users/change-role',
   }
 } as const;

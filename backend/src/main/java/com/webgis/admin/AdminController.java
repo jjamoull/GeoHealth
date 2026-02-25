@@ -1,10 +1,12 @@
 package com.webgis.admin;
 
 import com.webgis.MessageDto;
-import com.webgis.admin.dto.ChangeRoleDto;
 import com.webgis.user.User;
 import com.webgis.user.UserService;
-import com.webgis.user.dto.UserResponseDto;
+import com.webgis.admin.dto.AdminUserDto;
+import com.webgis.admin.dto.BanDto;
+import com.webgis.admin.dto.ChangeRoleDto;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,24 +35,24 @@ public class AdminController {
      * @return a list of all the users as a list of UserResponseDto
      */
     @GetMapping("/users")
-    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
+    public ResponseEntity<List<AdminUserDto>> getAllUsers() {
         final List<User> users = userService.findAllUsers();
-        final List<UserResponseDto> result = new ArrayList<>();
+        final List<AdminUserDto> result = new ArrayList<>();
         for (User user : users) {
-            result.add(new UserResponseDto(user));
+            result.add(new AdminUserDto(user));
         }
         return ResponseEntity.status(200).body(result);
     }
 
     /**
      * Bans the user
-     * @param username the username of the target to ban
+     * @param banDto the information about the target to ban
      * @return confirmation message if succeeded, error message otherwise
      */
-    @PutMapping("/users/{username}/ban")
-    public ResponseEntity<Object> banUser(@PathVariable String username){
+    @PutMapping("/users/ban")
+    public ResponseEntity<Object> banUser(@RequestBody BanDto banDto){
         try {
-            userService.banUser(username);
+            userService.banUser(banDto.username());
             return ResponseEntity.status(200).body(new MessageDto("User has been banned"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
@@ -62,7 +64,7 @@ public class AdminController {
      * @param username the username of the target to unban
      * @return confirmation message if succeeded, error message otherwise
      */
-    @PutMapping("/users/{username}/unban")
+    @PutMapping("/users/unban/{username}")
     public ResponseEntity<MessageDto> unbanUser(@PathVariable String username){
         try {
             userService.unbanUser(username);
@@ -77,13 +79,12 @@ public class AdminController {
      * @param username the username of the target to unban
      * @return confirmation message if succeeded, error message otherwise
      */
-    @PutMapping("/users/{username}/change-role")
+    @PutMapping("/users/change-role")
     public ResponseEntity<MessageDto> changeRole(
-            @PathVariable String username,
             @RequestBody ChangeRoleDto changeRoleDto
     ){
         try{
-            userService.changeRole(username, changeRoleDto.role());
+            userService.changeRole(changeRoleDto.username(), changeRoleDto.role());
             return ResponseEntity.status(200).body(new MessageDto("role udpated successfully"));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));

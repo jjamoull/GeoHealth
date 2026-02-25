@@ -17,19 +17,28 @@
             <th>Last name</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Banned</th>
+            <th>Deleted</th>
             <th>Ban</th>
         </tr>
+      @for(user of users; track $index){
         <tr>
-            @for(user of users; track $index){
                 <td>{{ user.username }}</td>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.role }}</td>
+                <td>{{ user.banned }}</td>
+                <td>{{ user.deleted }}</td>
                 <td>
+                  <app-button
+                    [text]="'Ban'"
+                    variant="danger"
+                    (clicked)="banUser(user.username)">
+                  </app-button>
                 </td>
-            }
         </tr>
+      }
 
     </table>
 

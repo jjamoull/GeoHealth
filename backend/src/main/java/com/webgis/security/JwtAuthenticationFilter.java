@@ -41,7 +41,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 final User user = userService.findByUsername(username).orElse(null);
                 if (user != null) {
-                    authenticateUser(user);
+                    if(user.isBanned()){
+                       response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                       response.getWriter().write("Account is banned");
+                       return;
+                    }
+                    else{
+                        authenticateUser(user);
+                    }
+
                 }
             }
         }
