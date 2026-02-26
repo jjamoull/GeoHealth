@@ -1,8 +1,11 @@
-import {ChangeDetectorRef, Component, signal} from '@angular/core';
-import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {LoginService} from '../../../core/service/LoginService/loginService';
-import {catchError, map, Observable, of} from 'rxjs';
-import {AuthService} from '../../../core/service/AuthService/auth-service';
+import {UsersServices} from '../../../core/service/UserService/users-services';
+import {UserResponseDto} from '../../models/UserModel/UserResponseDto';
+import {AdminsServices} from '../../../core/service/AdminService/admins-services';
+import {Observable} from 'rxjs';
+
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +16,11 @@ import {AuthService} from '../../../core/service/AuthService/auth-service';
 })
 export class NavbarComponent {
 
-  constructor(private router: Router, public loginService:LoginService) {}
+  constructor(private router: Router,
+              public loginService:LoginService,
+              private cdr:ChangeDetectorRef,
+  ) {}
+
 
 
   goToHome() {
@@ -21,10 +28,6 @@ export class NavbarComponent {
   }
   goToNavigation(){
     this.router.navigate(['navigation'])
-  }
-
-  goToRegister(){
-    this.router.navigate(['register'])
   }
 
   goToLogin(){
@@ -35,16 +38,27 @@ export class NavbarComponent {
     this.router.navigate(['profile'])
   }
 
+  goToUsersList(){
+    this.router.navigate(['users-list'])
+  }
+
   logout():void {
     this.loginService.logout().subscribe({
       next: (response) => {
         console.log("logout");
-        this.router.navigate(['login'])
+        this.loginService.setLoggedIn(false);
+        this.router.navigate(['login']);
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error while logged out', err);
+        this.cdr.detectChanges();
       }
     });
+  }
+
+  isLoggedIn():boolean{
+    return this.loginService.isLoggedIn();
   }
 
 }

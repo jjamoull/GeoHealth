@@ -32,7 +32,7 @@ public class AdminController {
     /**
      * returns all the users info
      *
-     * @return a list of all the users as a list of UserResponseDto
+     * @return a list of all the users as a list of AdminUserDto
      */
     @GetMapping("/users")
     public ResponseEntity<List<AdminUserDto>> getAllUsers() {
@@ -76,7 +76,7 @@ public class AdminController {
 
     /**
      * changes the user's role
-     * @param username the username of the target to unban
+     * @param changeRoleDto new role information
      * @return confirmation message if succeeded, error message otherwise
      */
     @PutMapping("/users/change-role")

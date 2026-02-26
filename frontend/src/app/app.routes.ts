@@ -23,8 +23,9 @@ export const routes: Routes = [
     component: NavigationPageComponent,
     canActivate: [authGuard]
   },{
-    path: 'usersList',
+    path:'users-list',
     component: UsersListPageComponent,
+    canActivate: [authGuard]
   },{
   path: '',
   redirectTo: 'login',

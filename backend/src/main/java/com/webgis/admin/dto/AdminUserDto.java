@@ -2,6 +2,9 @@ package com.webgis.admin.dto;
 
 import com.webgis.user.User;
 
+/**
+ * Data Transfer Object containing all the information about a user that can be retrieved by an admin
+ */
 public record AdminUserDto(
         long id,
         String username,
