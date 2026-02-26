@@ -25,16 +25,15 @@ public class Map {
     @Column(columnDefinition="BYTEA")
     private byte[] zipFile;
 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition="BYTEA")
-    private byte[] fileGeoJson;
+    @Column(name = "fileGeoJson", columnDefinition = "TEXT")
+    private String fileGeoJson;
 
     public Map(){}
 
     public Map(String title,
                String description,
                byte[] zipFile,
-               byte[] fileGeoJson){
+               String fileGeoJson){
         this.title=title;
         this.description =description;
         this.zipFile = zipFile;
@@ -58,7 +57,7 @@ public class Map {
 
     public byte[] getZipFile(){return zipFile;}
 
-    public byte[] getFileGeoJson() {
+    public String getFileGeoJson() {
         return fileGeoJson;
     }
 
@@ -80,7 +79,7 @@ public class Map {
     }
 
 
-    public void setFileGeoJson(byte[] fileGeoJson) {
+    public void setFileGeoJson(String fileGeoJson) {
         this.fileGeoJson = fileGeoJson;
     }
 }

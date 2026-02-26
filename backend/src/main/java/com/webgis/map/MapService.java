@@ -1,15 +1,25 @@
 package com.webgis.map;
 
+import com.Converter.ZipFiles;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
+
+import static com.Converter.DetectFiles.findShpFile;
+import static com.Converter.ShapeFileToGeoJsonFile.transformShapeFileToGeoJsonFile;
 
 @Service
 public class MapService {
 
     private final MapRepository mapRepository;
+    private final ZipFiles unzipper;
 
     public MapService(MapRepository mapRepository){
         this.mapRepository = mapRepository;
+        this.unzipper = new ZipFiles();
     }
 
     /**
@@ -54,4 +64,32 @@ public class MapService {
         final Map mapDel = map.get();
         mapRepository.delete(mapDel);
     }
+
+    /**
+     * Converts a zipFile containing shapefiles into a geoJSON file
+     *
+     * @param id : id of the map in the database
+     * @throws IOException : if method findShpFile doesn't find a shp file
+     */
+    public String toGeoJsonFile(long id) throws IOException{
+        Map map = mapRepository.findById(id).orElseThrow(()-> new RuntimeException("The map is not found for this id :"+id));
+        System.out.println("1");
+        //gets zipfile and creates temp dir to store results of unzipping
+        byte[] zipFile = map.getZipFile();
+        System.out.println("2");
+
+        File tempFile = Files.createTempDirectory("shp_").toFile();
+        System.out.println("3");
+
+        unzipper.unzip(map, tempFile);
+        System.out.println("4");
+
+        // shp file that will be converted into geojson file
+        File shpFile = findShpFile(tempFile);
+        System.out.println("5");
+
+        return transformShapeFileToGeoJsonFile(shpFile);
+    }
+
+
 }

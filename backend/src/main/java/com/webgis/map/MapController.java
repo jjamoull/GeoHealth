@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
-
+import org.springframework.web.bind.annotation.PatchMapping;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,11 +25,8 @@ import java.util.Optional;
 public class MapController {
     private final MapService mapService;
 
-    private final ZipFiles unzipper;
-
     public MapController( MapService mapService){
         this.mapService = mapService;
-        this.unzipper = new ZipFiles();
     }
 
 
@@ -64,36 +61,41 @@ public class MapController {
             @RequestParam("zipFile") MultipartFile zipFile,
             @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile) throws IOException {
 
+        System.out.println("avant");
         final Map map = new Map(title,
                 description,
                 zipFile.getBytes(),
                 null);
+
+        mapService.save(map);
+
         if (geoJsonFile != null){
-            map.setFileGeoJson(geoJsonFile.getBytes());
+            map.setFileGeoJson(new String(geoJsonFile.getBytes()));
+        } else{
+            System.out.println("coucou");
+            if (map.getId()== null){
+                throw new RuntimeException("There is no id for the map : "+ title);
+            } else {
+                String tempGeoJsonFile = mapService.toGeoJsonFile(map.getId());
+                map.setFileGeoJson(tempGeoJsonFile);
+                System.out.println("objet map bien changé avec " + tempGeoJsonFile);
+            }
+
         }
-
-        //----------------------------------------------------------------------------------------------
-        //temporary disabling the unzipping to avoid polluting the github, files will be deleted after
-        // transformation into geoJSON but this aspect is not yet implemented
-        
-        //File fileToUnzip = new File(zipFile.getOriginalFilename());
-        //zipFile.transferTo(fileToUnzip);
-        //unzipper.unzip(map, fileToUnzip);
-        //----------------------------------------------------------------------------------------------
-
+        System.out.println("map geojson: "+map.getFileGeoJson());
         return mapService.save(map);
     }
 
 
-    @PostMapping("/save_geoJsonFile/{id}")
-    public Map addGeoJSONFile(@RequestBody Map mapToAdd, @RequestBody byte[] geoJsonFile){
-        final Optional<Map> mapTemp = mapService.findByTitle(mapToAdd.getTitle());
-
-        if (mapTemp.isPresent()) {
-            final Map map = mapTemp.get();
-            return mapService.save(map);
-        }
-        return null;
+    @PatchMapping("/save_geoJsonFile/{id}")
+    public ResponseEntity<Map> addGeoJSONFile(@PathVariable long id, @RequestBody String geoJsonFile){
+        return mapService.findById(id)
+                .map(map -> {
+                    map.setFileGeoJson(geoJsonFile);
+                    Map mapConverted = mapService.save(map);
+                    return ResponseEntity.ok(mapConverted);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
 
