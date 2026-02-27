@@ -1,6 +1,5 @@
 package com.webgis.map;
 
-import com.Converter.ZipFiles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 //import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/maps")
@@ -59,7 +57,7 @@ public class MapController {
             if (map.getId()== null){
                 throw new RuntimeException("There is no id for the map : "+ title);
             } else {
-                String tempGeoJsonFile = mapService.toGeoJsonFile(map.getId());
+                final String tempGeoJsonFile = mapService.toGeoJsonFile(map.getId());
                 map.setFileGeoJson(tempGeoJsonFile);
             }
 
@@ -73,7 +71,7 @@ public class MapController {
         return mapService.findById(id)
                 .map(map -> {
                     map.setFileGeoJson(geoJsonFile);
-                    Map mapConverted = mapService.save(map);
+                    final Map mapConverted = mapService.save(map);
                     return ResponseEntity.ok(mapConverted);
                 })
                 .orElse(ResponseEntity.notFound().build());

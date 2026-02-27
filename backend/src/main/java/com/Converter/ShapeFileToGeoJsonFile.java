@@ -35,17 +35,17 @@ public class ShapeFileToGeoJsonFile {
      *  This method used a lot of predefined methods from library : GeoTools
      * */
     public static String transformShapeFileToGeoJsonFile(File shpFile) throws IOException {
-        ShapefileDataStore dataStore = new ShapefileDataStore(shpFile.toURI().toURL());
+        final ShapefileDataStore dataStore = new ShapefileDataStore(shpFile.toURI().toURL());
         dataStore.setCharset(StandardCharsets.UTF_8);
 
-        String typeName = dataStore.getTypeNames()[0];
+        final String typeName = dataStore.getTypeNames()[0];
 
-        SimpleFeatureSource featureSource = dataStore.getFeatureSource(typeName);
+        final SimpleFeatureSource featureSource = dataStore.getFeatureSource(typeName);
 
-        SimpleFeatureCollection collection = featureSource.getFeatures();
+        final SimpleFeatureCollection collection = featureSource.getFeatures();
 
-        FeatureJSON featureJSON = new FeatureJSON();
-        StringWriter writer = new StringWriter();
+        final FeatureJSON featureJSON = new FeatureJSON();
+        final StringWriter writer = new StringWriter();
 
         featureJSON.writeFeatureCollection(collection, writer);
 

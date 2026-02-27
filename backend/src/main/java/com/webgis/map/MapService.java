@@ -72,13 +72,13 @@ public class MapService {
      * @throws IOException : if method findShpFile doesn't find a shp file
      */
     public String toGeoJsonFile(long id) throws IOException{
-        Map map = mapRepository.findById(id).orElseThrow(()-> new RuntimeException("The map is not found for this id :"+id));
-        File tempFile = Files.createTempDirectory("shp_").toFile();
+        final Map map = mapRepository.findById(id).orElseThrow(()-> new RuntimeException("The map is not found for this id :"+id));
+        final File tempFile = Files.createTempDirectory("shp_").toFile();
 
         unzipper.unzip(map, tempFile);
 
         // shp file that will be converted and used to detect others important files into zip file for geojson file
-        File shpFile = findShpFile(tempFile);
+        final File shpFile = findShpFile(tempFile);
 
         return transformShapeFileToGeoJsonFile(shpFile);
     }
