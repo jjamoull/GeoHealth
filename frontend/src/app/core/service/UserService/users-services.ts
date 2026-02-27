@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {User} from '../../../shared/models/UserModel/User';
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {UserResponseDto} from '../../../shared/models/UserModel/UserResponseDto';
 import {UserUpdateDto} from '../../../shared/models/UserModel/UserUpdateDto';
 import {UpdatePasswordDto} from '../../../shared/models/UserModel/UpdatePasswordDto';
@@ -16,6 +16,8 @@ import {DeleteAccountDto} from '../../../shared/models/UserModel/DeleteAccountDt
 export class UsersServices {
 
   private baseUrl= environment.apiBaseUrl;
+
+
 
   constructor(private httpClient: HttpClient) {}
 
@@ -53,6 +55,13 @@ export class UsersServices {
    */
   public deleteUserAccount(deleteAccountDto:DeleteAccountDto):Observable<any>{
     return this.httpClient.delete(`${this.baseUrl}${API_ENDPOINTS.USER.DELETE}`,{body:deleteAccountDto, withCredentials: true})
+  }
+
+  /**
+   * Check if a user is an admin or not
+   */
+  public isAdmin():Observable<boolean>{
+    return this.httpClient.get<boolean>(`${this.baseUrl}${API_ENDPOINTS.USER.ISADMIN}`,{withCredentials: true})
   }
 
 }

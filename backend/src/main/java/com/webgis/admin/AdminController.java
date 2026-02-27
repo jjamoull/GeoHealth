@@ -3,9 +3,12 @@ package com.webgis.admin;
 import com.webgis.MessageDto;
 import com.webgis.user.User;
 import com.webgis.user.UserService;
+
+
 import com.webgis.admin.dto.AdminUserDto;
 import com.webgis.admin.dto.BanDto;
 import com.webgis.admin.dto.ChangeRoleDto;
+
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +22,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
+
 
     public AdminController(UserService userService) {
         this.userService = userService;
@@ -90,5 +95,6 @@ public class AdminController {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         }
     }
+
 
 }

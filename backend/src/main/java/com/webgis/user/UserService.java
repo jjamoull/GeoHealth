@@ -171,15 +171,16 @@ public class UserService {
         userRepository.save(user);
     }
   
-     /* changes the password of a given user
-     *
+     /**
+     * changes the password of a given user
+      *
      * @param username The username of the user
      * @param oldPassword the password the user wants to change
      * @param newPassword the new password
      * @return the user after changing the password
      * @throws IllegalArgumentException if the user associated with the username does not exist
      * @throws IllegalArgumentException if the old password is wrong
-     * */
+     */
     public User changePassword(String username, String oldPassword, String newPassword){
         final Optional<User> useroptional = findByUsername(username);
         if (useroptional.isEmpty()){
@@ -254,7 +255,7 @@ public class UserService {
     }
 
     /**
-     * Cheange the role of the user
+     * Change the role of the user
      *
      * @param username The username desired to change the role of
      * @param role The new role
