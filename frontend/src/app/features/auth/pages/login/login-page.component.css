@@ -1,25 +1,18 @@
-.image-container {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background-image: url("/assets/background/loginBackgroundPlanet.png");
-}
-
-.image{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
+.login-page{
+  min-height: 100vh;
+  background-image: url('/assets/background/loginBackgroundPlanet.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  padding-top: 5rem;
 }
 
 .login{
   position: absolute;
   width: 40%;
-  background: transparent;
-  color: #ffffff;
   border-radius: 10px;
-  top: 23%;
+  top: 22%;
   left: 5%
 }
 
