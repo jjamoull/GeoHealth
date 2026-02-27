@@ -28,3 +28,23 @@
   font-size: 18px;
   color: black;
 }
+.req {
+  color: red;
+}
+
+.alert {
+  padding: 15px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.error {
+  color: red;
+}
+
+.alert.error::before {
+  content: "⚠ ";
+  margin-right: 8px;
+}

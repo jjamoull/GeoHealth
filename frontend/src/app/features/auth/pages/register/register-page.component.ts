@@ -8,6 +8,8 @@ import {ButtonComponent} from '../../../../shared/components/button.component/bu
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 
 
+
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -40,9 +42,9 @@ export class RegisterPageComponent implements  OnInit {
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      firstName: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      lastName: new FormControl('', [Validators.required, Validators.minLength(1)]),
+      username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       email: new FormControl('', [Validators.required, Validators.minLength(3), Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword : new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -117,9 +119,30 @@ export class RegisterPageComponent implements  OnInit {
 
     return confirmPasswordControl.value == passwordControl.value;
   }
+  nameLength(name: string): boolean {
+    const control = this.formGroup.get(name);
+    if (!control || !control.value) return false;
 
-  isFieldValid(name: string){
-    const formControl = this.formGroup.get(name);
-    return formControl?.invalid && formControl?.dirty;
+    return !!control.errors?.['minlength'];
+  }
+
+  mailLength(name: string): boolean {
+    const control = this.formGroup.get(name);
+    if (!control || !control.value) return false;
+
+    return !!control.errors?.['email'];
+  }
+  passwordLength(name: string): boolean {
+    const control = this.formGroup.get(name);
+    if (!control || !control.value) return false;
+
+    return !!control.errors?.['minlength'];
+  }
+
+  passwordsMatch(): boolean {
+    const password = this.formGroup.get("password")?.value
+    const confirmPassword = this.formGroup.get("confirmPassword")?.value
+
+    return !!confirmPassword && password !== confirmPassword;
   }
 }
