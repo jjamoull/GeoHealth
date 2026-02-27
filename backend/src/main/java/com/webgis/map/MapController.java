@@ -57,7 +57,7 @@ public class MapController {
             if (map.getId()== null){
                 throw new RuntimeException("There is no id for the map : "+ title);
             } else {
-                final String tempGeoJsonFile = mapService.toGeoJsonFile(map.getId());
+                final String tempGeoJsonFile = mapService.zipToGeoJsonFile(map.getId());
                 map.setFileGeoJson(tempGeoJsonFile);
             }
 

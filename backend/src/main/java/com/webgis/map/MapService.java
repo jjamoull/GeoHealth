@@ -71,7 +71,7 @@ public class MapService {
      * @param id : id of the map in the database
      * @throws IOException : if method findShpFile doesn't find a shp file
      */
-    public String toGeoJsonFile(long id) throws IOException{
+    public String zipToGeoJsonFile(long id) throws IOException{
         final Map map = mapRepository.findById(id).orElseThrow(()-> new RuntimeException("The map is not found for this id :"+id));
         final File tempFile = Files.createTempDirectory("shp_").toFile();
 
