@@ -22,29 +22,34 @@ public class ShapeFileToGeoJsonFile {
 
     /**
      * Converts given shapefiles into geoJSON format (String)
+     *
+     * @param shpFile : represents shp file used to detect others files into
+     *                shape file to converted it into geojson file
+     * @return a string geoJSON format
+     * @throws IOException if there is a problem with at least one of these methods :
+     *  - toURL()
+     *  - getTypeNames()
+     *  - getFeatureSource()
+     *  - writeFeatureCollection()
+     *
+     *  This method used a lot of predefined methods from library : GeoTools
      * */
     public static String transformShapeFileToGeoJsonFile(File shpFile) throws IOException {
-        System.out.println("6");
-
         ShapefileDataStore dataStore = new ShapefileDataStore(shpFile.toURI().toURL());
         dataStore.setCharset(StandardCharsets.UTF_8);
 
         String typeName = dataStore.getTypeNames()[0];
 
         SimpleFeatureSource featureSource = dataStore.getFeatureSource(typeName);
-        System.out.println("7");
 
         SimpleFeatureCollection collection = featureSource.getFeatures();
 
         FeatureJSON featureJSON = new FeatureJSON();
         StringWriter writer = new StringWriter();
-        System.out.println("8");
 
         featureJSON.writeFeatureCollection(collection, writer);
 
         dataStore.dispose();
-        System.out.println("9");
-        System.out.println(writer.toString());
         return writer.toString();
     }
 }

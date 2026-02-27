@@ -29,21 +29,6 @@ public class MapController {
         this.mapService = mapService;
     }
 
-
-    /*@GetMapping("/geoJsonFile/{id}")
-    public Map getGeoJsonFile(@PathVariable long id){
-        final Optional<Map> mapTemp = mapService.findById(id);
-        if (mapTemp.isPresent()){
-//            final Map map = mapTemp.get();
-//            if (map.getFileGeoJson()!= null){
-//                return map;
-//            }
-            mapTemp.map(ResponseEntity::ok)
-                    .orElse(ResponseEntity.notFound().build());
-        }
-        return (Map) ResponseEntity.notFound();
-    }*/
-
     @GetMapping("/geoJsonFile/{id}")
     public ResponseEntity<Map> getGeoJsonFile(@PathVariable long id) {
 
@@ -61,7 +46,6 @@ public class MapController {
             @RequestParam("zipFile") MultipartFile zipFile,
             @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile) throws IOException {
 
-        System.out.println("avant");
         final Map map = new Map(title,
                 description,
                 zipFile.getBytes(),
@@ -72,17 +56,14 @@ public class MapController {
         if (geoJsonFile != null){
             map.setFileGeoJson(new String(geoJsonFile.getBytes()));
         } else{
-            System.out.println("coucou");
             if (map.getId()== null){
                 throw new RuntimeException("There is no id for the map : "+ title);
             } else {
                 String tempGeoJsonFile = mapService.toGeoJsonFile(map.getId());
                 map.setFileGeoJson(tempGeoJsonFile);
-                System.out.println("objet map bien changé avec " + tempGeoJsonFile);
             }
 
         }
-        System.out.println("map geojson: "+map.getFileGeoJson());
         return mapService.save(map);
     }
 
