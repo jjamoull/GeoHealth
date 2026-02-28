@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -48,9 +50,8 @@ public class AuthController {
             HttpServletRequest request,
             HttpServletResponse response
     ){
-        final String existingCookie = cookieService.getJwtFromCookie(request);
-        if (existingCookie != null && jwtService.isTokenValid(existingCookie)) {
-            return ResponseEntity.status(409).body(new MessageDto("You are logged in"));
+        if (handleExistingCookie(request, response)) {
+            return ResponseEntity.status(409).body(new MessageDto("You are already logged in"));
         }
 
         try {
@@ -82,11 +83,9 @@ public class AuthController {
             HttpServletRequest request,
             HttpServletResponse response
     ){
-        final String existingCookie = cookieService.getJwtFromCookie(request);
-        if (existingCookie != null && jwtService.isTokenValid(existingCookie)) {
+        if (handleExistingCookie(request, response)) {
             return ResponseEntity.status(409).body(new MessageDto("You are already logged in"));
         }
-
         try {
             final User user = userService.login(loginDto.username(), loginDto.password());
             return createResponse(user, response);
@@ -137,6 +136,27 @@ public class AuthController {
 
         final UserResponseDto userResponseDto = new UserResponseDto(user);
         return ResponseEntity.status(200).body(userResponseDto);
+    }
+
+    /**
+     * Checks if a valid, non-banned JWT cookie exists.
+     * If the user is banned, clears the cookie.
+     *
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return true if a valid non-banned session exists, false otherwise
+     */
+    private boolean handleExistingCookie(HttpServletRequest request, HttpServletResponse response){
+        final String existingCookie = cookieService.getJwtFromCookie(request);
+        if (existingCookie != null && jwtService.isTokenValid(existingCookie)) {
+            final String username = jwtService.extractUsername(existingCookie);
+            final Optional<User> existingUser = userService.findByUsername(username);
+            if (existingUser.isPresent() && !existingUser.get().isBanned()) {
+                return true;
+            }
+            response.addHeader(HttpHeaders.SET_COOKIE, cookieService.deleteCookie());
+        }
+        return false;
     }
 
 }
