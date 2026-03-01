@@ -19,7 +19,6 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/maps")
-@CrossOrigin(origins = "http://localhost:4200")
 public class MapController {
     private final MapService mapService;
 
