@@ -35,7 +35,6 @@ export class ProfilePageComponent implements OnInit{
 
   public showWindow:boolean = false;
 
-
   public isEditingField:boolean= false;
 
   public errorMessage: string | null = null;

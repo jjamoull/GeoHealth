@@ -12,6 +12,8 @@ export class LoginService{
 
   private baseUrl= environment.apiBaseUrl;
 
+  private LoggedIn= false;
+
 
   constructor(private HttpClient: HttpClient) {}
 
@@ -52,6 +54,24 @@ export class LoginService{
    */
   checkStatus(): Observable<any> {
     return this.HttpClient.get(`${this.baseUrl}${API_ENDPOINTS.AUTH.STATUS}`,{ withCredentials: true })
+  }
+
+  /**
+   * Track whether a user is logged in or no
+   *
+   * @return true if logging, false otherwise
+   */
+  public isLoggedIn():boolean{
+    return this.LoggedIn
+  }
+
+  /**
+   * Change the LoggedIn value
+   *
+   * @param value the new loggedIn value
+   */
+  public setLoggedIn(value:boolean):void{
+    this.LoggedIn=value;
   }
 
 

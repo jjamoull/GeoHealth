@@ -5,6 +5,7 @@
 
 .button{
   width: 30%;
+  min-width: 150px;
   height: 45px;
   border: solid 2px;
   outline: none;

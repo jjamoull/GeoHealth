@@ -1,1 +1,67 @@
 
+<h1 class="admin-title"> GeoHealth Users</h1>
+
+
+@if (users.length ==0) {
+    <div>No user found</div>
+}
+
+@if (users.length > 0) {
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Banned</th>
+            <th>Deleted</th>
+            <th>Ban</th>
+        </tr>
+      @for(user of users; track user.id){
+        <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  @if(user.role !== 'SUPERADMIN'){
+                    <select class="roleSelection" (change)="changeRole(user.username, $event)">
+                      <option [value]="user.role">{{ user.role }}</option>
+                      @for(role of roles; track $index){
+                        @if(role !== user.role){
+                          <option [value]="role">{{ role }}</option>
+                        }
+                      }
+                    </select>
+                  }
+                @else{
+                  {{ user.role }}
+                }
+                </td>
+                <td>{{ user.banned }}</td>
+                <td>{{ user.deleted }}</td>
+                <td>
+                  @if(user.role !=="SUPERADMIN"){
+                    @if(user.banned){
+                      <app-button
+                        [text]="'Unban'"
+                        variant="success"
+                        (clicked)="unbanUser(user.username)">
+                      </app-button>
+                    }
+                    @else{
+                      <app-button
+                        [text]="'Ban'"
+                        variant="danger"
+                        (clicked)="banUser(user.username)">
+                      </app-button>
+                    }
+                  }
+                </td>
+        </tr>
+      }
+
+    </table>
+
+}
