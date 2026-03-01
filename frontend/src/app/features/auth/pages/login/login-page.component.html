@@ -27,13 +27,20 @@
     <div class="login-button-container">
       <app-button
         [text]="'Login'"
-        variant="success">
+        variant="success"
+        [type]="'submit'">
       </app-button>
     </div>
 
     <div class="register-link">
       <p>Don't have an account ?  <a (click)="goToRegister()">Register</a></p>
     </div>
+    <app-error-success-message
+      [errorMessages]="errorMessage"
+      [successMessages]="successMessage"
+      [showErrors]="loginError">
+    </app-error-success-message>
   </form>
+
 </div>
 </div>

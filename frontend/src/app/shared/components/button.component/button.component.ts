@@ -14,6 +14,8 @@ export class ButtonComponent {
   @Input() variant: 'success' | 'danger' | 'primary' = 'success';
   @Input() disabled:boolean= false;
   @Output() clicked = new EventEmitter<void>();
+  @Input() type: 'button' | 'submit' = 'button';
+
 
 
   handleClick() {

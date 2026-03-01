@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
+import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-success-message.component/error-success-message.component';
+import { signal } from '@angular/core';
+
+
 
 @Component({
   selector: 'app-login',
@@ -14,6 +18,7 @@ import {InputboxComponents} from '../../../../shared/components/inputbox.compone
     CommonModule,
     ButtonComponent,
     InputboxComponents,
+    ErrorSuccessMessageComponent
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
@@ -21,12 +26,13 @@ import {InputboxComponents} from '../../../../shared/components/inputbox.compone
 export class LoginPageComponent implements OnInit {
 
   formGroup!: FormGroup;
-  errorMessage: string | null = null;
-  loginError = false;
+  loginError = signal(false);
+  errorMessage = signal('');
+  successMessage = signal('');
 
   constructor(
     private LoginService: LoginService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -42,23 +48,18 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
-    this.errorMessage = null;
-    this.loginError = false;
-
     this.LoginService.login(this.formGroup.value).subscribe({
       next: () => {
         // Ok -> redirect to /home
         this.router.navigate(['/home']);
+        this.loginError.set(false);
+        this.errorMessage.set('');
       },
-      error: (err) => {
+      error: () => {
         // Display error message
-        this.loginError = true;
+        this.loginError.set(true);
+        this.errorMessage.set('username or password invalid');
 
-        if (err.status === 401) {
-          this.errorMessage = "Identifiants invalides.";
-        } else {
-          this.errorMessage = "Erreur serveur. Réessayez.";
-        }
       }
     });
   }
@@ -69,4 +70,5 @@ export class LoginPageComponent implements OnInit {
   goToRegister(){
     this.router.navigate(['register'])
   }
+
 }

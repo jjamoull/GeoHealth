@@ -60,13 +60,3 @@
   text-decoration: underline;
 }
 
-.input-error {
-  border: 2px solid red;
-  background-color: #ffe6e6;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-  font-weight: 500;
-}
