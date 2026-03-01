@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import org.slf4j.Logger;
 
 /**
- * @overview This class allow to detect a type of file ".cpg, .dbf, .prj, .shp, .shx" 
+ * @overview This class allow to detect a type of file ".cpg, .dbf, .prj, .shp, .shx"
  * */
 public class DetectFiles {
 
