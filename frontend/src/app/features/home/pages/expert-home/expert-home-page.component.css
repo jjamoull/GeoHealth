@@ -72,12 +72,55 @@
   animation: spin 40s infinite linear;
   padding-right: 1em;
 }
-.radio-button{
+.carousel-preference-form{
+  width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 30px;
-
 }
+
+.radio-group {
+  width: 60%;
+  display: flex;
+  gap: 20px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.radio-card {
+  width: 30%;
+  padding: 18px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 200;
+  font-size: 14px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.radio-card:hover {
+  border-color: #007bff;
+}
+
+.radio-card:has(input:checked) {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.radio-card input {
+  display: none;
+}
+
 .card {
   flex: 0 0 5em;
   height: 5em;

@@ -2,3 +2,7 @@
 2026-02-23 14:01:46.81 - Debug - Web socket state : Connecting
 2026-02-23 14:01:47.047 - Error - Websocket failure : gamification.thibber.be: nodename nor servname provided, or not known
 2026-02-23 14:01:47.048 - Debug - Web socket state : Error
+2026-03-01 13:02:28.498 - Debug - Connect to wss://gamification.thibber.be/ws
+2026-03-01 13:02:28.503 - Debug - Web socket state : Connecting
+2026-03-01 13:02:28.776 - Error - Websocket failure : gamification.thibber.be: nodename nor servname provided, or not known
+2026-03-01 13:02:28.776 - Debug - Web socket state : Error
