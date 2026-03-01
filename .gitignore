@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### Secrets ###
-backend/.env
+.env
 
 ### Node modules ###
 frontend/node_modules/
