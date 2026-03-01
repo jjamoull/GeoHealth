@@ -1,51 +1,29 @@
 package com.webgis.map;
 
-import com.Converter.ZipFiles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
-
+import org.springframework.web.bind.annotation.PatchMapping;
 
 import org.springframework.web.multipart.MultipartFile;
 
 //import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/maps")
-@CrossOrigin(origins = "http://localhost:4200")
 public class MapController {
     private final MapService mapService;
 
-    private final ZipFiles unzipper;
-
     public MapController( MapService mapService){
         this.mapService = mapService;
-        this.unzipper = new ZipFiles();
     }
-
-
-    /*@GetMapping("/geoJsonFile/{id}")
-    public Map getGeoJsonFile(@PathVariable long id){
-        final Optional<Map> mapTemp = mapService.findById(id);
-        if (mapTemp.isPresent()){
-//            final Map map = mapTemp.get();
-//            if (map.getFileGeoJson()!= null){
-//                return map;
-//            }
-            mapTemp.map(ResponseEntity::ok)
-                    .orElse(ResponseEntity.notFound().build());
-        }
-        return (Map) ResponseEntity.notFound();
-    }*/
 
     @GetMapping("/geoJsonFile/{id}")
     public ResponseEntity<Map> getGeoJsonFile(@PathVariable long id) {
@@ -68,32 +46,33 @@ public class MapController {
                 description,
                 zipFile.getBytes(),
                 null);
+
+        mapService.save(map);
+
         if (geoJsonFile != null){
-            map.setFileGeoJson(geoJsonFile.getBytes());
+            map.setFileGeoJson(new String(geoJsonFile.getBytes()));
+        } else{
+            if (map.getId()== null){
+                throw new RuntimeException("There is no id for the map : "+ title);
+            } else {
+                final String tempGeoJsonFile = mapService.zipToGeoJsonFile(map.getId());
+                map.setFileGeoJson(tempGeoJsonFile);
+            }
+
         }
-
-        //----------------------------------------------------------------------------------------------
-        //temporary disabling the unzipping to avoid polluting the github, files will be deleted after
-        // transformation into geoJSON but this aspect is not yet implemented
-        
-        //File fileToUnzip = new File(zipFile.getOriginalFilename());
-        //zipFile.transferTo(fileToUnzip);
-        //unzipper.unzip(map, fileToUnzip);
-        //----------------------------------------------------------------------------------------------
-
         return mapService.save(map);
     }
 
 
-    @PostMapping("/save_geoJsonFile/{id}")
-    public Map addGeoJSONFile(@RequestBody Map mapToAdd, @RequestBody byte[] geoJsonFile){
-        final Optional<Map> mapTemp = mapService.findByTitle(mapToAdd.getTitle());
-
-        if (mapTemp.isPresent()) {
-            final Map map = mapTemp.get();
-            return mapService.save(map);
-        }
-        return null;
+    @PatchMapping("/save_geoJsonFile/{id}")
+    public ResponseEntity<Map> addGeoJSONFile(@PathVariable long id, @RequestBody String geoJsonFile){
+        return mapService.findById(id)
+                .map(map -> {
+                    map.setFileGeoJson(geoJsonFile);
+                    final Map mapConverted = mapService.save(map);
+                    return ResponseEntity.ok(mapConverted);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
 

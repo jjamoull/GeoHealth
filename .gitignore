@@ -39,3 +39,5 @@ build/
 frontend/node_modules/
 node_modules/
 frontend/package-lock.json
+package-lock.json
+package.json
