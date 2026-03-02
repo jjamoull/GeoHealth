@@ -77,11 +77,6 @@ export class RegisterPageComponent implements  OnInit {
       return;
     }
 
-    if (!this.checkPasswordConformity()) {
-      console.error('Passwords do not match');
-      return;
-    }
-
     const formValue = this.formGroup.value;
 
     const registerDto = {
@@ -104,21 +99,9 @@ export class RegisterPageComponent implements  OnInit {
   }
 
   /**
-   *  @return true if password = confirmPassword, false otherwise
+   * @param : name of the form field
+   * @return : boolean true if minlength is not respected
    * */
-  public checkPasswordConformity(): boolean {
-    if (this.formGroup==null){
-      return false;
-    }
-
-    const passwordControl = this.formGroup.get('password');
-    const confirmPasswordControl = this.formGroup.get('confirmPassword');
-    if (passwordControl ==null || confirmPasswordControl== null){
-      return false
-    }
-
-    return confirmPasswordControl.value == passwordControl.value;
-  }
   nameLength(name: string): boolean {
     const control = this.formGroup.get(name);
     if (!control || !control.value) return false;
@@ -126,12 +109,20 @@ export class RegisterPageComponent implements  OnInit {
     return !!control.errors?.['minlength'];
   }
 
+  /**
+   * @param : name of the form field
+   * @return : boolean true if mail is not respected
+   * */
   mailLength(name: string): boolean {
     const control = this.formGroup.get(name);
     if (!control || !control.value) return false;
 
     return !!control.errors?.['email'];
   }
+  /**
+   * @param : name of the form field
+   * @return : boolean true if minlength is not respected
+   * */
   passwordLength(name: string): boolean {
     const control = this.formGroup.get(name);
     if (!control || !control.value) return false;
@@ -139,10 +130,15 @@ export class RegisterPageComponent implements  OnInit {
     return !!control.errors?.['minlength'];
   }
 
+  /**
+   * @return : boolean true if password and confirmPassword do not match
+   * */
   passwordsMatch(): boolean {
     const password = this.formGroup.get("password")?.value
     const confirmPassword = this.formGroup.get("confirmPassword")?.value
 
     return !!confirmPassword && password !== confirmPassword;
   }
+
+
 }
