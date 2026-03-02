@@ -17,7 +17,7 @@ public class MapEntityTest {
         map.setTitle("newTitle");
         map.setDescription("newDescription");
         map.setZipFile("newDataZip".getBytes());
-        map.setFileGeoJson("newGeoJson".getBytes());
+        map.setFileGeoJson(("newGeoJson").getBytes());
 
         //Assert
         assertThat(map.getTitle()).isEqualTo("newTitle");
