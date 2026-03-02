@@ -9,8 +9,8 @@ public class MapEntityTest {
     @Test
     void MapGetterAndSetterTest(){
         //Arrange
-        byte[] dataZip ="dataZip".getBytes();
-        byte[] dataGeoJson ="dataGeoJson".getBytes();
+        byte[] dataZip ={66};
+        byte[] dataGeoJson ={12};
 
         byte[] newDataZip ="newDataZip".getBytes();
         byte[] newDataGeoJson ="newDataGeoJson".getBytes();
