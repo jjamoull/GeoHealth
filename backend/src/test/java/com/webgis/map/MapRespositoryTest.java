@@ -28,10 +28,13 @@ public class MapRespositoryTest {
     @Test
     void SaveAndfindByTitleMapExist(){
         //Arrange
+        byte[] dataZip ="dataZip".getBytes();
+        byte[] dataGeoJson ="dataGeoJson".getBytes();
+
         Map map= new Map("title",
                 "risk map",
-                "dataZip".getBytes(),
-                "dataGeoJson".getBytes());
+                dataZip,
+                dataGeoJson);
 
         //Act
         mapRepository.save(map);
@@ -45,10 +48,13 @@ public class MapRespositoryTest {
     @Test
     void SaveAndfindByTitleMapNotExist(){
         //Arrange
+        byte[] dataZip ="dataZip".getBytes();
+        byte[] dataGeoJson ="dataGeoJson".getBytes();
+
         Map map= new Map("title",
                 "risk map",
-                "dataZip".getBytes(),
-                "dataGeoJson".getBytes());
+                dataZip,
+                dataGeoJson);
 
         //Act
         mapRepository.save(map);
@@ -61,10 +67,13 @@ public class MapRespositoryTest {
     @Test
     void SaveAndfindByIdMapExist(){
         //Arrange
+        byte[] dataZip ="dataZip".getBytes();
+        byte[] dataGeoJson ="dataGeoJson".getBytes();
+
         Map map= new Map("title",
                 "risk map",
-                "dataZip".getBytes(),
-                "dataGeoJson".getBytes());
+                dataZip,
+                dataGeoJson);
 
         //Act
         mapRepository.save(map);
@@ -78,10 +87,13 @@ public class MapRespositoryTest {
     @Test
     void SaveAndfindByIdMapNotExist(){
         //Arrange
+        byte[] dataZip ="dataZip".getBytes();
+        byte[] dataGeoJson ="dataGeoJson".getBytes();
+
         Map map= new Map("title",
                 "risk map",
-                "dataZip".getBytes(),
-                "dataGeoJson".getBytes());
+                dataZip,
+                dataGeoJson);
 
         //Act
         mapRepository.save(map);
