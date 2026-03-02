@@ -1,40 +1,104 @@
-html, body {
-  height: 100%;
+/* SIDEBAR */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
-
-.parent {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  gap: 8px;
-  height: 89vh;
-  margin-top: 10px;
+.navigation-page {
+  display: flex;
 }
-
-.filters {
-  grid-row: span 5;
-  border: 2px solid black;
-  margin-left: 1px ;
+.side-navbar {
+  height: 92%;
+  width: 250px;
+  position: fixed;
+  left: -250px;
+  bottom:0;
+  background: black;
+  transition: left 0.5s ease;
+  z-index: 1000;
+}
+.side-navbar .head{
+  color: #fdfdce;
+  font-size: 30px;
+  font-weight: bold;
+  padding : 30px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  background-color: #8FC378 ;
+}
+ol{
+  width: 100%;
+  list-style: none;
+}
+ol li{
+  display: block;
+  width: 100%;
+}
+ol li a{
+  color: #fdfdce;
+  padding: 15px 10px;
+  text-decoration: none;
+  display: block;
+  font-size: 20px;
+  letter-spacing: 1px;
   position: relative;
+  transition: 0.3s;
+  overflow: hidden;
+  text-transform: capitalize;
 }
+ol li a i{
+  width: 70px;
+  font-size: 25px;
+  text-align: center;
+  padding-left: 30px;
+}
+ol li:hover a{
+  background: #030303;
+  color: #00eaff;
+}
+input{
+  -webkit-appearance: none;
+  visibility: hidden;
+  display: none;
+}
+span {
+  position: absolute;
+  right: -36px;
+  top: 10px;
+  font-size: 25px;
+  border-radius: 3px;
+  color: #fff;
+  padding: 3px 8px;
+  cursor: pointer;
+  background: #8FC378;
+}
+#check:checked ~ .side-navbar {
+  left: 0;
+}
+#check:checked ~ .allMaps {
+  margin-left: 250px;
+}
+/* SIDEBAR */
 
+/* MAPS */
 .allMaps {
+  flex: 1;
+  transition: margin-left 0.5s ease;
+  margin-left: 0;
   grid-column: span 4;
   grid-row: span 5;
   grid-gap: 12px;
-  border: 2px solid black;
   width: 100%;
   height: 100%;
   margin-right: 2px;
-
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(5, 1fr);
   gap: 8px;
   overflow-y: auto;
 }
-
 .recentMaps{
   grid-row: span 1;
 }
@@ -43,15 +107,8 @@ html, body {
   grid-row: 2 / span 4;
 }
 
-.titleOfCheckBox{
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  background: #F4D47A ;
-  text-align: center;
-}
-
 .newCase{
-  border: 1.2px solid black;
+  border: 3px solid #8FC378;
   margin: 1% ;
   padding: 7%;
   width: 25%;
@@ -65,9 +122,9 @@ html, body {
   justify-content: center;
 }
 
-.Titre{
-  margin-left: 7px;
-  margin-top: 7px;
+.titre{
+  text-align: center;
+  font-size: 30px;
 }
 
 
