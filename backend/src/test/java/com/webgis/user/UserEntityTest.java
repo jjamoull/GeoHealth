@@ -6,13 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserEntityTest {
 
-    //empty for now
-    public UserEntityTest(){}
-
     @Test
     void GetterTest(){
         // Arrange
-        User user = new User("pseudo","Julien","Jamal", "julien.jamal@outlook.be","password", "Admin");
+        User user = new User("pseudo",
+                "Julien",
+                "Jamal",
+                "julien.jamal@outlook.be",
+                "password",
+                "Admin");
 
         //Act
         assertEquals("pseudo", user.getUsername());
@@ -21,6 +23,7 @@ class UserEntityTest {
         assertEquals("julien.jamal@outlook.be", user.getEmail());
         assertEquals("password", user.getPassword());
     }
+
     @Test
     void SetterTest(){
         //Arrange

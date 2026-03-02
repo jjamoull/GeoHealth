@@ -1,10 +1,12 @@
 package com.webgis.user;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
@@ -13,21 +15,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
 
-    @Mock
-    private BCryptPasswordEncoder passwordEncoder;
-
     @InjectMocks
     private UserService userService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void updateUserInfoSuccessTest(){
@@ -36,7 +31,6 @@ class UserServiceTest {
         when(userRepository.save(user)).thenReturn(user);
         when(userRepository.findByUsernameAndDeletedFalse("mypseudo")).thenReturn(Optional.of(user));
         when(userRepository.findByEmailAndDeletedFalse("jean.jamal@outlook.com")).thenReturn(Optional.empty());
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
 
         //Act
         userService.updateUserInfo("mypseudo","mypseudo", "Jean", "Jamal", "jean.jamal@outlook.com");

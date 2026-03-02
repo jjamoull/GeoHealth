@@ -25,7 +25,6 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Optional;
 
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -76,7 +75,7 @@ public class UserControllerTest {
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value(user.getUsername()))
                 .andExpect(jsonPath("$.firstName").value(user.getFirstName()))
-                .andExpect(jsonPath("$.LastName").value(user.getLastName()))
+                .andExpect(jsonPath("$.lastName").value(user.getLastName()))
                 .andExpect(jsonPath("$.email").value(user.getEmail()))
                 .andExpect(jsonPath("$.role").value(user.getRole()));
 
@@ -123,6 +122,7 @@ public class UserControllerTest {
         response.andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Password changed successfully"));
     }
+
 
 }
 
