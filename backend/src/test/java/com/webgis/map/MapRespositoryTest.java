@@ -21,8 +21,8 @@ public class MapRespositoryTest {
     private void assertMapEquals(Map actual, Map expected) {
         assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
         assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
-        assertThat(actual.getZipFile()).isEqualTo(expected.getZipFile());
-        assertThat(actual.getFileGeoJson()).isEqualTo(expected.getFileGeoJson());
+        assertThat(actual.getZipFile()).containsExactly(expected.getZipFile());;
+        assertThat(actual.getFileGeoJson()).containsExactly(expected.getFileGeoJson());;
     }
 
     @Test

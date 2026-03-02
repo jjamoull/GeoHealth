@@ -22,7 +22,7 @@ public class MapEntityTest {
         //Assert
         assertThat(map.getTitle()).isEqualTo("newTitle");
         assertThat(map.getDescription()).isEqualTo("newDescription");
-        assertThat(map.getZipFile()).isEqualTo("newDataZip".getBytes());
-        assertThat(map.getFileGeoJson()).isEqualTo("newGeoJson".getBytes());
+        assertThat(map.getZipFile()).containsExactly("newDataZip".getBytes());
+        assertThat(map.getFileGeoJson()).containsExactly("newGeoJson".getBytes());
     }
 }
