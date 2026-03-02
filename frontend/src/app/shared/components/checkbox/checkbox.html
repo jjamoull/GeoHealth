@@ -1,0 +1,15 @@
+<div class="checkbox-container">
+
+  @if(label) {
+    <label [for]="id">{{ label }}</label>
+  }
+
+  <input
+    type="checkbox"
+    [id]="id"
+    [name]="name"
+    [checked]="checked"
+    [disabled]="disabled"
+    (change)="onChange($event)"
+  />
+</div>
