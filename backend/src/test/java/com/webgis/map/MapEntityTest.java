@@ -31,7 +31,7 @@ public class MapEntityTest {
         //Assert
         assertThat(map.getTitle()).isEqualTo("newTitle");
         assertThat(map.getDescription()).isEqualTo("newDescription");
-        assertThat(map.getZipFile()).containsExactly(newDataZip);
-        assertThat(map.getFileGeoJson()).containsExactly(newDataGeoJson);
+        assertThat(map.getZipFile()).isEqualTo(newDataZip);
+        assertThat(map.getFileGeoJson()).isEqualTo(newDataGeoJson);
     }
 }
