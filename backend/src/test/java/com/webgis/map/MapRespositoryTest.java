@@ -1,7 +1,5 @@
 package com.webgis.map;
 
-import com.webgis.user.User;
-import com.webgis.user.UserRepository;
 
 import org.junit.jupiter.api.Test;
 
