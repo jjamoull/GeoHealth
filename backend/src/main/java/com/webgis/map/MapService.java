@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Optional;
 
 import static com.Converter.DetectFiles.findShpFile;
@@ -83,5 +84,12 @@ public class MapService {
         return transformShapeFileToGeoJsonFile(shpFile);
     }
 
-
+    /**
+     * Returns all the maps from the database
+     *
+     * @returns a list of all the maps
+     */
+    public List<Map> findAll(){
+        return mapRepository.findAll();
+    }
 }
