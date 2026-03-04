@@ -18,5 +18,11 @@ export const API_ENDPOINTS = {
     BAN: '/admin/users/ban',
     UNBAN:'/admin/users/unban/',
     CHANGEROLE:'/admin/users/change-role',
-  }
+  },
+  MAPS: {
+    ALLMAPS: '/maps/AllMaps',
+    DELETE: '/maps',
+    UPLOAD: '/maps/uploadShapeFile',
+    GET: '/maps'
+    }
 } as const;

@@ -16,7 +16,7 @@ export const routes: Routes = [
     component: ExpertHomePageComponent,
     canActivate: [authGuard],
   },{
-    path: 'map/:id',
+    path: 'maps/:id',
     component: MapComponent,
     canActivate: [authGuard],
   },{
