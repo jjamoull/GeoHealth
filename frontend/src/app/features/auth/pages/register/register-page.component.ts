@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {LoginService} from '../../../../core/service/LoginService/loginService';
 import {User} from '../../../../shared/models/UserModel/User';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import {Router} from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
+import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-success-message.component/error-success-message.component';
+
 
 
 
@@ -17,7 +19,8 @@ import {InputboxComponents} from '../../../../shared/components/inputbox.compone
     ReactiveFormsModule,
     CommonModule,
     ButtonComponent,
-    InputboxComponents
+    InputboxComponents,
+    ErrorSuccessMessageComponent
   ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
@@ -33,6 +36,10 @@ export class RegisterPageComponent implements  OnInit {
     email: "anonymous@email",
     role: "Admin"
   };
+
+
+  registerError = signal(false);
+  errorMessage = signal('');
 
   /**
    * Init the form to add a new user/account to the database
@@ -91,9 +98,13 @@ export class RegisterPageComponent implements  OnInit {
       next: (response) => {
         console.log('Registration successful!', response);
         this.goToHome()
+        this.registerError.set(false);
+        this.errorMessage.set('');
       },
       error: (err) => {
         console.error('Error while creating user', err);
+        this.registerError.set(true);
+        this.errorMessage.set('username or password invalid');
       }
     });
   }

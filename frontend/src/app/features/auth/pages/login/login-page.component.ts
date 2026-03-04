@@ -28,7 +28,6 @@ export class LoginPageComponent implements OnInit {
   formGroup!: FormGroup;
   loginError = signal(false);
   errorMessage = signal('');
-  successMessage = signal('');
 
   constructor(
     private LoginService: LoginService,

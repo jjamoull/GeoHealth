@@ -79,6 +79,11 @@
       <p>Already have an account ? <a (click)="goToLogin()">Login</a></p>
     </div>
 
+    <app-error-success-message
+      [errorMessages]="errorMessage"
+      [showErrors]="registerError">
+    </app-error-success-message>
+
   </form>
 </div>
 </div>

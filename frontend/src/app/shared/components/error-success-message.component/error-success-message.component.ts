@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 })
 export class ErrorSuccessMessageComponent {
   @Input() errorMessages = signal('');
-  @Input() successMessages = signal('');
   @Input() showErrors = signal(false);
 
 }
