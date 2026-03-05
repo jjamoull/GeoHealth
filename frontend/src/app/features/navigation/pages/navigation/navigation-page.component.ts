@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import {PopUpComponent} from '../../../../shared/components/pop-up/pop-up.component';
+import {PopUpComponent} from '../../../pop-up/pop-up.component';
 import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {ListOfAllMaps} from './ListOfAllMaps';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ButtonComponent} from "../../../../shared/components/button.component/button.component";
+import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatDialogModule],
+  imports: [MatDialogModule, ButtonComponent, Checkbox],
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })

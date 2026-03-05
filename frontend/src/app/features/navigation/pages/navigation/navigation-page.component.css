@@ -1,3 +1,6 @@
+.navigation-page{
+  background-color: #EBEFFF;
+}
 /* SIDEBAR */
 * {
   margin: 0;
@@ -14,9 +17,13 @@
   position: fixed;
   left: -250px;
   bottom:0;
-  background: black;
+  background: linear-gradient(10deg, #ffffff, #EBEFFF);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: left 0.5s ease;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
 }
 .side-navbar .head{
   color: #fdfdce;
@@ -26,7 +33,9 @@
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 3px;
-  background-color: #8FC378 ;
+  background-color: #90ee90;
+  display: flex;
+  flex-direction: column;
 }
 ol{
   width: 100%;
@@ -57,6 +66,7 @@ ol li a i{
 ol li:hover a{
   background: #030303;
   color: #00eaff;
+  letter-spacing: 5px;
 }
 input{
   -webkit-appearance: none;
@@ -72,13 +82,32 @@ span {
   color: #fff;
   padding: 3px 8px;
   cursor: pointer;
-  background: #8FC378;
+  background: red;
+}
+#bars{
+  background: #90ee90;
+}
+#check:checked ~ .side-navbar #bars{
+  display: none;
 }
 #check:checked ~ .side-navbar {
   left: 0;
 }
 #check:checked ~ .allMaps {
   margin-left: 250px;
+}
+.scrollbox{
+  overflow: auto;
+}
+::-webkit-scrollbar{
+  width: 5px;
+}
+::-webkit-scrollbar-thumb{
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
 /* SIDEBAR */
 
@@ -108,7 +137,8 @@ span {
 }
 
 .newCase{
-  border: 3px solid #8FC378;
+  background-color: white;
+  border: 3px solid #90ee90;
   margin: 1% ;
   padding: 7%;
   width: 25%;
@@ -121,16 +151,40 @@ span {
   gap: 5%;
   justify-content: center;
 }
-
-.titre{
-  text-align: center;
-  font-size: 30px;
-}
-
-
 .newCase {
   transition: transform 0.3s ease-in-out;
 }
 .newCase:hover {
   transform: scale(1.05);
+}
+/*OTHER*/
+.title{
+  text-align: center;
+  font-size: 30px;
+}
+.rounded-card {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  background: #90ee90;
+  padding: 1.2rem ;
+  border-radius: 1.2rem;
+  max-width: 300px;
+  margin: 2rem auto 2rem auto;
+}
+.navigation-button-container{
+  margin-top: 2rem;
+}
+.filter-title {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  background: transparent;
+  padding: 0.5rem;
+  border: 0.2rem solid #90ee90;
+  border-radius: 1.2rem;
+  max-width: 200px;
+  margin: 2rem auto 2rem auto;
+}
+.filter-title {
+  text-align: center;
+  color: black;
 }
