@@ -1,17 +1,29 @@
-import {Component, AfterViewInit, Inject, PLATFORM_ID} from '@angular/core';
-import {isPlatformBrowser} from '@angular/common';
+import {Component, AfterViewInit, Inject, PLATFORM_ID, signal} from '@angular/core';
+import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
 import { MapService } from '../../../core/service/MapService/mapService';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
 })
 export class MapComponent implements AfterViewInit {
+
+  riskLevels = [
+    {label: 'Very Low', color: '#27ae60'},
+    {label: 'Low', color: '#2ecc71'},
+    {label: 'Medium', color: '#f39c12'},
+    {label: 'High', color: '#e74c3c'},
+    {label: 'Very High', color: '#8e1a0e'}];
+
+  selectedDistrict = signal<any>(null);
+  marker: any = null;
+  mapTitle = signal<string>('');
+  mapDescription = signal<string>('');
 
    CAMEROON_COORDINATES:LatLngExpression[] = [[6.8, 12.38]];
    CAMEROON_ZOOM:number = 6.6;
@@ -41,6 +53,8 @@ export class MapComponent implements AfterViewInit {
 
     this.mapService.getMap(id).subscribe({
       next: (mapData) => {
+        this.mapTitle.set(mapData.title);
+        this.mapDescription.set(mapData.description);
         const geoJson = JSON.parse(mapData.fileGeoJson);
         console.log(geoJson);
 
@@ -50,7 +64,32 @@ export class MapComponent implements AfterViewInit {
             weight: 1,
             fillColor: this.getRiskColor(feature?.properties?.Risk_categ),
             fillOpacity: 0.7,
-          })
+          }),
+          onEachFeature: (feature, layer) => {
+            layer.on('mouseover', () => {
+              (layer as any).setStyle({ fillOpacity: 1 });
+            });
+
+            layer.on('mouseout', () => {
+              (layer as any).setStyle({ fillOpacity: 0.7 });
+            });
+
+            layer.on('click', (e:any) => {
+              this.selectedDistrict.set(feature.properties);
+
+              if (this.marker) {
+                this.marker.remove();
+                this.marker = null;
+                } else {
+                  this.marker = leaflet.circleMarker(e.latlng, {
+                    radius: 6,
+                    color: '#2563eb',
+                    fillColor: '#2563eb',
+                    fillOpacity: 1,
+                    }).addTo(map);
+                  }
+            });
+          }
         }).addTo(map);
 
         map.fitBounds(geoJsonLayer.getBounds());
@@ -62,11 +101,11 @@ export class MapComponent implements AfterViewInit {
   }
 
   private getRiskColor(riskClass: string): string {
-    switch (riskClass) {
-      case 'Low':    return '#2ecc71';
-      case 'Medium': return '#f39c12';
-      case 'High':   return '#e74c3c';
-      default:       return '#aaaaaa';
-    }
+    for (const level of this.riskLevels) {
+      if (level.label === riskClass){
+        return level.color;
+        }
+      }
+    return '#aaaaaa';
   }
 }
