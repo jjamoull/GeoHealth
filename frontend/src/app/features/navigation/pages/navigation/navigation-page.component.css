@@ -93,7 +93,7 @@ span {
 #check:checked ~ .side-navbar {
   left: 0;
 }
-#check:checked ~ .allMaps {
+#check:checked ~ .all-maps {
   margin-left: 250px;
 }
 .scrollbox{
@@ -112,7 +112,7 @@ span {
 /* SIDEBAR */
 
 /* MAPS */
-.allMaps {
+.all-maps {
   flex: 1;
   transition: margin-left 0.5s ease;
   margin-left: 0;
@@ -128,15 +128,15 @@ span {
   gap: 8px;
   overflow-y: auto;
 }
-.recentMaps{
+.recent-maps{
   grid-row: span 1;
 }
 
-.allAvailableMaps{
+.all-available-maps{
   grid-row: 2 / span 4;
 }
 
-.newCase{
+.new-case{
   background-color: white;
   border: 3px solid #90ee90;
   margin: 1% ;
@@ -145,16 +145,16 @@ span {
   height: 25%;
 }
 
-.AllTheMaps {
+.all-the-maps {
   display: flex;
   flex-wrap: wrap;
   gap: 5%;
   justify-content: center;
 }
-.newCase {
+.new-case {
   transition: transform 0.3s ease-in-out;
 }
-.newCase:hover {
+.new-case:hover {
   transform: scale(1.05);
 }
 /*OTHER*/

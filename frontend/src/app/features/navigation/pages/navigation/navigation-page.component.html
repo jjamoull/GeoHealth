@@ -98,14 +98,14 @@
   </div>
 </div>
 
-  <div class="allMaps">
-     <div class="recentMaps">
+  <div class="all-maps">
+     <div class="recent-maps">
        <div class="rounded-card">
          <h3 class="title">Risk maps</h3>
        </div>
-       <div class="AllTheMaps">
+       <div class="all-the-maps">
          @for (map of listOfAllRecentMaps; track map.id){
-           <div class="newCase" (click)="goToMap(map.id)">
+           <div class="new-case" (click)="goToMap(map.id)">
              <h4 style="text-align: center">{{map.titre}}</h4>
              <h6 style="text-align: center">{{map.description}}</h6>
            </div>
@@ -117,13 +117,13 @@
       <!-- ------------------------ -->
       <!-- Lines about all the maps -->
       <!-- ------------------------ -->
-    <div class="allAvailableMaps">
+    <div class="all-available-maps">
       <div class="rounded-card">
         <h3 class="title">Annotated maps</h3>
       </div>
-      <div class="AllTheMaps">
+      <div class="all-the-maps">
         @for (map of listOfAllMaps; track map.id){
-          <div class="newCase" (click)="goToMap(map.id)">
+          <div class="new-case" (click)="goToMap(map.id)">
             <h4 style="text-align: center">{{map.titre}}</h4>
             <h6 style="text-align: center">{{map.description}}</h6>
           </div>
