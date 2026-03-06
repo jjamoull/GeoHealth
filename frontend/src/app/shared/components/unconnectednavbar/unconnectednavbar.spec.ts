@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarComponent } from './navbar.component';
+import { Unconnectednavbar } from './unconnectednavbar';
 
-describe('NavbarComponents', () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
+describe('Unconnectednavbar', () => {
+  let component: Unconnectednavbar;
+  let fixture: ComponentFixture<Unconnectednavbar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarComponent]
+      imports: [Unconnectednavbar]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NavbarComponent);
+    fixture = TestBed.createComponent(Unconnectednavbar);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

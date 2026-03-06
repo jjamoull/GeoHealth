@@ -3,7 +3,12 @@
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 />
 
-<app-navbar></app-navbar>
+@if(isLoggedIn()){
+  <app-connectednavbar></app-connectednavbar>
+}
+@else{
+  <app-unconnectednavbar></app-unconnectednavbar>
+}
 
 <router-outlet></router-outlet>
 

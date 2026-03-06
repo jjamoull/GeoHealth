@@ -56,7 +56,7 @@ export class NavigationPageComponent {
 * Set of all global variables of this file
 * */
   listOfAllRecentMaps:ListOfAllMaps[] = [{
-    titre: 'testRecent2', description:'description du testRecent2', id: 16
+    titre: 'testRecent2', description:'description du testRecent2', id: 1
   }, {
     titre: 'testRecent2', description:'description du testRecent2', id: 17
   }, {
@@ -75,12 +75,9 @@ export class NavigationPageComponent {
   /**
    * Go to the page with the id of the map
    * */
-  goToMap(id:number){
-    this.router.navigate(['map/'+id],{
-      queryParams: {id:id},
-      queryParamsHandling: 'merge'
-    });
-  }
+    goToMap(id: number) {
+      this.router.navigate(['/maps', id]);
+    }
 
 
 }

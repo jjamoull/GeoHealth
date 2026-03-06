@@ -10,8 +10,7 @@ import java.nio.file.Files;
 import org.slf4j.Logger;
 
 /**
- * @overview This class allow to detect a type of file ".cpg, .dbf, .prj, .shp, .shx" which be used
- * by method "transformShapeFileToGeoJsonFile(…)" in public Class : Converter/ShapeFileToGeoJsonFile
+ * @overview This class allow to detect a type of file ".cpg, .dbf, .prj, .shp, .shx"
  * */
 public class DetectFiles {
 
@@ -26,9 +25,16 @@ public class DetectFiles {
      *         null : otherwise
      * */
     public static File findShpFile(File fileInParam ) throws IOException{
+        if (!fileInParam.isDirectory()) {
+            throw new IOException(fileInParam + " is not a directory");
+        }
+
         for (File file:fileInParam.listFiles()){
+            if (!file.isFile()){
+                continue;
+            }
             final byte[] byteOfFile = Files.readAllBytes(file.toPath());
-            if (detectShpFile(byteOfFile)){
+            if (file.getName().toLowerCase().endsWith(".shp") || detectShpFile(byteOfFile) ){
                 logger.info("A .shp file is detected and returned");
                 return file;
             }

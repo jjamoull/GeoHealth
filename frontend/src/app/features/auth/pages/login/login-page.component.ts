@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LoginService} from '../../../../core/service/LoginService/loginService';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -25,7 +25,8 @@ export class LoginPageComponent implements OnInit {
   loginError = false;
 
   constructor(
-    private LoginService: LoginService,
+    private loginService: LoginService,
+    private cdr:ChangeDetectorRef,
     private router: Router
   ) {}
 
@@ -36,6 +37,9 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
+  /**
+   * Request login to the backend with formGroup information
+   */
   public login(): void {
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
@@ -45,13 +49,13 @@ export class LoginPageComponent implements OnInit {
     this.errorMessage = null;
     this.loginError = false;
 
-    this.LoginService.login(this.formGroup.value).subscribe({
+    this.loginService.login(this.formGroup.value).subscribe({
       next: () => {
-        // Ok -> redirect to /home
         this.router.navigate(['/home']);
+        this.loginService.setLoggedIn(true);
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        // Display error message
         this.loginError = true;
 
         if (err.status === 401) {

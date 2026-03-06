@@ -8,6 +8,7 @@ import {UsersListPageComponent} from './features/admin/pages/users-list/users-li
 import { authGuard } from './features/auth/services/authguard/authguard-guard';
 import {ProfilePageComponent} from './features/auth/pages/profile/profile-page.component';
 import {ChangePasswordPageComponent} from './features/auth/pages/change-password/change-password-page.component';
+import {adminGuard} from './features/admin/guard/admin-guard';
 
 export const routes: Routes = [
   {
@@ -15,7 +16,7 @@ export const routes: Routes = [
     component: ExpertHomePageComponent,
     canActivate: [authGuard],
   },{
-    path: 'map/:id',
+    path: 'maps/:id',
     component: MapComponent,
     canActivate: [authGuard],
   },{
@@ -23,9 +24,9 @@ export const routes: Routes = [
     component: NavigationPageComponent,
     canActivate: [authGuard]
   },{
-    path: 'usersList',
+    path:'users-list',
     component: UsersListPageComponent,
-    canActivate: [authGuard],
+    canActivate: [authGuard,adminGuard]
   },{
   path: '',
   redirectTo: 'login',
