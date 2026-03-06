@@ -48,3 +48,7 @@
   content: "⚠ ";
   margin-right: 8px;
 }
+
+.inputbox-container input.invalid {
+  border: 2px solid red;
+}

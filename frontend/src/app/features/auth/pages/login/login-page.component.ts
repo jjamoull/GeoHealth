@@ -51,9 +51,6 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
-    this.errorMessage = null;
-    this.loginError = false;
-
     this.loginService.login(this.formGroup.value).subscribe({
       next: () => {
         this.router.navigate(['/home']);
@@ -63,7 +60,7 @@ export class LoginPageComponent implements OnInit {
       error: () => {
         // Display error message
         this.loginError.set(true);
-        this.errorMessage.set('username or password invalid');
+        this.errorMessage.set('Username or password is invalid');
 
       }
     });

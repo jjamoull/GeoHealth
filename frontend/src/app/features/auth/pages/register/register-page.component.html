@@ -14,7 +14,7 @@
       [placeholder]="'Username'"
       formControlName="username"
       [label]="'Username'"
-      [message]="'At least 3 character long.'"
+      [message]="'At least 3 characters long.'"
       [showError]="nameLength('username')">
     </app-inputbox>
 
@@ -26,7 +26,7 @@
       [placeholder]="'Firstname'"
       formControlName="firstName"
       [label]="'Firstname'"
-      [message]="'At least 3 character long.'"
+      [message]="'At least 3 characters long.'"
       [showError]="nameLength('firstName')">
     </app-inputbox>
 
@@ -35,7 +35,7 @@
       [placeholder]="'Lastname'"
       formControlName="lastName"
       [label]="'Lastname'"
-      [message]="'At least 3 character long.'"
+      [message]="'At least 3 characters long.'"
       [showError]="nameLength('lastName')">
     </app-inputbox>
 
@@ -44,7 +44,7 @@
       [placeholder]="'Email'"
       formControlName="email"
       [label]="'Email'"
-      [message]="'doesn\'t match'"
+      [message]="'Enter a valid email (e.g. name@example.com)'"
       [showError]="mailLength('email')">
     </app-inputbox>
 
@@ -54,7 +54,7 @@
       [placeholder]="'Password'"
       formControlName="password"
       [label]="'Password'"
-      [message]="'At least 8 character long'"
+      [message]="'At least 8 characters long'"
       [showError]="passwordLength('password')">
     </app-inputbox>
 

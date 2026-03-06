@@ -13,14 +13,16 @@
       [type]="'text'"
       [placeholder]="'Your username'"
       formControlName="username"
-      [label]="'Username'" >
+      [label]="'Username'"
+      [showError]="loginError()" >
     </app-inputbox>
 
     <app-inputbox
       [type]="'password'"
       [placeholder]="'Your password'"
       formControlName="password"
-      [label]="'Password'" >
+      [label]="'Password'"
+      [showError]="loginError()" >
     </app-inputbox>
 
 
