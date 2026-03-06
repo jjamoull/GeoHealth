@@ -10,28 +10,25 @@ public class MapEntityTest {
     void MapGetterAndSetterTest(){
         //Arrange
         byte[] dataZip ={66};
-        byte[] dataGeoJson ={12};
-
         byte[] newDataZip ="newDataZip".getBytes();
-        byte[] newDataGeoJson ="newDataGeoJson".getBytes();
 
 
         Map map= new Map("title",
                 "risk map",
                 dataZip,
-                dataGeoJson);
+                "file");
 
 
         //Act
         map.setTitle("newTitle");
         map.setDescription("newDescription");
         map.setZipFile(newDataZip);
-        map.setFileGeoJson(newDataGeoJson);
+        map.setFileGeoJson("newFile");
 
         //Assert
         assertThat(map.getTitle()).isEqualTo("newTitle");
         assertThat(map.getDescription()).isEqualTo("newDescription");
         assertThat(map.getZipFile()).isEqualTo(newDataZip);
-        assertThat(map.getFileGeoJson()).isEqualTo(newDataGeoJson);
+        assertThat(map.getFileGeoJson()).isEqualTo("newFile");
     }
 }

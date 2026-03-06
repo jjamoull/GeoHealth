@@ -19,7 +19,7 @@ public class MapRespositoryTest {
     private void assertMapEquals(Map actual, Map expected) {
         assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
         assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
-        assertThat(actual.getZipFile()).isEqualTo(expected.getZipFile());
+        assertThat(actual.getZipFile()).containsExactly(expected.getZipFile());
         assertThat(actual.getFileGeoJson()).isEqualTo(expected.getFileGeoJson());
     }
 
@@ -27,12 +27,12 @@ public class MapRespositoryTest {
     void SaveAndfindByTitleMapExist(){
         //Arrange
         byte[] dataZip ={66};
-        byte[] dataGeoJson ={12};
+       ;
 
         Map map= new Map("title",
                 "risk map",
                 dataZip,
-                dataGeoJson);
+                "file");
 
         //Act
         mapRepository.save(map);
@@ -47,12 +47,12 @@ public class MapRespositoryTest {
     void SaveAndfindByTitleMapNotExist(){
         //Arrange
         byte[] dataZip ={66};
-        byte[] dataGeoJson ={12};
+
 
         Map map= new Map("title",
                 "risk map",
                 dataZip,
-                dataGeoJson);
+                "file");
 
         //Act
         mapRepository.save(map);
@@ -66,12 +66,11 @@ public class MapRespositoryTest {
     void SaveAndfindByIdMapExist(){
         //Arrange
         byte[] dataZip ={66};
-        byte[] dataGeoJson ={12};
 
         Map map= new Map("title",
                 "risk map",
                 dataZip,
-                dataGeoJson);
+                "file");
 
         //Act
         mapRepository.save(map);
@@ -91,7 +90,7 @@ public class MapRespositoryTest {
         Map map= new Map("title",
                 "risk map",
                 dataZip,
-                dataGeoJson);
+                "file");
 
         //Act
         mapRepository.save(map);
