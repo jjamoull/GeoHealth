@@ -1,54 +1,111 @@
-<button id="openBtn" (click)="openPopUp()" style="margin-top: 60px">Add a new map</button>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<div class="navigation-page">
 
-
-<div class="parent">
-
-  <!-- -------------------------------------------------------------- -->
-  <!-- Lines of filters concerning the visualisation of different map -->
-  <!-- -------------------------------------------------------------- -->
-  <div class="filters">
-    <p style="text-align: center"><strong>Filters for geographical maps</strong></p>
-
-    <form>
-      <p class="titleOfCheckBox">what type(s) of illness</p>
-
-      <input type="checkbox" id="Ebola" name="souscription" value="Ebola" checked>
-      <label for="news">Ebola</label><br>
-
-      <input type="checkbox" id="Covid" name="souscription" value="Covid" checked>
-      <label for="promo">Covid</label><br>
-    </form>
-
-    <form>
-      <p class="titleOfCheckBox">Annotations</p>
-
-      <input type="checkbox" id="Annotated" name="souscription" value="Annotated" checked>
-      <label for="news">Annotated</label><br>
-
-      <input type="checkbox" id="Unannotated" name="souscription" value="Unannotated" checked>
-      <label for="promo">Unannotated</label><br>
-    </form>
-
-    <form>
-      <p class="titleOfCheckBox">Risk factor</p>
-
-      <input type="checkbox" id="Cattle" name="souscription" value="Cattle" checked>
-      <label for="news">Cattle</label><br>
-
-      <input type="checkbox" id="Rivers" name="souscription" value="Rivers" checked>
-      <label for="promo">Rivers</label><br>
-    </form>
+<input type="checkbox" name="" id="check">
+<div class ="side-navbar">
+  <div class="scrollbox">
+    <div class="scrollbox-inner">
+      <div class="navigation-button-container">
+        <app-button
+          [text]="'Add a new map'"
+          variant="success"
+          (clicked) = "openPopUp()">
+        </app-button>
+      </div>
+      <label for="check">
+        <span class ="fas fa-times" id="times"> </span>
+        <span class ="fas fa-bars" id="bars"> </span>
+      </label>
+          <div class ="filter-title">
+            <div class="text">Diseases</div>
+          </div>
+          <ol>
+            <app-checkbox
+              [id]="'Ebola'"
+              [label]="'Ebola'"
+              [name]="'souscription'">
+            </app-checkbox>
+            <app-checkbox
+              [id]="'Covid'"
+              [label]="'Covid'"
+              [name]="'souscription'">
+            </app-checkbox>
+            <app-checkbox
+              [id]="'Other'"
+              [label]="'Other'"
+              [name]="'souscription'">
+            </app-checkbox>
+            <app-checkbox
+              [id]="'Other'"
+              [label]="'Other'"
+              [name]="'souscription'">
+            </app-checkbox>
+          </ol>
+          <div class ="filter-title">
+            <div class="text">Annotations</div>
+          </div>
+          <ol>
+            <app-checkbox
+              [id]="'Annotated'"
+              [label]="'Annotated'"
+              [name]="'souscription'">
+            </app-checkbox>
+            <app-checkbox
+              [id]="'Unannotated'"
+              [label]="'Unannotated'"
+              [name]="'souscription'">
+            </app-checkbox>
+            <app-checkbox
+              [id]="'Other'"
+              [label]="'Other'"
+              [name]="'souscription'">
+            </app-checkbox>
+            <app-checkbox
+              [id]="'Other'"
+              [label]="'Other'"
+              [name]="'souscription'">
+            </app-checkbox>
+          </ol>
+          <div class ="filter-title">
+            <div class="text">Risk factors</div>
+          </div>
+          <ol>
+            <app-checkbox
+              [id]="'Cattle'"
+              [label]="'Cattle'"
+              [name]="'souscription'">
+            </app-checkbox>
+            <app-checkbox
+              [id]="'Rivers'"
+              [label]="'Rivers'"
+              [name]="'souscription'">
+            </app-checkbox>
+            <app-checkbox
+              [id]="'Other'"
+              [label]="'Other'"
+              [name]="'souscription'">
+            </app-checkbox>
+            <app-checkbox
+              [id]="'Other'"
+              [label]="'Other'"
+              [name]="'souscription'">
+            </app-checkbox>
+          </ol>
+    </div>
   </div>
+</div>
 
-  <div class="allMaps">
-      <!-- ------------------------------------ -->
-      <!-- Lines about the recent modified maps -->
-      <!-- ------------------------------------ -->
-     <div class="recentMaps">
-       <h3 class="Titre">Recent maps modified</h3>
-       <div class="AllTheMaps">
+  <div class="all-maps">
+     <div class="recent-maps">
+       <div class="rounded-card">
+         <h3 class="title">Risk maps</h3>
+       </div>
+       <div class="all-the-maps">
          @for (map of listOfAllRecentMaps; track map.id){
-           <div class="newCase" (click)="goToMap(map.id)">
+           <div class="new-case" (click)="goToMap(map.id)">
              <h4 style="text-align: center">{{map.titre}}</h4>
              <h6 style="text-align: center">{{map.description}}</h6>
            </div>
@@ -60,11 +117,13 @@
       <!-- ------------------------ -->
       <!-- Lines about all the maps -->
       <!-- ------------------------ -->
-    <div class="allAvailableMaps">
-      <h3 class="Titre">All the available maps</h3>
-      <div class="AllTheMaps">
+    <div class="all-available-maps">
+      <div class="rounded-card">
+        <h3 class="title">Annotated maps</h3>
+      </div>
+      <div class="all-the-maps">
         @for (map of listOfAllMaps; track map.id){
-          <div class="newCase" (click)="goToMap(map.id)">
+          <div class="new-case" (click)="goToMap(map.id)">
             <h4 style="text-align: center">{{map.titre}}</h4>
             <h6 style="text-align: center">{{map.description}}</h6>
           </div>
@@ -73,5 +132,6 @@
     </div>
 
   </div>
-
 </div>
+
+

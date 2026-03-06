@@ -11,11 +11,27 @@
 <!-- The recent card Section -->
 <section class="carouselSection" >
   <h2 class="cardTitle">Cartes</h2>
-  <div class="radio-button">
-    <button type="button" class="btn btn-primary">Récemment consultées</button>
+  <form class="carousel-preference-form">
+    <!--<button type="button" class="btn btn-primary">Récemment consultées</button>
     <button type="button" class="btn btn-primary">Récemment modifiées</button>
-    <button type="button" class="btn btn-primary">Favoris</button>
-  </div>
+    <button type="button" class="btn btn-primary">Favoris</button>-->
+    <div class="radio-group">
+      <label class="radio-card">
+        <input type="radio" name="carousel-option" value="recently-added">
+        <span>Récemment consultées</span>
+      </label>
+
+      <label class="radio-card">
+        <input type="radio" name="carousel-option" value="recently-modified">
+        <span>Récemment modifiées</span>
+      </label>
+
+      <label class="radio-card">
+        <input type="radio" name="carousel-option" value="favourites">
+        <span>Favoris</span>
+      </label>
+    </div>
+  </form>
   <div class="cards" id="Card">
     <div class ="carousel">
       <div class ="group">

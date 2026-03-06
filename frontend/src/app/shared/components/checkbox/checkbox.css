@@ -1,0 +1,13 @@
+.checkbox-container{
+  display: flex;
+  justify-content: normal;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 2rem;
+}
+
+.label{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background: #F4D47A ;
+}

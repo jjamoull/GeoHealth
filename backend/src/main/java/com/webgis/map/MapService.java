@@ -1,15 +1,26 @@
 package com.webgis.map;
 
+import com.Converter.ZipFiles;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.Optional;
+
+import static com.Converter.DetectFiles.findShpFile;
+import static com.Converter.ShapeFileToGeoJsonFile.transformShapeFileToGeoJsonFile;
 
 @Service
 public class MapService {
 
     private final MapRepository mapRepository;
+    private final ZipFiles unzipper;
 
     public MapService(MapRepository mapRepository){
         this.mapRepository = mapRepository;
+        this.unzipper = new ZipFiles();
     }
 
     /**
@@ -53,5 +64,32 @@ public class MapService {
         }
         final Map mapDel = map.get();
         mapRepository.delete(mapDel);
+    }
+
+    /**
+     * Converts a zipFile containing shapefiles into a geoJSON file
+     *
+     * @param id : id of the map in the database
+     * @throws IOException : if method findShpFile doesn't find a shp file
+     */
+    public String zipToGeoJsonFile(long id) throws IOException{
+        final Map map = mapRepository.findById(id).orElseThrow(()-> new RuntimeException("The map is not found for this id :"+id));
+        final File tempFile = Files.createTempDirectory("shp_").toFile();
+
+        unzipper.unzip(map, tempFile);
+
+        // shp file that will be converted and used to detect others important files into zip file for geojson file
+        final File shpFile = findShpFile(tempFile);
+
+        return transformShapeFileToGeoJsonFile(shpFile);
+    }
+
+    /**
+     * Returns all the maps from the database
+     *
+     * @returns a list of all the maps
+     */
+    public List<Map> findAll(){
+        return mapRepository.findAll();
     }
 }

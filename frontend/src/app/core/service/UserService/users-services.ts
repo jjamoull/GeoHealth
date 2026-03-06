@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {User} from '../../../shared/models/UserModel/User';
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {UserResponseDto} from '../../../shared/models/UserModel/UserResponseDto';
 import {UserUpdateDto} from '../../../shared/models/UserModel/UserUpdateDto';
 import {UpdatePasswordDto} from '../../../shared/models/UserModel/UpdatePasswordDto';
@@ -17,14 +17,10 @@ export class UsersServices {
 
   private baseUrl= environment.apiBaseUrl;
 
+
+
   constructor(private httpClient: HttpClient) {}
 
-  /**
-   * @return : Retrieves all users in dataBase
-   * */
-  public getAllUsers():Observable<User[]>{
-    return this.httpClient.get<User[]>(`${this.baseUrl}${API_ENDPOINTS.USER.UPDATE}`,{ withCredentials: true });
-  }
 
 
   /**
@@ -59,6 +55,13 @@ export class UsersServices {
    */
   public deleteUserAccount(deleteAccountDto:DeleteAccountDto):Observable<any>{
     return this.httpClient.delete(`${this.baseUrl}${API_ENDPOINTS.USER.DELETE}`,{body:deleteAccountDto, withCredentials: true})
+  }
+
+  /**
+   * Check if a user is an admin or not
+   */
+  public isAdmin():Observable<boolean>{
+    return this.httpClient.get<boolean>(`${this.baseUrl}${API_ENDPOINTS.USER.ISADMIN}`,{withCredentials: true})
   }
 
 }

@@ -143,4 +143,29 @@ public class UserController {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         }
     }
+
+    /**
+     * Check whether a user is an admin or not
+     *
+     * @param request the Http request containing the JWT token
+     * @return True if the user connected is admin, False otherwise
+     */
+    @GetMapping("/isAdmin")
+    public ResponseEntity<Boolean> isAdmin(HttpServletRequest request){
+
+        final String token = cookieService.getJwtFromCookie(request);
+        final String username = jwtService.extractUsername(token);
+        final Optional<User> user = userService.findByUsername(username);
+
+        if(user.isEmpty()){
+            return ResponseEntity.status(404).body(false);
+        }
+
+        final User userToCheck = user.get();
+        if(userToCheck.getRole().equals("ADMIN")|| userToCheck.getRole().equals("SUPERADMIN")){
+            return ResponseEntity.ok(true);
+        }
+
+        return ResponseEntity.ok(false);
+    }
 }
