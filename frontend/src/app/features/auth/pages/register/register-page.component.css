@@ -1,18 +1,18 @@
-.image{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
+.register-page{
+  display: flex;
+  justify-content: right;
+  min-height: 100vh;
+  background-image: url('/assets/background/registerBackgroungPlanet.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top: 5rem;
 }
-.register{
-  position: absolute;
-  background: transparent;
+.register {
   width: 35%;
-  color: #ffffff;
   border-radius: 10px;
-  top: 10%;
-  right: 10%;
+  padding: 2rem;
+  margin-right: 8%;
 }
 .registerTitle{
   font-size: 36px;
@@ -38,7 +38,4 @@
 }
 .loginLink p a:hover{
   text-decoration: underline;
-}
-.error{
-  color: black;
 }

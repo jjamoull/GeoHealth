@@ -3,14 +3,19 @@
 
 <div class="inputbox-container">
   @if(label){
-    <label >{{label}}</label>
+    <label >{{label}} <span class="req">*</span>
+      @if(showError && message){
+        <span class="alert error">{{message}}</span>
+      }</label>
   }
   <input
     [type]="type"
     [placeholder]="placeholder"
     [disabled]="disabled"
     [value]="value"
+    [class.invalid]="showError"
     (input)="onChange($any($event.target).value)"
     (blur)="onTouched()">
+
 
 </div>

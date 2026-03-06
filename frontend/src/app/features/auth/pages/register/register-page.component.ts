@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {LoginService} from '../../../../core/service/LoginService/loginService';
 import {User} from '../../../../shared/models/UserModel/User';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 import {Router} from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
+import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-success-message.component/error-success-message.component';
+
+
+
 
 
 @Component({
@@ -15,7 +19,8 @@ import {InputboxComponents} from '../../../../shared/components/inputbox.compone
     ReactiveFormsModule,
     CommonModule,
     ButtonComponent,
-    InputboxComponents
+    InputboxComponents,
+    ErrorSuccessMessageComponent
   ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
@@ -32,6 +37,10 @@ export class RegisterPageComponent implements  OnInit {
     role: "Admin"
   };
 
+
+  registerError = signal(false);
+  errorMessage = signal('');
+
   /**
    * Init the form to add a new user/account to the database
    */
@@ -40,9 +49,9 @@ export class RegisterPageComponent implements  OnInit {
 
   ngOnInit(): void {
     this.formGroup = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      firstName: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      lastName: new FormControl('', [Validators.required, Validators.minLength(1)]),
+      username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      firstName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       email: new FormControl('', [Validators.required, Validators.minLength(3), Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword : new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -75,11 +84,6 @@ export class RegisterPageComponent implements  OnInit {
       return;
     }
 
-    if (!this.checkPasswordConformity()) {
-      console.error('Passwords do not match');
-      return;
-    }
-
     const formValue = this.formGroup.value;
 
     const registerDto = {
@@ -94,32 +98,58 @@ export class RegisterPageComponent implements  OnInit {
       next: (response) => {
         console.log('Registration successful!', response);
         this.goToHome()
+        this.registerError.set(false);
+        this.errorMessage.set('');
       },
       error: (err) => {
         console.error('Error while creating user', err);
+        this.registerError.set(true);
+        this.errorMessage.set('username or password invalid');
       }
     });
   }
 
   /**
-   *  @return true if password = confirmPassword, false otherwise
+   * @param : name of the form field
+   * @return : boolean true if minlength is not respected
    * */
-  public checkPasswordConformity(): boolean {
-    if (this.formGroup==null){
-      return false;
-    }
+  nameLength(name: string): boolean {
+    const control = this.formGroup.get(name);
+    if (!control || !control.value) return false;
 
-    const passwordControl = this.formGroup.get('password');
-    const confirmPasswordControl = this.formGroup.get('confirmPassword');
-    if (passwordControl ==null || confirmPasswordControl== null){
-      return false
-    }
-
-    return confirmPasswordControl.value == passwordControl.value;
+    return !!control.errors?.['minlength'];
   }
 
-  isFieldValid(name: string){
-    const formControl = this.formGroup.get(name);
-    return formControl?.invalid && formControl?.dirty;
+  /**
+   * @param : name of the form field
+   * @return : boolean true if mail is not respected
+   * */
+  mailLength(name: string): boolean {
+    const control = this.formGroup.get(name);
+    if (!control || !control.value) return false;
+
+    return !!control.errors?.['email'];
   }
+  /**
+   * @param : name of the form field
+   * @return : boolean true if minlength is not respected
+   * */
+  passwordLength(name: string): boolean {
+    const control = this.formGroup.get(name);
+    if (!control || !control.value) return false;
+
+    return !!control.errors?.['minlength'];
+  }
+
+  /**
+   * @return : boolean true if password and confirmPassword do not match
+   * */
+  passwordsMatch(): boolean {
+    const password = this.formGroup.get("password")?.value
+    const confirmPassword = this.formGroup.get("confirmPassword")?.value
+
+    return !!confirmPassword && password !== confirmPassword;
+  }
+
+
 }

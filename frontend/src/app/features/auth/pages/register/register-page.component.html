@@ -1,6 +1,5 @@
-<div class="registerPage">
-  <img class="image" src="/assets/background/registerBackgroungPlanet.png">
-</div>
+<div class="register-page">
+
 
 <div class="register">
   <h1 class="registerTitle"> Register </h1>
@@ -9,78 +8,65 @@
         (ngSubmit)="register()"
         class="form">
 
+  <div class="form-field">
     <app-inputbox
       [type]="'text'"
       [placeholder]="'Username'"
       formControlName="username"
-      [label]="'Username'" >
+      [label]="'Username'"
+      [message]="'At least 3 characters long.'"
+      [showError]="nameLength('username')">
     </app-inputbox>
-    @if(isFieldValid("username")){
-      <div class="error">
-        The username must be at least 1 character long.
-      </div>
-    }
+
+
+  </div>
 
     <app-inputbox
       [type]="'text'"
       [placeholder]="'Firstname'"
       formControlName="firstName"
-      [label]="'Firstname'" >
+      [label]="'Firstname'"
+      [message]="'At least 3 characters long.'"
+      [showError]="nameLength('firstName')">
     </app-inputbox>
-    @if(isFieldValid("firstName")){
-      <div class="error">
-        The first name must be at least 1 character long.    </div>
-    }
 
     <app-inputbox
       [type]="'text'"
       [placeholder]="'Lastname'"
       formControlName="lastName"
-      [label]="'Lastname'" >
+      [label]="'Lastname'"
+      [message]="'At least 3 characters long.'"
+      [showError]="nameLength('lastName')">
     </app-inputbox>
-    @if(isFieldValid("lastName")){
-      <div class="error">
-        The last name must be at least 1 character long.
-      </div>
-    }
 
     <app-inputbox
       [type]="'text'"
       [placeholder]="'Email'"
       formControlName="email"
-      [label]="'Email'" >
+      [label]="'Email'"
+      [message]="'Enter a valid email (e.g. name@example.com)'"
+      [showError]="mailLength('email')">
     </app-inputbox>
-    @if(isFieldValid("email")){
-      <div class="error">
-        doesn't match
-      </div>
-    }
 
 
     <app-inputbox
       [type]="'password'"
       [placeholder]="'Password'"
       formControlName="password"
-      [label]="'Password'" >
+      [label]="'Password'"
+      [message]="'At least 8 characters long'"
+      [showError]="passwordLength('password')">
     </app-inputbox>
-    @if(isFieldValid("password")){
-      <div class="error">
-        The password does not contain at least 8 characters or does not match the required format. E.g. Toto#123.com
-      </div>
-    }
 
     <app-inputbox
       [type]="'password'"
       [placeholder]="'Confirm Password'"
       formControlName="confirmPassword"
-      [label]="'Confirm Password'" >
+      [label]="'Confirm Password'"
+      [message]="'Doesn\'t match'"
+      [showError]="passwordsMatch()">
     </app-inputbox>
 
-    @if(isFieldValid("confirmPassword")){
-      <div class="error">
-        The confirmPassword does not contain at least 8 characters or does not match the required format. E.g. Toto#123.com
-      </div>
-    }
 
     <div class="register-button-container">
       <app-button
@@ -93,5 +79,11 @@
       <p>Already have an account ? <a (click)="goToLogin()">Login</a></p>
     </div>
 
+    <app-error-success-message
+      [errorMessages]="errorMessage"
+      [showErrors]="registerError">
+    </app-error-success-message>
+
   </form>
+</div>
 </div>

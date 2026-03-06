@@ -20,6 +20,8 @@ export class InputboxComponents implements ControlValueAccessor {
 
   @Input() type:'text' | 'password' | 'email' | 'number'='text';
   @Input() placeholder:string='';
+  @Input() message:string='';
+  @Input() showError:boolean = false;
   @Input() disabled:boolean = false;
   @Input() label:string='';
   value = '';
