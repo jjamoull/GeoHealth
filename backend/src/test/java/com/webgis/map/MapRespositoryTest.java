@@ -11,7 +11,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class MapRespositoryTest {
+class MapRespositoryTest {
 
     @Autowired
     private MapRepository mapRepository;
@@ -27,7 +27,7 @@ public class MapRespositoryTest {
     void SaveAndfindByTitleMapExist(){
         //Arrange
         byte[] dataZip ={66};
-       ;
+
 
         Map map= new Map("title",
                 "risk map",
@@ -85,7 +85,6 @@ public class MapRespositoryTest {
     void SaveAndfindByIdMapNotExist(){
         //Arrange
         byte[] dataZip ={66};
-        byte[] dataGeoJson ={12};
 
         Map map= new Map("title",
                 "risk map",

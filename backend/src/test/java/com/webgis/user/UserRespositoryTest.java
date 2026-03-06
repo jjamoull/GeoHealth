@@ -10,7 +10,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class UserRespositoryTest {
+class UserRespositoryTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -152,7 +152,7 @@ public class UserRespositoryTest {
         List<User> userList = userRepository.findAllByDeletedFalse();
 
         // Assert
-        assertThat(userList.size()).isEqualTo(1);
+        assertThat(userList).hasSize(1);
         assertUserEquals(userList.get(0),firstUser);
     }
 

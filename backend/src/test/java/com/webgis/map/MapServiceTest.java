@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
-public class MapServiceTest {
+class MapServiceTest {
 
     @Mock
     MapRepository mapRepository;
