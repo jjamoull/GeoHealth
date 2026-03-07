@@ -106,7 +106,7 @@
        <div class="all-the-maps">
          @for (map of listOfAllRecentMaps; track map.id){
            <div class="new-case" (click)="goToMap(map.id)">
-             <h4 style="text-align: center">{{map.titre}}</h4>
+             <h4 style="text-align: center">{{map.title}}</h4>
              <h6 style="text-align: center">{{map.description}}</h6>
            </div>
          }
@@ -124,7 +124,7 @@
       <div class="all-the-maps">
         @for (map of listOfAllMaps; track map.id){
           <div class="new-case" (click)="goToMap(map.id)">
-            <h4 style="text-align: center">{{map.titre}}</h4>
+            <h4 style="text-align: center">{{map.title}}</h4>
             <h6 style="text-align: center">{{map.description}}</h6>
           </div>
         }
