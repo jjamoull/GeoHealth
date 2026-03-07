@@ -14,11 +14,9 @@ import { MapService } from '../../../core/service/MapService/mapService';
 export class MapComponent implements AfterViewInit {
 
   riskLevels = [
-    {label: 'Very Low', color: '#27ae60'},
     {label: 'Low', color: '#2ecc71'},
     {label: 'Medium', color: '#f39c12'},
-    {label: 'High', color: '#e74c3c'},
-    {label: 'Very High', color: '#8e1a0e'}];
+    {label: 'High', color: '#e74c3c'}];
 
   selectedDistrict = signal<any>(null);
   marker: any = null;
@@ -63,15 +61,15 @@ export class MapComponent implements AfterViewInit {
             color: '#333',
             weight: 1,
             fillColor: this.getRiskColor(feature?.properties?.Risk_categ),
-            fillOpacity: 0.7,
+            fillOpacity: 0.5,
           }),
           onEachFeature: (feature, layer) => {
             layer.on('mouseover', () => {
-              (layer as any).setStyle({ fillOpacity: 1 });
+              (layer as any).setStyle({ fillOpacity:0.7 });
             });
 
             layer.on('mouseout', () => {
-              (layer as any).setStyle({ fillOpacity: 0.7 });
+              (layer as any).setStyle({ fillOpacity: 0.5 });
             });
 
             layer.on('click', (e:any) => {

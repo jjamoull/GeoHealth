@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { isPlatformBrowser} from '@angular/common';
 import {PopUpComponent} from '../../../pop-up/pop-up.component';
 import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {ListOfAllMaps} from './ListOfAllMaps';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ButtonComponent} from "../../../../shared/components/button.component/button.component";
 import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
+import {MapService} from '../../../../core/service/MapService/mapService';
+import {MapListDto} from '../../../../shared/models/MapModel/MapListDto';
 
 @Component({
   selector: 'app-navigation',
@@ -12,74 +14,48 @@ import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })
-export class NavigationPageComponent {
+export class NavigationPageComponent implements OnInit{
 
-  constructor(private dialog: MatDialog,
-              private router: Router) {}
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private mapService: MapService,
+    private cdr: ChangeDetectorRef
+    ){}
 
-  /*
-  * Set of all global variables of this file
-  * */
-  listOfAllMaps:ListOfAllMaps[] = [{
-    titre: 'test2', description:'description du test2', id: 0
-  }, {
-    titre: 'test2', description:'description du test2', id: 1
-  }, {
-    titre: 'test2', description:'description du test2', id: 2
-  }, {
-    titre: 'test2', description:'description du test2', id: 3
-  }, {
-    titre: 'test2', description:'description du test2', id: 4
-  }, {
-    titre: 'test2', description:'description du test2', id: 5
-  }, {
-    titre: 'test2', description:'description du test2', id: 6
-  }, {
-    titre: 'test2', description:'description du test2', id: 7
-  }, {
-    titre: 'test2', description:'description du test2', id: 8
-  }, {
-    titre: 'test2', description:'description du test2', id: 9
-  }, {
-    titre: 'test2', description:'description du test2', id: 10
-  }, {
-    titre: 'test2', description:'description du test2', id: 11
-  }, {
-    titre: 'test2', description:'description du test2', id: 12
-  }, {
-    titre: 'test2', description:'description du test2', id: 13
-  }, {
-    titre: 'test2', description:'description du test2', id: 14
-  }, {
-    titre: 'test2', description:'description du test2', id: 15
-  }]
+  listOfAllMaps:MapListDto[] = [];
+  listOfAllRecentMaps:MapListDto[] = [];
 
-  /*
-* Set of all global variables of this file
-* */
-  listOfAllRecentMaps:ListOfAllMaps[] = [{
-    titre: 'testRecent2', description:'description du testRecent2', id: 1
-  }, {
-    titre: 'testRecent2', description:'description du testRecent2', id: 17
-  }, {
-    titre: 'testRecent2', description:'description du testRecent2', id: 18
-  }]
+  ngOnInit() {
+      this.getAllMaps();
+    }
 
-  //----------------------------------------------------
+  /**
+   * add all the maps into ListOfAllMaps
+   */
+  private getAllMaps() {
+    this.mapService.getAllMaps().subscribe({
+      next: (maps: MapListDto[]) => {
+        this.listOfAllMaps = maps;
+        this.cdr.detectChanges();
+      },
+      error: (err: any) => {
+        console.error('Error fetching maps', err);
+      }
+    });
+  }
 
   /**
    * Allow the user to open the pop-up on click event
-   * */
+   */
   openPopUp(): void {
     this.dialog.open(PopUpComponent);
   }
 
   /**
    * Go to the page with the id of the map
-   * */
-    goToMap(id: number) {
-      this.router.navigate(['/maps', id]);
-    }
-
-
+   */
+  goToMap(id: number) {
+    this.router.navigate(['/maps', id]);
+  }
 }
