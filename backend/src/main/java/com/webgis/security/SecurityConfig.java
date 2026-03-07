@@ -1,7 +1,6 @@
 package com.webgis.security;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -49,15 +48,16 @@ public class SecurityConfig {
     }
 
     private static final Long LIFETIME = 3600L;
-    private static final int CORSFILTERORDER = -101;
 
     @Bean
-    public FilterRegistrationBean corsFilter() {
+    public CorsFilter corsFilter() {
+
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
         config.addAllowedOrigin(frontendUrl);
+
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,
@@ -70,11 +70,9 @@ public class SecurityConfig {
                 HttpMethod.DELETE.name()));
 
         config.setMaxAge(LIFETIME);
-        source.registerCorsConfiguration("/**", config);
-        final FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
 
-        // should be set order to -100 because we need to CorsFilter before SpringSecurityFilter
-        bean.setOrder(CORSFILTERORDER);
-        return bean;
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsFilter(source);
     }
 }
