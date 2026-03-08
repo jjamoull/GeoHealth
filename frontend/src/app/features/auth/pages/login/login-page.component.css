@@ -4,16 +4,17 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  position: relative;
   padding-top: 5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 22vh;
+  padding-left: 5%;
 }
 
 .login{
-  position: absolute;
   width: 40%;
   border-radius: 10px;
-  top: 22%;
-  left: 5%
 }
 
 .title-container {
@@ -59,4 +60,54 @@
 .registerlink p a:hover{
   text-decoration: underline;
 }
+
+
+/* phone portrait */
+@media (max-width: 768px) and (orientation: portrait){
+
+  .login-page{
+    background-image: url("/assets/background/phoneLoginBackgroundPlanet.png");
+  }
+
+  .login{
+    width: 90%;
+    padding-top: 10rem;
+  }
+
+}
+/* phone landscape */
+@media (max-width: 768px) and (orientation: landscape){
+  .login-page{
+    background-image: url("/assets/background/phoneLoginLandscapeBackground.png");
+  }
+
+  .login{
+    width: 50%;
+  }
+
+}
+
+/* Tablet portrait */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+  .login-page{
+    background-image: url("/assets/background/tabletLoginBackgroundPlanet.png");
+  }
+
+  .login{
+    width: 60%;
+    padding-top: 70px;
+  }
+}
+
+/* Tablet landscape */
+@media (min-width: 1025px) and (max-width: 1200px) and (orientation: landscape) {
+  .login-page{
+    background-image: url("/assets/background/tabletLoginLandscapeBackground.png");
+  }
+
+  .login{
+    width: 50%;
+  }
+}
+
 
