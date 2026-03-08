@@ -12,17 +12,20 @@ export const API_ENDPOINTS = {
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
     STATUS: '/auth/status',
+
   },
   ADMIN: {
     ALLUSER: '/admin/users',
     BAN: '/admin/users/ban',
     UNBAN:'/admin/users/unban/',
     CHANGEROLE:'/admin/users/change-role',
+    MAPS: {
+      DELETE: '/admin/maps',
+      UPLOAD: '/admin/maps/uploadShapeFile',
+    }
   },
   MAPS: {
     ALLMAPS: '/maps/AllMaps',
-    DELETE: '/maps',
-    UPLOAD: '/maps/uploadShapeFile',
     GET: '/maps'
     }
 } as const;

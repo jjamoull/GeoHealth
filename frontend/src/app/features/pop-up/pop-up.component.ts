@@ -1,9 +1,9 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {MatDialog,MatDialogRef, MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {finalize, Subscription} from 'rxjs';
-import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
-import {MapService} from '../../core/service/MapService/mapService';
+import {Subscription} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {AdminMapService} from '../../core/service/AdminService/AdminMapService';
 
 @Component({
   selector: 'app-pop-up',
@@ -16,7 +16,7 @@ import {MapService} from '../../core/service/MapService/mapService';
 export class PopUpComponent implements OnInit{
   constructor(private dialog: MatDialogRef <PopUpComponent>,
               private http: HttpClient,
-              private mapService: MapService) {}
+              private adminMapService: AdminMapService) {}
 
   formGroup!: FormGroup;
   selectedFile: File | null = null;
@@ -59,7 +59,7 @@ export class PopUpComponent implements OnInit{
       formData.append("zipFile", this.selectedFile);
 
 
-      this.mapService.uploadNewMap(formData).subscribe(
+      this.adminMapService.uploadNewMap(formData).subscribe(
         {
           next:()=>{
             this.isUploading = false;
