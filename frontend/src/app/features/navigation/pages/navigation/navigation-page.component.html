@@ -9,11 +9,13 @@
   <div class="scrollbox">
     <div class="scrollbox-inner">
       <div class="navigation-button-container">
-        <app-button
-          [text]="'Add a new map'"
-          variant="success"
-          (clicked) = "openPopUp()">
-        </app-button>
+        @if(isAdmin){
+          <app-button
+            [text]="'Add a new map'"
+            variant="success"
+            (clicked) = "openPopUp()">
+          </app-button>
+        }
       </div>
       <label for="check">
         <span class ="fas fa-times" id="times"> </span>

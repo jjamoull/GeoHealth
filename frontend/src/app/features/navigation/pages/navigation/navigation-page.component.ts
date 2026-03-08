@@ -7,6 +7,7 @@ import {ButtonComponent} from "../../../../shared/components/button.component/bu
 import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
 import {MapService} from '../../../../core/service/MapService/mapService';
 import {MapListDto} from '../../../../shared/models/MapModel/MapListDto';
+import {UsersServices} from '../../../../core/service/UserService/users-services';
 
 @Component({
   selector: 'app-navigation',
@@ -20,14 +21,25 @@ export class NavigationPageComponent implements OnInit{
     private dialog: MatDialog,
     private router: Router,
     private mapService: MapService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private usersServices: UsersServices
     ){}
+
+  isAdmin:boolean =false;
 
   listOfAllMaps:MapListDto[] = [];
   listOfAllRecentMaps:MapListDto[] = [];
 
   ngOnInit() {
-      this.getAllMaps();
+    this.getAllMaps();
+
+    this.usersServices.isAdmin().subscribe(
+      bool =>{
+        this.isAdmin=bool
+        this.cdr.detectChanges();
+      }
+    );
+
     }
 
   /**

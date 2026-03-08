@@ -38,8 +38,6 @@ export class PopUpComponent implements OnInit{
     });
   }
 
-
-
   /**
    * Handles the file upload component contained in a pop-up
    * */
