@@ -46,7 +46,6 @@ public class AdminMapController {
                     null);
             mapService.save(map);
 
-            System.out.println("in postGeoJsonFile");
 
             if (geoJsonFile != null){
                 map.setFileGeoJson(new String(geoJsonFile.getBytes()));
