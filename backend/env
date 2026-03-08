@@ -1,5 +1,0 @@
-DB_USER=geohealth
-DB_PASSWORD=geohealthpassword2026
-JWT_SECRET=secret-256-bit-key
-COOKIE_SECURE=true
-SUPERADMIN_SECRET=AdminPassword
