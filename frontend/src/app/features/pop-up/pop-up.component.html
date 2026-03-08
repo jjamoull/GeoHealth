@@ -1,11 +1,63 @@
 <div class="pop-up">
-  <h2 align="center" style=" border-bottom: 2px solid black;">
-    Configure your new map to add
-  </h2>
+  @if(typeOfPopopIsValid(addMap)){
+    <h2 align="center" style=" border-bottom: 2px solid black;">
+      Configure your new map to add
+    </h2>
 
+    <form [formGroup]="formGroup" (ngSubmit)="closePopUp()">
+      <label for="title" class="my-3">Title</label>
+      <input type="text" class="form-control"  name="title" placeholder="MapComponent on …" formControlName ="title" />
+      @if(isFieldValid("title")){
+        <div class="error">
+          The minimum length of the title is incorrect
+        </div>
+      }
+
+      <label for="description" class="my-3">Description</label>
+      <input type="text" class="form-control" name="description" placeholder="About the map …" formControlName ="description" />
+      @if(isFieldValid("description")){
+        <div class="error">
+          The minimum length of the description is incorrect
+        </div>
+      }
+
+      <label>The zipFile on shape file here (e.g.: example.zip)</label>
+      <input type="file"
+             class="file-input"
+             formControlName="file"
+             (change)="onFileSelected($event)"
+             #fileUpload>
+
+
+      <div class="file-upload">
+        <button type="button"
+                mat-fab
+                color="primary"
+                class="upload-btn"
+                (click)="fileUpload.click()"> Upload
+        </button>
+        {{selectedFile?.name||'No file uploaded yet'}}
+      </div>
+
+
+      @if(isFieldValid("file")){
+        <div class="error">
+          The file is incorrect
+        </div>
+      }
+
+      <button type="submit" [disabled]="formGroup.invalid || isUploading">
+        Create the new map
+      </button>
+
+    </form>
+  }
+  <h2 align="center" style=" border-bottom: 2px solid black;">
+    Configure your new risk factor to add
+  </h2>
   <form [formGroup]="formGroup" (ngSubmit)="closePopUp()">
     <label for="title" class="my-3">Title</label>
-    <input type="text" class="form-control" id="title" name="title" placeholder="MapComponent on …" formControlName ="title" />
+    <input type="text" class="form-control" name="title" placeholder="Title of the risk factor…" formControlName ="title" />
     @if(isFieldValid("title")){
       <div class="error">
         The minimum length of the title is incorrect
@@ -13,14 +65,14 @@
     }
 
     <label for="description" class="my-3">Description</label>
-    <input type="text" class="form-control" id="description" name="description" placeholder="About the map …" formControlName ="description" />
+    <input type="text" class="form-control"  name="description" placeholder="About the risk factor …" formControlName ="description" />
     @if(isFieldValid("description")){
       <div class="error">
         The minimum length of the description is incorrect
       </div>
     }
 
-    <label>The zipFile on shape file here (e.g.: example.zip)</label>
+    <label>The tiff file here ⟺ Risk factor (e.g.: example.tiff)</label>
     <input type="file"
            class="file-input"
            formControlName="file"
@@ -44,10 +96,12 @@
         The file is incorrect
       </div>
     }
-
+    @if (problemWithUploading){
+      <h5>There is a issue with the uploading of file</h5>
+    }
     <button type="submit" [disabled]="formGroup.invalid || isUploading">
-    Create the new map
-  </button>
+      Add a new risk factor
+    </button>
 
   </form>
 

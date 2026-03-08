@@ -47,10 +47,15 @@ export class NavigationPageComponent implements OnInit{
 
   /**
    * Allow the user to open the pop-up on click event
-   */
-  openPopUp(): void {
-    this.dialog.open(PopUpComponent);
+   * */
+  openPopUp(paramTypeOfPopUp:string): void {
+    this.dialog.open(PopUpComponent, {
+      data:{
+        typeOfPopUp: paramTypeOfPopUp
+      }
+    });
   }
+
 
   /**
    * Go to the page with the id of the map
