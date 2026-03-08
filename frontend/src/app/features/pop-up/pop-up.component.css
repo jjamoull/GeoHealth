@@ -1,18 +1,18 @@
 .pop-up{
-  width: 50vh;
-  height: 50vh;
+  background-color: white;
   border: 3px solid #2e8b57;
   border-radius: 25px;
-  box-sizing: border-box;
   padding: 20px;
-  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .popup-title{
   text-align: center;
-  background: #90ee90;;
+  background: #90ee90;
   padding: 8px;
-  border-radius: 8px;
   margin-bottom: 20px;
 }
 
