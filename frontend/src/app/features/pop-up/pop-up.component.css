@@ -1,7 +1,24 @@
 .pop-up{
   width: 50vh;
   height: 50vh;
-  border: 2px solid black;
+  border: 3px solid #2e8b57;
+  border-radius: 25px;
+  box-sizing: border-box;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.popup-title{
+  text-align: center;
+  background: #90ee90;;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.pop-up .error {
+  color: red;
+  font-size: 0.9em;
 }
 
 .enterDataOnNewMap{

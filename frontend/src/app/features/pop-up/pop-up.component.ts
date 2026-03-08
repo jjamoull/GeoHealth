@@ -4,11 +4,14 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {finalize, Subscription} from 'rxjs';
 import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
 import {MapService} from '../../core/service/MapService/mapService';
+import {InputboxComponents} from '../../shared/components/inputbox.components/inputbox.components';
+import {ButtonComponent} from '../../shared/components/button.component/button.component';
 
 @Component({
   selector: 'app-pop-up',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputboxComponents
   ],
   templateUrl: './pop-up.component.html',
   styleUrl: './pop-up.component.css',

@@ -1,19 +1,30 @@
 <div class="pop-up">
-  <h2 align="center" style=" border-bottom: 2px solid black;">
+
+  <h2 class="popup-title" align="center" >
     Configure your new map to add
   </h2>
 
   <form [formGroup]="formGroup" (ngSubmit)="closePopUp()">
-    <label for="title" class="my-3">Title</label>
-    <input type="text" class="form-control" id="title" name="title" placeholder="MapComponent on …" formControlName ="title" />
+
+    <app-inputbox
+      [type]="'text'"
+      [placeholder]="'My title'"
+      formControlName="title"
+      [label]="'Title'">
+    </app-inputbox>
     @if(isFieldValid("title")){
       <div class="error">
         The minimum length of the title is incorrect
       </div>
     }
 
-    <label for="description" class="my-3">Description</label>
-    <input type="text" class="form-control" id="description" name="description" placeholder="About the map …" formControlName ="description" />
+    <app-inputbox
+      [type]="'text'"
+      [placeholder]="'About the map …'"
+      formControlName="description"
+      [label]="'Description'">
+    </app-inputbox>
+
     @if(isFieldValid("description")){
       <div class="error">
         The minimum length of the description is incorrect
@@ -21,6 +32,7 @@
     }
 
     <label>The zipFile on shape file here (e.g.: example.zip)</label>
+
     <input type="file"
            class="file-input"
            formControlName="file"
@@ -35,6 +47,7 @@
               class="upload-btn"
               (click)="fileUpload.click()"> Upload
       </button>
+
       {{selectedFile?.name||'No file uploaded yet'}}
     </div>
 
@@ -45,7 +58,7 @@
       </div>
     }
 
-    <button type="submit" [disabled]="formGroup.invalid || isUploading">
+  <button type="submit" [disabled]="formGroup.invalid || isUploading">
     Create the new map
   </button>
 
