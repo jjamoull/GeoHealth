@@ -11,6 +11,7 @@
 
 .popup-title{
   text-align: center;
+  border-radius: 8px;
   background: #90ee90;
   padding: 8px;
   margin-bottom: 20px;
