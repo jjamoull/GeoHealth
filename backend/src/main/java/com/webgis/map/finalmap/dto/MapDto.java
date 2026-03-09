@@ -1,4 +1,4 @@
-package com.webgis.map.finalMap.dto;
+package com.webgis.map.finalmap.dto;
 
 /**
  * Data Transfer Object containing needed fields for a map's info.

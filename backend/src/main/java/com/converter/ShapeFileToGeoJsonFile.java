@@ -1,4 +1,4 @@
-package com.Converter;
+package com.converter;
 
 
 import org.geotools.api.data.SimpleFeatureSource;

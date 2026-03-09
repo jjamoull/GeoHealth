@@ -1,6 +1,6 @@
-package com.webgis.map.finalMap;
+package com.webgis.map.finalmap;
 
-import com.Converter.ZipFiles;
+import com.converter.ZipFiles;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -9,8 +9,8 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 
-import static com.Converter.DetectFiles.findShpFile;
-import static com.Converter.ShapeFileToGeoJsonFile.transformShapeFileToGeoJsonFile;
+import static com.converter.DetectFiles.findShpFile;
+import static com.converter.ShapeFileToGeoJsonFile.transformShapeFileToGeoJsonFile;
 
 @Service
 public class MapService {

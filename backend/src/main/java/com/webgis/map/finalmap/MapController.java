@@ -1,8 +1,9 @@
-package com.webgis.map.finalMap;
+package com.webgis.map.finalmap;
 
 import com.webgis.MessageDto;
-import com.webgis.map.finalMap.dto.MapDto;
-import com.webgis.map.finalMap.dto.MapListDto;
+import com.webgis.map.finalmap.dto.MapDto;
+import com.webgis.map.finalmap.dto.MapListDto;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,7 +74,7 @@ public class MapController {
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("zipFile") MultipartFile zipFile,
-            @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile) throws IOException {
+            @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile){
 
         try {
             final Map map = new Map(title,
@@ -86,7 +87,7 @@ public class MapController {
                 map.setFileGeoJson(new String(geoJsonFile.getBytes()));
             } else{
                 if (map.getId()== null){
-                    throw new RuntimeException("There is no id for the map : "+ title);
+                    throw new NotFound();
                 } else {
                     final String tempGeoJsonFile = mapService.zipToGeoJsonFile(map.getId());
                     map.setFileGeoJson(tempGeoJsonFile);
@@ -94,7 +95,7 @@ public class MapController {
             }
             final Map savedMap = mapService.save(map);
             return ResponseEntity.status(200).body(new MapListDto(savedMap.getId(), savedMap.getTitle(), savedMap.getDescription()));
-        } catch (RuntimeException e) {
+        } catch (NotFound e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         } catch (IOException e) {
             return ResponseEntity.status(500).body(new MessageDto(e.getMessage()));

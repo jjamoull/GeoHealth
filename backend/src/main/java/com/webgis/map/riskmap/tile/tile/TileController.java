@@ -1,4 +1,4 @@
-package com.webgis.map.riskMap.tile.tile;
+package com.webgis.map.riskmap.tile.tile;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,9 @@ import java.util.Optional;
 public class TileController {
 
     private final TileRepository tileRepository;
-    private final TileService tileService;
 
-    public TileController(TileRepository tileRepository, TileService tileService  ){
+    public TileController(TileRepository tileRepository){
         this.tileRepository = tileRepository;
-        this.tileService = tileService;
     }
 
     @GetMapping("/file/{mapId}/{z}/{x}/{y}.png")

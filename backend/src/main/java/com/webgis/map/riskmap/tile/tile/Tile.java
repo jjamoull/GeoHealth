@@ -1,4 +1,4 @@
-package com.webgis.map.riskMap.tile.tile;
+package com.webgis.map.riskmap.tile.tile;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -50,9 +50,6 @@ public class Tile {
         this.tileId = tileId;
     }
 
-    public void setData(byte[] tileData) {
-        this.tileData = tileData;
-    }
 }
 
 

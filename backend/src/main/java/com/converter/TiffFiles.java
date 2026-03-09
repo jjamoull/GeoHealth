@@ -1,4 +1,4 @@
-package com.Converter;
+package com.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,13 +86,13 @@ public class TiffFiles {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    System.out.println("[gdal2tiles] " + line);
+                    logger.info("[gdal2tiles] " + line);
                 }
             }
 
             final int exitCode = process.waitFor();
             if (exitCode != 0) {
-                logger.info("gdal2tiles exited with code " + exitCode);
+                logger.info("gdal2tiles exited with code {}", exitCode);
             }
 
         } catch (IOException | InterruptedException e) {
@@ -133,7 +133,7 @@ public class TiffFiles {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(logPrefix + " " + line);
+                logger.info("{} {}", logPrefix, line);
             }
         }
         final int exitCode = process.waitFor();

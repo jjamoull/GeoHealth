@@ -1,6 +1,6 @@
-package com.Converter;
+package com.converter;
 
-import com.webgis.map.finalMap.Map;
+import com.webgis.map.finalmap.Map;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -101,14 +101,6 @@ public class ZipFiles {
         }
         return destFile;
     }
-
-
-
-
-    /**
-     *
-     */
-    public void zip(){ /* TODO document why this method is empty */ }
 
 
 }
