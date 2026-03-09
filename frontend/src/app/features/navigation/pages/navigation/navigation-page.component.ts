@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser} from '@angular/common';
 import {PopUpComponent} from '../../../pop-up/pop-up.component';
-import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ButtonComponent} from "../../../../shared/components/button.component/button.component";
 import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
@@ -49,7 +49,17 @@ export class NavigationPageComponent implements OnInit{
    * Allow the user to open the pop-up on click event
    */
   openPopUp(): void {
-    this.dialog.open(PopUpComponent);
+
+    const dialogConfig = new MatDialogConfig()
+
+    const dialogRef = this.dialog.open(PopUpComponent,dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getAllMaps();
+        this.cdr.detectChanges()
+      }
+     });
   }
 
   /**

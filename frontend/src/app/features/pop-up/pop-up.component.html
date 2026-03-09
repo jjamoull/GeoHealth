@@ -4,7 +4,7 @@
     Configure your new map to add
   </h2>
 
-  <form [formGroup]="formGroup" (ngSubmit)="closePopUp()">
+  <form [formGroup]="formGroup" (ngSubmit)="Upload()">
 
     <app-inputbox
       [type]="'text'"
@@ -24,15 +24,13 @@
       formControlName="description"
       [label]="'Description'">
     </app-inputbox>
-
     @if(isFieldValid("description")){
       <div class="error">
         The minimum length of the description is incorrect
       </div>
     }
 
-    <label>The zipFile on shape file here (e.g.: example.zip)</label>
-
+    <label>Zip file of Shape file here</label>
     <input type="file"
            class="file-input"
            formControlName="file"
@@ -42,13 +40,12 @@
 
     <div class="file-upload">
       <button type="button"
-              mat-fab
-              color="primary"
               class="upload-btn"
               (click)="fileUpload.click()"> Upload
       </button>
-
-      {{selectedFile?.name||'No file uploaded yet'}}
+      <span>
+      {{selectedFile?.name || 'No file uploaded yet'}}
+      </span>
     </div>
 
 
@@ -58,9 +55,9 @@
       </div>
     }
 
-  <button type="submit" [disabled]="formGroup.invalid || isUploading">
-    Create the new map
-  </button>
+    <button type="submit" [disabled]="formGroup.invalid || isUploading">
+      Create the new map
+    </button>
 
   </form>
 

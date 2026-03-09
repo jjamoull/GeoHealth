@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
 import {MatDialog,MatDialogRef, MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {finalize, Subscription} from 'rxjs';
@@ -18,7 +18,7 @@ import {ButtonComponent} from '../../shared/components/button.component/button.c
 })
 export class PopUpComponent implements OnInit{
   constructor(private dialog: MatDialogRef <PopUpComponent>,
-              private http: HttpClient,
+              private cdr: ChangeDetectorRef,
               private mapService: MapService) {}
 
   formGroup!: FormGroup;
@@ -54,7 +54,15 @@ export class PopUpComponent implements OnInit{
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
       this.isUploading = false;
+      console.log("finish file selection")
+    }
+  }
 
+  Upload(){
+    console.log("near upload")
+    if(this.selectedFile != null){
+
+      console.log("in upload")
       //add all values from the form in FormData to send in DB
       const formData = new FormData();
       formData.append("title", this.formGroup.value.title);
@@ -66,21 +74,13 @@ export class PopUpComponent implements OnInit{
         {
           next:()=>{
             this.isUploading = false;
-            //this.closePopUp()
+            this.closePopUp()
           }, error:(error)=>{
             console.error(error);
             this.isUploading = false;
           }
         }
       );
-
-      // missing geoJson file but optional so shouldn't raise issues
-      //upload progress bar if we plan to upload a good amount of files at a time
-      /*
-        if (event.type == HttpEventType.UploadProgress && event.total) {
-          this.uploadProgress = Math.round(100 * (event.loaded / event.total));
-        }
-      */
     }
   }
 
@@ -105,8 +105,7 @@ export class PopUpComponent implements OnInit{
    * Allow the user to close the pop-up
    * */
   closePopUp(): void {
-    console.log(this.formGroup.value)
-    this.dialog.close();
+    this.dialog.close(true);
   }
 
 
@@ -118,8 +117,6 @@ export class PopUpComponent implements OnInit{
     const formControl = this.formGroup.get(name);
     return formControl?.invalid && formControl?.dirty;
   }
-
-
 
 
 }
