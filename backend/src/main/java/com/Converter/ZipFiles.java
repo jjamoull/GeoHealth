@@ -1,6 +1,6 @@
 package com.Converter;
 
-import com.webgis.map.Map;
+import com.webgis.map.finalMap.Map;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

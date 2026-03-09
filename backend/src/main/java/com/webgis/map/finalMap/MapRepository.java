@@ -1,4 +1,4 @@
-package com.webgis.map;
+package com.webgis.map.finalMap;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.webgis.tile;
+package com.webgis.map.riskMap.tile.tile;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

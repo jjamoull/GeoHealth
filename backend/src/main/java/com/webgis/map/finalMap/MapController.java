@@ -1,8 +1,8 @@
-package com.webgis.map;
+package com.webgis.map.finalMap;
 
 import com.webgis.MessageDto;
-import com.webgis.map.dto.MapDto;
-import com.webgis.map.dto.MapListDto;
+import com.webgis.map.finalMap.dto.MapDto;
+import com.webgis.map.finalMap.dto.MapListDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

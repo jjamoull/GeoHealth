@@ -1,6 +1,8 @@
-package com.webgis.map;
+package com.webgis.finalMap;
 
 
+import com.webgis.map.finalMap.Map;
+import com.webgis.map.finalMap.MapRepository;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;

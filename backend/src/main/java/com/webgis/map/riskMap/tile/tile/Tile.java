@@ -1,4 +1,4 @@
-package com.webgis.tile;
+package com.webgis.map.riskMap.tile.tile;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

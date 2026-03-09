@@ -1,5 +1,7 @@
-package com.webgis.map;
+package com.webgis.finalMap;
 
+import com.webgis.map.finalMap.MapRepository;
+import com.webgis.map.finalMap.MapService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 

@@ -1,4 +1,4 @@
-package com.webgis.riskFactorMap;
+package com.webgis.map.riskMap.riskFactorMap;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
