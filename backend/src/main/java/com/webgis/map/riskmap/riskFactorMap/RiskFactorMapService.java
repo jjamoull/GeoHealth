@@ -78,7 +78,7 @@ public class RiskFactorMapService {
     /**
      * Main method to transform tif files into tiles and stored them into the DB
      *
-     * @param map_id : the id of the risk factor map that the result will be linked
+     * @param mapId : the id of the risk factor map that the result will be linked
      * @param tifFile : the fil file to transform
      * */
     public void transformIntoTileFile(long mapId, MultipartFile tifFile){

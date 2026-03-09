@@ -123,10 +123,10 @@ public class TiffFiles {
      *
      * @param command : execute the line of command to transform the tif file into a set of 8 bits file
      * @param logPrefix : String to recognize the process thanks to his prefix
-     * @throws IOException : if there is a problem with execution of pb.start();
+     * @throws IOException : if there is a problem with execution of pb.start() (E.g. Command that doesn't exist) ;
      * @throws InterruptedException : if there is a problem with execution of process.waitFor();
      *  */
-    private void runProcessFor8Bits(String[] command, String logPrefix) throws IOException, InterruptedException {
+    public static void runProcessFor8Bits(String[] command, String logPrefix) throws IOException, InterruptedException {
         final ProcessBuilder pb = new ProcessBuilder(command);
         pb.redirectErrorStream(true);
         final Process process = pb.start();

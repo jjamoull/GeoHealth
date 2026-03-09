@@ -1,9 +1,9 @@
 package com.webgis.map.finalmap;
 
 import com.webgis.MessageDto;
+import com.webgis.exception.NotFound;
 import com.webgis.map.finalmap.dto.MapDto;
 import com.webgis.map.finalmap.dto.MapListDto;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,7 +87,7 @@ public class MapController {
                 map.setFileGeoJson(new String(geoJsonFile.getBytes()));
             } else{
                 if (map.getId()== null){
-                    throw new NotFound();
+                    throw new NotFound("There is no id for this map : " + map.getTitle());
                 } else {
                     final String tempGeoJsonFile = mapService.zipToGeoJsonFile(map.getId());
                     map.setFileGeoJson(tempGeoJsonFile);
