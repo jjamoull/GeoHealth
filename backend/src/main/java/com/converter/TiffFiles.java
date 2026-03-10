@@ -66,8 +66,7 @@ public class TiffFiles {
 
 
         } catch (IOException | InterruptedException e) {
-            logger.info("The temporary file for .tif file can be created : \n");
-            e.printStackTrace();
+            logger.info("The temporary file for .tif file can not be created : \n");
         }
     }
 
@@ -97,7 +96,6 @@ public class TiffFiles {
 
         } catch (IOException | InterruptedException e) {
             logger.info("Failed to run gdal2tiles.py");
-            e.printStackTrace();
         }
     }
 
