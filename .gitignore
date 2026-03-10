@@ -41,3 +41,4 @@ node_modules/
 frontend/package-lock.json
 package-lock.json
 package.json
+/tiles
