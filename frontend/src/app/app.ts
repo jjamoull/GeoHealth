@@ -6,10 +6,11 @@ import {catchError, map, of} from 'rxjs';
 import {Connectednavbar} from './shared/components/connectednavbar/connectednavbar';
 import {Unconnectednavbar} from './shared/components/unconnectednavbar/unconnectednavbar';
 import {Unconnectedsidebar} from './shared/components/unconnectedsidebar/unconnectedsidebar';
+import {Connectedsidebar} from './shared/components/connectedsidebar/connectedsidebar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Connectednavbar, Unconnectednavbar, Unconnectedsidebar],
+  imports: [RouterOutlet, Connectednavbar, Unconnectednavbar, Unconnectedsidebar, Connectedsidebar],
   templateUrl: './app.html',
   styleUrl: './app.css',
   standalone: true,
