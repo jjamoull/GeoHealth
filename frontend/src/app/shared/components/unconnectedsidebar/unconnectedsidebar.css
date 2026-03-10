@@ -29,6 +29,10 @@
     overflow: hidden;
     transition: all 0.3s linear;
     display: block;
+    z-index: 1000;
+  }
+  .btnOne label, .btnTwo label, .btnOne i, .btnTwo i {
+    z-index: 1100;
   }
   .logo-container{
     display: flex;
