@@ -1,8 +1,8 @@
 package com.webgis.finalMap;
 
 
-import com.webgis.map.finalmap.Map;
-import com.webgis.map.finalmap.MapRepository;
+import com.webgis.map.finalmap.FinalMap;
+import com.webgis.map.finalmap.FinalMapRepository;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +13,12 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class MapRespositoryTest {
+class finalMapRespositoryTest {
 
     @Autowired
-    private MapRepository mapRepository;
+    private FinalMapRepository finalMapRepository;
 
-    private void assertMapEquals(Map actual, Map expected) {
+    private void assertMapEquals(FinalMap actual, FinalMap expected) {
         assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
         assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
         assertThat(actual.getZipFile()).containsExactly(expected.getZipFile());
@@ -31,18 +31,18 @@ class MapRespositoryTest {
         byte[] dataZip ={66};
 
 
-        Map map= new Map("title",
+        FinalMap finalMap = new FinalMap("title",
                 "risk map",
                 dataZip,
                 "file");
 
         //Act
-        mapRepository.save(map);
-        Optional<Map> found = mapRepository.findByTitle(map.getTitle());
+        finalMapRepository.save(finalMap);
+        Optional<FinalMap> found = finalMapRepository.findByTitle(finalMap.getTitle());
 
         //Assert
         assertThat(found).isPresent();
-        assertMapEquals(found.get(),map);
+        assertMapEquals(found.get(), finalMap);
     }
 
     @Test
@@ -51,14 +51,14 @@ class MapRespositoryTest {
         byte[] dataZip ={66};
 
 
-        Map map= new Map("title",
+        FinalMap finalMap = new FinalMap("title",
                 "risk map",
                 dataZip,
                 "file");
 
         //Act
-        mapRepository.save(map);
-        Optional<Map> found = mapRepository.findByTitle("otherTitle");
+        finalMapRepository.save(finalMap);
+        Optional<FinalMap> found = finalMapRepository.findByTitle("otherTitle");
 
         //Assert
         assertThat(found).isEmpty();
@@ -69,18 +69,18 @@ class MapRespositoryTest {
         //Arrange
         byte[] dataZip ={66};
 
-        Map map= new Map("title",
+        FinalMap finalMap = new FinalMap("title",
                 "risk map",
                 dataZip,
                 "file");
 
         //Act
-        mapRepository.save(map);
-        Optional<Map> found = mapRepository.findById(map.getId());
+        finalMapRepository.save(finalMap);
+        Optional<FinalMap> found = finalMapRepository.findById(finalMap.getId());
 
         //Assert
         assertThat(found).isPresent();
-        assertMapEquals(found.get(),map);
+        assertMapEquals(found.get(), finalMap);
     }
 
     @Test
@@ -88,14 +88,14 @@ class MapRespositoryTest {
         //Arrange
         byte[] dataZip ={66};
 
-        Map map= new Map("title",
+        FinalMap finalMap = new FinalMap("title",
                 "risk map",
                 dataZip,
                 "file");
 
         //Act
-        mapRepository.save(map);
-        Optional<Map> found = mapRepository.findById(88);
+        finalMapRepository.save(finalMap);
+        Optional<FinalMap> found = finalMapRepository.findById(88);
 
         //Assert
         assertThat(found).isEmpty();

@@ -50,7 +50,7 @@ public class AdminController {
     }
 
     /**
-     * Bans the user
+     * Bans the u
      * @param banDto the information about the target to ban
      * @return confirmation message if succeeded, error message otherwise
      */

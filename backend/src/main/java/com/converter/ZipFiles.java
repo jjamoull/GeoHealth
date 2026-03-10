@@ -1,6 +1,6 @@
 package com.converter;
 
-import com.webgis.map.finalmap.Map;
+import com.webgis.map.finalmap.FinalMap;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -20,12 +20,12 @@ public class ZipFiles {
     /**
      * Extract zip archives stored in DB
      *
-     * @param map : Map entity that contains all information about the map
+     * @param finalMap : Map entity that contains all information about the map
      * @param destFilePath : path where the extracted files should be placed
      * @throws IOException if there is an issue with extraction or folder creation
      */
-    public void unzip(Map map, File destFilePath) throws IOException {
-        final byte[] zipFile = map.getZipFile();
+    public void unzip(FinalMap finalMap, File destFilePath) throws IOException {
+        final byte[] zipFile = finalMap.getZipFile();
 
         if (!destFilePath.exists() && !destFilePath.mkdirs()){throw new IOException("unzipped folder wasn't created");}
 

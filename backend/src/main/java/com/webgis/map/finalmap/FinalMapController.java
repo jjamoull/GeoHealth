@@ -2,8 +2,8 @@ package com.webgis.map.finalmap;
 
 import com.webgis.MessageDto;
 import com.webgis.exception.NotFound;
-import com.webgis.map.finalmap.dto.MapDto;
-import com.webgis.map.finalmap.dto.MapListDto;
+import com.webgis.map.finalmap.dto.FinalMapDto;
+import com.webgis.map.finalmap.dto.FinalMapListDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,21 +22,25 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/maps")
-public class MapController {
-    private final MapService mapService;
+public class FinalMapController {
+    private final FinalMapService finalMapService;
 
-    public MapController( MapService mapService){
-        this.mapService = mapService;
+    public FinalMapController(FinalMapService finalMapService){
+        this.finalMapService = finalMapService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getGeoJsonFile(@PathVariable long id) {
         try {
-            final Optional<Map> optionalMap = mapService.findById(id);
+            final Optional<FinalMap> optionalMap = finalMapService.findById(id);
             if (optionalMap.isPresent()) {
-                final Map map = optionalMap.get();
-                final MapDto mapDto = new MapDto(map.getId(), map.getTitle(), map.getDescription(), map.getFileGeoJson());
-                return ResponseEntity.status(200).body(mapDto);
+                final FinalMap finalMap = optionalMap.get();
+                final FinalMapDto finalMapDto = new FinalMapDto(
+                        finalMap.getId(),
+                        finalMap.getTitle(),
+                        finalMap.getDescription(),
+                        finalMap.getFileGeoJson());
+                return ResponseEntity.status(200).body(finalMapDto);
             }
             return ResponseEntity.status(404).body(new MessageDto("Map not found"));
         } catch (IllegalArgumentException e) {
@@ -47,12 +51,12 @@ public class MapController {
     @GetMapping("/AllMaps")
     public ResponseEntity<Object> getAllMaps() {
         try {
-            final List<Map> allMaps = mapService.findAll();
-            final List<MapListDto> mapListDtoList = new ArrayList<>();
-            for(Map map : allMaps){
-                mapListDtoList.add(new MapListDto(map.getId(), map.getTitle(), map.getDescription()));
+            final List<FinalMap> allFinalMaps = finalMapService.findAll();
+            final List<FinalMapListDto> finalMapListDtoList = new ArrayList<>();
+            for(FinalMap finalMap : allFinalMaps){
+                finalMapListDtoList.add(new FinalMapListDto(finalMap.getId(), finalMap.getTitle(), finalMap.getDescription()));
             }
-            return ResponseEntity.status(200).body(mapListDtoList);
+            return ResponseEntity.status(200).body(finalMapListDtoList);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         }
@@ -61,7 +65,7 @@ public class MapController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteMap(@PathVariable long id) {
         try {
-            mapService.deleteMap(id);
+            finalMapService.deleteMap(id);
             return ResponseEntity.status(200).body(new MessageDto("Map deleted successfully"));
         } catch(IllegalArgumentException e) {
             return ResponseEntity.status(404).body(new MessageDto(e.getMessage()));
@@ -77,24 +81,27 @@ public class MapController {
             @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile){
 
         try {
-            final Map map = new Map(title,
+            final FinalMap finalMap = new FinalMap(title,
                     description,
                     zipFile.getBytes(),
                     null);
-            mapService.save(map);
+            finalMapService.save(finalMap);
 
             if (geoJsonFile != null){
-                map.setFileGeoJson(new String(geoJsonFile.getBytes()));
+                finalMap.setFileGeoJson(new String(geoJsonFile.getBytes()));
             } else{
-                if (map.getId()== null){
-                    throw new NotFound("There is no id for this map : " + map.getTitle());
+                if (finalMap.getId()== null){
+                    throw new NotFound("There is no id for this map : " + finalMap.getTitle());
                 } else {
-                    final String tempGeoJsonFile = mapService.zipToGeoJsonFile(map.getId());
-                    map.setFileGeoJson(tempGeoJsonFile);
+                    final String tempGeoJsonFile = finalMapService.zipToGeoJsonFile(finalMap.getId());
+                    finalMap.setFileGeoJson(tempGeoJsonFile);
                 }
             }
-            final Map savedMap = mapService.save(map);
-            return ResponseEntity.status(200).body(new MapListDto(savedMap.getId(), savedMap.getTitle(), savedMap.getDescription()));
+            final FinalMap savedFinalMap = finalMapService.save(finalMap);
+            return ResponseEntity.status(200).body(
+                    new FinalMapListDto(savedFinalMap.getId(),
+                            savedFinalMap.getTitle(),
+                            savedFinalMap.getDescription()));
         } catch (NotFound e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         } catch (IOException e) {

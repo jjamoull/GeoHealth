@@ -1,6 +1,5 @@
-export interface MapDto{
+export interface FinalMapListDto {
   id: number;
   title: string;
   description: string;
-  fileGeoJson: string;
   }

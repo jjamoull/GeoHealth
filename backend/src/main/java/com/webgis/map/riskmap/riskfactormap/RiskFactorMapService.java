@@ -1,10 +1,10 @@
-package com.webgis.map.riskmap.riskFactorMap;
+package com.webgis.map.riskmap.riskfactormap;
 
 
 import com.converter.TiffFiles;
-import com.webgis.map.riskmap.tile.tile.Tile;
-import com.webgis.map.riskmap.tile.tile.TileId;
-import com.webgis.map.riskmap.tile.tile.TileRepository;
+import com.webgis.map.riskmap.tile.Tile;
+import com.webgis.map.riskmap.tile.TileId;
+import com.webgis.map.riskmap.tile.TileRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

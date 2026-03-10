@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class PopupService{
+export class RiskFactorMapService {
 
   private DBMapUrl = 'http://localhost:8080/riskFactor'
 

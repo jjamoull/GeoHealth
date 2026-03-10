@@ -3,7 +3,7 @@ package com.webgis.map.finalmap.dto;
 /**
  * Data Transfer Object containing needed fields for a map's info.
  */
-public record MapDto(
+public record FinalMapDto(
     Long id,
     String title,
     String description,

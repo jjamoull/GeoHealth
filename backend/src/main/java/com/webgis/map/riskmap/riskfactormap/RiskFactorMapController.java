@@ -1,4 +1,4 @@
-package com.webgis.map.riskmap.riskFactorMap;
+package com.webgis.map.riskmap.riskfactormap;
 
 
 

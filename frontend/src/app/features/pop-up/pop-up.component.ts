@@ -1,10 +1,8 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
-import {MatDialog,MatDialogRef, MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {finalize, Subscription} from 'rxjs';
-import {HttpClient, HttpEvent, HttpEventType} from '@angular/common/http';
-import {MapService} from '../../core/service/MapService/mapService';
-import {PopupService} from '../../core/service/PopupService/popupService';
+import {FinalMapService} from '../../core/service/MapService/FinalMapService/finalMapService';
+import {RiskFactorMapService} from '../../core/service/MapService/RiskMapService/riskFactorMapService';
 
 @Component({
   selector: 'app-pop-up',
@@ -16,9 +14,8 @@ import {PopupService} from '../../core/service/PopupService/popupService';
 })
 export class PopUpComponent implements OnInit{
   constructor(private dialog: MatDialogRef <PopUpComponent>,
-              private http: HttpClient,
-              private mapService: MapService,
-              private popupService: PopupService,
+              private finalMapService: FinalMapService,
+              private riskFactorMapService: RiskFactorMapService,
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   //************ Constants ************
@@ -76,7 +73,8 @@ export class PopUpComponent implements OnInit{
     console.log("typeOfPopOp =", this.typeOfPopUp);
 
     if (this.typeOfPopUp == this.addMap){
-      this.mapService.uploadNewMap(formData).subscribe(
+
+      this.finalMapService.uploadNewMap(formData).subscribe(
         {
           next:()=>{
             this.isUploading = false;
@@ -88,7 +86,7 @@ export class PopUpComponent implements OnInit{
         }
       );
     } else if(this.typeOfPopUp == this.addRiskFactor) {
-      this.popupService.uploadNewRiskFactor(formData).subscribe(
+      this.riskFactorMapService.uploadNewRiskFactor(formData).subscribe(
         {
           next:()=>{
             this.isUploading = false;

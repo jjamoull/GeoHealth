@@ -1,7 +1,7 @@
 package com.webgis.finalMap;
 
-import com.webgis.map.finalmap.MapRepository;
-import com.webgis.map.finalmap.MapService;
+import com.webgis.map.finalmap.FinalMapRepository;
+import com.webgis.map.finalmap.FinalMapService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -15,22 +15,22 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
-class MapServiceTest {
+class finalFinalMapServiceTest {
 
     @Mock
-    MapRepository mapRepository;
+    FinalMapRepository finalMapRepository;
 
     @InjectMocks
-    MapService mapService;
+    FinalMapService finalMapService;
 
     @Test
     void deleteMapNotFound(){
         //Arrange
-        Mockito.when(mapService.findById(1)).thenReturn(Optional.empty());
+        Mockito.when(finalMapService.findById(1)).thenReturn(Optional.empty());
 
         //Act
         assertThrows(IllegalArgumentException.class, () -> {
-            mapService.deleteMap(1);
+            finalMapService.deleteMap(1);
         });
 
     }

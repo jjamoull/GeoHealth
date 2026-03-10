@@ -2,7 +2,7 @@ import {Component, AfterViewInit, Inject, PLATFORM_ID, signal} from '@angular/co
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
-import { MapService } from '../../../core/service/MapService/mapService';
+import { FinalMapService } from '../../../core/service/MapService/FinalMapService/finalMapService';
 
 @Component({
   selector: 'app-map',
@@ -28,7 +28,7 @@ export class MapComponent implements AfterViewInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private mapService: MapService,
+    private mapService: FinalMapService,
     private route: ActivatedRoute
     ){}
 

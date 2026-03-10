@@ -12,7 +12,7 @@ import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "maps")
-public class Map {
+public class FinalMap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,12 +28,12 @@ public class Map {
     @Column(name = "fileGeoJson", columnDefinition = "TEXT")
     private String fileGeoJson;
 
-    public Map(){}
+    public FinalMap(){}
 
-    public Map(String title,
-               String description,
-               byte[] zipFile,
-               String fileGeoJson){
+    public FinalMap(String title,
+                    String description,
+                    byte[] zipFile,
+                    String fileGeoJson){
         this.title=title;
         this.description =description;
         this.zipFile = zipFile;

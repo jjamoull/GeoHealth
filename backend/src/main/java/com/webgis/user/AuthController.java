@@ -143,7 +143,7 @@ public class AuthController {
      * If the user is banned, clears the cookie.
      *
      * @param request the HTTP request
-     * @param response the HTTP response
+     * @paramesponse the HTTP response
      * @return true if a valid non-banned session exists, false otherwise
      */
     private boolean handleExistingCookie(HttpServletRequest request, HttpServletResponse response){

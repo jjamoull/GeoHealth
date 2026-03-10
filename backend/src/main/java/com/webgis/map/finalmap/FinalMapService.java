@@ -13,13 +13,13 @@ import static com.converter.DetectFiles.findShpFile;
 import static com.converter.ShapeFileToGeoJsonFile.transformShapeFileToGeoJsonFile;
 
 @Service
-public class MapService {
+public class FinalMapService {
 
-    private final MapRepository mapRepository;
+    private final FinalMapRepository finalMapRepository;
     private final ZipFiles unzipper;
 
-    public MapService(MapRepository mapRepository){
-        this.mapRepository = mapRepository;
+    public FinalMapService(FinalMapRepository finalMapRepository){
+        this.finalMapRepository = finalMapRepository;
         this.unzipper = new ZipFiles();
     }
 
@@ -29,8 +29,8 @@ public class MapService {
      * @param id identifier of the map you want to retrieve from the db
      * @return Map which identifier equals to id, empty otherwise
      */
-    public Optional<Map> findById(long id){
-        return mapRepository.findById(id);
+    public Optional<FinalMap> findById(long id){
+        return finalMapRepository.findById(id);
     }
 
     /**
@@ -39,17 +39,17 @@ public class MapService {
      * @param title name of the map you want to retrieve from the db
      * @return Map found using its name, empty if there's none
      * */
-    public Optional<Map> findByTitle(String title){return mapRepository.findByTitle(title);}
+    public Optional<FinalMap> findByTitle(String title){return finalMapRepository.findByTitle(title);}
 
 
     /**
      * Save the geoJSON file and the files used to create it for a map identified by its id
      *
-     * @param map : the map you want to add geoJsonFile from the db
+     * @param finalMap : the map you want to add geoJsonFile from the db
      * @return Saved map
      * */
-    public Map save(Map map){
-        return mapRepository.save(map);
+    public FinalMap save(FinalMap finalMap){
+        return finalMapRepository.save(finalMap);
     }
 
     /**
@@ -58,12 +58,12 @@ public class MapService {
      * @param id The id of the map you want to delete
      */
     public void deleteMap(long id){
-        final Optional<Map> map = findById(id);
+        final Optional<FinalMap> map = findById(id);
         if (map.isEmpty()) {
             throw new IllegalArgumentException("Map does not exist");
         }
-        final Map mapDel = map.get();
-        mapRepository.delete(mapDel);
+        final FinalMap finalMapDel = map.get();
+        finalMapRepository.delete(finalMapDel);
     }
 
     /**
@@ -73,10 +73,11 @@ public class MapService {
      * @throws IOException : if method findShpFile doesn't find a shp file
      */
     public String zipToGeoJsonFile(long id) throws IOException{
-        final Map map = mapRepository.findById(id).orElseThrow(()-> new RuntimeException("The map is not found for this id :"+id));
+        final FinalMap finalMap = finalMapRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("The map is not found for this id :"+id));
         final File tempFile = Files.createTempDirectory("shp_").toFile();
 
-        unzipper.unzip(map, tempFile);
+        unzipper.unzip(finalMap, tempFile);
 
         // shp file that will be converted and used to detect others important files into zip file for geojson file
         final File shpFile = findShpFile(tempFile);
@@ -89,7 +90,7 @@ public class MapService {
      *
      * @returns a list of all the maps
      */
-    public List<Map> findAll(){
-        return mapRepository.findAll();
+    public List<FinalMap> findAll(){
+        return finalMapRepository.findAll();
     }
 }
