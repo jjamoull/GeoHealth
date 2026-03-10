@@ -33,8 +33,9 @@
   .logo-container{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     gap: 10px;
+    margin-left: 10px;
     margin-top: 20px;
   }
   .logo {
@@ -77,25 +78,26 @@
 
   .sidebar .menu li:hover {
     border-left: 1px solid #fff;
-    box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 4px #90ee90;
   }
-
-
   #check {
     display: none;
   }
   .btnOne{
     display: block;
   }
-  .btnOne label,
-  .btnTwo label{
+  .btnOne label{
     position: absolute;
     top: 16px;
     left: 16px;
     cursor: pointer;
   }
-
-
+  .btnTwo label{
+    position: absolute;
+    top: 5px;
+    left: 16px;
+    cursor: pointer;
+  }
   .btnOne i {
     color: #fff;
     font-size: 30px;
@@ -108,7 +110,7 @@
     transition: all 0.3s linear;
   }
 
-  .sidebar .btnTwo i {
+  .btnTwo i {
     font-size: 25px;
     line-height: 60px;
     position: absolute;
