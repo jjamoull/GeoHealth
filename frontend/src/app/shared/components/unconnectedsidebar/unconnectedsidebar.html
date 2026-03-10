@@ -1,1 +1,37 @@
-<p>unconnectedsidebar works!</p>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+
+<input type="checkbox" id="check">
+<div class="btnOne">
+  <label for="check">
+    <i class="fas fa-bars"></i>
+  </label>
+</div>
+<div class="sidebar">
+  <div class="logo-container">
+    <div class="logo"></div>
+    <a class="logo-text">GeoHealth</a>
+  </div>
+  <div class="btnTwo">
+    <label for="check">
+      <i class="fas fa-times"></i>
+    </label>
+  </div>
+  <div class="menu">
+    <ul>
+      <li>
+        <i class="fas fa-right-to-bracket"></i>
+        <a (click)="goToLogin()">Login</a>
+      </li>
+      <li>
+        <i class="fas fa-user-plus"></i>
+        <a (click)="goToRegister()">Register</a>
+      </li>
+
+    </ul>
+  </div>
+</div>
+

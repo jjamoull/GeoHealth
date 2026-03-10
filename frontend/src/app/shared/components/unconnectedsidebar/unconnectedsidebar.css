@@ -1,0 +1,142 @@
+.btnOne{
+  display: none;
+}
+.sidebar{
+  display:none;
+}
+#check{
+  display: none;
+}
+@media (max-width: 768px) and (orientation: portrait) {
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+
+  .sidebar {
+    position: fixed;
+    height: 100vh;
+    width: 280px;
+    left: -280px;
+    background: rgba(235, 239, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.37);
+    overflow: hidden;
+    transition: all 0.3s linear;
+    display: block;
+  }
+  .logo-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .logo {
+    background-image: url("/assets/icons/image.png");
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.5);
+  }
+
+  .logo-text {
+    color: black;
+    font-size: 25px;
+    text-decoration: none;
+  }
+
+  .sidebar .menu {
+    position: absolute;
+    top:  150px;
+    width: 100%;
+  }
+
+  .sidebar .menu li {
+    margin-top: 6px;
+    padding:20px 15px;
+  }
+
+  .sidebar .menu i {
+    color: black;
+    font-size: 20px;
+    padding-right: 8px;
+  }
+
+  .sidebar .menu a {
+    color: black;
+    font-size: 20px;
+    text-decoration: none;
+  }
+
+  .sidebar .menu li:hover {
+    border-left: 1px solid #fff;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+  }
+
+
+  #check {
+    display: none;
+  }
+  .btnOne{
+    display: block;
+  }
+  .btnOne label,
+  .btnTwo label{
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    cursor: pointer;
+  }
+
+
+  .btnOne i {
+    color: #fff;
+    font-size: 30px;
+    font-weight: 700;
+    position: absolute;
+    left: 16px;
+    line-height: 60px;
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.3s linear;
+  }
+
+  .sidebar .btnTwo i {
+    font-size: 25px;
+    line-height: 60px;
+    position: absolute;
+    left: 240px;
+    cursor: pointer;
+    color: #fff;
+    opacity: 0;
+    transition: all 0.3s linear;
+
+  }
+
+  .btnOne i:hover {
+    font-size: 29px;
+  }
+
+  .btnTwo i:hover {
+    font-size: 24px;
+  }
+
+  #check:checked~.sidebar {
+    left: 0;
+  }
+
+  #check:checked~.btnOne i {
+    opacity: 0;
+  }
+
+  #check:checked~.sidebar .btnTwo i {
+    opacity: 1;
+  }
+}

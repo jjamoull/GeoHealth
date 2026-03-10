@@ -5,10 +5,11 @@ import {LoginService} from './core/service/LoginService/loginService';
 import {catchError, map, of} from 'rxjs';
 import {Connectednavbar} from './shared/components/connectednavbar/connectednavbar';
 import {Unconnectednavbar} from './shared/components/unconnectednavbar/unconnectednavbar';
+import {Unconnectedsidebar} from './shared/components/unconnectedsidebar/unconnectedsidebar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Connectednavbar, Unconnectednavbar],
+  imports: [RouterOutlet, Connectednavbar, Unconnectednavbar, Unconnectedsidebar],
   templateUrl: './app.html',
   styleUrl: './app.css',
   standalone: true,
