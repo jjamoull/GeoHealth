@@ -67,6 +67,9 @@
 
   .login-page{
     background-image: url("/assets/background/phoneLoginBackgroundPlanet.png");
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .login{
