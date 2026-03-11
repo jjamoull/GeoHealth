@@ -2,6 +2,7 @@ package com.webgis.map.riskmap.riskfactormap;
 
 
 
+import com.webgis.map.riskmap.dto.RiskFactorMapListDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,6 +43,23 @@ public class RiskFactorMapController {
         return ResponseEntity.status(404).build();
     }
 
+    @GetMapping("/allMaps")
+    public ResponseEntity<List<RiskFactorMapListDto>> getAllRiskFactorMaps() {
+        try {
+            List<RiskFactorMapListDto> dtoList = new ArrayList<>();
+
+            List<RiskFactorMap> riskFactorMapList = riskFactorMapService.findAll();
+            for (RiskFactorMap rf : riskFactorMapList) {
+                RiskFactorMapListDto dto = new RiskFactorMapListDto(rf.getTitle());
+                dtoList.add(dto);
+            }
+
+            return ResponseEntity.status(200).body(dtoList);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).build();
+        }
+    }
+
     @PostMapping(value = "/file", consumes = "multipart/form-data")
     public ResponseEntity<Object> postTifFile(
             @RequestParam("title") String title,
@@ -59,5 +78,7 @@ public class RiskFactorMapController {
         }
 
     }
+
+
 
 }
