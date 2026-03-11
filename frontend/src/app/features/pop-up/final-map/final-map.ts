@@ -1,8 +1,9 @@
+
 import {Component, Inject, Input, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FinalMapService} from '../../../core/service/MapService/FinalMapService/finalMapService';
-import {RiskFactorMapService} from '../../../core/service/MapService/RiskMapService/riskFactorMapService';
+import {MatDialogRef, MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Subscription} from 'rxjs';
+import {FinalMapService} from '../../../core/service/MapService/FinalMapService/finalMapService';
 
 @Component({
   selector: 'app-final-map',
@@ -10,38 +11,26 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
     ReactiveFormsModule
   ],
   templateUrl: './final-map.html',
-  styleUrl: './final-map.css',
+  standalone: true,
+  styleUrl: './final-map.css'
 })
 export class FinalMap implements OnInit{
   constructor(private dialog: MatDialogRef <FinalMap>,
-              private finalMapService: FinalMapService,
-              private riskFactorMapService: RiskFactorMapService,
-              @Inject(MAT_DIALOG_DATA) public data: any) {}
+              private finalMapService: FinalMapService) {}
 
-  //************ Constants ************
-  addMap:string ="addMap";
-  addRiskFactor : string = "addRiskFactor"
-  //***********************************
-
-  //******** Global variables *********
-  problemWithUploading:boolean = false;
-  typeOfPopUp: string = "addRiskFactor";
   formGroup!: FormGroup;
   selectedFile: File | null = null;
   isUploading = false;
   @Input()
   requiredFileType:string = '';
-  //***********************************
-
+  uploadProgress =  0;
+  uploadSub: Subscription | undefined;
 
 
   /**
    * Init the form to add the new map on the list of map
    */
   ngOnInit():void {
-    this.problemWithUploading = false;
-
-    this.typeOfPopUp = this.data.typeOfPopUp;
     this.formGroup = new FormGroup({
       title: new FormControl('',[Validators.required, Validators.minLength(1)]),
       description: new FormControl('', [Validators.required, Validators.minLength(1)]),
@@ -55,7 +44,6 @@ export class FinalMap implements OnInit{
    * Handles the file upload component contained in a pop-up
    * */
   onFileSelected(event:Event) {
-    this.problemWithUploading = false;
 
     // This constant recieve the set of data from the event
     const input = event.target as HTMLInputElement;
@@ -63,16 +51,13 @@ export class FinalMap implements OnInit{
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
       this.isUploading = false;
-    }
-  }
 
-  /**
-   * Methods that contain all situation of sending data to backend
-   * */
-  private sendData(formData: FormData){
-    console.log("typeOfPopOp =", this.typeOfPopUp);
+      //add all values from the form in FormData to send in DB
+      const formData = new FormData();
+      formData.append("title", this.formGroup.value.title);
+      formData.append("description", this.formGroup.value.description);
+      formData.append("zipFile", this.selectedFile);
 
-    if (this.typeOfPopUp == this.addMap){
 
       this.finalMapService.uploadNewMap(formData).subscribe(
         {
@@ -85,41 +70,32 @@ export class FinalMap implements OnInit{
           }
         }
       );
-    } else if(this.typeOfPopUp == this.addRiskFactor) {
-      this.riskFactorMapService.uploadNewRiskFactor(formData).subscribe(
-        {
-          next:()=>{
-            this.isUploading = false;
-            this.dialog.close();
-
-            //this.closePopUp()
-          }, error:(error)=>{
-            this.problemWithUploading = true;
-            console.error(error);
-            this.isUploading = false;
-          }
-        }
-      );
-    } else {
-      throw new Error("Impossible to send data to add your new feature ! \n Issue with the type of feature you want to add");
     }
+  }
+
+  /**
+   * Cancel upload, user-centered
+   * */
+  cancelUpload() {
+    if (this.uploadSub){
+      this.uploadSub.unsubscribe();}
+    this.reset();
+  }
+
+  /**
+   * Reset the subscription to flux and reset the current progress
+   * */
+  reset() {
+    this.uploadProgress = 0;
+    this.uploadSub = undefined;
   }
 
   /**
    * Allow the user to close the pop-up
    * */
   closePopUp(): void {
-    if (!this.selectedFile) {
-      return;
-    }
-
-    //add all values from the form in FormData to send in DB
-    const formData = new FormData();
-    formData.append("title", this.formGroup.value.title);
-    formData.append("description", this.formGroup.value.description);
-    formData.append("tifFile", this.selectedFile);
-
-    this.sendData(formData);
+    console.log(this.formGroup.value)
+    this.dialog.close();
   }
 
 
@@ -131,5 +107,8 @@ export class FinalMap implements OnInit{
     const formControl = this.formGroup.get(name);
     return formControl?.invalid && formControl?.dirty;
   }
+
+
+
 
 }
