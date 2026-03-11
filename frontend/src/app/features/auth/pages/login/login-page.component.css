@@ -74,17 +74,6 @@
   }
 
 }
-/* phone landscape */
-@media (max-width: 768px) and (orientation: landscape){
-  .login-page{
-    background-image: url("/assets/background/phoneLoginLandscapeBackground.png");
-  }
-
-  .login{
-    width: 50%;
-  }
-
-}
 
 /* Tablet portrait */
 @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
