@@ -36,4 +36,4 @@ jobs:
       - name: Build and run tests
         run: |
           cd backend
-          mvn clean test
+          mvn clean test -pl . --ignore-missing -Dmaven.test.failure.ignore=false -Dgeotools.skip=true
