@@ -109,5 +109,12 @@ public class RiskFactorMapService {
         }
     }
 
-
+    /**
+     * Gets all risk factor map instances
+     *
+     * @return list of all the risk factor maps contained in database
+     * */
+    public List<RiskFactorMap> findAll(){
+        return this.riskFactorMapRepository.findAll();
+    }
 }
