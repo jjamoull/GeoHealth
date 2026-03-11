@@ -28,7 +28,8 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.37);
     overflow: hidden;
     transition: all 0.3s linear;
-    display: block;
+    display: flex;
+    flex-direction: column;
     z-index: 1000;
   }
   .btnOne label, .btnTwo label, .btnOne i, .btnTwo i {
@@ -58,9 +59,14 @@
   }
 
   .sidebar .menu {
-    position: absolute;
-    top:  150px;
-    width: 100%;
+    margin-top: 40px;
+    flex: 1;
+  }
+  .menu ul {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
   }
 
   .sidebar .menu li {
@@ -84,6 +90,11 @@
     border-left: 1px solid #fff;
     box-shadow: 0 0 4px #90ee90;
   }
+  .logout {
+    position: absolute;
+    bottom: 20px;
+  }
+
   #check {
     display: none;
   }

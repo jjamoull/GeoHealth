@@ -18,6 +18,16 @@ export class Connectedsidebar {
               private cdr:ChangeDetectorRef
   ) {}
 
+  ngOnInit() {
+    this.usersServices.isAdmin().subscribe(
+      bool =>{
+        this.isAdmin=bool
+        this.cdr.detectChanges();
+      }
+    );
+
+  }
+
   goToHome() {
     this.router.navigate(['home'])
   }
