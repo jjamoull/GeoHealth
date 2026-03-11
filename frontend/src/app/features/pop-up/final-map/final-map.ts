@@ -1,8 +1,7 @@
 
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {MatDialogRef, MatDialogModule, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Component, Input, OnInit} from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { Subscription} from 'rxjs';
 import {FinalMapService} from '../../../core/service/MapService/FinalMapService/finalMapService';
 
 @Component({
@@ -23,8 +22,6 @@ export class FinalMap implements OnInit{
   isUploading = false;
   @Input()
   requiredFileType:string = '';
-  uploadProgress =  0;
-  uploadSub: Subscription | undefined;
 
 
   /**
@@ -52,50 +49,43 @@ export class FinalMap implements OnInit{
       this.selectedFile = input.files[0];
       this.isUploading = false;
 
-      //add all values from the form in FormData to send in DB
-      const formData = new FormData();
-      formData.append("title", this.formGroup.value.title);
-      formData.append("description", this.formGroup.value.description);
-      formData.append("zipFile", this.selectedFile);
 
-
-      this.finalMapService.uploadNewMap(formData).subscribe(
-        {
-          next:()=>{
-            this.isUploading = false;
-            //this.closePopUp()
-          }, error:(error)=>{
-            console.error(error);
-            this.isUploading = false;
-          }
-        }
-      );
     }
   }
 
   /**
-   * Cancel upload, user-centered
+   * Methods that contain all situation of sending data to backend
    * */
-  cancelUpload() {
-    if (this.uploadSub){
-      this.uploadSub.unsubscribe();}
-    this.reset();
-  }
-
-  /**
-   * Reset the subscription to flux and reset the current progress
-   * */
-  reset() {
-    this.uploadProgress = 0;
-    this.uploadSub = undefined;
+  private sendData(formData: FormData){
+    this.finalMapService.uploadNewMap(formData).subscribe(
+      {
+        next:()=>{
+          this.isUploading = false;
+          console.log("The new final map is sent to backend");
+          this.dialog.close();
+        }, error:(error)=>{
+          console.error(error);
+          this.isUploading = false;
+        }
+      }
+    );
   }
 
   /**
    * Allow the user to close the pop-up
    * */
   closePopUp(): void {
-    console.log(this.formGroup.value)
-    this.dialog.close();
+    if (!this.selectedFile) {
+      return;
+    }
+    //add all values from the form in FormData to send in DB
+    const formData = new FormData();
+    formData.append("title", this.formGroup.value.title);
+    formData.append("description", this.formGroup.value.description);
+    formData.append("zipFile", this.selectedFile);
+
+    this.sendData(formData);
+    console.log("the final map '" + this.formGroup.value.name + "' is sent")
   }
 
 

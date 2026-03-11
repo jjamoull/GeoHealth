@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FinalMapService} from '../../../core/service/MapService/FinalMapService/finalMapService';
 import {RiskFactorMapService} from '../../../core/service/MapService/RiskMapService/riskFactorMapService';
 
 @Component({
@@ -14,18 +13,12 @@ import {RiskFactorMapService} from '../../../core/service/MapService/RiskMapServ
 })
 export class RiskFactor  implements OnInit{
   constructor(private dialog: MatDialogRef <RiskFactor>,
-              private finalMapService: FinalMapService,
               private riskFactorMapService: RiskFactorMapService,
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  //************ Constants ************
-  addMap:string ="addMap";
-  addRiskFactor : string = "addRiskFactor"
-  //***********************************
 
   //******** Global variables *********
   problemWithUploading:boolean = false;
-  typeOfPopUp: string = "addRiskFactor";
   formGroup!: FormGroup;
   selectedFile: File | null = null;
   isUploading = false;
@@ -41,7 +34,6 @@ export class RiskFactor  implements OnInit{
   ngOnInit():void {
     this.problemWithUploading = false;
 
-    this.typeOfPopUp = this.data.typeOfPopUp;
     this.formGroup = new FormGroup({
       title: new FormControl('',[Validators.required, Validators.minLength(1)]),
       description: new FormControl('', [Validators.required, Validators.minLength(1)]),
@@ -70,26 +62,11 @@ export class RiskFactor  implements OnInit{
    * Methods that contain all situation of sending data to backend
    * */
   private sendData(formData: FormData){
-    console.log("typeOfPopOp =", this.typeOfPopUp);
-
-    if (this.typeOfPopUp == this.addMap){
-
-      this.finalMapService.uploadNewMap(formData).subscribe(
+    this.riskFactorMapService.uploadNewRiskFactor(formData).subscribe(
         {
           next:()=>{
             this.isUploading = false;
-            //this.closePopUp()
-          }, error:(error)=>{
-            console.error(error);
-            this.isUploading = false;
-          }
-        }
-      );
-    } else if(this.typeOfPopUp == this.addRiskFactor) {
-      this.riskFactorMapService.uploadNewRiskFactor(formData).subscribe(
-        {
-          next:()=>{
-            this.isUploading = false;
+            console.log("The new risk factor is sent to backend");
             this.dialog.close();
 
             //this.closePopUp()
@@ -100,9 +77,6 @@ export class RiskFactor  implements OnInit{
           }
         }
       );
-    } else {
-      throw new Error("Impossible to send data to add your new feature ! \n Issue with the type of feature you want to add");
-    }
   }
 
   /**
@@ -120,6 +94,7 @@ export class RiskFactor  implements OnInit{
     formData.append("tifFile", this.selectedFile);
 
     this.sendData(formData);
+    console.log("the risk factor '" + this.formGroup.value.name + "' is sent")
   }
 
 
