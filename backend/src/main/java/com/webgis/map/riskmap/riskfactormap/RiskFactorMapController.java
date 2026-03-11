@@ -42,17 +42,22 @@ public class RiskFactorMapController {
     }
 
     @PostMapping(value = "/file", consumes = "multipart/form-data")
-    public RiskFactorMap postTifFile(
+    public ResponseEntity<Object> postTifFile(
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam(value="tifFile") MultipartFile tifFile) {
 
-        final RiskFactorMap riskFactorMap = new RiskFactorMap(title, description);
-        riskFactorMapService.save(riskFactorMap);
+        try {
+            final RiskFactorMap riskFactorMap = new RiskFactorMap(title, description);
+            riskFactorMapService.save(riskFactorMap);
 
-        riskFactorMapService.transformIntoTileFile(riskFactorMap.getId(), tifFile);
+            riskFactorMapService.transformIntoTileFile(riskFactorMap.getId(), tifFile);
 
-        return riskFactorMapService.save(riskFactorMap);
+            return ResponseEntity.status(200).body(riskFactorMapService.save(riskFactorMap));
+        } catch (Exception e) {
+            return ResponseEntity.status(404).build();
+        }
+
     }
 
 }
