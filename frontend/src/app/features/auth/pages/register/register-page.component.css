@@ -1,7 +1,7 @@
 .register-page{
+  min-height: 100vh;
   display: flex;
   justify-content: right;
-  min-height: 100vh;
   background-image: url('/assets/background/registerBackgroungPlanet.png');
   background-size: cover;
   background-position: center;
@@ -39,3 +39,37 @@
 .loginLink p a:hover{
   text-decoration: underline;
 }
+
+/* phone portrait */
+@media (max-width: 768px) and (orientation: portrait){
+
+  .register-page{
+    background-image: url("/assets/background/phoneRegisterBackgroundPlanet.jpg");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .register{
+    width: 90%;
+    margin: 0;
+    margin-top: 20rem;
+  }
+
+}
+/* phone landscape */
+@media (max-width: 768px) and (orientation: landscape){
+
+
+}
+
+/* Tablet portrait */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+
+}
+
+/* Tablet landscape */
+@media (min-width: 1025px) and (max-width: 1200px) and (orientation: landscape) {
+
+}
+
