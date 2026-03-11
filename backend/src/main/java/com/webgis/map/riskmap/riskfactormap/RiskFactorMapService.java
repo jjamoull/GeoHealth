@@ -4,7 +4,7 @@ package com.webgis.map.riskmap.riskfactormap;
 import com.converter.TiffFiles;
 import com.webgis.map.riskmap.tile.Tile;
 import com.webgis.map.riskmap.tile.TileId;
-import com.webgis.map.riskmap.tile.TileRepository;
+import com.webgis.map.riskmap.tile.TileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,12 +23,12 @@ public class RiskFactorMapService {
     static Logger logger = LoggerFactory.getLogger(RiskFactorMapService.class);
 
     private final RiskFactorMapRepository riskFactorMapRepository;
-    private final TileRepository tileRepository;
+    private final TileService tileService;
 
     public RiskFactorMapService (RiskFactorMapRepository riskFactorMapRepository,
-                                 TileRepository tileRepository ){
+                                 TileService tileService ){
         this.riskFactorMapRepository = riskFactorMapRepository;
-        this.tileRepository = tileRepository;
+        this.tileService= tileService;
 
     }
 
@@ -98,10 +98,7 @@ public class RiskFactorMapService {
                         final int x = Integer.parseInt(path.getParent().getFileName().toString());
                         final int zoom = Integer.parseInt(path.getParent().getParent().getFileName().toString());
 
-                        final TileId tileId = new TileId(mapId, zoom, x, y);
-                        final Tile tileToStore = new Tile(tileId, data);
-
-                        tileRepository.save(tileToStore);
+                        tileService.save(mapId, zoom, x, y, data);
                     } catch (IOException e) {
                         logger.info("1) Issue with the uploading\n");
                     }
