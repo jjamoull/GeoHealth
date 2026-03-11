@@ -5,8 +5,8 @@ import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog
 import {ActivatedRoute, Router} from '@angular/router';
 import {ButtonComponent} from "../../../../shared/components/button.component/button.component";
 import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
-import {MapService} from '../../../../core/service/MapService/mapService';
-import {MapListDto} from '../../../../shared/models/MapModel/MapListDto';
+import {FinalMapService} from '../../../../core/service/MapService/FinalMapService/finalMapService';
+import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/FinalMapListDto';
 
 @Component({
   selector: 'app-navigation',
@@ -19,12 +19,12 @@ export class NavigationPageComponent implements OnInit{
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private mapService: MapService,
+    private finalMapService: FinalMapService,
     private cdr: ChangeDetectorRef
     ){}
 
-  listOfAllMaps:MapListDto[] = [];
-  listOfAllRecentMaps:MapListDto[] = [];
+  listOfAllMaps:FinalMapListDto[] = [];
+  listOfAllRecentMaps:FinalMapListDto[] = [];
 
   ngOnInit() {
       this.getAllMaps();
@@ -34,8 +34,8 @@ export class NavigationPageComponent implements OnInit{
    * add all the maps into ListOfAllMaps
    */
   private getAllMaps() {
-    this.mapService.getAllMaps().subscribe({
-      next: (maps: MapListDto[]) => {
+    this.finalMapService.getAllMaps().subscribe({
+      next: (maps: FinalMapListDto[]) => {
         this.listOfAllMaps = maps;
         this.cdr.detectChanges();
       },
@@ -47,10 +47,15 @@ export class NavigationPageComponent implements OnInit{
 
   /**
    * Allow the user to open the pop-up on click event
-   */
-  openPopUp(): void {
-    this.dialog.open(PopUpComponent);
+   * */
+  openPopUp(paramTypeOfPopUp:string): void {
+    this.dialog.open(PopUpComponent, {
+      data:{
+        typeOfPopUp: paramTypeOfPopUp
+      }
+    });
   }
+
 
   /**
    * Go to the page with the id of the map

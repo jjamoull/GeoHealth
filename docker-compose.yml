@@ -11,6 +11,10 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
+  gdal:
+    image: ghcr.io/osgeo/gdal:alpine-normal-3.11.4
+    container_name: gdal-worker
+    volumes:
+      - ./data:/data
 volumes:
   postgres_data:
