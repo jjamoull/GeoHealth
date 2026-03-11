@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable} from "rxjs";
+import { environment } from '../../../rest-api-management/environment';
 
 
 @Injectable({
@@ -8,12 +9,12 @@ import {Observable} from "rxjs";
 })
 export class RiskFactorMapService {
 
-  private DBMapUrl = 'http://localhost:8080/riskFactor'
+  private baseUrl= environment.apiBaseUrl;
 
   constructor(private HttpClient: HttpClient) {}
 
   uploadNewRiskFactor(formData: FormData ): Observable<any> {
-    return this.HttpClient.post(`${this.DBMapUrl}/file`,
+    return this.HttpClient.post(`${this.baseUrl}${API_ENDPOINTS.RISKFACTORMAP.UPLOAD}`,
       formData,
       { withCredentials: true }
     );
