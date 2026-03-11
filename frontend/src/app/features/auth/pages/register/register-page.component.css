@@ -66,18 +66,20 @@
   .register{
     width: 50%;
   }
-
-
-
 }
 
 /* Tablet portrait */
 @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+    .register-page{
+      background-image: url("/assets/background/tabletRegisterBackgroundPlanet.png");
+      justify-content: left;
+    }
 
+    .register{
+      width: 50%;
+    }
 }
 
-/* Tablet landscape */
-@media (min-width: 1025px) and (max-width: 1200px) and (orientation: landscape) {
 
-}
+
 
