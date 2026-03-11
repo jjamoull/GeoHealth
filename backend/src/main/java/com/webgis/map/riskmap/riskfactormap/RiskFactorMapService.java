@@ -2,8 +2,6 @@ package com.webgis.map.riskmap.riskfactormap;
 
 
 import com.converter.TiffFiles;
-import com.webgis.map.riskmap.tile.Tile;
-import com.webgis.map.riskmap.tile.TileId;
 import com.webgis.map.riskmap.tile.TileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
