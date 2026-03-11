@@ -44,7 +44,7 @@
 @media (max-width: 768px) and (orientation: portrait){
 
   .register-page{
-    background-image: url("/assets/background/phoneRegisterBackgroundPlanet.jpg");
+    background-image: url("/assets/background/phoneRegisterBackgroundPlanet.png");
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,6 +59,7 @@
 }
 /* phone landscape */
 @media (max-width: 768px) and (orientation: landscape){
+
 
 
 }
