@@ -23,10 +23,7 @@ export const API_ENDPOINTS = {
     ALLMAPS: '/maps/AllMaps',
     DELETE: '/maps',
     UPLOAD: '/maps/uploadShapeFile',
-    GET: '/maps'
-    },
-  RISKFACTORMAPS:{
-    ALLRISKFACTORMAPS: '/riskFactor/allMaps',
-    FILE:'/riskFactor/file'
-  }
+    GET: '/maps',
+    ALLRISKFACTORMAPS: '/riskFactor/allMaps'
+    }
 } as const;
