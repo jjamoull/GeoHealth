@@ -46,11 +46,11 @@ public class RiskFactorMapController {
     @GetMapping("/allMaps")
     public ResponseEntity<List<RiskFactorMapListDto>> getAllRiskFactorMaps() {
         try {
-            final List<RiskFactorMapListDto> dtoList = new ArrayList<>();
+            List<RiskFactorMapListDto> dtoList = new ArrayList<>();
 
-            final List<RiskFactorMap> riskFactorMapList = riskFactorMapService.findAll();
+            List<RiskFactorMap> riskFactorMapList = riskFactorMapService.findAll();
             for (RiskFactorMap rf : riskFactorMapList) {
-                final RiskFactorMapListDto dto = new RiskFactorMapListDto(rf.getTitle());
+                RiskFactorMapListDto dto = new RiskFactorMapListDto(rf.getTitle());
                 dtoList.add(dto);
             }
 
