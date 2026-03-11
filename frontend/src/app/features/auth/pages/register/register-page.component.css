@@ -59,6 +59,13 @@
 }
 /* phone landscape */
 @media (max-width: 768px) and (orientation: landscape){
+  .register-page{
+    background-image: url("/assets/background/phoneRegisterLandscapeBackground.png");
+  }
+
+  .register{
+    width: 50%;
+  }
 
 
 
