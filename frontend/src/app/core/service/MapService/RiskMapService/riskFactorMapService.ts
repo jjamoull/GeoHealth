@@ -16,7 +16,7 @@ export class RiskFactorMapService {
   constructor(private HttpClient: HttpClient) {}
 
   uploadNewRiskFactor(formData: FormData ): Observable<any> {
-    return this.HttpClient.post(`${this.baseUrl}${API_ENDPOINTS.MAPS.UPLOAD}`,
+    return this.HttpClient.post(`${this.baseUrl}${API_ENDPOINTS.RISKFACTORMAPS.UPLOAD}`,
       formData,
       { withCredentials: true }
     );
