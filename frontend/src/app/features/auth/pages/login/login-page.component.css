@@ -4,7 +4,6 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding-top: 5rem;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -75,17 +74,6 @@
   }
 
 }
-/* phone landscape */
-@media (max-width: 768px) and (orientation: landscape){
-  .login-page{
-    background-image: url("/assets/background/phoneLoginLandscapeBackground.png");
-  }
-
-  .login{
-    width: 50%;
-  }
-
-}
 
 /* Tablet portrait */
 @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
@@ -96,17 +84,6 @@
   .login{
     width: 60%;
     padding-top: 70px;
-  }
-}
-
-/* Tablet landscape */
-@media (min-width: 1025px) and (max-width: 1200px) and (orientation: landscape) {
-  .login-page{
-    background-image: url("/assets/background/tabletLoginLandscapeBackground.png");
-  }
-
-  .login{
-    width: 50%;
   }
 }
 
