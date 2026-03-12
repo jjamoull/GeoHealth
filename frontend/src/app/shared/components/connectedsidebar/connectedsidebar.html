@@ -1,0 +1,49 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+
+<input type="checkbox" id="check">
+<div class="btnOne">
+  <label for="check">
+    <i class="fas fa-bars"></i>
+  </label>
+</div>
+<div class="sidebar">
+  <div class="logo-container">
+    <div class="logo"></div>
+    <a class="logo-text">GeoHealth</a>
+  </div>
+  <div class="btnTwo">
+    <label for="check">
+      <i class="fas fa-times"></i>
+    </label>
+  </div>
+  <div class="menu">
+    <ul>
+      <li>
+        <i class="fas fa-house"></i>
+        <a (click)="goToHome()">Home</a>
+      </li>
+      <li>
+        <i class="fas fa-map"></i>
+        <a (click)="goToNavigation()">Navigation</a>
+      </li>
+      <li>
+        <i class="fas fa-user"></i>
+        <a (click)="goToProfile()">Profile</a>
+      </li>
+      <li>
+        @if(isAdmin){
+        <i class="fas fa-user-shield"></i>
+        <a (click)="goToUsersList()">Admin Panel</a>
+        }
+      </li>
+      <li class="logout">
+        <i class="fas fa-right-from-bracket"></i>
+        <a (click)="logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</div>

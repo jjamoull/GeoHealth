@@ -87,13 +87,13 @@ span {
 #bars{
   background: #90ee90;
 }
-#check:checked ~ .side-navbar #bars{
+#check-nav:checked ~ .side-navbar #bars{
   display: none;
 }
-#check:checked ~ .side-navbar {
+#check-nav:checked ~ .side-navbar {
   left: 0;
 }
-#check:checked ~ .all-maps {
+#check-nav:checked ~ .all-maps {
   margin-left: 250px;
 }
 .scrollbox{
