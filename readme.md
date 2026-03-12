@@ -1,3 +1,20 @@
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Status](https://img.shields.io/badge/status-active-success)
+
+![Java](https://img.shields.io/badge/Java-17-orange?logo=openjdk)
+![Java](https://img.shields.io/badge/Java-22-orange?logo=openjdk)
+![Maven](https://img.shields.io/badge/Maven-3.9-C71A36?logo=apachemaven)
+![Spring Boot](https://img.shields.io/badge/SpringBoot-3.x-6DB33F?logo=springboot)
+
+![Angular](https://img.shields.io/badge/Angular-22-DD0031?logo=angular)
+![Node.js](https://img.shields.io/badge/Node.js-22.14.0-339933?logo=node.js)
+![Angular](https://img.shields.io/badge/Angular_Core-21.1.2-DD0031?logo=angular)
+![Angular CLI](https://img.shields.io/badge/Angular_CLI-21.1.x-DD0031?logo=angular)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)
+
+
+![Docker](https://img.shields.io/badge/Docker-containerized-2496ED?logo=docker)
+
 # GeoHealth
 Interactive and scalable tool for viewing, validating, and updating infectious disease 
 risk maps. It is an WebGIS based on Ebola and Rift Valley Fever risk maps 
