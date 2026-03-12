@@ -68,7 +68,7 @@ class UserControllerTest {
 
 
         //Act
-        ResultActions response = mockMvc.perform(get("/users/profile")
+        ResultActions response = mockMvc.perform(get("/user/profile")
                 .contentType(MediaType.APPLICATION_JSON));
 
         //Assert
@@ -112,7 +112,7 @@ class UserControllerTest {
 
         //Act
         ResultActions response = mockMvc.perform(
-                put("/users/change-password")
+                put("/user/changePassword")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatePasswordDto))
         );

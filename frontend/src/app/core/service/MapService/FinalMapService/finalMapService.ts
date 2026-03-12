@@ -17,25 +17,25 @@ export class FinalMapService {
   constructor(private HttpClient: HttpClient) {}
 
   getAllMaps(): Observable<FinalMapListDto[]> {
-    return this.HttpClient.get<FinalMapListDto[]>(`${this.baseUrl}${API_ENDPOINTS.MAPS.ALLMAPS}`,
+    return this.HttpClient.get<FinalMapListDto[]>(`${this.baseUrl}${API_ENDPOINTS.FINALMAPS.ALLMAPS}`,
       {withCredentials: true}
       );
     }
 
   deleteMap(id: number) : Observable<MessageDto> {
-    return this.HttpClient.get<MessageDto>(`${this.baseUrl}${API_ENDPOINTS.MAPS.DELETE}/${id}`,
+    return this.HttpClient.get<MessageDto>(`${this.baseUrl}${API_ENDPOINTS.FINALMAPS.DELETE}/${id}`,
       {withCredentials: true}
       );
     }
 
   getMap(id: number): Observable<any> {
-      return this.HttpClient.get(`${this.baseUrl}${API_ENDPOINTS.MAPS.GET}/${id}`,
+      return this.HttpClient.get(`${this.baseUrl}${API_ENDPOINTS.FINALMAPS.GET}/${id}`,
         { withCredentials: true }
       );
     }
 
   uploadNewMap(saveDto: any): Observable<any> {
-    return this.HttpClient.post(`${this.baseUrl}${API_ENDPOINTS.MAPS.UPLOAD}`,
+    return this.HttpClient.post(`${this.baseUrl}${API_ENDPOINTS.FINALMAPS.UPLOAD}`,
       saveDto,
       { withCredentials: true }
     );

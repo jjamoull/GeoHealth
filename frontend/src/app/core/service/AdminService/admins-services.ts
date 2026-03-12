@@ -27,7 +27,7 @@ export class AdminsServices {
    * @return A list of all the user (as AdminUserDto) or an error response
    */
   public getAllUsers(): Observable<AdminUserDto[]> {
-    return this.http.get<AdminUserDto[]>(`${this.baseUrl}${API_ENDPOINTS.ADMIN.ALLUSER}`,
+    return this.http.get<AdminUserDto[]>(`${this.baseUrl}${API_ENDPOINTS.ADMIN.USERS}`,
       { withCredentials: true }
     );
 

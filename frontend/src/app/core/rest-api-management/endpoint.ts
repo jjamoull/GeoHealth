@@ -1,11 +1,10 @@
 export const API_ENDPOINTS = {
   USER: {
-    UPDATE: '/users/update',
-    PROFILE: '/users/profile',
-    ALL:'/users/all',
-    CHANGEPASSWORD: '/users/change-password',
-    DELETE: '/users/delete',
-    ISADMIN: '/users/isAdmin'
+    UPDATE: '/user/update',
+    PROFILE: '/user/profile',
+    CHANGEPASSWORD: '/user/changePassword',
+    DELETE: '/user/delete',
+    ISADMIN: '/user/isAdmin'
   },
   AUTH: {
     LOGIN: '/auth/login',
@@ -14,19 +13,19 @@ export const API_ENDPOINTS = {
     STATUS: '/auth/status',
   },
   ADMIN: {
-    ALLUSER: '/admin/users',
+    USERS: '/admin/users',
     BAN: '/admin/users/ban',
     UNBAN:'/admin/users/unban/',
-    CHANGEROLE:'/admin/users/change-role',
+    CHANGEROLE:'/admin/users/changeRole',
   },
-  MAPS: {
-    ALLMAPS: '/maps/AllMaps',
-    DELETE: '/maps',
-    UPLOAD: '/maps/uploadShapeFile',
-    GET: '/maps'
+  FINALMAPS: {
+    ALLMAPS: '/finalMaps/allMaps',
+    DELETE: '/finalMaps',
+    UPLOAD: '/finalMaps/uploadShapeFile',
+    GET: '/finalMaps'
     },
   RISKFACTORMAPS: {
-    ALLMAPS: '/riskFactor/allMaps',
-    UPLOAD: '/riskFactor/file'
+    ALLMAPS: '/riskFactorMaps/allMaps',
+    UPLOAD: '/riskFactorMaps/file'
   }
 } as const;

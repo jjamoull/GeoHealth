@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/riskFactor")
+@RequestMapping("/riskFactorMaps")
 public class RiskFactorMapController {
     static Logger logger = LoggerFactory.getLogger(RiskFactorMapController.class);
 

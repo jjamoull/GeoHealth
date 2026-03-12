@@ -84,7 +84,7 @@ public class AdminController {
      * @param changeRoleDto new role information
      * @return confirmation message if succeeded, error message otherwise
      */
-    @PutMapping("/users/change-role")
+    @PutMapping("/users/changeRole")
     public ResponseEntity<MessageDto> changeRole(
             @RequestBody ChangeRoleDto changeRoleDto
     ){
