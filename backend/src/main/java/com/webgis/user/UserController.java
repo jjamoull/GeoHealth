@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -129,7 +129,7 @@ public class UserController {
      * @param updatePasswordDto information needed to update the password
      * @return confirmation message if succeeded, error message otherwise
      */
-    @PutMapping("/change-password")
+    @PutMapping("/changePassword")
     public ResponseEntity<MessageDto> changePassword(
             HttpServletRequest request,
             @RequestBody UpdatePasswordDto updatePasswordDto

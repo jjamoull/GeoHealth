@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/maps")
+@RequestMapping("/finalMaps")
 public class FinalMapController {
     private final FinalMapService finalMapService;
 
@@ -48,7 +48,7 @@ public class FinalMapController {
         }
     }
 
-    @GetMapping("/AllMaps")
+    @GetMapping("/allMaps")
     public ResponseEntity<Object> getAllMaps() {
         try {
             final List<FinalMap> allFinalMaps = finalMapService.findAll();
