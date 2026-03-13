@@ -50,7 +50,7 @@ public class RiskFactorMapController {
 
             final List<RiskFactorMap> riskFactorMapList = riskFactorMapService.findAll();
             for (RiskFactorMap rf : riskFactorMapList) {
-                final RiskFactorMapListDto dto = new RiskFactorMapListDto(rf.getTitle());
+                final RiskFactorMapListDto dto = new RiskFactorMapListDto(rf.getId(), rf.getTitle());
                 dtoList.add(dto);
             }
 

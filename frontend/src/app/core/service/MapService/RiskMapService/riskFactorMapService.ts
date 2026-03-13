@@ -4,14 +4,12 @@ import {Observable} from "rxjs";
 import {environment} from '../../../rest-api-management/environment';
 import {API_ENDPOINTS} from '../../../rest-api-management/endpoint';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class RiskFactorMapService {
 
   private baseUrl= environment.apiBaseUrl;
-
 
   constructor(private HttpClient: HttpClient) {}
 
@@ -22,5 +20,9 @@ export class RiskFactorMapService {
     );
   }
 
-
+  getAllMaps(): Observable<RiskFactorMapListDto[]> {
+    return this.httpClient.get<RiskFactorMapListDto[]>(`${this.baseUrl}${API_ENDPOINTS.RISKFACTORMAPS.ALLMAPS}`,
+      {withCredentials: true}
+      );
+  }
 }
