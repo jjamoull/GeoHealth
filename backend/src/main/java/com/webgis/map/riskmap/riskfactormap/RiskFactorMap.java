@@ -14,42 +14,27 @@ public class RiskFactorMap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
-
     private String description;
-
 
     public RiskFactorMap(){}
 
-    public RiskFactorMap(String title,
-                         String description){
+    public RiskFactorMap(String title, String description){
         this.title = title;
         this.description = description;
     }
 
-    /* ***************************************
-     * **************** GETTER ***************
-     * ****************************************/
+    public Long getId(){return id; }
 
-    public String getTitle() {
-        return this.title;
-    }
+    public String getTitle() {return title; }
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public long getId(){return this.id;}
-    /** ***************************************
-     * *************** SETTER *****************
-     * **************************************** */
+    public String getDescription() { return description;}
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setTileDescription(String description){
+    public void setDescription(String description){
         this.description = description;
     }
 }

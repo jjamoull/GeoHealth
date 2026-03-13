@@ -69,16 +69,11 @@ public class RiskFactorMapController {
         try {
             final RiskFactorMap riskFactorMap = new RiskFactorMap(title, description);
             riskFactorMapService.save(riskFactorMap);
-
             riskFactorMapService.transformIntoTileFile(riskFactorMap.getId(), tifFile);
 
             return ResponseEntity.status(200).body(riskFactorMapService.save(riskFactorMap));
         } catch (Exception e) {
-            return ResponseEntity.status(404).build();
+            return ResponseEntity.status(500).body(e.getMessage());
         }
-
     }
-
-
-
 }

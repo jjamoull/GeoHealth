@@ -1,34 +1,31 @@
 package com.webgis.map.riskmap.tile;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Column;
+import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tile")
 public class Tile {
-
     @EmbeddedId
     private TileId tileId;
-
     @Lob
     @Column(name = "tile_data", nullable = false)
     private byte[] tileData;
-
+    @ManyToOne
+    @MapsId("mapId")
+    @JoinColumn(name = "map_id")
+    private RiskFactorMap riskFactorMap;
 
     public Tile(){}
 
     public Tile(TileId tileId,
-                         byte[] tileData){
+                byte[] tileData,
+                RiskFactorMap riskFactorMap){
         this.tileId = tileId;
-        this.tileData =tileData;
+        this.tileData = tileData;
+        this.riskFactorMap = riskFactorMap;
     }
 
-    /* ***************************************
-     * **************** GETTER ***************
-     * ****************************************/
 
     public TileId getTileId() {
         return tileId;
@@ -38,9 +35,7 @@ public class Tile {
         return tileData;
     }
 
-    /** ***************************************
-     * *************** SETTER *****************
-     * **************************************** */
+    public RiskFactorMap getRiskFactorMap() { return riskFactorMap; }
 
     public void setTileData(byte[] tileData) {
         this.tileData = tileData;
@@ -50,6 +45,7 @@ public class Tile {
         this.tileId = tileId;
     }
 
+    public void setRiskFactorMap(RiskFactorMap riskFactorMap) { this.riskFactorMap = riskFactorMap; }
 }
 
 
