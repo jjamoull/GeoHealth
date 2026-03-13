@@ -1,4 +1,4 @@
-package com.webgis.map.finalMap.finalMap;
+package com.webgis.finalMap;
 
 
 import com.webgis.map.finalmap.FinalMap;

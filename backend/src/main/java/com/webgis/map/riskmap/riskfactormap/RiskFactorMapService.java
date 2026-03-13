@@ -51,11 +51,6 @@ public class RiskFactorMapService {
      *
      */
     public RiskFactorMap save(RiskFactorMap riskFactorMap){
-
-        if(riskFactorMap == null){
-            throw new NullPointerException("RiskFactorMap cannot be null");
-        }
-
         return riskFactorMapRepository.save(riskFactorMap);
     }
 
