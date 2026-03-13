@@ -1,4 +1,4 @@
-package com.webgis.finalMap;
+package com.webgis.map.finalMap;
 
 import com.webgis.map.finalmap.FinalMap;
 import org.junit.jupiter.api.Test;
