@@ -73,26 +73,27 @@
     margin-top: 6px;
     padding:20px 15px;
   }
-
   .sidebar .menu i {
     color: black;
     font-size: 20px;
     padding-right: 8px;
   }
-
   .sidebar .menu a {
     color: black;
     font-size: 20px;
     text-decoration: none;
   }
-
   .sidebar .menu li:hover {
-    border-left: 1px solid #fff;
-    box-shadow: 0 0 4px #90ee90;
+    background-color: #90ee90;
   }
-  .logout {
+
+  .sidebar .menu li:last-of-type {
     position: absolute;
     bottom: 20px;
+    width: 100%;
+  }
+  .menu li .logout a:hover {
+    background-color: #90ee90;
   }
 
   #check {

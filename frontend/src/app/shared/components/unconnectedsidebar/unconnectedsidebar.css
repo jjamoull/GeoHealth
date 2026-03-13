@@ -81,8 +81,7 @@
   }
 
   .sidebar .menu li:hover {
-    border-left: 1px solid #fff;
-    box-shadow: 0 0 4px #90ee90;
+    background-color: #90ee90;
   }
   #check {
     display: none;
