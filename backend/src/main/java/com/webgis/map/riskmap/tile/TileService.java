@@ -26,7 +26,7 @@ public class TileService {
      * @return : tile
      * */
     public Tile save(long mapId, int zoom, int x, int y, byte[] data){
-        RiskFactorMap riskFactorMap = riskFactorMapRepository.findById(mapId)
+        final RiskFactorMap riskFactorMap = riskFactorMapRepository.findById(mapId)
                 .orElseThrow(() -> new RuntimeException("Map not found: " + mapId));
 
         final TileId tileId = new TileId(mapId, zoom, x, y);

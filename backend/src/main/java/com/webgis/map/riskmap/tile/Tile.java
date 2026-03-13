@@ -1,7 +1,14 @@
 package com.webgis.map.riskmap.tile;
 
 import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "tile")
