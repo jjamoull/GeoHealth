@@ -19,11 +19,11 @@ export const API_ENDPOINTS = {
     CHANGEROLE:'/admin/users/changeRole',
     MAPS: {
       FINALMAPS:{
-        DELETE: 'admin/finalMaps',
-        UPLOAD: 'admin/finalMaps/uploadShapeFile'
+        DELETE: '/admin/finalMaps',
+        UPLOAD: '/admin/finalMaps/uploadShapeFile'
       },
       RISKFACTORMAPS: {
-        UPLOAD: 'admin/riskFactorMaps/file'
+        UPLOAD: '/admin/riskFactorMaps/file'
       }
 
     }
