@@ -1,17 +1,28 @@
-<h2 align="center" style=" border-bottom: 2px solid black;">
+<div class="pop-up">
+
+<h2 class="popup-title" >
   Configure your new risk factor to add
 </h2>
 <form [formGroup]="formGroup" (ngSubmit)="closePopUp()">
-  <label for="title" class="my-3">Title</label>
-  <input type="text" class="form-control" name="title" placeholder="Title of the risk factor…" formControlName ="title" />
+
+  <app-inputbox
+    [type]="'text'"
+    [placeholder]="'Title of the risk factor…'"
+    formControlName="title"
+    [label]="'Title'">
+  </app-inputbox>
   @if(isFieldValid("title")){
     <div class="error">
       The minimum length of the title is incorrect
     </div>
   }
 
-  <label for="description" class="my-3">Description</label>
-  <input type="text" class="form-control"  name="description" placeholder="About the risk factor …" formControlName ="description" />
+  <app-inputbox
+    [type]="'text'"
+    [placeholder]="'About the risk factor …'"
+    formControlName="description"
+    [label]="'Description'">
+  </app-inputbox>
   @if(isFieldValid("description")){
     <div class="error">
       The minimum length of the description is incorrect
@@ -50,3 +61,4 @@
   </button>
 
 </form>
+</div>
