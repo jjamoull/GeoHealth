@@ -1,8 +1,6 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {FinalMapService} from '../../core/service/MapService/FinalMapService/finalMapService';
-import {RiskFactorMapService} from '../../core/service/MapService/RiskMapService/riskFactorMapService';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {ReactiveFormsModule} from '@angular/forms';
 import {FinalMap} from './final-map/final-map';
 import {RiskFactor} from './risk-factor/risk-factor';
 
