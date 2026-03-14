@@ -84,7 +84,7 @@
   }
   .btnOne label{
     position: absolute;
-    top: 16px;
+    top: 20px;
     left: 16px;
     cursor: pointer;
   }
@@ -100,7 +100,7 @@
     font-weight: 700;
     position: absolute;
     left: 16px;
-    line-height: 60px;
+    line-height: 1;
     cursor: pointer;
     opacity: 1;
     transition: all 0.3s linear;
