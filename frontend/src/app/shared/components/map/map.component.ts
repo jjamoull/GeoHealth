@@ -101,11 +101,8 @@ export class MapComponent implements AfterViewInit {
             fillOpacity: 0.5,
           }),
           onEachFeature: (feature: any, layer: any) => {
-            layer.on('mouseover', () => {
-                layer.bringToFront();
-                layer.setStyle({ color: '#ffffff', weight: 2 });
-              });
-            layer.on('mouseout', () => layer.setStyle({color: '#414241', weight: 1}));
+            layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
+            layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
             layer.on('click', (e: any) => {
               if (this.selectedDistrict() === feature.properties) {
                 this.marker.remove();
