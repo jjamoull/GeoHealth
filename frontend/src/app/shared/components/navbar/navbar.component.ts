@@ -27,12 +27,12 @@ export class NavbarComponent {
     this.router.navigate(['departments'])
   }
 
-  goToSettingsPage() {
-    this.router.navigate(['settings'])
-  }
-
   goToConsensusPage() {
     this.router.navigate(['consensus'])
+  }
+
+  goToSettingsPage() {
+    this.router.navigate(['settings'])
   }
 
   goToRegister(){

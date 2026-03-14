@@ -10,6 +10,7 @@ import {ProfilePageComponent} from './features/auth/pages/profile/profile-page.c
 import {ChangePasswordPageComponent} from './features/auth/pages/change-password/change-password-page.component';
 import {DepartmentsPageComponent} from './features/departments/pages/departments/departments-page.component';
 import {SettingsPageComponent} from './features/settings/pages/settings/settings-page.component';
+import {ConsensusPageComponent} from './features/consensus/pages/consensus/consensus-page.component';
 
 export const routes: Routes = [
   {
@@ -26,8 +27,7 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },{
   path:'departments',
-    component: DepartmentsPageComponent,
-    canActivate: [authGuard]
+    component: DepartmentsPageComponent
   },
   {
     path: 'usersList',
@@ -47,6 +47,10 @@ export const routes: Routes = [
   {
     path:'settings',
     component: SettingsPageComponent,
+  },
+  {
+    path:'consensus',
+    component: ConsensusPageComponent,
   },
   {
     path:'profile',
