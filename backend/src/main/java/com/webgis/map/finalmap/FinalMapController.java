@@ -1,7 +1,6 @@
 package com.webgis.map.finalmap;
 
 import com.webgis.MessageDto;
-import com.webgis.exception.NotFound;
 import com.webgis.map.finalmap.dto.FinalMapDto;
 import com.webgis.map.finalmap.dto.FinalMapListDto;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,53 +52,6 @@ public class FinalMapController {
             return ResponseEntity.status(200).body(finalMapListDtoList);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteMap(@PathVariable long id) {
-        try {
-            finalMapService.deleteMap(id);
-            return ResponseEntity.status(200).body(new MessageDto("Map deleted successfully"));
-        } catch(IllegalArgumentException e) {
-            return ResponseEntity.status(404).body(new MessageDto(e.getMessage()));
-        }
-    }
-
-
-    @PostMapping(value = "/uploadShapeFile", consumes = "multipart/form-data" )
-    public ResponseEntity<Object> postGeoJsonFile(
-            @RequestParam("title") String title,
-            @RequestParam("description") String description,
-            @RequestParam("zipFile") MultipartFile zipFile,
-            @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile){
-
-        try {
-            final FinalMap finalMap = new FinalMap(title,
-                    description,
-                    zipFile.getBytes(),
-                    null);
-            finalMapService.save(finalMap);
-
-            if (geoJsonFile != null){
-                finalMap.setFileGeoJson(new String(geoJsonFile.getBytes()));
-            } else{
-                if (finalMap.getId()== null){
-                    throw new NotFound("There is no id for this map : " + finalMap.getTitle());
-                } else {
-                    final String tempGeoJsonFile = finalMapService.zipToGeoJsonFile(finalMap.getId());
-                    finalMap.setFileGeoJson(tempGeoJsonFile);
-                }
-            }
-            final FinalMap savedFinalMap = finalMapService.save(finalMap);
-            return ResponseEntity.status(200).body(
-                    new FinalMapListDto(savedFinalMap.getId(),
-                            savedFinalMap.getTitle(),
-                            savedFinalMap.getDescription()));
-        } catch (NotFound e) {
-            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
-        } catch (IOException e) {
-            return ResponseEntity.status(500).body(new MessageDto(e.getMessage()));
         }
     }
 

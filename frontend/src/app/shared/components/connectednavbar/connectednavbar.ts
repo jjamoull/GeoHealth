@@ -59,9 +59,5 @@ export class Connectednavbar implements OnInit{
     });
   }
 
-  isLoggedIn():boolean{
-    return this.loginService.isLoggedIn();
-  }
-
 
 }
