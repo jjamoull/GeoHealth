@@ -4,6 +4,7 @@ package com.webgis.map.finalMap;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapRepository;
 import com.webgis.map.finalmap.FinalMapService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -11,10 +12,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,6 +28,21 @@ class finalFinalMapServiceTest {
 
     @InjectMocks
     FinalMapService finalMapService;
+
+    private FinalMap fm1;
+    private FinalMap fm2;
+    private FinalMap fm3;
+    private long id;
+
+    @BeforeEach
+    void init(){
+
+        byte[] bytea = new byte[0];
+        fm1 = new FinalMap("test1", "testdescription", bytea, "fakefile");
+        fm2 = new FinalMap("test2", "testdescription", bytea, "fakefile");
+        fm3 = new FinalMap("test3", "testdescription", bytea, "fakefile");
+        id = 1;
+    }
 
     @Test
     void deleteMapNotFound(){
@@ -39,13 +57,21 @@ class finalFinalMapServiceTest {
     }
 
     @Test
-    void findAllMapsWorking(){
+    void deleteMapValid(){
+        //Arrange
+        when(finalMapService.findById(id)).thenReturn(Optional.of(fm1));
+
+        //Act
+        finalMapService.deleteMap(id);
+
+        //Assert
+        verify(finalMapRepository).delete(fm1);
+    }
+
+    @Test
+    void findAllValid(){
 
         //Arrange
-        byte[] bytea = new byte[0];
-        FinalMap fm1 = new FinalMap("test1", "testdescription", bytea, "fakefile");
-        FinalMap fm2 = new FinalMap("test2", "testdescription", bytea, "fakefile");
-        FinalMap fm3 = new FinalMap("test3", "testdescription", bytea, "fakefile");
 
         List<FinalMap> mapList = List.of(fm1, fm2, fm3);
 
@@ -60,4 +86,27 @@ class finalFinalMapServiceTest {
         assertTrue(results.contains(fm2));
         assertTrue(results.contains(fm3));
     }
+
+    @Test
+    void saveValid(){
+        //Arrange
+        when(finalMapRepository.save(fm1)).thenReturn(fm1);
+
+        //Act
+        FinalMap result = finalMapService.save(fm1);
+
+        //Assert
+        assertEquals(fm1, result);
+    }
+
+
+
+    @Test
+    void transformShapeFileNotFound() throws IOException {
+        //Arrange
+        when(finalMapRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> {finalMapService.zipToGeoJsonFile(id);});
+    }
+
 }

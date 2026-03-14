@@ -3,6 +3,7 @@ package com.webgis.map.finalMap;
 
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,20 @@ class finalMapRespositoryTest {
     @Autowired
     private FinalMapRepository finalMapRepository;
 
+    private FinalMap finalMap;
+    private byte[] dataZip;
+
+    @BeforeEach
+    void init(){
+        //Arrange
+        dataZip = new byte[]{66};
+
+        finalMap = new FinalMap("title",
+                "risk map",
+                dataZip,
+                "file");
+    }
+
     private void assertMapEquals(FinalMap actual, FinalMap expected) {
         assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
         assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
@@ -27,15 +42,6 @@ class finalMapRespositoryTest {
 
     @Test
     void SaveAndfindByTitleMapExist(){
-        //Arrange
-        byte[] dataZip ={66};
-
-
-        FinalMap finalMap = new FinalMap("title",
-                "risk map",
-                dataZip,
-                "file");
-
         //Act
         finalMapRepository.save(finalMap);
         Optional<FinalMap> found = finalMapRepository.findByTitle(finalMap.getTitle());
@@ -47,15 +53,6 @@ class finalMapRespositoryTest {
 
     @Test
     void SaveAndfindByTitleMapNotExist(){
-        //Arrange
-        byte[] dataZip ={66};
-
-
-        FinalMap finalMap = new FinalMap("title",
-                "risk map",
-                dataZip,
-                "file");
-
         //Act
         finalMapRepository.save(finalMap);
         Optional<FinalMap> found = finalMapRepository.findByTitle("otherTitle");
@@ -66,14 +63,6 @@ class finalMapRespositoryTest {
 
     @Test
     void SaveAndfindByIdMapExist(){
-        //Arrange
-        byte[] dataZip ={66};
-
-        FinalMap finalMap = new FinalMap("title",
-                "risk map",
-                dataZip,
-                "file");
-
         //Act
         finalMapRepository.save(finalMap);
         Optional<FinalMap> found = finalMapRepository.findById(finalMap.getId());
@@ -85,14 +74,6 @@ class finalMapRespositoryTest {
 
     @Test
     void SaveAndfindByIdMapNotExist(){
-        //Arrange
-        byte[] dataZip ={66};
-
-        FinalMap finalMap = new FinalMap("title",
-                "risk map",
-                dataZip,
-                "file");
-
         //Act
         finalMapRepository.save(finalMap);
         Optional<FinalMap> found = finalMapRepository.findById(88);
@@ -100,7 +81,4 @@ class finalMapRespositoryTest {
         //Assert
         assertThat(found).isEmpty();
     }
-
-
-
 }
