@@ -3,11 +3,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {FinalMapService} from '../../../core/service/MapService/FinalMapService/finalMapService';
+import {InputboxComponents} from '../../../shared/components/inputbox.components/inputbox.components';
 
 @Component({
   selector: 'app-final-map',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputboxComponents
   ],
   templateUrl: './final-map.html',
   standalone: true,

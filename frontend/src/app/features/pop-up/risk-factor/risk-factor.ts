@@ -2,11 +2,13 @@ import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {RiskFactorMapService} from '../../../core/service/MapService/RiskMapService/riskFactorMapService';
+import {InputboxComponents} from '../../../shared/components/inputbox.components/inputbox.components';
 
 @Component({
   selector: 'app-risk-factor',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputboxComponents
   ],
   templateUrl: './risk-factor.html',
   styleUrl: './risk-factor.css',
