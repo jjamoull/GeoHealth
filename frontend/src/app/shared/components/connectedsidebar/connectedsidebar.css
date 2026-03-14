@@ -8,14 +8,12 @@
   display: none;
 }
 @media (max-width: 768px) and (orientation: portrait) {
-
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
   }
-
   .sidebar {
     position: fixed;
     height: 100vh;
@@ -51,13 +49,11 @@
     background-position: center;
     box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.5);
   }
-
   .logo-text {
     color: black;
     font-size: 25px;
     text-decoration: none;
   }
-
   .sidebar .menu {
     margin-top: 40px;
     flex: 1;
@@ -68,7 +64,6 @@
     height: 100%;
     flex: 1;
   }
-
   .sidebar .menu li {
     margin-top: 6px;
     padding:20px 15px;
@@ -86,7 +81,6 @@
   .sidebar .menu li:hover {
     background-color: #90ee90;
   }
-
   .sidebar .menu li:last-of-type {
     position: absolute;
     bottom: 20px;
@@ -95,7 +89,6 @@
   .menu li .logout a:hover {
     background-color: #90ee90;
   }
-
   #check {
     display: none;
   }
@@ -125,7 +118,6 @@
     opacity: 1;
     transition: all 0.3s linear;
   }
-
   .btnTwo i {
     font-size: 25px;
     line-height: 60px;
@@ -137,7 +129,6 @@
     transition: all 0.3s linear;
 
   }
-
   .btnOne i:hover {
     font-size: 29px;
   }
@@ -149,11 +140,12 @@
   #check:checked~.sidebar {
     left: 0;
   }
-
   #check:checked~.btnOne i {
     opacity: 0;
   }
-
+  #check:checked ~ .btnOne {
+    pointer-events: none;
+  }
   #check:checked~.sidebar .btnTwo i {
     opacity: 1;
   }

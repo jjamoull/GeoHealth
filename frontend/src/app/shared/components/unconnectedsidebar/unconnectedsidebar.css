@@ -8,14 +8,12 @@
   display: none;
 }
 @media (max-width: 768px) and (orientation: portrait) {
-
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
   }
-
   .sidebar {
     position: fixed;
     height: 100vh;
@@ -50,19 +48,16 @@
     background-position: center;
     box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.5);
   }
-
   .logo-text {
     color: black;
     font-size: 25px;
     text-decoration: none;
   }
-
   .sidebar .menu {
     position: absolute;
     top:  150px;
     width: 100%;
   }
-
   .sidebar .menu li {
     margin-top: 6px;
     padding:20px 15px;
@@ -73,13 +68,11 @@
     font-size: 20px;
     padding-right: 8px;
   }
-
   .sidebar .menu a {
     color: black;
     font-size: 20px;
     text-decoration: none;
   }
-
   .sidebar .menu li:hover {
     background-color: #90ee90;
   }
@@ -112,7 +105,6 @@
     opacity: 1;
     transition: all 0.3s linear;
   }
-
   .btnTwo i {
     font-size: 25px;
     line-height: 60px;
@@ -122,25 +114,22 @@
     color: #fff;
     opacity: 0;
     transition: all 0.3s linear;
-
   }
-
   .btnOne i:hover {
     font-size: 29px;
   }
-
   .btnTwo i:hover {
     font-size: 24px;
   }
-
   #check:checked~.sidebar {
     left: 0;
   }
-
+  #check:checked ~ .btnOne {
+    pointer-events: none;
+  }
   #check:checked~.btnOne i {
     opacity: 0;
   }
-
   #check:checked~.sidebar .btnTwo i {
     opacity: 1;
   }
