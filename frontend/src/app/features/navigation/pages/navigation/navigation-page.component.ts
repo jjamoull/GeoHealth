@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { isPlatformBrowser} from '@angular/common';
 import {PopUpComponent} from '../../../pop-up/pop-up.component';
-import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {ActivatedRoute, Router} from '@angular/router';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 import {ButtonComponent} from "../../../../shared/components/button.component/button.component";
 import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
 import {FinalMapService} from '../../../../core/service/MapService/FinalMapService/finalMapService';
 import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/FinalMapListDto';
+import {UsersServices} from '../../../../core/service/UserService/users-services';
 
 @Component({
   selector: 'app-navigation',
@@ -20,14 +20,24 @@ export class NavigationPageComponent implements OnInit{
     private dialog: MatDialog,
     private router: Router,
     private finalMapService: FinalMapService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private usersServices: UsersServices
     ){}
+
+  isAdmin:boolean =false;
 
   listOfAllMaps:FinalMapListDto[] = [];
   listOfAllRecentMaps:FinalMapListDto[] = [];
 
   ngOnInit() {
-      this.getAllMaps();
+    this.getAllMaps();
+
+    this.usersServices.isAdmin().subscribe(
+      bool=>{
+        this.isAdmin=bool
+        this.cdr.detectChanges();
+      }
+    );
     }
 
   /**

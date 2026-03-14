@@ -17,15 +17,22 @@ export const API_ENDPOINTS = {
     BAN: '/admin/users/ban',
     UNBAN:'/admin/users/unban/',
     CHANGEROLE:'/admin/users/changeRole',
+    MAPS: {
+      FINALMAPS:{
+        DELETE: '/admin/finalMaps',
+        UPLOAD: '/admin/finalMaps/uploadShapeFile'
+      },
+      RISKFACTORMAPS: {
+        UPLOAD: '/admin/riskFactorMaps/file'
+      }
+
+    }
   },
   FINALMAPS: {
     ALLMAPS: '/finalMaps/allMaps',
-    DELETE: '/finalMaps',
-    UPLOAD: '/finalMaps/uploadShapeFile',
     GET: '/finalMaps'
     },
   RISKFACTORMAPS: {
-    ALLMAPS: '/riskFactorMaps/allMaps',
-    UPLOAD: '/riskFactorMaps/file'
+    ALLMAPS: '/riskFactorMaps/allMaps'
   }
 } as const;

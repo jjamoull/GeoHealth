@@ -2,7 +2,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {FinalMapService} from '../../../core/service/MapService/FinalMapService/finalMapService';
+import {AdminFinalMapService} from '../../../core/service/AdminService/AdminMapService/AdminFinalMapService';
 import {InputboxComponents} from '../../../shared/components/inputbox.components/inputbox.components';
 
 @Component({
@@ -17,7 +17,7 @@ import {InputboxComponents} from '../../../shared/components/inputbox.components
 })
 export class FinalMap implements OnInit{
   constructor(private dialog: MatDialogRef <FinalMap>,
-              private finalMapService: FinalMapService) {}
+              private adminFinalMapService: AdminFinalMapService) {}
 
   formGroup!: FormGroup;
   selectedFile: File | null = null;
@@ -59,7 +59,7 @@ export class FinalMap implements OnInit{
    * Methods that contain all situation of sending data to backend
    * */
   private sendData(formData: FormData){
-    this.finalMapService.uploadNewMap(formData).subscribe(
+    this.adminFinalMapService.uploadNewMap(formData).subscribe(
       {
         next:()=>{
           this.isUploading = false;

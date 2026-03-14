@@ -1,7 +1,7 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {RiskFactorMapService} from '../../../core/service/MapService/RiskMapService/riskFactorMapService';
+import {AdminRiskFactorMapService} from '../../../core/service/AdminService/AdminMapService/AdminRiskFactorMapService';
 import {InputboxComponents} from '../../../shared/components/inputbox.components/inputbox.components';
 
 @Component({
@@ -15,7 +15,7 @@ import {InputboxComponents} from '../../../shared/components/inputbox.components
 })
 export class RiskFactor  implements OnInit{
   constructor(private dialog: MatDialogRef <RiskFactor>,
-              private riskFactorMapService: RiskFactorMapService,
+              private adminRiskFactorMapService: AdminRiskFactorMapService,
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 
 
@@ -64,7 +64,7 @@ export class RiskFactor  implements OnInit{
    * Methods that contain all situation of sending data to backend
    * */
   private sendData(formData: FormData){
-    this.riskFactorMapService.uploadNewRiskFactor(formData).subscribe(
+    this.adminRiskFactorMapService.uploadNewRiskFactor(formData).subscribe(
         {
           next:()=>{
             this.isUploading = false;

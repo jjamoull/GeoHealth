@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-
-import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.ArrayList;
@@ -59,26 +55,5 @@ public class RiskFactorMapController {
             return ResponseEntity.status(404).build();
         }
     }
-
-    @PostMapping(value = "/file", consumes = "multipart/form-data")
-    public ResponseEntity<Object> postTifFile(
-            @RequestParam("title") String title,
-            @RequestParam("description") String description,
-            @RequestParam(value="tifFile") MultipartFile tifFile) {
-
-        try {
-            final RiskFactorMap riskFactorMap = new RiskFactorMap(title, description);
-            riskFactorMapService.save(riskFactorMap);
-
-            riskFactorMapService.transformIntoTileFile(riskFactorMap.getId(), tifFile);
-
-            return ResponseEntity.status(200).body(riskFactorMapService.save(riskFactorMap));
-        } catch (Exception e) {
-            return ResponseEntity.status(404).build();
-        }
-
-    }
-
-
 
 }

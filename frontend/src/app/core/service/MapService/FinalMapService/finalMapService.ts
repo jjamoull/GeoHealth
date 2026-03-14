@@ -3,9 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {Observable} from "rxjs";
 import { environment } from '../../../rest-api-management/environment';
 import { API_ENDPOINTS } from '../../../rest-api-management/endpoint';
-import { FinalMapDto } from '../../../../shared/models/MapModel/FinalMapModel/FinalMapDto';
 import { FinalMapListDto } from '../../../../shared/models/MapModel/FinalMapModel/FinalMapListDto';
-import { MessageDto } from '../../../../shared/models/MessageDto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,23 +20,11 @@ export class FinalMapService {
       );
     }
 
-  deleteMap(id: number) : Observable<MessageDto> {
-    return this.HttpClient.get<MessageDto>(`${this.baseUrl}${API_ENDPOINTS.FINALMAPS.DELETE}/${id}`,
-      {withCredentials: true}
-      );
-    }
 
   getMap(id: number): Observable<any> {
       return this.HttpClient.get(`${this.baseUrl}${API_ENDPOINTS.FINALMAPS.GET}/${id}`,
         { withCredentials: true }
       );
     }
-
-  uploadNewMap(saveDto: any): Observable<any> {
-    return this.HttpClient.post(`${this.baseUrl}${API_ENDPOINTS.FINALMAPS.UPLOAD}`,
-      saveDto,
-      { withCredentials: true }
-    );
-  }
 
 }
