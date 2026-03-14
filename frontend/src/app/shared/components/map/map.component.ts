@@ -68,6 +68,9 @@ export class MapComponent implements AfterViewInit {
 
     this.map = this.leaflet.map('map').setView(this.CAMEROON_COORDINATES[0], this.CAMEROON_ZOOM);
 
+    this.map.createPane('markerPane');
+    this.map.getPane('markerPane').style.zIndex = 400;
+
     this.leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
@@ -81,27 +84,33 @@ export class MapComponent implements AfterViewInit {
 
         const geoJsonLayer = this.leaflet.geoJSON(geoJson, {
           style: (feature: any) => ({
-            color: '#333',
+            color: '#414241',
             weight: 1,
             fillColor: this.getRiskColor(feature?.properties?.Risk_categ),
             fillOpacity: 0.5,
           }),
           onEachFeature: (feature: any, layer: any) => {
-            layer.on('mouseover', () => layer.setStyle({ fillOpacity: 0.7 }));
-            layer.on('mouseout', () => layer.setStyle({ fillOpacity: 0.5 }));
+            layer.on('mouseover', () => {
+                layer.bringToFront();
+                layer.setStyle({ color: '#ffffff', weight: 2 });
+              });
+            layer.on('mouseout', () => layer.setStyle({color: '#414241', weight: 1}));
             layer.on('click', (e: any) => {
-              this.selectedDistrict.set(feature.properties);
-              if (this.marker) {
+              if (this.selectedDistrict() === feature.properties) {
                 this.marker.remove();
                 this.marker = null;
-              } else {
-                this.marker = this.leaflet.circleMarker(e.latlng, {
-                  radius: 6,
-                  color: '#2563eb',
-                  fillColor: '#2563eb',
-                  fillOpacity: 1,
-                }).addTo(this.map);
+                this.selectedDistrict.set(null);
+                return;
               }
+              this.selectedDistrict.set(feature.properties);
+              if (this.marker) this.marker.remove();
+              this.marker = this.leaflet.circleMarker(e.latlng, {
+                radius: 5,
+                color: '#1356eb',
+                fillColor: '#1959e6',
+                fillOpacity: 0.8,
+                pane: 'markerPane',
+              }).addTo(this.map);
             });
           }
         }).addTo(this.map);
