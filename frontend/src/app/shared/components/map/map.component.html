@@ -3,7 +3,7 @@
 
     <div class="map-selector">
       <select (change)="onMapSelected($event)">
-        <option value="" disabled selected>risk factor map</option>
+        <option value="">Districts only</option>
         @for (map of riskFactorMaps(); track map.id) {
         <option [value]="map.id">{{ map.title }}</option>
         }

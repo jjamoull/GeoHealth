@@ -29,6 +29,7 @@ export class MapComponent implements AfterViewInit {
   private map: any = null;
   private leaflet: any = null;
   private tileLayer: any = null;
+  private geoJsonLayer: any = null;
 
    CAMEROON_COORDINATES:LatLngExpression[] = [[6.8, 12.38]];
    CAMEROON_ZOOM:number = 6.6;
@@ -41,13 +42,22 @@ export class MapComponent implements AfterViewInit {
     ){}
 
   onMapSelected(event: Event): void {
-    const mapId = Number((event.target as HTMLSelectElement).value);
+    const value = (event.target as HTMLSelectElement).value;
     if (this.tileLayer) {
       this.tileLayer.remove();
+      this.tileLayer = null;
     }
+    if (!value) {
+      if (this.geoJsonLayer) this.geoJsonLayer.setStyle({ fillOpacity: 0.5 });
+      return;
+    }
+    const mapId = Number(value);
+    if (this.geoJsonLayer){
+      this.geoJsonLayer.setStyle({ fillOpacity: 0 });
+      }
     this.tileLayer = this.leaflet.tileLayer(
       `/tile/file/${mapId}/{z}/{x}/{y}.png`,
-      { opacity: 1, zIndex: 500 }
+      { opacity: 0.7, zIndex: 500 }
     ).addTo(this.map);
   }
 
@@ -83,7 +93,7 @@ export class MapComponent implements AfterViewInit {
         const geoJson = JSON.parse(mapData.fileGeoJson);
         console.log(geoJson);
 
-        const geoJsonLayer = this.leaflet.geoJSON(geoJson, {
+        this.geoJsonLayer = this.leaflet.geoJSON(geoJson, {
           style: (feature: any) => ({
             color: '#414241',
             weight: 1,
@@ -116,7 +126,7 @@ export class MapComponent implements AfterViewInit {
           }
         }).addTo(this.map);
 
-        this.map.fitBounds(geoJsonLayer.getBounds());
+        this.map.fitBounds(this.geoJsonLayer.getBounds());
       },
       error: (err) => console.error('Failed to load map data', err)
     });
