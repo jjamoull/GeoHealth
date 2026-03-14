@@ -23,6 +23,15 @@ export class NavbarComponent {
     this.router.navigate(['navigation'])
   }
 
+  goToDepartmentsPage() {
+    this.router.navigate(['departments'])
+  }
+
+
+  goToConsensusPage() {
+    this.router.navigate(['consensus'])
+  }
+
   goToRegister(){
     this.router.navigate(['register'])
   }

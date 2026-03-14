@@ -1,10 +1,27 @@
 <nav class="navbar">
-  <div class="navbar-container">
-    <a class="item" (click)="goToHome()">Home</a>
-    <a class="item" (click)="goToNavigation()">Navigation</a>
-    <a class="item" (click)="goToProfile()">Profile</a>
-    <a class="item" (click)="goToLogin()">Login</a>
+  <div class="left-navlinks-container">
+    <a class="item" (click)="goToHome()">
+      <img src="assets/icons/home_icon.svg" alt="house shaped icon">
+    </a>
+    <a class="item" (click)="goToNavigation()">
+      <img src="assets/icons/map_icon.svg" alt="house shaped icon">
+    </a>
+    <!--<a class="item" (click)="goToProfile()">
+      <img src="assets/icons/validation_icon.svg" alt="house shaped icon">
+    </a>-->
+
+    <a class="item" (click)="goToDepartmentsPage()">
+      <img src="assets/icons/validation_icon.svg" alt="form icon">
+    </a>
+
+    <a class="item" (click)="goToSettingsPage()">
+      <img src="assets/icons/settings_icon.svg" alt="settings icon">
+    </a>
     <a class="item" (click)="logout()">Logout</a>
+  </div>
+
+  <div class="right-navlinks-container">
+    <p>test</p>
   </div>
 </nav>
 

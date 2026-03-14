@@ -8,6 +8,7 @@ import {UsersListPageComponent} from './features/admin/pages/users-list/users-li
 import { authGuard } from './features/auth/services/authguard/authguard-guard';
 import {ProfilePageComponent} from './features/auth/pages/profile/profile-page.component';
 import {ChangePasswordPageComponent} from './features/auth/pages/change-password/change-password-page.component';
+import {DepartmentsPageComponent} from './features/departments/pages/departments/departments-page.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,11 @@ export const routes: Routes = [
     component: NavigationPageComponent,
     canActivate: [authGuard]
   },{
+  path:'departments',
+    component: DepartmentsPageComponent,
+    canActivate: [authGuard]
+  },
+  {
     path: 'usersList',
     component: UsersListPageComponent,
     canActivate: [authGuard],
@@ -36,7 +42,8 @@ export const routes: Routes = [
   },{
     path:'register',
     component: RegisterPageComponent,
-  },{
+  },
+  {
     path:'profile',
     component: ProfilePageComponent,
     canActivate: [authGuard]
