@@ -46,7 +46,8 @@ export class MapComponent implements AfterViewInit {
       this.tileLayer.remove();
     }
     this.tileLayer = this.leaflet.tileLayer(
-      `/tile/file/${mapId}/{z}/{x}/{y}.png`
+      `/tile/file/${mapId}/{z}/{x}/{y}.png`,
+      { opacity: 1, zIndex: 500 }
     ).addTo(this.map);
   }
 
