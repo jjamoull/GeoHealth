@@ -9,6 +9,7 @@ import { authGuard } from './features/auth/services/authguard/authguard-guard';
 import {ProfilePageComponent} from './features/auth/pages/profile/profile-page.component';
 import {ChangePasswordPageComponent} from './features/auth/pages/change-password/change-password-page.component';
 import {DepartmentsPageComponent} from './features/departments/pages/departments/departments-page.component';
+import {SettingsPageComponent} from './features/settings/pages/settings/settings-page.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +43,10 @@ export const routes: Routes = [
   },{
     path:'register',
     component: RegisterPageComponent,
+  },
+  {
+    path:'settings',
+    component: SettingsPageComponent,
   },
   {
     path:'profile',
