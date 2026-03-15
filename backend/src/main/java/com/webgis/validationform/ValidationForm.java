@@ -30,6 +30,9 @@ public class ValidationForm {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(nullable = false)
+    private boolean isPublic;
+
     public ValidationForm(){}
 
     public ValidationForm(
@@ -38,13 +41,15 @@ public class ValidationForm {
             String perceivedRisk,
             int certaintyLevel,
             String comment,
-            User user){
+            User user,
+            boolean isPublic){
         this.department=department;
         this.agreementLevel=agreementLevel;
         this.perceivedRisk=perceivedRisk;
         this.certaintyLevel=certaintyLevel;
         this.comment=comment;
         this.user=user;
+        this.isPublic=isPublic;
     }
 
     public Long getId() {return id;}
@@ -61,6 +66,9 @@ public class ValidationForm {
 
     public User getUser(){return user;}
 
+    public boolean isPublic(){return isPublic;}
+
+
     public void setId(long id){this.id=id;}
 
     public void setDepartment(String department) {this.department = department;}
@@ -74,4 +82,6 @@ public class ValidationForm {
     public void setComment(String comment) {this.comment = comment;}
 
     public void setUser(User user) {this.user = user;}
+
+    public void setIsPublic(boolean isPublic){this.isPublic=isPublic;}
 }
