@@ -1,13 +1,17 @@
 package com.webgis.map.riskmap.tile;
 
+import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
+import com.webgis.map.riskmap.riskfactormap.RiskFactorMapRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TileService {
     private final TileRepository tileRepository;
+    private final RiskFactorMapRepository riskFactorMapRepository;
 
-    public TileService (TileRepository tileRepository){
+    public TileService (TileRepository tileRepository, RiskFactorMapRepository riskFactorMapRepository){
         this.tileRepository = tileRepository;
+        this.riskFactorMapRepository = riskFactorMapRepository;
     }
 
     /**
@@ -22,8 +26,11 @@ public class TileService {
      * @return : tile
      * */
     public Tile save(long mapId, int zoom, int x, int y, byte[] data){
+        final RiskFactorMap riskFactorMap = riskFactorMapRepository.findById(mapId)
+                .orElseThrow(() -> new RuntimeException("Map not found: " + mapId));
+
         final TileId tileId = new TileId(mapId, zoom, x, y);
-        final Tile tileToStore = new Tile(tileId, data);
+        final Tile tileToStore = new Tile(tileId, data, riskFactorMap);
 
         return tileRepository.save(tileToStore);
     }

@@ -1,5 +1,15 @@
 <div class="map-section">
   <div class="map-container">
+
+    <div class="map-selector">
+      <select (change)="onMapSelected($event)">
+        <option value="">Districts only</option>
+        @for (map of riskFactorMaps(); track map.id) {
+        <option [value]="map.id">{{ map.title }}</option>
+        }
+      </select>
+    </div>
+
     <div id="map"></div>
     <div class="info-card">
       <p>{{ selectedDistrict | json }}</p>

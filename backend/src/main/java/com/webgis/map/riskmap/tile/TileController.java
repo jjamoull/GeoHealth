@@ -25,7 +25,7 @@ public class TileController {
                                           @PathVariable int z,
                                           @PathVariable int x,
                                           @PathVariable int y) {
-        final Optional<Tile> tile = tileRepository.findByTileId(new TileId(mapId, z, x, y));
+        final Optional<Tile> tile = tileRepository.findById(new TileId(mapId, z, x, y));
         if (tile.isPresent()){
             return ResponseEntity.status(200).contentType(MediaType.IMAGE_PNG).body(tile.get().getTileData());
         }else {

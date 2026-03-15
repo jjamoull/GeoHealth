@@ -66,7 +66,7 @@ public class TiffFiles {
 
 
         } catch (IOException | InterruptedException e) {
-            logger.info("The temporary file for .tif file can not be created : \n");
+            logger.error("The temporary file for .tif file can not be created : {}", e.getMessage());
         }
     }
 
