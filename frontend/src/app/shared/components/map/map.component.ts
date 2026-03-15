@@ -62,11 +62,11 @@ export class MapComponent implements AfterViewInit {
   }
 
 /**
-* Display the map OSM thanks to Leaflet on Cameron
+* Display the map OSM thanks to Leaflet on Cameroon
 */
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
-
+    //risk factor maps dropdown
     this.riskFactorMapService.getAllMaps().subscribe({
           next: (maps:RiskFactorMapListDto[]) => {
             this.riskFactorMaps.set(maps);
@@ -108,6 +108,8 @@ export class MapComponent implements AfterViewInit {
             layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
             layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
             layer.on('click', (e: any) => {
+              this.readTileValue(e.latlng);
+              //select again => remove marker
               if (this.selectedDistrict() === feature.properties) {
                 this.marker.remove();
                 this.marker = null;
@@ -115,7 +117,9 @@ export class MapComponent implements AfterViewInit {
                 return;
               }
               this.selectedDistrict.set(feature.properties);
-              if (this.marker) this.marker.remove();
+              if (this.marker){
+                this.marker.remove();
+              }
               this.marker = this.leaflet.circleMarker(e.latlng, {
                 radius: 5,
                 color: '#1356eb',
@@ -140,5 +144,43 @@ export class MapComponent implements AfterViewInit {
         }
       }
     return '#aaaaaa';
+  }
+
+
+  private readTileValue(latlng: any) {
+
+    const point = this.map.latLngToContainerPoint(latlng);
+
+    const tiles = document.querySelectorAll(".leaflet-tile");
+
+    if (!tiles.length) return;
+
+    const tileImg: any = tiles[0];
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = tileImg.src;
+
+    img.onload = () => {
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      ctx?.drawImage(img,0,0);
+
+      const pixel = ctx?.getImageData(point.x, point.y, 1, 1).data;
+
+      if(!pixel) return;
+
+      const value = pixel[0] / 255;
+
+      console.log("Risk value:", value);
+      console.log("Pixel value:", pixel[0]);
+      console.log("Risk value /255:", pixel[0] / 255);
+    };
+
   }
 }
