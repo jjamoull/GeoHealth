@@ -70,11 +70,16 @@ public class ValidationFormService{
         return validationFormRepository.findAll();
     }
 
-    public List<ValidationForm> getAllFormFromAUser(User user){
-        return validationFormRepository.findByUser(user);
-    }
-
-    public List<ValidationForm> getAllFormFromDepartment(String department){
+    public List<ValidationForm> getAllFormForDepartment(String department){
         return validationFormRepository.findByDepartment(department);
     }
+
+    public Optional<ValidationForm> getFormForUserAndDepartment(User user,String department){
+        return validationFormRepository.findByUserAndDepartment(user,department);
+    }
+
+    public boolean hasAlreadyAFormForDepartment(User user,String department){
+        return validationFormRepository.existsByUserAndDepartment(user,department);
+    }
+
 }

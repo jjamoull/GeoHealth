@@ -89,6 +89,8 @@ public class User {
         return this.banned;
     }
 
+    public boolean isAdmin(){return role.equals("ADMIN") ||role.equals("SUPERADMIN");}
+
     public void setId(Long id) {
         this.id = id;
     }

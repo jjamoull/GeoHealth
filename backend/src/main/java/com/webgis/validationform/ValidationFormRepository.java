@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface ValidationFormRepository extends JpaRepository<ValidationForm,Integer> {
     Optional<ValidationForm> findById(long id);
-    List<ValidationForm> findByUser(User user);
+    Optional<ValidationForm> findByUserAndDepartment(User user,String department);
     List<ValidationForm> findByDepartment(String department);
+    boolean existsByUserAndDepartment(User user, String department);
 }
