@@ -68,9 +68,13 @@ export class MapComponent implements AfterViewInit {
     if (!isPlatformBrowser(this.platformId)) return;
 
     this.riskFactorMapService.getAllMaps().subscribe({
-          next: (maps) => this.riskFactorMaps.set(maps),
-          error: (err) => console.error('Failed to load risk factor maps', err)
-        });
+          next: (maps:RiskFactorMapListDto[]) => {
+            this.riskFactorMaps.set(maps);
+          },
+          error: (err) => {
+            console.error('Failed to load risk factor maps', err);
+          }
+    });
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
 

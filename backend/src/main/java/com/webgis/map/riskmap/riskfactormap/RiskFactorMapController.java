@@ -3,8 +3,6 @@ package com.webgis.map.riskmap.riskfactormap;
 
 
 import com.webgis.map.riskmap.dto.RiskFactorMapListDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +18,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/riskFactorMaps")
 public class RiskFactorMapController {
-    static Logger logger = LoggerFactory.getLogger(RiskFactorMapController.class);
-
     private final RiskFactorMapService riskFactorMapService;
 
     public RiskFactorMapController (RiskFactorMapService riskFactorMapService){
