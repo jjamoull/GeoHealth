@@ -1,7 +1,17 @@
 package com.webgis.validationform;
 
 import com.webgis.user.User;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GenerationType;
 
 @Entity
 @Table(name="validationForms", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "department"})})

@@ -1,6 +1,5 @@
 package com.webgis.validationform.dto;
 
-import com.webgis.user.User;
 
 public record UpdateValidationFormDto(
         long id,
