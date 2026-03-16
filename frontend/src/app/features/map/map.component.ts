@@ -2,13 +2,15 @@ import {Component, AfterViewInit, Inject, PLATFORM_ID, signal} from '@angular/co
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
-import { FinalMapService } from '../../../core/service/MapService/FinalMapService/finalMapService';
-import { RiskFactorMapService } from '../../../core/service/MapService/RiskMapService/riskFactorMapService';
-import { RiskFactorMapListDto } from '../../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
+import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
+import { RiskFactorMapService } from '../../core/service/MapService/RiskMapService/riskFactorMapService';
+import { RiskFactorMapListDto } from '../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
+
+import { MapLegendComponent } from './map-legend/map-legend';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, MapLegendComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,

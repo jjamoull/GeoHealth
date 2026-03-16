@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
   /*Colors: */
-var(--blue : #007bff);
+  --blue : #007bff;
 }
 
 body {
