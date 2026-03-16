@@ -11,6 +11,7 @@
     </div>
 
     <div id="map"></div>
+    <!-- info-card -->
     <div class="info-card">
       <p>{{ selectedDistrict | json }}</p>
       @if(selectedDistrict()) {
@@ -22,14 +23,9 @@
       <p class="card-label">Click a district</p>
       }
     </div>
-    <div class="legend-card">
-      @for (level of riskLevels; track level.label) {
-      <div class="legend-item">
-        <span class="dot" [style.background]="level.color"></span>
-        <span>{{ level.label }}</span>
-      </div>
-      }
-    </div>
+
+    <!-- map legend -->
+    <map-legend [riskLevels]="riskLevels"/>
 
   </div>
   <div class="side">

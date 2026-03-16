@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import {ExpertHomePageComponent} from './features/home/pages/expert-home/expert-home-page.component';
-import {MapComponent} from './shared/components/map/map.component';
+import {MapComponent} from './features/map/map.component';
 import {NavigationPageComponent} from './features/navigation/pages/navigation/navigation-page.component';
 import { LoginPageComponent } from './features/auth/pages/login/login-page.component';
 import { RegisterPageComponent } from './features/auth/pages/register/register-page.component';
