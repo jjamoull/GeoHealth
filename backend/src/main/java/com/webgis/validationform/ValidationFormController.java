@@ -204,9 +204,9 @@ public class ValidationFormController {
      */
     @GetMapping("/allForm")
     public ResponseEntity<Object> getAllForm(){
-        final List<ValidationForm> ValidationForms = validationFormService.getAllForm();
+        final List<ValidationForm> validationForms = validationFormService.getAllForm();
         final List<ResponseValidationFormDto> responseValidationForms = new ArrayList<>();
-        for(ValidationForm validationForm:ValidationForms){
+        for(ValidationForm validationForm:validationForms){
             responseValidationForms.add(new ResponseValidationFormDto(validationForm));
         }
         return ResponseEntity.status(200).body(responseValidationForms);
@@ -222,9 +222,9 @@ public class ValidationFormController {
     @GetMapping("/allFormForDepartment/{department}")
     public ResponseEntity<Object> getAllFormForDepartment(@PathVariable String department){
 
-        final List<ValidationForm> ValidationForms = validationFormService.getAllFormForDepartment(department);
+        final List<ValidationForm> validationForms = validationFormService.getAllFormForDepartment(department);
         final List<ResponseValidationFormDto> responseValidationForms = new ArrayList<>();
-        for(ValidationForm validationForm:ValidationForms){
+        for(ValidationForm validationForm:validationForms){
             responseValidationForms.add(new ResponseValidationFormDto(validationForm));
         }
         return ResponseEntity.status(200).body(responseValidationForms);

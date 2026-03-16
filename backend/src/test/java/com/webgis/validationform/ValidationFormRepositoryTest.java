@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @DataJpaTest
-public class ValidationFormRepositoryTest {
+class ValidationFormRepositoryTest {
 
     @Autowired
     private ValidationFormRepository validationFormRepository;

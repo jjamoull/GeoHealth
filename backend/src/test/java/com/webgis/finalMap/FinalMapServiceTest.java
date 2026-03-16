@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
-class finalFinalMapServiceTest {
+class FinalMapServiceTest {
 
     @Mock
     FinalMapRepository finalMapRepository;

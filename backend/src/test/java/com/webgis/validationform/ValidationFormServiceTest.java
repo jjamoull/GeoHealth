@@ -11,11 +11,10 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ValidationFormServiceTest {
+class ValidationFormServiceTest {
 
     @Mock
     private ValidationFormRepository validationFormRepository;
@@ -62,13 +61,13 @@ public class ValidationFormServiceTest {
         );
 
         //Assert
-        assertEquals("Mfoundi", validationForm.getDepartment());
-        assertEquals(4, validationForm.getAgreementLevel());
-        assertEquals("medium", validationForm.getPerceivedRisk());
-        assertEquals(3, validationForm.getCertaintyLevel());
-        assertEquals("newComment", validationForm.getComment());
-        assertEquals(user, validationForm.getUser());
-        assertFalse(validationForm.isPublic());
+        assertEquals("Mfoundi", updatedValidationForm.getDepartment());
+        assertEquals(4, updatedValidationForm.getAgreementLevel());
+        assertEquals("medium", updatedValidationForm.getPerceivedRisk());
+        assertEquals(3, updatedValidationForm.getCertaintyLevel());
+        assertEquals("newComment", updatedValidationForm.getComment());
+        assertEquals(user, updatedValidationForm.getUser());
+        assertFalse(updatedValidationForm.isPublic());
 
     }
 
