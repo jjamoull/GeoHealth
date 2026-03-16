@@ -5,12 +5,13 @@ import {LatLngExpression} from 'leaflet';
 import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
 import { RiskFactorMapService } from '../../core/service/MapService/RiskMapService/riskFactorMapService';
 import { RiskFactorMapListDto } from '../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
+import {ButtonComponent} from '../../shared/components/button.component/button.component';
 
 import { MapLegendComponent } from './map-legend/map-legend';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent],
+  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,

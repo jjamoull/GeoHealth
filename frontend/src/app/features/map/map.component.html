@@ -40,6 +40,16 @@
 </div>
 
 <div class="evaluations-section">
+
+  <div class="button-evaluation">
+    @if(selectedDistrict()){
+    <app-button
+      [text]="'Add Evaluation'"
+      [variant]="'success'">
+    </app-button>
+    }
+  </div>
+
   <h2>Evaluations</h2>
 
   <div class="evaluation-item">
