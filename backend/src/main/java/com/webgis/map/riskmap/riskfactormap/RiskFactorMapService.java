@@ -23,11 +23,13 @@ public class RiskFactorMapService {
     private final RiskFactorMapRepository riskFactorMapRepository;
     private final TileService tileService;
 
+    final int TILE_SIZE = 256;
+    final int BLOCK_SIZE = 16;
+
     public RiskFactorMapService (RiskFactorMapRepository riskFactorMapRepository,
                                  TileService tileService ){
         this.riskFactorMapRepository = riskFactorMapRepository;
         this.tileService= tileService;
-
     }
 
 
@@ -105,6 +107,33 @@ public class RiskFactorMapService {
         } catch (IOException e) {
             logger.info("2) Issue with the uploading\n");
         }
+    }
+
+
+    /**
+     * compute means of pixels in tile by blocks of size BLOCK_SIZE,
+     *
+     * @return normalised mean of pixels value (0-1) for each block in a tile
+     * */
+    public float[] computeMean(byte[] tileData){
+        float[] means = new float[TILE_SIZE/BLOCK_SIZE];
+        long sum;
+        int count = BLOCK_SIZE*BLOCK_SIZE;
+
+        //for each block
+        for (int xOffSet = 0; xOffSet < TILE_SIZE; xOffSet=xOffSet+BLOCK_SIZE){
+            for (int yOffSet = 0; yOffSet < TILE_SIZE; yOffSet=yOffSet+BLOCK_SIZE){
+                sum = 0;
+
+                for (int x = 0; x < BLOCK_SIZE; x++){
+                    for (int y = 0; y < BLOCK_SIZE; y++){
+                        sum += tileData[yOffSet*TILE_SIZE + y*TILE_SIZE + xOffSet + x] & 0xFF;
+                    }
+                }
+                means[yOffSet + xOffSet/BLOCK_SIZE] = sum / (float) count*255;
+            }
+        }
+        return means;
     }
 
     /**
