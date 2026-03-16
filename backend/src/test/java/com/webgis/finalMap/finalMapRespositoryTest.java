@@ -18,6 +18,7 @@ class finalMapRespositoryTest {
     @Autowired
     private FinalMapRepository finalMapRepository;
 
+
     private void assertMapEquals(FinalMap actual, FinalMap expected) {
         assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
         assertThat(actual.getDescription()).isEqualTo(expected.getDescription());
