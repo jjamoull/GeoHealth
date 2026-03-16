@@ -25,14 +25,21 @@ export const API_ENDPOINTS = {
       RISKFACTORMAPS: {
         UPLOAD: '/admin/riskFactorMaps/file'
       }
-
     }
   },
   FINALMAPS: {
     ALLMAPS: '/finalMaps/allMaps',
     GET: '/finalMaps'
-    },
+  },
   RISKFACTORMAPS: {
     ALLMAPS: '/riskFactorMaps/allMaps'
+  },
+  VAlIDATIONFORM:{
+    SAVE:"/validationForm/saveForm",
+    UPDATE:"/validationForm/updateForm",
+    GETFORM:"/validationForm/form",
+    GETMYFORMFORADEP:"/validationForm/myForm",
+    GETALLFORM:"/validationForm/allForm",
+    GETALLFORMFORADEP:"/validationForm/allFormForDepartment"
   }
 } as const;
