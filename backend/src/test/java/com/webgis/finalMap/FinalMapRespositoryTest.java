@@ -13,10 +13,11 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class finalMapRespositoryTest {
+class FinalMapRespositoryTest {
 
     @Autowired
     private FinalMapRepository finalMapRepository;
+
 
     private void assertMapEquals(FinalMap actual, FinalMap expected) {
         assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
