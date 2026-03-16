@@ -3,7 +3,7 @@ package com.webgis.validationform.dto;
 import com.webgis.validationform.ValidationForm;
 
 /**
- * Data Transfer Object containing the all validation form information
+ * Data Transfer Object containing all the validation form information
  */
 public record ResponseValidationFormDto(
         long id,

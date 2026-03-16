@@ -42,6 +42,14 @@ public class ValidationFormController {
         this.userService = userService;
     }
 
+    /**
+     * Save a new form
+     *
+     * @param saveFormDto information needed to save a new form
+     * @param request the Http request containing the JWT token
+     *
+     * @return saved form information if it succeeds, error message otherwise
+     */
     @PostMapping("/saveForm")
     public ResponseEntity<Object> saveForm(
             @RequestBody @Valid SaveValidationFormDto saveFormDto,
@@ -80,6 +88,14 @@ public class ValidationFormController {
 
     }
 
+    /**
+     * Update a form
+     *
+     * @param updateValidationFormDto  information of about the form you want to update
+     * @param request the Http request containing the JWT token
+     *
+     * @return updated form information if it succeeds, error message otherwise
+     */
     @PostMapping("/updateForm")
     public ResponseEntity<Object> updateForm(
             @RequestBody @Valid UpdateValidationFormDto updateValidationFormDto,
@@ -125,6 +141,13 @@ public class ValidationFormController {
         }
     }
 
+    /**
+     * Get a form based on its id
+     *
+     * @param id the id of the form you are looking for
+     *
+     * @return the form information if it exists, not found otherwise
+     */
     @GetMapping("/form/{id}")
     public ResponseEntity<Object> getForm(@PathVariable long id){
 
@@ -139,6 +162,14 @@ public class ValidationFormController {
         return ResponseEntity.status(200).body(responseValidationFormDto);
     }
 
+    /**
+     * Get the form from the conncted user for a specific department
+     *
+     * @param department the department you are interested in
+     * @param request the Http request containing the JWT token
+     *
+     * @return the form information if it exists, error message or not found otherwise
+     */
     @GetMapping("/myForm/{department}")
     public ResponseEntity<Object> getConnectUserFormForDepartment(
             @PathVariable String department,
@@ -166,6 +197,11 @@ public class ValidationFormController {
         return ResponseEntity.status(200).body(responseValidationFormDto);
     }
 
+    /**
+     * Get all existing form
+     *
+     * @return the froms information in a list
+     */
     @GetMapping("/allForm")
     public ResponseEntity<Object> getAllForm(){
         final List<ValidationForm> ValidationForms = validationFormService.getAllForm();
@@ -176,6 +212,13 @@ public class ValidationFormController {
         return ResponseEntity.status(200).body(responseValidationForms);
     }
 
+    /**
+     * Get all the form for a specific department
+     *
+     * @param department the department you are interested in
+     *
+     * @return the forms information in a list
+     */
     @GetMapping("/allFormForDepartment/{department}")
     public ResponseEntity<Object> getAllFormForDepartment(@PathVariable String department){
 
