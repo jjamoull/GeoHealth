@@ -98,11 +98,11 @@ public class RiskFactorMapService {
                         final int y = Integer.parseInt(path.getFileName().toString().replace(".png",""));
                         final int x = Integer.parseInt(path.getParent().getFileName().toString());
                         final int zoom = Integer.parseInt(path.getParent().getParent().getFileName().toString());
-
+                        System.out.println("a que coucou 1");
                         float[] floatMeans = computeMean(data);
-
+                        System.out.println("means done");
                         byte[] means = convertToBytes(floatMeans);
-
+                        System.out.println("convert done");
 
                         tileService.save(mapId, zoom, x, y, data, means);
                     } catch (IOException e) {
@@ -122,22 +122,29 @@ public class RiskFactorMapService {
      * @return normalised mean of pixels value (0-1) for each block in a tile
      * */
     private float[] computeMean(byte[] tileData){
-        float[] means = new float[TILE_SIZE/BLOCK_SIZE];
+        System.out.println("1");
+        float[] means = new float[TILE_SIZE];
         long sum;
         int count = BLOCK_SIZE*BLOCK_SIZE;
+        System.out.println("1");
 
         //for each block
         for (int xOffSet = 0; xOffSet < TILE_SIZE; xOffSet=xOffSet+BLOCK_SIZE){
             for (int yOffSet = 0; yOffSet < TILE_SIZE; yOffSet=yOffSet+BLOCK_SIZE){
                 sum = 0;
+                System.out.println("2");
 
                 //for each pixel in this block
                 for (int x = 0; x < BLOCK_SIZE; x++){
                     for (int y = 0; y < BLOCK_SIZE; y++){
+                        System.out.println("3");
+
                         //0xFF to remove the sign
-                        sum += tileData[yOffSet*TILE_SIZE + y*TILE_SIZE + xOffSet + x] & 0xFF;
+                        sum += tileData[yOffSet*x + y*TILE_SIZE + xOffSet + x] & 0xFF;
                     }
                 }
+                System.out.println("4");
+
                 means[yOffSet + xOffSet/BLOCK_SIZE] = sum / (float) count*255;
             }
         }
