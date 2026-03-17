@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -98,7 +99,12 @@ public class RiskFactorMapService {
                         final int x = Integer.parseInt(path.getParent().getFileName().toString());
                         final int zoom = Integer.parseInt(path.getParent().getParent().getFileName().toString());
 
-                        tileService.save(mapId, zoom, x, y, data);
+                        float[] floatMeans = computeMean(data);
+
+                        byte[] means = convertToBytes(floatMeans);
+
+
+                        tileService.save(mapId, zoom, x, y, data, means);
                     } catch (IOException e) {
                         logger.info("1) Issue with the uploading\n");
                     }
@@ -115,7 +121,7 @@ public class RiskFactorMapService {
      *
      * @return normalised mean of pixels value (0-1) for each block in a tile
      * */
-    public float[] computeMean(byte[] tileData){
+    private float[] computeMean(byte[] tileData){
         float[] means = new float[TILE_SIZE/BLOCK_SIZE];
         long sum;
         int count = BLOCK_SIZE*BLOCK_SIZE;
@@ -125,8 +131,10 @@ public class RiskFactorMapService {
             for (int yOffSet = 0; yOffSet < TILE_SIZE; yOffSet=yOffSet+BLOCK_SIZE){
                 sum = 0;
 
+                //for each pixel in this block
                 for (int x = 0; x < BLOCK_SIZE; x++){
                     for (int y = 0; y < BLOCK_SIZE; y++){
+                        //0xFF to remove the sign
                         sum += tileData[yOffSet*TILE_SIZE + y*TILE_SIZE + xOffSet + x] & 0xFF;
                     }
                 }
@@ -134,6 +142,20 @@ public class RiskFactorMapService {
             }
         }
         return means;
+    }
+
+
+    /**
+     * convert float array to byte array
+     *
+     * @return byte array for input
+     * */
+    private byte[] convertToBytes(float[] floatArray){
+        ByteBuffer buffer = ByteBuffer.allocate(TILE_SIZE * 4);
+        for (float f : floatArray) {
+            buffer.putFloat(f);
+        }
+        return buffer.array();
     }
 
     /**
