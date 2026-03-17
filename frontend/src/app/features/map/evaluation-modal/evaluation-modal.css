@@ -1,0 +1,16 @@
+.evaluation-modal {
+  position: absolute;
+  top: 15%;
+  right: 0;
+  width: 30%;
+  height: 58%;
+  background: white;
+  border: 2px solid #e2e6ea;
+  z-index: 1000;
+}
+
+.modal-header {
+  padding: 10px;
+  border-bottom: 2px solid #e2e6ea;
+}
+

@@ -45,7 +45,8 @@
     @if(selectedDistrict()){
     <app-button
       [text]="'Add Evaluation'"
-      [variant]="'success'">
+      [variant]="'success'"
+      (click)="onOpenEvaluation()">
     </app-button>
     }
   </div>
@@ -68,3 +69,10 @@
   </div>
 
 </div>
+
+@if(showEvaluationModal()) {
+<app-evaluation-modal
+  [district]="selectedDistrict()"
+  (close)="onCloseEvaluation()">
+</app-evaluation-modal>
+}

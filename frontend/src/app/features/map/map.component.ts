@@ -6,12 +6,13 @@ import { FinalMapService } from '../../core/service/MapService/FinalMapService/f
 import { RiskFactorMapService } from '../../core/service/MapService/RiskMapService/riskFactorMapService';
 import { RiskFactorMapListDto } from '../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
 import {ButtonComponent} from '../../shared/components/button.component/button.component';
+import { EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
 
 import { MapLegendComponent } from './map-legend/map-legend';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent],
+  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
@@ -28,6 +29,7 @@ export class MapComponent implements AfterViewInit {
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
   riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
+  showEvaluationModal = signal<boolean>(false);
 
   private map: any = null;
   private leaflet: any = null;
@@ -43,6 +45,14 @@ export class MapComponent implements AfterViewInit {
     private riskFactorMapService: RiskFactorMapService,
     private route: ActivatedRoute
     ){}
+
+  onOpenEvaluation(): void {
+    this.showEvaluationModal.set(true);
+  }
+
+  onCloseEvaluation(): void {
+    this.showEvaluationModal.set(false);
+  }
 
   onMapSelected(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;

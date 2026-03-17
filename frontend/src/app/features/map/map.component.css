@@ -81,6 +81,7 @@
   font-size: 20px;
   border-top: 5px solid #e2e6ea;
   border-bottom: 2px solid #e2e6ea;
+  height: 8%;
 }
 
 .description {
@@ -88,6 +89,7 @@
   font-size: 14px;
   line-height: 1.6;
   border-bottom: 2px solid #e2e6ea;
+  height: 8%;
 }
 
 .button-evaluation {
