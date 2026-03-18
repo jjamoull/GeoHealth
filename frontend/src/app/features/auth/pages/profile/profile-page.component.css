@@ -182,8 +182,9 @@
 /*TITLE*/
 
 .profile-title{
+  align-self: flex-start;
   text-align: center;
-  transform: translate(-10%, -170%);
+  transform: translate(-10%, 25%);
   width: 100%;
 }
 .profile-title span{
