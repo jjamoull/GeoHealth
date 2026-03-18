@@ -30,7 +30,6 @@ export class ChangePasswordPageComponent implements OnInit{
    */
   formGroup!: FormGroup;
 
-  isMobile: boolean = false;
 
   public messageSuccess:string|null=null;
 
@@ -45,7 +44,6 @@ export class ChangePasswordPageComponent implements OnInit{
       userData=>this.userReponseDto=userData
 
     )
-    this.isMobile = window.innerWidth <= 768;
 
     this.passwordForm = new FormGroup({
       oldPassword:new FormControl('', [Validators.required, Validators.minLength(8)]),
