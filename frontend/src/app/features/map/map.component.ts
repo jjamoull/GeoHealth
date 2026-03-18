@@ -9,6 +9,8 @@ import {ButtonComponent} from '../../shared/components/button.component/button.c
 import { EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
 
 import { MapLegendComponent } from './map-legend/map-legend';
+import {ResponseValidationFormDto} from '../../shared/models/ValidationFormModel/ResponseValidationFormDto';
+import {ValidationFormService} from '../../core/service/ValidationFormService/validationFormService';
 
 @Component({
   selector: 'app-map',
@@ -30,6 +32,7 @@ export class MapComponent implements AfterViewInit {
   mapDescription = signal<string>('');
   riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
   showEvaluationModal = signal<boolean>(false);
+  existingForm = signal<ResponseValidationFormDto | null>(null);
 
   private map: any = null;
   private leaflet: any = null;
@@ -43,6 +46,7 @@ export class MapComponent implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private mapService: FinalMapService,
     private riskFactorMapService: RiskFactorMapService,
+    private validationFormService: ValidationFormService,
     private route: ActivatedRoute
     ){}
 
@@ -52,6 +56,12 @@ export class MapComponent implements AfterViewInit {
 
   onCloseEvaluation(): void {
     this.showEvaluationModal.set(false);
+    this.existingForm.set(null);
+    this.selectedDepartment.set(null);
+    if (this.marker) {
+      this.marker.remove();
+      this.marker = null;
+    }
   }
 
   onMapSelected(event: Event): void {
@@ -125,6 +135,7 @@ export class MapComponent implements AfterViewInit {
                 this.marker.remove();
                 this.marker = null;
                 this.selectedDepartment.set(null);
+                this.existingForm.set(null);
                 return;
               }
               this.selectedDepartment.set(feature.properties);
@@ -136,6 +147,10 @@ export class MapComponent implements AfterViewInit {
                 fillOpacity: 0.8,
                 pane: 'markerPane',
               }).addTo(this.map);
+              this.validationFormService.getMyFormForADep(feature.properties.NAME_2).subscribe({
+                next: (form) => this.existingForm.set(form),
+                error: () => this.existingForm.set(null)
+              });
             });
           }
         }).addTo(this.map);

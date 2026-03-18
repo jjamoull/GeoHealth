@@ -10,6 +10,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class RatingScalerComponent {
   @Input() name: string = '';
   @Input() options: string[] = [];
+  @Input() value: string = '';
   @Output() valueChange = new EventEmitter<string>();
 
   onSelect(value: string): void {

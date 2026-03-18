@@ -42,9 +42,9 @@
 <div class="evaluations-section">
 
   <div class="button-evaluation">
-    @if(selectedDepartment()){
+    @if(selectedDepartment() && !showEvaluationModal()){
     <app-button
-      [text]="'Add Evaluation'"
+      [text]="existingForm() ? 'Edit Evaluation' : 'Add Evaluation'"
       [variant]="'success'"
       (click)="onOpenEvaluation()">
     </app-button>
@@ -71,8 +71,9 @@
 </div>
 
 @if(showEvaluationModal()) {
-<app-evaluation-modal
-  [department]="selectedDepartment()"
-  (close)="onCloseEvaluation()">
-</app-evaluation-modal>
+  <app-evaluation-modal
+    [department]="selectedDepartment()"
+    [existingForm]="existingForm()"
+    (close)="onCloseEvaluation()">
+  </app-evaluation-modal>
 }

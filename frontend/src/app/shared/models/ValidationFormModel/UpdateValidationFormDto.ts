@@ -1,8 +1,8 @@
 export interface UpdateValidationFormDto{
   id: number,
   agreementLevel: number|null,
-  perceivedRisk: String|null,
-  certaintyLevel: String|null,
-  comment: String|null,
+  perceivedRisk: string|null,
+  certaintyLevel: string|null,
+  comment: string|null,
   isPublic: boolean
 }

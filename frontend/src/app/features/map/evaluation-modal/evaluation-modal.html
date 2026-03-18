@@ -16,6 +16,7 @@
         <app-rating-scaler
           name="agreementLevel"
           [options]="['4', '3', '2', '1']"
+          [value]="agreementLevel?.toString() || ''"
           (valueChange)="agreementLevel = +$event">
         </app-rating-scaler>
       </div>
@@ -25,6 +26,7 @@
         <app-rating-scaler
           name="certaintyLevel"
           [options]="['4', '3', '2', '1']"
+          [value]="certaintyLevel?.toString() || ''"
           (valueChange)="certaintyLevel = +$event">
         </app-rating-scaler>
       </div>
@@ -34,6 +36,7 @@
         <app-rating-scaler
           name="perceivedRisk"
           [options]="['high', 'medium', 'low']"
+          [value]="perceivedRisk?.toString() || ''"
           (valueChange)="perceivedRisk = $event">
         </app-rating-scaler>
       </div>
@@ -48,15 +51,15 @@
 
   <div class="footer">
     <app-button
-      [text]="'Publish'"
+      [text]="existingForm?.isPublic ? 'Unpublish' : 'Publish'"
       [variant]="'success'"
-      (click)="onSave(true)">
+      (click)="onSave(!existingForm?.isPublic)">
     </app-button>
 
     <app-button
-      [text]="'Save'"
+      [text]="existingForm !== null ? 'Save changes' : 'Save'"
       [variant]="'success'"
-      (click)="onSave(false)">
+      (click)="onSave(existingForm?.isPublic || false)">
     </app-button>
   </div>
 </div>

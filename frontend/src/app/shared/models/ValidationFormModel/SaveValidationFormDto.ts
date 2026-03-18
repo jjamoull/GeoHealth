@@ -1,8 +1,8 @@
 export interface SaveValidationFormDto{
-  department: String,
+  department: string,
   agreementLevel: number|null,
-  perceivedRisk:  String|null,
+  perceivedRisk:  string|null,
   certaintyLevel: number|null,
-  comment: String|null,
+  comment: string|null,
   isPublic: boolean
 }
