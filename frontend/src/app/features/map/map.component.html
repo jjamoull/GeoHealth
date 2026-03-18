@@ -3,7 +3,7 @@
 
     <div class="map-selector">
       <select (change)="onMapSelected($event)">
-        <option value="">Districts only</option>
+        <option value="">Departments only</option>
         @for (map of riskFactorMaps(); track map.id) {
         <option [value]="map.id">{{ map.title }}</option>
         }
@@ -13,14 +13,14 @@
     <div id="map"></div>
     <!-- info-card -->
     <div class="info-card">
-      <p>{{ selectedDistrict | json }}</p>
-      @if(selectedDistrict()) {
-      <p>Type: {{selectedDistrict().ENGTYPE_2}}</p>
-      <p>Region: {{selectedDistrict().NAME_1}}</p>
-      <p>Name: {{selectedDistrict().NAME_2}}</p>
-      <p>Risk: {{selectedDistrict().Risk_categ}}</p>
+      <p>{{ selectedDepartment | json }}</p>
+      @if(selectedDepartment()) {
+      <p>Type: {{selectedDepartment().ENGTYPE_2}}</p>
+      <p>Region: {{selectedDepartment().NAME_1}}</p>
+      <p>Name: {{selectedDepartment().NAME_2}}</p>
+      <p>Risk: {{selectedDepartment().Risk_categ}}</p>
       } @else {
-      <p class="card-label">Click a district</p>
+      <p class="card-label">Click a Department</p>
       }
     </div>
 
@@ -42,7 +42,7 @@
 <div class="evaluations-section">
 
   <div class="button-evaluation">
-    @if(selectedDistrict()){
+    @if(selectedDepartment()){
     <app-button
       [text]="'Add Evaluation'"
       [variant]="'success'"
@@ -72,7 +72,7 @@
 
 @if(showEvaluationModal()) {
 <app-evaluation-modal
-  [district]="selectedDistrict()"
+  [department]="selectedDepartment()"
   (close)="onCloseEvaluation()">
 </app-evaluation-modal>
 }

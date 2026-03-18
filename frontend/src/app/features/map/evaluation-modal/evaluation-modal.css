@@ -3,7 +3,7 @@
   top: 17%;
   right: 0;
   width: 30%;
-  height: 58%;
+  max-height: 58%;
   background: white;
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -54,8 +54,9 @@
   }
 }
 
-.modal-content{
-  padding:16px;
+.modal-content {
+  padding: 16px;
+  overflow-y: auto;
 }
 
 .item {
@@ -65,16 +66,26 @@
   gap: 5px;
 }
 
-.item label {
+.item > label {
   font-weight: 600;
   font-size: 14px;
 }
 
-.item input {
+.item input[type="text"] {
   padding: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
   border-radius: 4px;
+}
+
+.item textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  border-radius: 4px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
 }
 
 .footer {
@@ -89,4 +100,10 @@
 
 .footer app-button {
   flex-shrink: 0;
+}
+
+input[readonly] {
+  background-color: #f0f0f0;
+  color: #666;
+  cursor: not-allowed;
 }

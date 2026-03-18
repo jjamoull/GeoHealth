@@ -24,7 +24,7 @@ export class MapComponent implements AfterViewInit {
     {label: 'Medium', color: '#f39c12'},
     {label: 'High', color: '#e74c3c'}];
 
-  selectedDistrict = signal<any>(null);
+  selectedDepartment = signal<any>(null);
   marker: any = null;
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
@@ -121,13 +121,13 @@ export class MapComponent implements AfterViewInit {
             layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
             layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
             layer.on('click', (e: any) => {
-              if (this.selectedDistrict() === feature.properties) {
+              if (this.selectedDepartment() === feature.properties) {
                 this.marker.remove();
                 this.marker = null;
-                this.selectedDistrict.set(null);
+                this.selectedDepartment.set(null);
                 return;
               }
-              this.selectedDistrict.set(feature.properties);
+              this.selectedDepartment.set(feature.properties);
               if (this.marker) this.marker.remove();
               this.marker = this.leaflet.circleMarker(e.latlng, {
                 radius: 5,

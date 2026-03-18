@@ -7,24 +7,56 @@
   <div class="modal-content">
     <form id="evaluation-form">
       <div class="item">
-        <label>Test 1</label>
-        <input type="text" placeholder="Enter test 1 result">
+        <label>Department</label>
+        <input type="text" [value]="department?.NAME_2" readonly>
       </div>
+
       <div class="item">
-        <label>Test 1</label>
-        <input type="text" placeholder="Enter test 1 result">
+        <label>Risk assessment (1-4)</label>
+        <app-rating-scaler
+          name="agreementLevel"
+          [options]="['4', '3', '2', '1']"
+          (valueChange)="agreementLevel = +$event">
+        </app-rating-scaler>
       </div>
+
       <div class="item">
-        <label>Test 1</label>
-        <input type="text" placeholder="Enter test 1 result">
+        <label>Certainty (1-4)</label>
+        <app-rating-scaler
+          name="certaintyLevel"
+          [options]="['4', '3', '2', '1']"
+          (valueChange)="certaintyLevel = +$event">
+        </app-rating-scaler>
       </div>
+
+      <div class="item">
+        <label>Perceived risk (low-high)</label>
+        <app-rating-scaler
+          name="perceivedRisk"
+          [options]="['high', 'medium', 'low']"
+          (valueChange)="perceivedRisk = $event">
+        </app-rating-scaler>
+      </div>
+
+      <div class="item">
+        <label>Comment</label>
+        <textarea placeholder="Enter your comment..." [(ngModel)]="comment" name="comment"></textarea>
+      </div>
+
     </form>
   </div>
 
   <div class="footer">
     <app-button
-      [text]="'Add Evaluation'"
-      [variant]="'success'">
+      [text]="'Publish'"
+      [variant]="'success'"
+      (click)="onSave(true)">
+    </app-button>
+
+    <app-button
+      [text]="'Save'"
+      [variant]="'success'"
+      (click)="onSave(false)">
     </app-button>
   </div>
 </div>
