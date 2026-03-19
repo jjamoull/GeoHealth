@@ -9,4 +9,5 @@ public record SaveValidationFormDto(
     String perceivedRisk,
     Integer certaintyLevel,
     String comment,
+    long finalMapId,
     boolean isPublic){}

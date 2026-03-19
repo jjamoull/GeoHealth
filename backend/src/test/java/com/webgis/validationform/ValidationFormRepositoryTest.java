@@ -1,5 +1,7 @@
 package com.webgis.validationform;
 
+import com.webgis.map.finalmap.FinalMap;
+import com.webgis.map.finalmap.FinalMapRepository;
 import com.webgis.user.User;
 import com.webgis.user.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,9 @@ class ValidationFormRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private FinalMapRepository finalMapRepository;
+
     private void assertValidationFormEquals(ValidationForm actual, ValidationForm expected) {
         assertThat(actual.getDepartment()).isEqualTo(expected.getDepartment());
         assertThat(actual.getAgreementLevel()).isEqualTo(expected.getAgreementLevel());
@@ -28,6 +33,7 @@ class ValidationFormRepositoryTest {
         assertThat(actual.getCertaintyLevel()).isEqualTo(expected.getCertaintyLevel());
         assertThat(actual.getComment()).isEqualTo(expected.getComment());
         assertThat(actual.getUser()).isEqualTo(expected.getUser());
+        assertThat(actual.getFinalMap()).isEqualTo(expected.getFinalMap());
         assertThat(actual.isPublic()).isEqualTo(expected.isPublic());
     }
 
@@ -43,6 +49,13 @@ class ValidationFormRepositoryTest {
                 "Admin"
         );
 
+        byte[] dataZip ={66};
+        FinalMap finalMap = new FinalMap(
+                "title",
+                "risk map",
+                dataZip,
+                "file");
+
         ValidationForm validationForm=new ValidationForm(
                 "Wouri",
                 2,
@@ -50,11 +63,13 @@ class ValidationFormRepositoryTest {
                 4,
                 "comment",
                 user,
+                finalMap,
                 true
         );
 
         //Act
         userRepository.save(user);
+        finalMapRepository.save(finalMap);
         validationFormRepository.save(validationForm);
         Optional<ValidationForm> found= validationFormRepository.findById(validationForm.getId());
 
@@ -64,7 +79,7 @@ class ValidationFormRepositoryTest {
     }
 
     @Test
-    void saveAndFindByUserAndByDepartmentTest(){
+    void saveAndFindByUserAndByDepartmentAndFinalMapTest(){
         // Arrange
         User user1 = new User(
                 "pseudo",
@@ -84,6 +99,20 @@ class ValidationFormRepositoryTest {
                 "User"
         );
 
+        byte[] dataZip1 ={66};
+        FinalMap finalMap1 = new FinalMap(
+                "title",
+                "risk map",
+                dataZip1,
+                "file");
+
+        byte[] dataZip2 ={90};
+        FinalMap finalMap2 = new FinalMap(
+                "title",
+                "risk map",
+                dataZip2,
+                "file");
+
 
         ValidationForm validationForm1=new ValidationForm(
                 "Wouri",
@@ -92,6 +121,7 @@ class ValidationFormRepositoryTest {
                 4,
                 "comment",
                 user1,
+                finalMap1,
                 true
         );
 
@@ -102,15 +132,20 @@ class ValidationFormRepositoryTest {
                 4,
                 "comment",
                 user2,
+                finalMap2,
                 false
         );
 
         //Act
         userRepository.save(user1);
         userRepository.save(user2);
+
+        finalMapRepository.save(finalMap1);
+        finalMapRepository.save(finalMap2);
+
         validationFormRepository.save(validationForm1);
         validationFormRepository.save(validationForm2);
-        Optional<ValidationForm> found= validationFormRepository.findByUserAndDepartment(user1,"Wouri");
+        Optional<ValidationForm> found= validationFormRepository.findByUserAndDepartmentAndFinalMap(user1,"Wouri",finalMap1);
 
         //Assert
         assertThat(found).isPresent();
@@ -119,7 +154,7 @@ class ValidationFormRepositoryTest {
     }
 
     @Test
-    void findByDepartmentMutipleFormTest(){
+    void findByDepartmentAndFinalMapMutipleFormTest(){
         //Arrange
         User user1 = new User(
                 "pseudo",
@@ -139,6 +174,13 @@ class ValidationFormRepositoryTest {
                 "User"
         );
 
+        byte[] dataZip ={66};
+        FinalMap finalMap = new FinalMap(
+                "title",
+                "risk map",
+                dataZip,
+                "file");
+
 
         ValidationForm validationForm1=new ValidationForm(
                 "Wouri",
@@ -147,6 +189,7 @@ class ValidationFormRepositoryTest {
                 4,
                 "comment",
                 user1,
+                finalMap,
                 true
         );
 
@@ -157,15 +200,19 @@ class ValidationFormRepositoryTest {
                 4,
                 "comment",
                 user2,
+                finalMap,
                 false
         );
 
         //Act
         userRepository.save(user1);
         userRepository.save(user2);
+
+        finalMapRepository.save(finalMap);
+
         validationFormRepository.save(validationForm1);
         validationFormRepository.save(validationForm2);
-        List<ValidationForm> found= validationFormRepository.findByDepartment("Wouri");
+        List<ValidationForm> found= validationFormRepository.findByDepartmentAndFinalMap("Wouri",finalMap);
 
         //Assert
         assertThat(found).hasSize(2);
@@ -175,7 +222,7 @@ class ValidationFormRepositoryTest {
     }
 
     @Test
-    void existsByUserAndDepartmentNotExistTest(){
+    void existsByUserAndDepartmentAndFinalMapNotExistTest(){
 
         // Arrange
         User user = new User(
@@ -187,6 +234,13 @@ class ValidationFormRepositoryTest {
                 "Admin"
         );
 
+        byte[] dataZip ={66};
+        FinalMap finalMap = new FinalMap(
+                "title",
+                "risk map",
+                dataZip,
+                "file");
+
         ValidationForm validationForm=new ValidationForm(
                 "Wouri",
                 2,
@@ -194,13 +248,17 @@ class ValidationFormRepositoryTest {
                 4,
                 "comment",
                 user,
+                finalMap,
                 true
         );
 
         //Act
         userRepository.save(user);
+
+        finalMapRepository.save(finalMap);
+
         validationFormRepository.save(validationForm);
-        boolean exist= validationFormRepository.existsByUserAndDepartment(user,"Mfoundi");
+        boolean exist= validationFormRepository.existsByUserAndDepartmentAndFinalMap(user,"Mfoundi",finalMap);
 
         //Assert
         assertFalse(exist);

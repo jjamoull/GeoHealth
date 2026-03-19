@@ -1,5 +1,6 @@
 package com.webgis.validationform;
 
+import com.webgis.map.finalmap.FinalMap;
 import com.webgis.user.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +35,13 @@ class ValidationFormServiceTest {
                 "Admin"
         );
 
+        byte[] dataZip ={66};
+        FinalMap finalMap = new FinalMap(
+                "title",
+                "risk map",
+                dataZip,
+                "file");
+
         ValidationForm validationForm= new ValidationForm(
                 "Wouri",
                 2,
@@ -41,6 +49,7 @@ class ValidationFormServiceTest {
                 4,
                 "comment",
                 user,
+                finalMap,
                 true
         );
         validationForm.setId(1);
@@ -57,6 +66,7 @@ class ValidationFormServiceTest {
                 3,
                 "newComment",
                 user,
+                finalMap,
                 false
         );
 
@@ -67,6 +77,7 @@ class ValidationFormServiceTest {
         assertEquals(3, updatedValidationForm.getCertaintyLevel());
         assertEquals("newComment", updatedValidationForm.getComment());
         assertEquals(user, updatedValidationForm.getUser());
+        assertEquals(finalMap, updatedValidationForm.getFinalMap());
         assertFalse(updatedValidationForm.isPublic());
 
     }

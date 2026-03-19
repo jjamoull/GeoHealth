@@ -1,5 +1,6 @@
 package com.webgis.validationform;
 
+import com.webgis.map.finalmap.FinalMap;
 import com.webgis.user.User;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class ValidationFormService{
      * @param certaintyLevel the certainty level of the expert on its own evaluation (1-4)
      * @param comment any comment of the expert
      * @param user the expert that produce the form
+     * @param finalMap the map for which the validation form is made
      * @param isPublic whether the form should be public for other experts or not
      *
      * @return the newly saved validationForm
@@ -35,6 +37,7 @@ public class ValidationFormService{
             Integer certaintyLevel,
             String comment,
             User user,
+            FinalMap finalMap,
             boolean isPublic){
 
         final ValidationForm form = new ValidationForm(
@@ -44,6 +47,7 @@ public class ValidationFormService{
                 certaintyLevel,
                 comment,
                 user,
+                finalMap,
                 isPublic);
 
         return validationFormRepository.save(form);
@@ -68,6 +72,7 @@ public class ValidationFormService{
      * @param certaintyLevel the new certainty level for the form
      * @param comment the new comment for the form
      * @param user the new user for the form
+     * @param finalMap the new map to which the form is attached
      * @param isPublic whether the form should be public for other experts or not
      *
      * @throws IllegalArgumentException if there is no form with the specify id
@@ -82,6 +87,7 @@ public class ValidationFormService{
             Integer certaintyLevel,
             String comment,
             User user,
+            FinalMap finalMap,
             boolean isPublic){
 
             final Optional<ValidationForm> optionalForm =findFormById(id);
@@ -97,52 +103,59 @@ public class ValidationFormService{
             form.setCertaintyLevel(certaintyLevel);
             form.setComment(comment);
             form.setUser(user);
+            form.setFinalMap(finalMap);
             form.setIsPublic(isPublic);
 
             return validationFormRepository.save(form);
     }
 
     /**
-     * Get all form
+     * Get all form for a map
      *
-     * @return A list of all form
+     * @param finalMap the map from which you want the validation forms
+     *
+     * @return A list of all form linked to a specific map
      */
-    public List<ValidationForm> getAllForm(){
-        return validationFormRepository.findAll();
+    public List<ValidationForm> getAllFormForFinalMap(FinalMap finalMap){
+        return validationFormRepository.findByFinalMap(finalMap);
     }
 
     /**
-     * Get all the form concerning a specific department
+     * Get all the form concerning a specific department for a map
      *
      * @param department the department you are interested in
+     * @param finalMap the map from which you want the validation forms
      *
-     * @return a list of all the forms for this department
+     * @return a list of all the forms for a department linked to a specific map
      */
-    public List<ValidationForm> getAllFormForDepartment(String department){
-        return validationFormRepository.findByDepartment(department);
+    public List<ValidationForm> getAllFormForDepartmentAndFinalMap(String department,FinalMap finalMap){
+        return validationFormRepository.findByDepartmentAndFinalMap(department,finalMap);
     }
 
     /**
-     * Get a form for a specific user and a specific department
+     * Get a form for a specific user and a specific department for a specific map
      *
      * @param user the user you are interested in
      * @param department the department you are interested in
+     * @param finalMap the map from which you want the validation forms
      *
-     * @return the form of the specify user for the specify department if it exists, empty otherwise
+     * @return the form of the specify user for the specify department for a specific map if it exists, empty otherwise
      */
-    public Optional<ValidationForm> getFormForUserAndDepartment(User user,String department){
-        return validationFormRepository.findByUserAndDepartment(user,department);
+    public Optional<ValidationForm> getFormForUserAndDepartmentAndFinalMap(User user, String department,FinalMap finalMap){
+        return validationFormRepository.findByUserAndDepartmentAndFinalMap(user,department,finalMap);
     }
 
     /**
-     * Check whether a user has a validation form for a department
+     * Check whether a user has a validation form for a department for a specific map
+     *
      * @param user the user you want to check
      * @param department the department you want to check
+     * @param finalMap the map from which you want the validation form
      *
-     * @return True if the specify user has already a form for the specify department, False otherwise
+     * @return True if the specify user has already a form for the specific department for a specific map , False otherwise
      */
-    public boolean hasAlreadyAFormForDepartment(User user,String department){
-        return validationFormRepository.existsByUserAndDepartment(user,department);
+    public boolean hasAlreadyAFormForDepartmentForFinalMap(User user,String department,FinalMap finalMap){
+        return validationFormRepository.existsByUserAndDepartmentAndFinalMap(user,department,finalMap);
     }
 
 }
