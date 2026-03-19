@@ -11,11 +11,10 @@ import {MatExpansionPanel, MatExpansionPanelHeader} from '@angular/material/expa
   styleUrl: './validation-comment.css',
 })
 export class ValidationComment {
-  @Input() username: string="Jajmoulle";
-  @Input() department: string="Mbfébé";
-  @Input() agreementLevel:number|null=3;
-  @Input() perceivedRisk:string|null="low";
-  @Input() certaintyLevel: number|null=2;
-  @Input() comment: string|null="commenLe lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu'il est prêt ou que la mise en page est achevée.commenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans signcommenLe lorem ipsum est, en imprimerie, une suite de mots sans sign";
-
+  @Input() username: string="";
+  @Input() department: string="";
+  @Input() agreementLevel:number|null=0;
+  @Input() perceivedRisk:string|null="";
+  @Input() certaintyLevel: number|null=0;
+  @Input() comment: string|null="";
 }
