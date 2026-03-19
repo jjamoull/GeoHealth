@@ -131,17 +131,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   background: rgba(0, 0, 0, 0.5);
   z-index: 9999;
 }
-
-
-
 .menu-toggle {
   position: absolute;
   width: 30px;
@@ -170,10 +165,9 @@
   position: absolute;
   width: 30px;
   height: 30px;
-  background: #90ee90;;
+  background: #90ee90;
   border-radius: 70px;
   z-index: -1;
-  /*overflow: hidden;*/
   transition: transform 0.5s, width 0.5s, height 0.5s;
   transition-delay: 1s, 0.5s, 0.5s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -191,7 +185,7 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  background: #90ee90;;
+  background: #90ee90;
   left: calc(50% - 8px);
   bottom: 4px;
   transform: rotate(45deg);
@@ -232,8 +226,4 @@
   align-items: center;
   width: 70px;
   height: 70px;
-}
-.avatar-list ul li img:hover {
-  color: #ff216d !important;
-  cursor: pointer;
 }

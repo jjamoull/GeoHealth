@@ -8,15 +8,15 @@
     <div class="container">
       <div class="card">
         <div class="profile-picture">
-        <img src="assets/icons/user.png" alt="Person" class="card__image">
-        <div class="menu-toggle" [class.active]="profilPictureUpdate" (click)="toggleMenu()"></div>
+        <img [src]=selectedAvatar alt="Person" class="card__image">
+        <div class="menu-toggle" [class.active]="profilePictureUpdate" (click)="toggleMenu()"></div>
 
-          <div class="avatar-list" [class.active]="profilPictureUpdate">
+          <div class="avatar-list" [class.active]="profilePictureUpdate">
             <ul>
-              <li style="--i:0s"><img src="assets/icons/avatar1.png" class="avatar" onclick="selectAvatar('assets/icons/avatar1.png')"></li>
-              <li style="--i:0s"><img src="assets/icons/avatar2.png" class="avatar" onclick="selectAvatar('assets/icons/avatar2.png')"></li>
-              <li style="--i:0s"><img src="assets/icons/avatar3.png" class="avatar" onclick="selectAvatar('assets/icons/avatar3.png')"></li>
-              <li style="--i:0s"><img src="assets/icons/avatar4.png" class="avatar" onclick="selectAvatar('assets/icons/avatar4.png')"></li>
+              <li style="--i:0s"><img src="assets/icons/avatar1.png" class="avatar" (click)="selectAvatar('assets/icons/avatar1.png')"></li>
+              <li style="--i:0s"><img src="assets/icons/avatar2.png" class="avatar" (click)="selectAvatar('assets/icons/avatar2.png')"></li>
+              <li style="--i:0s"><img src="assets/icons/avatar3.png" class="avatar" (click)="selectAvatar('assets/icons/avatar3.png')"></li>
+              <li style="--i:0s"><img src="assets/icons/avatar4.png" class="avatar" (click)="selectAvatar('assets/icons/avatar4.png')"></li>
             </ul>
           </div>
         </div>
