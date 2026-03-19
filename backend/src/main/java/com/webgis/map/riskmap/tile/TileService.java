@@ -4,6 +4,8 @@ import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
 import com.webgis.map.riskmap.riskfactormap.RiskFactorMapRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TileService {
     private final TileRepository tileRepository;
@@ -33,5 +35,9 @@ public class TileService {
         final Tile tileToStore = new Tile(tileId, data, means, riskFactorMap);
 
         return tileRepository.save(tileToStore);
+    }
+
+    public Optional<Tile> findById(TileId tileId) {
+        return tileRepository.findById(tileId);
     }
 }
