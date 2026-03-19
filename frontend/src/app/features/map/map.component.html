@@ -53,24 +53,24 @@
     }
   </div>
 
+
+  <div class="validation-forms">
   <h2>Validations</h2>
-
-  <div class="validation-item">
-    <p class="eval-title">Validation1</p>
-    <p class="eval-author">name1</p>
+  @for(form of allValidationForms(); track form){
+    @if(form.department==selectedDepartment().NAME_2 && form.isPublic){
+      <app-validation-comment
+        [username]= "form.username"
+        [department]="form.department"
+        [agreementLevel]="form.agreementLevel"
+        [perceivedRisk]="form.perceivedRisk"
+        [certaintyLevel]="form.certaintyLevel"
+        [comment]="form.comment">
+      </app-validation-comment>
+    }
+  }
   </div>
-
-  <div class="validation-item">
-    <p class="eval-title">Validation2</p>
-    <p class="eval-author">name2</p>
-  </div>
-
-  <div class="validation-item">
-    <p class="eval-title">Validation3</p>
-    <p class="eval-author">name3</p>
-  </div>
-
 </div>
+
 
 @if(showValidationModal()) {
   <app-validation-modal

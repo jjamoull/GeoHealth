@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, Inject, PLATFORM_ID, signal} from '@angular/core';
+import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, OnInit} from '@angular/core';
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
@@ -11,15 +11,16 @@ import { ValidationModalComponent } from './validation-modal/validation-modal';
 import { MapLegendComponent } from './map-legend/map-legend';
 import {ResponseValidationFormDto} from '../../shared/models/ValidationFormModel/ResponseValidationFormDto';
 import {ValidationFormService} from '../../core/service/ValidationFormService/validationFormService';
+import {ValidationComment} from './validation-comment/validation-comment';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, ValidationModalComponent],
+  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, ValidationModalComponent, ValidationComment],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements  OnInit, AfterViewInit {
 
   riskLevels = [
     {label: 'Low', color: '#2ecc71'},
@@ -33,6 +34,7 @@ export class MapComponent implements AfterViewInit {
   riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
   showValidationModal = signal<boolean>(false);
   existingForm = signal<ResponseValidationFormDto | null>(null);
+  allValidationForms= signal<ResponseValidationFormDto[]>([]);
 
   private map: any = null;
   private leaflet: any = null;
@@ -84,6 +86,10 @@ export class MapComponent implements AfterViewInit {
     ).addTo(this.map);
   }
 
+
+  ngOnInit() {
+  }
+
 /**
 * Display the map OSM thanks to Leaflet on Cameron
 */
@@ -98,6 +104,15 @@ export class MapComponent implements AfterViewInit {
             console.error('Failed to load risk factor maps', err);
           }
     });
+
+  this.validationFormService.getAllForm().subscribe({
+    next: (validationForms:ResponseValidationFormDto[])=>{
+      this.allValidationForms.set(validationForms);
+    },
+    error: (err)=>{
+      console.error('Failed to load validation forms', err);
+    }
+  })
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
 

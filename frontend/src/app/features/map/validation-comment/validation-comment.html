@@ -1,0 +1,40 @@
+<mat-expansion-panel class="comment-card">
+
+  <mat-expansion-panel-header>
+    <div class="header">
+      <div class="user">
+        {{ username }}
+      </div>
+
+      <div class="meta">
+        {{ department }}
+      </div>
+    </div>
+  </mat-expansion-panel-header>
+
+  <div class="content">
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="label">Agreement Level</span>
+        <span class="value">{{ agreementLevel }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Perceived Risk</span>
+        <span class="value">{{ perceivedRisk }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Certainty Level</span>
+        <span class="value">{{ certaintyLevel }}</span>
+      </div>
+    </div>
+
+    <p class="comment">
+      {{ comment }}
+    </p>
+
+  </div>
+
+</mat-expansion-panel>
