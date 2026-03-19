@@ -4,7 +4,7 @@
            [name]="name"
            [id]="name + '_' + i"
            [checked]="option === value"
-           (change)="onSelect(option)" />
+           (click)="onSelect(option)" />
     <label [for]="name + '_' + i">{{ option }}</label>
   }
 </div>

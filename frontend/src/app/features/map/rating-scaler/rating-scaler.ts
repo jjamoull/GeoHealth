@@ -13,7 +13,13 @@ export class RatingScalerComponent {
   @Input() value: string = '';
   @Output() valueChange = new EventEmitter<string>();
 
-  onSelect(value: string): void {
-    this.valueChange.emit(value);
+  onSelect(option: string): void {
+    if (this.value === option) {
+      this.value = '';
+      this.valueChange.emit('');
+    } else {
+      this.value = option;
+      this.valueChange.emit(option);
+    }
   }
 }

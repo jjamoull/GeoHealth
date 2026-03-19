@@ -25,12 +25,14 @@ export class EvaluationModalComponent implements OnChanges {
   certaintyLevel: number | null = null;
   perceivedRisk: string | null = null;
   comment: string | null = null;
+  isPublic: boolean = false;
 
   ngOnChanges(): void {
     this.agreementLevel = this.existingForm?.agreementLevel || null;
     this.certaintyLevel = this.existingForm?.certaintyLevel || null;
     this.perceivedRisk = this.existingForm?.perceivedRisk || null;
     this.comment = this.existingForm?.comment || null;
+    this.isPublic = this.existingForm?.isPublic || false;
   }
 
   constructor(private validationFormService: ValidationFormService) {}
