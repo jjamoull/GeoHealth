@@ -1,11 +1,11 @@
-<div cdkDrag class="evaluation-modal">
+<div cdkDrag class="validation-modal">
   <div class="modal-header" cdkDragHandle>
-    <h2>Evaluation for a district</h2>
+    <h2>Validation for a district</h2>
     <button class="close-btn" (click)="onClose()">×</button>
   </div>
 
   <div class="modal-content">
-    <form id="evaluation-form">
+    <form id="validation-form">
       <div class="item">
         <label>Department</label>
         <input type="text" [value]="department?.NAME_2" readonly>
@@ -51,13 +51,10 @@
         </app-rating-scaler>
       </div>
 
-
-
       <div class="item">
         <label>Comment</label>
         <textarea placeholder="Enter your comment..." [(ngModel)]="comment" name="comment"></textarea>
       </div>
-
     </form>
   </div>
 
@@ -69,4 +66,3 @@
     </app-button>
   </div>
 </div>
-

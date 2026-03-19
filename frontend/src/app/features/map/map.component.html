@@ -5,26 +5,29 @@
       <select (change)="onMapSelected($event)">
         <option value="">Departments only</option>
         @for (map of riskFactorMaps(); track map.id) {
-        <option [value]="map.id">{{ map.title }}</option>
+          <option [value]="map.id">{{ map.title }}</option>
         }
       </select>
     </div>
 
     <div id="map"></div>
-    <!-- info-card -->
+
     <div class="info-card">
       <p>{{ selectedDepartment | json }}</p>
       @if(selectedDepartment()) {
-      <p>Type: {{selectedDepartment().ENGTYPE_2}}</p>
-      <p>Region: {{selectedDepartment().NAME_1}}</p>
-      <p>Name: {{selectedDepartment().NAME_2}}</p>
-      <p>Risk: {{selectedDepartment().Risk_categ}}</p>
+        <p>Type: {{selectedDepartment().ENGTYPE_2}}</p>
+        <p>Region: {{selectedDepartment().NAME_1}}</p>
+        <p>Name: {{selectedDepartment().NAME_2}}</p>
+        <p class="risk-row">
+          Risk:
+          <span class="dot" [style.background]="getRiskColor(selectedDepartment().Risk_categ)"></span>
+          {{selectedDepartment().Risk_categ}}
+        </p>
       } @else {
-      <p class="card-label">Click a Department</p>
+        <p class="card-label">Click a Department</p>
       }
     </div>
 
-    <!-- map legend -->
     <map-legend [riskLevels]="riskLevels"/>
 
   </div>
@@ -35,45 +38,44 @@
     <div class="description">
       <p>{{mapDescription() }}</p>
     </div>
-    <!--future measures-->
   </div>
 </div>
 
-<div class="evaluations-section">
+<div class="validations-section">
 
-  <div class="button-evaluation">
-    @if(selectedDepartment() && !showEvaluationModal()){
-    <app-button
-      [text]="existingForm() ? 'Edit Evaluation' : 'Add Evaluation'"
-      [variant]="'success'"
-      (click)="onOpenEvaluation()">
-    </app-button>
+  <div class="button-validation">
+    @if(selectedDepartment() && !showValidationModal()){
+      <app-button
+        [text]="existingForm() ? 'Edit Validation' : 'Add Validation'"
+        [variant]="'success'"
+        (click)="onOpenValidation()">
+      </app-button>
     }
   </div>
 
-  <h2>Evaluations</h2>
+  <h2>Validations</h2>
 
-  <div class="evaluation-item">
-    <p class="eval-title">Evaluation1</p>
+  <div class="validation-item">
+    <p class="eval-title">Validation1</p>
     <p class="eval-author">name1</p>
   </div>
 
-  <div class="evaluation-item">
-    <p class="eval-title">Evaluation2</p>
+  <div class="validation-item">
+    <p class="eval-title">Validation2</p>
     <p class="eval-author">name2</p>
   </div>
 
-  <div class="evaluation-item">
-    <p class="eval-title">Evaluation3</p>
+  <div class="validation-item">
+    <p class="eval-title">Validation3</p>
     <p class="eval-author">name3</p>
   </div>
 
 </div>
 
-@if(showEvaluationModal()) {
-  <app-evaluation-modal
+@if(showValidationModal()) {
+  <app-validation-modal
     [department]="selectedDepartment()"
     [existingForm]="existingForm()"
-    (close)="onCloseEvaluation()">
-  </app-evaluation-modal>
+    (close)="onCloseValidation()">
+  </app-validation-modal>
 }

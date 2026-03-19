@@ -6,7 +6,7 @@ import { FinalMapService } from '../../core/service/MapService/FinalMapService/f
 import { RiskFactorMapService } from '../../core/service/MapService/RiskMapService/riskFactorMapService';
 import { RiskFactorMapListDto } from '../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
 import {ButtonComponent} from '../../shared/components/button.component/button.component';
-import { EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
+import { ValidationModalComponent } from './validation-modal/validation-modal';
 
 import { MapLegendComponent } from './map-legend/map-legend';
 import {ResponseValidationFormDto} from '../../shared/models/ValidationFormModel/ResponseValidationFormDto';
@@ -14,7 +14,7 @@ import {ValidationFormService} from '../../core/service/ValidationFormService/va
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent],
+  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, ValidationModalComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
@@ -31,7 +31,7 @@ export class MapComponent implements AfterViewInit {
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
   riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
-  showEvaluationModal = signal<boolean>(false);
+  showValidationModal = signal<boolean>(false);
   existingForm = signal<ResponseValidationFormDto | null>(null);
 
   private map: any = null;
@@ -50,12 +50,12 @@ export class MapComponent implements AfterViewInit {
     private route: ActivatedRoute
     ){}
 
-  onOpenEvaluation(): void {
-    this.showEvaluationModal.set(true);
+  onOpenValidation(): void {
+    this.showValidationModal.set(true);
   }
 
-  onCloseEvaluation(): void {
-    this.showEvaluationModal.set(false);
+  onCloseValidation(): void {
+    this.showValidationModal.set(false);
     this.existingForm.set(null);
     this.selectedDepartment.set(null);
     if (this.marker) {
@@ -161,7 +161,7 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
-  private getRiskColor(riskClass: string): string {
+  public getRiskColor(riskClass: string): string {
     for (const level of this.riskLevels) {
       if (level.label === riskClass){
         return level.color;

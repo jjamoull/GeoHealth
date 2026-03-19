@@ -10,13 +10,13 @@ import {ResponseValidationFormDto} from '../../../shared/models/ValidationFormMo
 import { UpdateValidationFormDto } from '../../../shared/models/ValidationFormModel/UpdateValidationFormDto';
 
 @Component({
-  selector: 'app-evaluation-modal',
+  selector: 'app-validation-modal',
   standalone: true,
   imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent],
-  templateUrl: './evaluation-modal.html',
-  styleUrl: './evaluation-modal.css',
+  templateUrl: './validation-modal.html',
+  styleUrl: './validation-modal.css',
 })
-export class EvaluationModalComponent implements OnChanges {
+export class ValidationModalComponent implements OnChanges {
   @Input() department: any = null;
   @Input() existingForm: ResponseValidationFormDto | null = null;
   @Output() close = new EventEmitter<void>();
@@ -77,5 +77,4 @@ export class EvaluationModalComponent implements OnChanges {
       });
     }
   }
-
 }

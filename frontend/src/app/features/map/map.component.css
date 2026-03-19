@@ -29,6 +29,7 @@
   font-size: 14px;
   cursor: pointer;
 }
+
 .info-card {
   position: absolute;
   bottom: 20px;
@@ -44,7 +45,6 @@
   margin: 2px 0;
 }
 
-
 .side {
   width: 30%;
   border: 2px solid #e2e6ea;
@@ -55,11 +55,11 @@
   margin-top: 50px;
 }
 
-.evaluations-section {
+.validations-section {
   padding: 12px 12px;
 }
 
-.evaluation-item {
+.validation-item {
   border-bottom: 1px solid #e2e6ea;
   padding: 12px 0;
 }
@@ -92,7 +92,7 @@
   height: 8%;
 }
 
-.button-evaluation {
+.button-validation {
   justify-content: center;
   width: 70%;
 }
@@ -114,8 +114,19 @@
     border: 2px solid #e2e6ea;
   }
 
-  .button-evaluation {
+  .button-validation {
     width: 100%;
     justify-content: center;
   }
+}
+
+.risk-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-card .dot {
+  width: 12px;
+  height: 12px;
 }
