@@ -20,7 +20,7 @@ public class TileController {
 
     private final TileRepository tileRepository;
     private final TileService tileService;
-    final int BLOCK_SIZE = 16;
+    final int BLOCK_SIZE = TileConstants.BLOCK_SIZE;
     private final RiskFactorMapService riskFactorMapService;
 
     public TileController(TileRepository tileRepository, TileService tileService, RiskFactorMapService riskFactorMapService){
@@ -91,15 +91,15 @@ public class TileController {
                                                         @PathVariable double lat,
                                                         @PathVariable double lng){
 
-        final int[] tileCoordinates = riskFactorMapService.getTileCoordinates(z,lat,lng);
+        final int[] tileCoordinates = tileService.getTileCoordinates(z,lat,lng);
 
         final Optional<Tile> tile = tileService.findById(new TileId(mapId, z, tileCoordinates[0], tileCoordinates[1]));
 
-        int[] blockCoordinates = riskFactorMapService.getBlockCoordinates(z, lat, lng);
+        int[] blockCoordinates = tileService.getBlockCoordinates(z, lat, lng);
 
         if (tile.isPresent()){
             float mean = (tile.get().getTileMeans()[
-                    riskFactorMapService.getMeanIndex(blockCoordinates[0],
+                    tileService.getMeanIndex(blockCoordinates[0],
                     blockCoordinates[1])
                     ] & 0xFF) / 255.0f;
 

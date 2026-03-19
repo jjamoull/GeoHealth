@@ -2,6 +2,7 @@ package com.webgis.map.riskmap.riskfactormap;
 
 
 import com.converter.TiffFiles;
+import com.webgis.map.riskmap.tile.TileConstants;
 import com.webgis.map.riskmap.tile.TileService;
 import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
@@ -30,8 +31,8 @@ public class RiskFactorMapService {
     private final RiskFactorMapRepository riskFactorMapRepository;
     private final TileService tileService;
 
-    final int TILE_SIZE = 256;
-    final int BLOCK_SIZE = 16;
+    final int TILE_SIZE = TileConstants.TILE_SIZE;
+    final int BLOCK_SIZE = TileConstants.BLOCK_SIZE;
 
     public RiskFactorMapService (RiskFactorMapRepository riskFactorMapRepository,
                                  TileService tileService ){
@@ -209,88 +210,5 @@ public class RiskFactorMapService {
     public List<RiskFactorMap> findAll(){
         return this.riskFactorMapRepository.findAll();
     }
-
-
-    /** returns the index of mean in 1D array of size constant BlOCK_SIZE
-     *
-     * @param x : int representing the x coordinates of mean BLOCK (0-BLOCK_SIZE)
-     * @param y : int representing the y coordinate of mean BLOCK (0-BLOCK_SIZE)
-     * @return index for mean of mean in 1D array of size constant BLOCK_SIZE
-     * */
-    public int getMeanIndex(int x, int y){
-        return y*BLOCK_SIZE + x;
-    }
-
-
-    /**returns coordinates of tile in OpenStreetMap 2D space
-     *
-     * @param z : current zoom level on the map
-     * @param lat : latitude
-     * @param lng : longitude
-     * @return tile coordinates in OpenStreetMap 2D space in format array : [x,y]
-     * */
-    public int[] getTileCoordinates(int z, double lat, double lng){
-        double[] nAndLatRad = getNAndLatRad(z, lat);
-        double[] xy = getTileXY(nAndLatRad[0], lng, nAndLatRad[1]);
-
-        return new int[]{
-                (int)Math.floor(xy[0]),
-                (int)Math.floor(xy[1])
-        };
-    }
-
-
-    /**returns coordinates of tile in OpenStreetMap 2D space
-     *
-     * @param z : current zoom level on the map
-     * @param lat : latitude
-     * @param lng : longitude
-     * @return tile coordinates in OpenStreetMap 2D space in format array : [x,y]
-     * */
-    public int[] getBlockCoordinates(int z, double lat, double lng){
-        double[] nAndLatRad = getNAndLatRad(z, lat);
-        double[] xy = getTileXY(nAndLatRad[0], lng, nAndLatRad[1]);
-
-        return new int[]{
-                (int)Math.floor((xy[0]*BLOCK_SIZE)%BLOCK_SIZE),
-                (int)Math.floor((xy[1]*BLOCK_SIZE)%BLOCK_SIZE)
-        };
-    }
-
-    /**
-     * return 2^zoom and the latitude in radian into an array of size 2
-     *
-     * @param z : current zoom level on the map
-     * @param latitude : latitude
-     * @return an array of size 2 with index :
-         *  0 : n -> 2^zoom
-         *  1 : LatRad -> Latitude in Radian
-     * */
-    private double[] getNAndLatRad(int z,  double latitude){
-        return new double[]{
-                (int)Math.pow(2,z),
-                (latitude * (Math.PI / 180))
-        };
-    }
-
-
-    /**
-     * Return X and Y into an array of size 2
-     *
-     * @param n : represent 2^zoom
-     * @param lng : longitude
-     * @param lat_rad : Latitude in Radian
-     * @return an array of size 2 with index :
-     *      0 : X
-     *      1 : Y
-     **/
-    private double[] getTileXY(double n, double lng, double lat_rad){
-        return new double[]{
-                n*((lng+180)/360),
-                 n * ( 1- ( Math.log( Math.tan( lat_rad )  +  1/Math.cos(lat_rad)) / Math.PI))/2
-        };
-    }
-
-
 
 }
