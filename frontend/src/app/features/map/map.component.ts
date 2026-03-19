@@ -91,19 +91,10 @@ export class MapComponent implements  OnInit, AfterViewInit {
   }
 
 /**
-* Display the map OSM thanks to Leaflet on Cameron
+* Display the map OSM thanks to Leaflet on Cameron andd load the validation forms
 */
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    this.riskFactorMapService.getAllMaps().subscribe({
-          next: (maps:RiskFactorMapListDto[]) => {
-            this.riskFactorMaps.set(maps);
-          },
-          error: (err) => {
-            console.error('Failed to load risk factor maps', err);
-          }
-    });
 
   this.validationFormService.getAllForm().subscribe({
     next: (validationForms:ResponseValidationFormDto[])=>{
@@ -113,6 +104,15 @@ export class MapComponent implements  OnInit, AfterViewInit {
       console.error('Failed to load validation forms', err);
     }
   })
+
+    this.riskFactorMapService.getAllMaps().subscribe({
+          next: (maps:RiskFactorMapListDto[]) => {
+            this.riskFactorMaps.set(maps);
+          },
+          error: (err) => {
+            console.error('Failed to load risk factor maps', err);
+          }
+    });
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
