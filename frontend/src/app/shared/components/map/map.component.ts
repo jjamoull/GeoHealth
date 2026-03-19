@@ -6,6 +6,7 @@ import {LatLngExpression} from 'leaflet';
 import { FinalMapService } from '../../../core/service/MapService/FinalMapService/finalMapService';
 import { RiskFactorMapService } from '../../../core/service/MapService/RiskMapService/riskFactorMapService';
 import { RiskFactorMapListDto } from '../../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
+import {TileMeanAndXYdto} from '../../../shared/models/MapModel/RiskFactorMapModel/TileMeanAndXYdto';
 
 @Component({
   selector: 'app-map',
@@ -89,33 +90,54 @@ export class MapComponent implements AfterViewInit {
   /**
    * TODO
    * */
-  private onTileSelected(event:Event, mapId:number):void{
-    this.map.on('click', (e:any)=>{
+  private async onTileSelected(event:Event, mapId:number):Promise<void>{
+    this.map.on('click', async (e:any)=>{
       console.log("\n [onTileSelected] : " + e.latlng)
       const coordinates : any = e.latlng
       const z : number = this.map.getZoom();
-      const n : number = 2**z ;
 
-      var x : number = Math.floor( n * ((coordinates.lng + 180)/360)) ;
-      const lat_rad : number = coordinates.lat * (Math.PI / 180);
 
-      var y : number = Math.floor( n * (1 - (Math.log( Math.tan(lat_rad) + (1 / Math.cos(lat_rad))) / Math.PI)) /2 );
+      console.log(mapId);
+      console.log(coordinates.lat, coordinates.lng);
+      const blockData : TileMeanAndXYdto | null = await this.getTileMean(mapId, z, coordinates.lat, coordinates.lng);
 
-      console.log(x,y);
 
-      const bounds = this.tileToPolygon(x, y, z);
-      this.highlightLayer = null;
-      if (this.highlightLayer) {
-        this.map.removeLayer(this.highlightLayer);
-      }
+      if (blockData){
+        console.log(blockData.mean);
+        const bounds = this.tileToPolygon(blockData.x, blockData.y, z);
+        this.highlightLayer = null;
+        if (this.highlightLayer) {
+          this.map.removeLayer(this.highlightLayer);
+        }
 
-      this.highlightLayer = this.leaflet.polygon(bounds, {
-        color: 'red',
-        weight: 2,
-        fillOpacity: 0.1
-      }).addTo(this.map);
-      this.map.fitBounds(bounds);
+
+        this.highlightLayer = this.leaflet.polygon(bounds, {
+          color: 'red',
+          weight: 2,
+          fillOpacity: 0.1
+        }).addTo(this.map);
+        this.map.fitBounds(bounds);
+    }
     });
+  }
+
+  private async getTileMean(mapId: number,
+                            z : number,
+                            lat : number,
+                            lng : number){
+    try {
+      const response: Response = await fetch(`tile/file/mean/${mapId}/${z}/${lat}/${lng}`);
+
+      if (!response.ok) {
+        throw new Error("Server request failed to obtain mean tile ");
+      }
+      const data: TileMeanAndXYdto = await response.json();
+      return data;
+    }
+    catch (err) {
+      console.error(err);
+      return null;
+    }
   }
 
 
