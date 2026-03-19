@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 <div class="profile-page">
   <div class="profile-title">
     <span class="text1">Welcome to</span>
@@ -5,7 +7,19 @@
   </div>
     <div class="container">
       <div class="card">
+        <div class="profile-picture">
         <img src="assets/icons/user.png" alt="Person" class="card__image">
+        <div class="menu-toggle" [class.active]="profilPictureUpdate" (click)="toggleMenu()"></div>
+
+          <div class="avatar-list" [class.active]="profilPictureUpdate">
+            <ul>
+              <li style="--i:0s"><img src="assets/icons/avatar1.png" class="avatar" onclick="selectAvatar('assets/icons/avatar1.png')"></li>
+              <li style="--i:0s"><img src="assets/icons/avatar2.png" class="avatar" onclick="selectAvatar('assets/icons/avatar2.png')"></li>
+              <li style="--i:0s"><img src="assets/icons/avatar3.png" class="avatar" onclick="selectAvatar('assets/icons/avatar3.png')"></li>
+              <li style="--i:0s"><img src="assets/icons/avatar4.png" class="avatar" onclick="selectAvatar('assets/icons/avatar4.png')"></li>
+            </ul>
+          </div>
+        </div>
         <p class="card__name">{{user.username}}</p>
         <div class="grid-container">
 

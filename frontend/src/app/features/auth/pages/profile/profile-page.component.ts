@@ -39,6 +39,9 @@ export class ProfilePageComponent implements OnInit{
 
   public errorMessage: string | null = null;
 
+  public profilPictureUpdate :boolean= false;
+
+
   constructor(private userService:UsersServices, private cdr: ChangeDetectorRef,private router: Router) {}
 
   /**
@@ -153,6 +156,10 @@ export class ProfilePageComponent implements OnInit{
       console.log('Error while deleting account');
     }
     })
+  }
+
+  toggleMenu() {
+    this.profilPictureUpdate = !this.profilPictureUpdate;
   }
 
 
