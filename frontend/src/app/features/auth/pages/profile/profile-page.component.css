@@ -1,120 +1,229 @@
-.main-container {
-  display: flex;
-  background-color: #EBEFFF;
+.profile-page{
+  min-height: 100vh;
+  background-image: url('/assets/background/profilePageUserBackground.png');
   background-size: cover;
-  width: 100vw;
-  height: 100vh;
-  flex-direction: column;
-}
-
-.image{
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1; }
-
-.form-container {
-  position: absolute;
-  top: 62%;
-  left: 60%;
-  transform: translate(-50%, -50%);
-  width: 40%;
-  max-width: 900px;
-}
-
-.title-container{
+  background-position: center;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  padding-right: 7rem;
+  padding-bottom: 1.3rem;
 }
+.container {
+  display: flex;
+  width: 100%;
+  max-width: none;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-family: 'Baloo Paaji 2', cursive;
+}
+
+.card {
+  background-color: white;
+  width: 80vh;
+  height: auto;
+  padding: 2rem;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);;
+  color: white;
+}
+
+.profile-picture{
+  position: relative;
+  z-index: 1100;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.card__name {
+  margin: 15px auto 0 auto;
+  font-size: 1.5em;
+  color: black;
+}
+
+.card__image {
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  margin: 0px auto 0 auto;
+}
+
+.grid-container {
+  display: grid;
+  margin-top: -15px;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  font-size: 1.2em;
+}
+
+/*TITLE*/
 
 .profile-title{
-  font-size: 36px;
+  align-self: flex-start;
   text-align: center;
-  font-weight: 600;
-  color: black;
-  margin-top: 100px;
-}
-
-.info-container{
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-  margin-left: 200px;
-  gap: 2rem;
-}
-
-.user-icon{
-  width: 15vh;
-}
-
-.text-container{
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-}
-
-.text-container p{
-  color: black;
-}
-
-.profile-section {
-  display: grid;
-}
-
-.form-wrapper{
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.form{
+  transform: translate(-13%, 20%);
   width: 100%;
-  height: 50%;
-  background: white;
-  margin: 30px 0;
-  border-radius: 12px;
-  border: solid 2px black;
-  font-size: 1rem;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
+}
+.profile-title span{
+  text-transform: uppercase;
+  display: block;
+  font-family: 'Baloo Paaji 2', cursive;
+}
+.text1{
+  color: white;
+  font-weight: 700;
+  letter-spacing: 8px;
+  margin-bottom: 20px;
+  position: relative;
+  animation: text 3s 1;
+  font-size: 60px;
+}
+.text2{
+  color: white;
+  font-size: 30px;
 }
 
-.deleteAccountWindow{
-  position: absolute;
-  width: 50%;
-  border-radius: 10px;
-  top: 23%;
-  right: 120%;
-  background-color: white;
-  border: black
+@keyframes text {
+  0%{
+    color: transparent;
+    margin-bottom: -40px;
+  }
+  30%{
+    letter-spacing: 25px;
+    margin-bottom: -40px;
+
+  }
 }
+/*TITLE*/
 
-.window h3{
-  display: flex;
-  justify-content: center;
-}
-
-
-.changePasswordLink{
+/*LINK*/
+.change-password-link{
   font-size:14.5px;
   text-align: center;
   margin-top: 20px;
 }
-.changePasswordLink p a{
+.change-password-link p a{
   color: darkblue;
   text-decoration: none;
 }
-.changePasswordLink p {
+.change-password-link p {
   color: black;
   text-decoration: none;
-  font-weight: 600;
-}
-.changePasswordLink p a:hover{
-  text-decoration: underline;
+  font-weight: lighter;
 }
 
+.change-password-link a {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.change-password-link p a:hover{
+  text-decoration: underline;
+}
+/*POPUP*/
+.deleteAccountWindow{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+.menu-toggle {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border-radius: 70px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+}
+.menu-toggle::before {
+  content: '\f030';
+  font-family: "Font Awesome 6 Free";
+  font-weight: 600;
+  position: absolute;
+  font-size: 1.3em;
+  color: #90ee90;
+  transition: 1.5s;
+}
+.menu-toggle.active::before {
+  transform: rotate(360deg);
+}
+.avatar-list {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #90ee90;
+  border-radius: 70px;
+  z-index: -1;
+  transition: transform 0.5s, width 0.5s, height 0.5s;
+  transition-delay: 1s, 0.5s, 0.5s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.avatar-list.active {
+  width: 440px;
+  height: 80px;
+  z-index: 1;
+  transform: translateY(-100px);
+  transition-delay: 0s, 0.5s, 0.5s;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+.avatar-list::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #90ee90;
+  left: calc(50% - 8px);
+  bottom: 4px;
+  transform: rotate(45deg);
+  border-radius: 2px;
+  transition: 0.5s;
+}
+.menu-toggle.active~.avatar-list::before {
+  transition-delay: 0.5s;
+  bottom: -6px;
+}
+.avatar-list ul {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  height: 70px;
+  gap: 40px;
+  padding: 0;
+}
+.avatar-list ul li {
+  list-style: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-30px);
+  transition: 0.25s;
+  transition-delay: calc(0s + var(--i));
+}
+.avatar-list.active ul li {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0px);
+  transition-delay: calc(0.75s + var(--i));
+}
+.avatar-list ul li img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+}

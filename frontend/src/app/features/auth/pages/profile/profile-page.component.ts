@@ -39,6 +39,11 @@ export class ProfilePageComponent implements OnInit{
 
   public errorMessage: string | null = null;
 
+  public profilePictureUpdate :boolean= false;
+
+  selectedAvatar = "assets/icons/user.png"
+
+
   constructor(private userService:UsersServices, private cdr: ChangeDetectorRef,private router: Router) {}
 
   /**
@@ -56,6 +61,10 @@ export class ProfilePageComponent implements OnInit{
         console.log("Error occured");
       }
     })
+    const savedAvatar = localStorage.getItem('selectedAvatar');
+    if (savedAvatar) {
+      this.selectedAvatar = savedAvatar;
+    }
   }
 
 
@@ -153,6 +162,22 @@ export class ProfilePageComponent implements OnInit{
       console.log('Error while deleting account');
     }
     })
+  }
+
+  /**
+   *  Display the menu to update picture after the click
+   */
+  toggleMenu() {
+    this.profilePictureUpdate = !this.profilePictureUpdate;
+  }
+
+  /**
+   * @param : image path of the selected avatar
+   * */
+  selectAvatar(avatar: string) {
+    this.selectedAvatar = avatar;
+    localStorage.setItem('selectedAvatar', avatar);
+    this.profilePictureUpdate = false;
   }
 
 
