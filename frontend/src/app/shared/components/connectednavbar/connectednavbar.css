@@ -28,6 +28,7 @@
   text-decoration: none;
   font-size: 18px;
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 .item:hover {

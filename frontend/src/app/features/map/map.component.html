@@ -3,28 +3,31 @@
 
     <div class="map-selector">
       <select (change)="onMapSelected($event)">
-        <option value="">Districts only</option>
+        <option value="">Departments only</option>
         @for (map of riskFactorMaps(); track map.id) {
-        <option [value]="map.id">{{ map.title }}</option>
+          <option [value]="map.id">{{ map.title }}</option>
         }
       </select>
     </div>
 
     <div id="map"></div>
-    <!-- info-card -->
+
     <div class="info-card">
-      <p>{{ selectedDistrict | json }}</p>
-      @if(selectedDistrict()) {
-      <p>Type: {{selectedDistrict().ENGTYPE_2}}</p>
-      <p>Region: {{selectedDistrict().NAME_1}}</p>
-      <p>Name: {{selectedDistrict().NAME_2}}</p>
-      <p>Risk: {{selectedDistrict().Risk_categ}}</p>
+      <p>{{ selectedDepartment | json }}</p>
+      @if(selectedDepartment()) {
+        <p>Type: {{selectedDepartment().ENGTYPE_2}}</p>
+        <p>Region: {{selectedDepartment().NAME_1}}</p>
+        <p>Name: {{selectedDepartment().NAME_2}}</p>
+        <p class="risk-row">
+          Risk:
+          <span class="dot" [style.background]="getRiskColor(selectedDepartment().Risk_categ)"></span>
+          {{selectedDepartment().Risk_categ}}
+        </p>
       } @else {
-      <p class="card-label">Click a district</p>
+        <p class="card-label">Click a Department</p>
       }
     </div>
 
-    <!-- map legend -->
     <map-legend [riskLevels]="riskLevels"/>
 
   </div>
@@ -35,26 +38,44 @@
     <div class="description">
       <p>{{mapDescription() }}</p>
     </div>
-    <!--future measures-->
   </div>
 </div>
 
-<div class="evaluations-section">
-  <h2>Evaluations</h2>
+<div class="validations-section">
 
-  <div class="evaluation-item">
-    <p class="eval-title">Evaluation1</p>
-    <p class="eval-author">name1</p>
+  <div class="button-validation">
+    @if(selectedDepartment() && !showValidationModal()){
+      <app-button
+        [text]="existingForm() ? 'Edit Validation' : 'Add Validation'"
+        [variant]="'success'"
+        (click)="onOpenValidation()">
+      </app-button>
+    }
   </div>
 
-  <div class="evaluation-item">
-    <p class="eval-title">Evaluation2</p>
-    <p class="eval-author">name2</p>
-  </div>
 
-  <div class="evaluation-item">
-    <p class="eval-title">Evaluation3</p>
-    <p class="eval-author">name3</p>
+  <div class="validation-forms">
+  <h2>Validations</h2>
+  @for(form of allValidationForms(); track form){
+    @if(form.department==selectedDepartment().NAME_2 && form.isPublic){
+      <app-validation-comment
+        [username]= "form.username"
+        [department]="form.department"
+        [agreementLevel]="form.agreementLevel"
+        [perceivedRisk]="form.perceivedRisk"
+        [certaintyLevel]="form.certaintyLevel"
+        [comment]="form.comment">
+      </app-validation-comment>
+    }
+  }
   </div>
-
 </div>
+
+
+@if(showValidationModal()) {
+  <app-validation-modal
+    [department]="selectedDepartment()"
+    [existingForm]="existingForm()"
+    (close)="onCloseValidation()">
+  </app-validation-modal>
+}
