@@ -1,114 +1,107 @@
-<!-- Header -->
-<section class="homeSection" >
-  <div class = "visual">
-    <img class="image" src="/assets/background/homeBackground.png" alt="MapComponent">
-    <div class="rectangle">
-      <h1>GEOHEALTH<span>TEXT</span></h1>
-    </div>
-  </div>
-</section>
-
-<!-- The recent card Section -->
-<section class="carouselSection" >
-  <h2 class="cardTitle">Cartes</h2>
-  <form class="carousel-preference-form">
-    <!--<button type="button" class="btn btn-primary">Récemment consultées</button>
-    <button type="button" class="btn btn-primary">Récemment modifiées</button>
-    <button type="button" class="btn btn-primary">Favoris</button>-->
-    <div class="radio-group">
-      <label class="radio-card">
-        <input type="radio" name="carousel-option" value="recently-added">
-        <span>Récemment consultées</span>
-      </label>
-
-      <label class="radio-card">
-        <input type="radio" name="carousel-option" value="recently-modified">
-        <span>Récemment modifiées</span>
-      </label>
-
-      <label class="radio-card">
-        <input type="radio" name="carousel-option" value="favourites">
-        <span>Favoris</span>
-      </label>
-    </div>
-  </form>
-  <div class="cards" id="Card">
-    <div class ="carousel">
-      <div class ="group">
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-      </div>
-      <div aria-hidden="hidden" class ="group">
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-      </div>
-    </div>
-  </div>
-</section>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
-<!-- The comments Section -->
-
-<section class="commentSection">
-  <div class="commentContent">
-    <h3 class="commentTitle">Commentaires récents</h3>
-
-    <div class="cardSection">
-
-      <div class="commentCard">
-        <img src="/assets/background/worldMap.png" alt="MapComponent">
-        <div class="cardUserContent">
-          <p><b>User</b></p>
-          <p class="cardCommentDateContent">Date</p>
-          <p>Comments.</p>
-          <button class="commentButton">Voir</button>
+<div class="main">
+  <div class="flex flex1">
+    <div class="txt" data-aos="slide-up">
+      <div class="head">
+        <div class="text-animate">
+          <span><img src="" alt="" id="acc1">Welcome to<br></span>
+          <span> - GeoHealth<br><img src="/assets/icons/map.png" alt="" id="acc2"></span>
         </div>
       </div>
-
-      <div class="commentCard">
-        <img src="/assets/background/worldMap.png" alt="MapComponent">
-        <div class="cardUserContent">
-          <p><b>User</b></p>
-          <p class="cardCommentDateContent">Date</p>
-          <p>Comments.</p>
-          <button class="commentButton">Voir</button>
-        </div>
+      <p>GeoHealth, groupe de recherche de l’Université de Namur,spécialisé en épidémiologie spatiale
+        et modélisation, étudie les maladies infectieuses selon l’approche One Health, reliant santé
+        humaine, animale et environnementale.</p>
+      <div class="buttons">
+        <app-button
+          [text]="'Sign in >'"
+          variant="success"
+          (click)="goToRegister()">
+        </app-button>
       </div>
-
-      <div class="commentCard">
-        <img src="/assets/background/worldMap.png" alt="MapComponent" >
-        <div class="cardUserContent">
-          <p><b>User</b></p>
-          <p class="cardCommentDateContent">Date</p>
-          <p>Comments.</p>
-          <button class="commentButton">Voir</button>
-        </div>
-      </div>
-
+        <ul class="brands">
+          <li> <a>
+            <span class="label">Mobile Friendly</span>
+            <i class="fa-solid fa-mobile-screen"></i>
+          </a></li>
+          <li> <a>
+            <span class="label">Tablet Friendly</span>
+            <i class="fa-solid fa-tablet-screen-button"></i>
+          </a></li>
+          <li> <a>
+            <span class="label">Desktop Friendly</span>
+            <i class="fa-solid fa-computer"></i>
+          </a></li>
+        </ul>
     </div>
+    <div class="img-hand"><img src="/assets/background/handHomePage.png" data-aos="zoom-in"  alt=""></div>
   </div>
-</section>
 
-<!-- The Contact Section -->
-<div class="contactSection">
-  <h4 class="contactTitle">CONTACT</h4>
-  <div class="contactContent">
-    <i class="fa fa-map-marker" ></i> Location<br>
-    <i class="fa fa-phone" ></i> Phone: +00 151515<br>
-    <i class="fa fa-envelope" > </i> Email: mail.com<br>
+  <div class="work" data-aos="slide-up">
+    <h1>How this works?</h1>
+    <div class="cards">
+      <div class="c1 cc1" data-aos="fade-up" data-aos-delay="450">
+        <img src="/assets/icons/minimap.png" alt="">
+        <h4>Visualisation cartographique interactive</h4>
+        <p>WebGIS multicouche avec zoom, filtres et visualisation des cartes de risque et facteurs associés.</p>
+      </div>
+      <div class="c1 cc2" data-aos="fade-up" data-aos-delay="300">
+        <img src="/assets/icons/validation.png" alt="">
+        <h4>Module de validation expert</h4>
+        <p>Évaluation des risques par département avec visualisation, export et suivi collaboratif anonymisé.</p>
+      </div>
+      <div class="c1 cc3" data-aos="fade-up" data-aos-delay="150">
+        <img src="/assets/icons/sync.png" alt="">
+        <h4> Mise à jour automatique</h4>
+        <p> Intégration de nouveaux jeux de données géoréférencés et recalcul via scripts R fournis.</p>
+      </div>
+      <div class="c1 cc4" data-aos="fade-up" data-aos-delay="0">
+        <img src="/assets/icons/rapport.png" alt="">
+        <h4>Rapports et recommandations automatisés</h4>
+        <p> Génération par département des facteurs de risque dominants et mesures préventives associées.</p>
+      </div>
+    </div>
   </div>
 </div>
+<div class="p2">
+  <div class="flex">
+    <div class="img-work"><img src="/assets/background/workingUserHome.png" data-aos="zoom-in" alt=""></div>
+    <div class="txt" data-aos="slide-up">
+      <div class="head">
+        <div class="subhead">
+          <span>Problématique</span>
+        </div>
+      </div>
+      <p>Les zoonoses sont
+        responsables de 75 % des maladies infectieuses émergentes comme Ebola et le COVID-19. Pour anticiper ces maladies, il est essentiel de disposer
+        de cartes de risque fiables et validées, afin de mieux orienter les interventions et renforcer la
+        réponse sanitaire.</p>
+      <div class="bullets2">
+        <div class="l1">
+          <div class="b"><span>▶</span><span>Prototype évolutif</span></div>
+          <div class="b"><span>▶</span><span>Portée mondiale</span></div>
+        </div>
+        <div class="l2">
+          <div class="b"><span>▶</span><span>Prévention des pandémies</span></div>
+          <div class="b"><span>▶</span><span>Résilience des systèmes de santé</span></div>
+        </div>
+      </div>
+      <div class="buttons">
+        <app-button
+          [text]="'En savoir plus'"
+          variant="success">
+        </app-button>
+      </div>
 
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="namur-footer">
+      <img src="/assets/icons/logoUnamur.png" alt="Logo UNamur">
+      <span>Université de Namur</span>
+    </div>
+  </footer>
+</div>
 
-<!-- Footer -->
-<footer class="footer">
-  <p class="copyright">Copyright</p>
-</footer>
