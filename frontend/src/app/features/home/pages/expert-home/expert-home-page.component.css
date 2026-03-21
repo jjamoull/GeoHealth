@@ -7,7 +7,6 @@
   height: auto;
   padding-top: 10px;
 }
-
 .txt {
   position: relative;
   display: flex;
@@ -45,10 +44,6 @@
   justify-content: left;
   gap: 24px;
   font-family: 'Baloo Paaji 2', cursive;
-
-  /*opacity: 0;*/
-  /*transform: translateY(50px);*/
-  /*animation: slideUp 0.5s ease-out forwards;*/
 }
 .brands {
   display: flex;
@@ -114,14 +109,12 @@
   object-fit: contain;
   animation: float 3s ease-in-out infinite 0.3s;
 }
-
 .brands li {
   display: inline-block;
   margin: 0.15em;
   position: relative;
   font-size: 1em;
 }
-
 .brands i {
   color: #fff;
   position: absolute;
@@ -129,8 +122,6 @@
   left: 0.96em;
   transition: all 265ms ease-out;
 }
-
-
 .brands a:before {
   transform: scale(1);
   -ms-transform: scale(1);
@@ -165,15 +156,7 @@
   height: 450px;
   text-align: center;
   font-family: 'Baloo Paaji 2', cursive;
-  /*opacity: 0;*/
-  /*transform: translateY(50px);*/
-  /*transition: all 0.6s ease-out;*/
 }
-
-/*.work.active {*/
-/*  opacity: 1;*/
-/*  transform: translateY(0);*/
-/*}*/
 .cards {
   display: flex;
   flex-direction: row;
@@ -260,16 +243,10 @@
   width: 90%;
   height: 200px;
 }
-
 .img-hand {
   width: 50%;
-  /*opacity: 0;*/
-  /*transform: scale(0.2);*/
-
-  animation:
-    float 3s ease-in-out infinite 0.3s;
+  animation: float 3s ease-in-out infinite 0.3s;
 }
-
 .footer{
   display: flex;
   justify-content: center;
@@ -287,22 +264,6 @@
   align-items: center;
   gap: 10px;
 }
-
-/*@keyframes popIn {*/
-/*  0% {*/
-/*    opacity: 0;*/
-/*    transform: scale(0.6);*/
-/*  }*/
-/*  80% {*/
-/*    opacity: 1;*/
-/*    transform: scale(1.05);*/
-/*  }*/
-/*  100% {*/
-/*    opacity: 1;*/
-/*    transform: scale(1);*/
-/*  }*/
-/*}*/
-
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -315,15 +276,3 @@
   }
 }
 
-
-
-/*@keyframes slideUp {*/
-/*  0% {*/
-/*    opacity: 0;*/
-/*    transform: translateY(50px);*/
-/*  }*/
-/*  100% {*/
-/*    opacity: 1;*/
-/*    transform: translateY(0);*/
-/*  }*/
-/*}*/
