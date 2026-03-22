@@ -7,6 +7,7 @@ import {Connectednavbar} from './shared/components/connectednavbar/connectednavb
 import {Unconnectednavbar} from './shared/components/unconnectednavbar/unconnectednavbar';
 import {Unconnectedsidebar} from './shared/components/unconnectedsidebar/unconnectedsidebar';
 import {Connectedsidebar} from './shared/components/connectedsidebar/connectedsidebar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +21,15 @@ export class App implements OnInit{
 
   constructor(private authService:AuthService,
               private loginService:LoginService,
-              private cdr:ChangeDetectorRef) {
+              private cdr:ChangeDetectorRef,
+              private translate: TranslateService) {
+    this.translate.setFallbackLang('en')
   }
+
+  switchLanguage(language: string){
+    this.translate.use(language);
+  }
+
   ngOnInit() {
     this.authService.isTokenValid().pipe(
       map(isValid => {

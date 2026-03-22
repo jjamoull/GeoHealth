@@ -7,6 +7,7 @@ import {ButtonComponent} from '../../../../shared/components/button.component/bu
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-success-message.component/error-success-message.component';
 import { signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 
@@ -18,7 +19,8 @@ import { signal } from '@angular/core';
     CommonModule,
     ButtonComponent,
     InputboxComponents,
-    ErrorSuccessMessageComponent
+    ErrorSuccessMessageComponent,
+    TranslatePipe
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
