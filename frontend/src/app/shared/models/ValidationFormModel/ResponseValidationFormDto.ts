@@ -1,10 +1,10 @@
 export interface ResponseValidationFormDto{
   id:number,
-  department: String,
+  department: string,
   agreementLevel: number|null,
-  perceivedRisk: String|null,
+  perceivedRisk: string|null,
   certaintyLevel: number|null,
-  comment: String|null,
-  username: String,
+  comment: string | null,
+  username: string,
   isPublic: boolean
 }

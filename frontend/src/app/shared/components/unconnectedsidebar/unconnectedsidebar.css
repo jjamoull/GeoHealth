@@ -39,6 +39,7 @@
     gap: 10px;
     margin-left: 10px;
     margin-top: 20px;
+    cursor: pointer;
   }
   .logo {
     background-image: url("/assets/icons/image.png");

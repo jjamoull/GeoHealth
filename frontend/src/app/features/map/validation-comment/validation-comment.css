@@ -1,0 +1,70 @@
+.comment-card {
+  background-color: #ffffff;
+  border: 2px solid #90ee90;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  padding: 8px;
+  width: 100%;
+  max-width: 420px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comment-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+::ng-deep .mat-expansion-panel-header .header {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  width: 100%;
+  font-size: 16px;
+}
+
+.user {
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+.meta {
+  font-size: 14px;
+  color: #777;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 10px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #373b3e;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.label {
+  color: #888;
+  font-size: 12px;
+}
+
+.value {
+  font-weight: 600;
+  color: #333;
+}
+
+.comment {
+  color: #444;
+  font-size: 14px;
+  line-height: 1.4;
+}

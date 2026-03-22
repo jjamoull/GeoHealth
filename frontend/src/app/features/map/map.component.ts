@@ -1,32 +1,40 @@
-import {Component, AfterViewInit, Inject, PLATFORM_ID, signal} from '@angular/core';
+import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, OnInit} from '@angular/core';
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
 import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
 import { RiskFactorMapService } from '../../core/service/MapService/RiskMapService/riskFactorMapService';
 import { RiskFactorMapListDto } from '../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
+import {ButtonComponent} from '../../shared/components/button.component/button.component';
+import { ValidationModalComponent } from './validation-modal/validation-modal';
 
 import { MapLegendComponent } from './map-legend/map-legend';
+import {ResponseValidationFormDto} from '../../shared/models/ValidationFormModel/ResponseValidationFormDto';
+import {ValidationFormService} from '../../core/service/ValidationFormService/validationFormService';
+import {ValidationComment} from './validation-comment/validation-comment';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent],
+  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, ValidationModalComponent, ValidationComment],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements  OnInit, AfterViewInit {
 
   riskLevels = [
     {label: 'Low', color: '#2ecc71'},
     {label: 'Medium', color: '#f39c12'},
     {label: 'High', color: '#e74c3c'}];
 
-  selectedDistrict = signal<any>(null);
+  selectedDepartment = signal<any>(null);
   marker: any = null;
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
   riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
+  showValidationModal = signal<boolean>(false);
+  existingForm = signal<ResponseValidationFormDto | null>(null);
+  allValidationForms= signal<ResponseValidationFormDto[]>([]);
 
   private map: any = null;
   private leaflet: any = null;
@@ -40,8 +48,23 @@ export class MapComponent implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private mapService: FinalMapService,
     private riskFactorMapService: RiskFactorMapService,
+    private validationFormService: ValidationFormService,
     private route: ActivatedRoute
     ){}
+
+  onOpenValidation(): void {
+    this.showValidationModal.set(true);
+  }
+
+  onCloseValidation(): void {
+    this.showValidationModal.set(false);
+    this.existingForm.set(null);
+    this.selectedDepartment.set(null);
+    if (this.marker) {
+      this.marker.remove();
+      this.marker = null;
+    }
+  }
 
   onMapSelected(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
@@ -63,11 +86,24 @@ export class MapComponent implements AfterViewInit {
     ).addTo(this.map);
   }
 
+
+  ngOnInit() {
+  }
+
 /**
-* Display the map OSM thanks to Leaflet on Cameron
+* Display the map OSM thanks to Leaflet on Cameron andd load the validation forms
 */
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
+
+  this.validationFormService.getAllForm().subscribe({
+    next: (validationForms:ResponseValidationFormDto[])=>{
+      this.allValidationForms.set(validationForms);
+    },
+    error: (err)=>{
+      console.error('Failed to load validation forms', err);
+    }
+  })
 
     this.riskFactorMapService.getAllMaps().subscribe({
           next: (maps:RiskFactorMapListDto[]) => {
@@ -110,13 +146,14 @@ export class MapComponent implements AfterViewInit {
             layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
             layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
             layer.on('click', (e: any) => {
-              if (this.selectedDistrict() === feature.properties) {
+              if (this.selectedDepartment() === feature.properties) {
                 this.marker.remove();
                 this.marker = null;
-                this.selectedDistrict.set(null);
+                this.selectedDepartment.set(null);
+                this.existingForm.set(null);
                 return;
               }
-              this.selectedDistrict.set(feature.properties);
+              this.selectedDepartment.set(feature.properties);
               if (this.marker) this.marker.remove();
               this.marker = this.leaflet.circleMarker(e.latlng, {
                 radius: 5,
@@ -125,6 +162,10 @@ export class MapComponent implements AfterViewInit {
                 fillOpacity: 0.8,
                 pane: 'markerPane',
               }).addTo(this.map);
+              this.validationFormService.getMyFormForADep(feature.properties.NAME_2).subscribe({
+                next: (form) => this.existingForm.set(form),
+                error: () => this.existingForm.set(null)
+              });
             });
           }
         }).addTo(this.map);
@@ -135,7 +176,7 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
-  private getRiskColor(riskClass: string): string {
+  public getRiskColor(riskClass: string): string {
     for (const level of this.riskLevels) {
       if (level.label === riskClass){
         return level.color;

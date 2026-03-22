@@ -1,0 +1,68 @@
+<div cdkDrag class="validation-modal">
+  <div class="modal-header" cdkDragHandle>
+    <h2>Validation for a district</h2>
+    <button class="close-btn" (click)="onClose()">×</button>
+  </div>
+
+  <div class="modal-content">
+    <form id="validation-form">
+      <div class="item">
+        <label>Department</label>
+        <input type="text" [value]="department?.NAME_2" readonly>
+      </div>
+
+      <div class="item">
+        <label>Risk assessment (1-4)</label>
+        <app-rating-scaler
+          name="agreementLevel"
+          [options]="['4', '3', '2', '1']"
+          [value]="agreementLevel?.toString() || ''"
+          (valueChange)="agreementLevel = +$event">
+        </app-rating-scaler>
+      </div>
+
+      <div class="item">
+        <label>Certainty (1-4)</label>
+        <app-rating-scaler
+          name="certaintyLevel"
+          [options]="['4', '3', '2', '1']"
+          [value]="certaintyLevel?.toString() || ''"
+          (valueChange)="certaintyLevel = +$event">
+        </app-rating-scaler>
+      </div>
+
+      <div class="item">
+        <label>Perceived risk (low-high)</label>
+        <app-rating-scaler
+          name="perceivedRisk"
+          [options]="['high', 'medium', 'low']"
+          [value]="perceivedRisk?.toString() || ''"
+          (valueChange)="perceivedRisk = $event">
+        </app-rating-scaler>
+      </div>
+
+      <div class="item">
+        <label>Visibility</label>
+        <app-rating-scaler
+          name="isPublic"
+          [options]="[isPublic ? 'Public' : 'Private']"
+          [value]="isPublic ? (isPublic ? 'Public' : 'Private') : ''"
+          (valueChange)="isPublic = !isPublic">
+        </app-rating-scaler>
+      </div>
+
+      <div class="item">
+        <label>Comment</label>
+        <textarea placeholder="Enter your comment..." [(ngModel)]="comment" name="comment"></textarea>
+      </div>
+    </form>
+  </div>
+
+  <div class="footer">
+    <app-button
+      [text]="existingForm !== null ? 'Save changes' : 'Save'"
+      [variant]="'success'"
+      (click)="onSave(isPublic)">
+    </app-button>
+  </div>
+</div>
