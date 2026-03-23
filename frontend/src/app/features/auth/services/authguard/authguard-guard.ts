@@ -18,14 +18,14 @@ export const authGuard: CanActivateFn = () => {
   return authService.isTokenValid().pipe(
     map(isValid => {
       if (!isValid) {
-        router.navigate(["login"]);
+        router.navigate(["home"]);
       }
       loginService.setLoggedIn(isValid);
       return isValid;
 
     }),
     catchError(() => {
-      router.navigate(["login"]);
+      router.navigate(["home"]);
       return of(false);
 
     })
