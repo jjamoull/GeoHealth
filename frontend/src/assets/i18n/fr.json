@@ -1,3 +1,5 @@
 {
-  "Hello" : "Bonjour"
+  "login": {
+    "title": "Connexion"
+  }
 }

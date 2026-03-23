@@ -7,7 +7,11 @@ import {ButtonComponent} from '../../../../shared/components/button.component/bu
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-success-message.component/error-success-message.component';
 import { signal } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import {TranslocoModule, TranslocoPipe} from '@jsverse/transloco';
+import { inject } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
+
+
 
 
 
@@ -20,7 +24,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     ButtonComponent,
     InputboxComponents,
     ErrorSuccessMessageComponent,
-    TranslatePipe
+    TranslocoModule,
+    TranslocoPipe,
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
@@ -30,6 +35,7 @@ export class LoginPageComponent implements OnInit {
   formGroup!: FormGroup;
   loginError = signal(false);
   errorMessage = signal('');
+
 
   constructor(
     private loginService: LoginService,
@@ -42,6 +48,12 @@ export class LoginPageComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
+  }
+
+  private transloco = inject(TranslocoService);
+
+  switchLang(lang: string) {
+    this.transloco.setActiveLang(lang);
   }
 
   /**
