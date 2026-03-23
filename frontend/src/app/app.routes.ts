@@ -18,7 +18,6 @@ export const routes: Routes = [
   },{
     path:'home',
     component: ExpertHomePageComponent,
-    canActivate: [authGuard],
   },{
     path: 'maps/:id',
     component: MapComponent,
