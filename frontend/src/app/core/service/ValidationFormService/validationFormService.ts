@@ -44,53 +44,33 @@ export class ValidationFormService{
   }
 
   /**
-   * Get the form which has the specify id
+   * Get the form of the connected user for a division for a specific map
    *
-   * @param id the id of the form you want to get
-   * @return the form if it exists, not found otherwise
-   */
-  public getFormById(id:number):Observable<ResponseValidationFormDto>{
-    return this.httpClient.get<ResponseValidationFormDto>(
-      `${this.baseUrl}${API_ENDPOINTS.VAlIDATIONFORM.GETFORM}/${id}`,
-      {withCredentials:true}
-    );
-  }
-
-  /**
-   * Get the form of the connected user for a department
+   * @param finalMapId the id of the map you are interested in
+   * @param division the division you are interested in
    *
-   * @param department the department you are interested in
    * @return the form if it exists, not found if it does not exist, unauthorized otherwise
    */
-  public getMyFormForADep(department:String):Observable<ResponseValidationFormDto>{
+  public getMyFormForADiv(finalMapId:number, division:String):Observable<ResponseValidationFormDto>{
     return this.httpClient.get<ResponseValidationFormDto>(
-      `${this.baseUrl}${API_ENDPOINTS.VAlIDATIONFORM.GETMYFORMFORADEP}/${department}`,
+      `${this.baseUrl}${API_ENDPOINTS.VAlIDATIONFORM.GETMYFORMFORADIVFORAMAP}/${finalMapId}/${division}`,
       {withCredentials:true}
     );
   }
 
   /**
-   * Get all the form
+   * Get all the form for a specific map
+   *
+   * @param finalMapId the id of the map you are interested in
    *
    * @return A list of all the forms
    */
-  public getAllForm():Observable<ResponseValidationFormDto[]>{
+  public getAllForm(finalMapId:number):Observable<ResponseValidationFormDto[]>{
     return this.httpClient.get<ResponseValidationFormDto[]>(
-      `${this.baseUrl}${API_ENDPOINTS.VAlIDATIONFORM.GETALLFORM}`,
+      `${this.baseUrl}${API_ENDPOINTS.VAlIDATIONFORM.GETALLFORMFORAMAP}/${finalMapId}`,
       {withCredentials:true}
     );
   }
 
-  /**
-   * Get all the form for a department
-   *
-   * @return A list of all the forms for a department
-   */
-  public getAllFormForADep(department:String):Observable<ResponseValidationFormDto[]> {
-    return this.httpClient.get<ResponseValidationFormDto[]>(
-      `${this.baseUrl}${API_ENDPOINTS.VAlIDATIONFORM.GETALLFORMFORADEP}`,
-      {withCredentials: true}
-    );
-  }
 
 }

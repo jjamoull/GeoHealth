@@ -19,8 +19,8 @@ public class ValidationFormService{
     /**
      * Save a validation form
      *
-     * @param department the department which is concerned by the form
-     * @param agreementLevel the agreement level of the expert for this department (1-4)
+     * @param division the division which is concerned by the form
+     * @param agreementLevel the agreement level of the expert for this division (1-4)
      * @param perceivedRisk the risk perceived by the expert (low-medium-hight)
      * @param certaintyLevel the certainty level of the expert on its own evaluation (1-4)
      * @param comment any comment of the expert
@@ -31,7 +31,7 @@ public class ValidationFormService{
      * @return the newly saved validationForm
      */
     public ValidationForm saveForm(
-            String department,
+            String division,
             Integer agreementLevel,
             String perceivedRisk,
             Integer certaintyLevel,
@@ -41,7 +41,7 @@ public class ValidationFormService{
             boolean isPublic){
 
         final ValidationForm form = new ValidationForm(
-                department,
+                division,
                 agreementLevel,
                 perceivedRisk,
                 certaintyLevel,
@@ -66,7 +66,7 @@ public class ValidationFormService{
      * Update the value of the form with the specify id
      *
      * @param id the id of the form you want to update
-     * @param department the new department for the form
+     * @param division the new division for the form
      * @param agreementLevel the new agreement level for the form
      * @param perceivedRisk the new perceived risk for the form
      * @param certaintyLevel the new certainty level for the form
@@ -81,7 +81,7 @@ public class ValidationFormService{
      */
     public ValidationForm updateForm(
             long id,
-            String department,
+            String division,
             Integer agreementLevel,
             String perceivedRisk,
             Integer certaintyLevel,
@@ -97,7 +97,7 @@ public class ValidationFormService{
 
             final ValidationForm form= optionalForm.get();
 
-            form.setDepartment(department);
+            form.setDivision(division);
             form.setAgreementLevel(agreementLevel);
             form.setPerceivedRisk(perceivedRisk);
             form.setCertaintyLevel(certaintyLevel);
@@ -121,41 +121,29 @@ public class ValidationFormService{
     }
 
     /**
-     * Get all the form concerning a specific department for a map
-     *
-     * @param department the department you are interested in
-     * @param finalMap the map from which you want the validation forms
-     *
-     * @return a list of all the forms for a department linked to a specific map
-     */
-    public List<ValidationForm> getAllFormForDepartmentAndFinalMap(String department,FinalMap finalMap){
-        return validationFormRepository.findByDepartmentAndFinalMap(department,finalMap);
-    }
-
-    /**
-     * Get a form for a specific user and a specific department for a specific map
+     * Get a form for a specific user and a specific division for a specific map
      *
      * @param user the user you are interested in
-     * @param department the department you are interested in
+     * @param division the division you are interested in
      * @param finalMap the map from which you want the validation forms
      *
-     * @return the form of the specify user for the specify department for a specific map if it exists, empty otherwise
+     * @return the form of the specify user for the specify division for a specific map if it exists, empty otherwise
      */
-    public Optional<ValidationForm> getFormForUserAndDepartmentAndFinalMap(User user, String department,FinalMap finalMap){
-        return validationFormRepository.findByUserAndDepartmentAndFinalMap(user,department,finalMap);
+    public Optional<ValidationForm> getFormForUserAndDivisionAndFinalMap(User user, String division, FinalMap finalMap){
+        return validationFormRepository.findByUserAndDivisionAndFinalMap(user,division,finalMap);
     }
 
     /**
-     * Check whether a user has a validation form for a department for a specific map
+     * Check whether a user has a validation form for a division for a specific map
      *
      * @param user the user you want to check
-     * @param department the department you want to check
+     * @param division the division you want to check
      * @param finalMap the map from which you want the validation form
      *
-     * @return True if the specify user has already a form for the specific department for a specific map , False otherwise
+     * @return True if the specify user has already a form for the specific division for a specific map , False otherwise
      */
-    public boolean hasAlreadyAFormForDepartmentForFinalMap(User user,String department,FinalMap finalMap){
-        return validationFormRepository.existsByUserAndDepartmentAndFinalMap(user,department,finalMap);
+    public boolean hasAlreadyAFormForDivisionForFinalMap(User user, String division, FinalMap finalMap){
+        return validationFormRepository.existsByUserAndDivisionAndFinalMap(user,division,finalMap);
     }
 
 }

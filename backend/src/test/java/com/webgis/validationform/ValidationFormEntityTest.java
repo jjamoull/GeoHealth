@@ -37,7 +37,7 @@ class ValidationFormEntityTest {
         );
 
         //Assert
-        assertEquals("Wouri", validationForm.getDepartment());
+        assertEquals("Wouri", validationForm.getDivision());
         assertEquals(2, validationForm.getAgreementLevel());
         assertEquals("low", validationForm.getPerceivedRisk());
         assertEquals(4, validationForm.getCertaintyLevel());
@@ -95,7 +95,7 @@ class ValidationFormEntityTest {
         );
 
         // Act
-        validationForm.setDepartment("Mfoundi");
+        validationForm.setDivision("Mfoundi");
         validationForm.setAgreementLevel(4);
         validationForm.setPerceivedRisk("high");
         validationForm.setCertaintyLevel(1);
@@ -105,7 +105,7 @@ class ValidationFormEntityTest {
         validationForm.setIsPublic(false);
 
         // Assert
-        assertEquals("Mfoundi", validationForm.getDepartment());
+        assertEquals("Mfoundi", validationForm.getDivision());
         assertEquals(4, validationForm.getAgreementLevel());
         assertEquals("high", validationForm.getPerceivedRisk());
         assertEquals(1, validationForm.getCertaintyLevel());

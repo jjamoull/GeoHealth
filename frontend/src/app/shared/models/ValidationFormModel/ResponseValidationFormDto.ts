@@ -1,6 +1,6 @@
 export interface ResponseValidationFormDto{
   id:number,
-  department: string,
+  division: string,
   agreementLevel: number|null,
   perceivedRisk: string|null,
   certaintyLevel: number|null,

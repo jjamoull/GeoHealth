@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface ValidationFormRepository extends JpaRepository<ValidationForm,Integer> {
     Optional<ValidationForm> findById(long id);
     List<ValidationForm> findByFinalMap(FinalMap finalMap);
-    Optional<ValidationForm> findByUserAndDepartmentAndFinalMap(User user,String department,FinalMap finalMap);
-    List<ValidationForm> findByDepartmentAndFinalMap(String department,FinalMap finalMap);
-    boolean existsByUserAndDepartmentAndFinalMap(User user, String department, FinalMap finalMap);
+    Optional<ValidationForm> findByUserAndDivisionAndFinalMap(User user, String division, FinalMap finalMap);
+    boolean existsByUserAndDivisionAndFinalMap(User user, String division, FinalMap finalMap);
 }

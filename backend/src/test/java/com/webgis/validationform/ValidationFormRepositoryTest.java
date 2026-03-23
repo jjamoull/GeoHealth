@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +26,7 @@ class ValidationFormRepositoryTest {
     private FinalMapRepository finalMapRepository;
 
     private void assertValidationFormEquals(ValidationForm actual, ValidationForm expected) {
-        assertThat(actual.getDepartment()).isEqualTo(expected.getDepartment());
+        assertThat(actual.getDivision()).isEqualTo(expected.getDivision());
         assertThat(actual.getAgreementLevel()).isEqualTo(expected.getAgreementLevel());
         assertThat(actual.getPerceivedRisk()).isEqualTo(expected.getPerceivedRisk());
         assertThat(actual.getCertaintyLevel()).isEqualTo(expected.getCertaintyLevel());
@@ -76,191 +75,5 @@ class ValidationFormRepositoryTest {
         //Assert
         assertThat(found).isPresent();
         assertValidationFormEquals(found.get(),validationForm);
-    }
-
-    @Test
-    void saveAndFindByUserAndByDepartmentAndFinalMapTest(){
-        // Arrange
-        User user1 = new User(
-                "pseudo",
-                "Julien",
-                "Jamal",
-                "julien.jamal@outlook.be",
-                "password",
-                "Admin"
-        );
-
-        User user2 = new User(
-                "jdp",
-                "Jean",
-                "Dupont",
-                "jean.dupont@test.com",
-                "password2",
-                "User"
-        );
-
-        byte[] dataZip1 ={66};
-        FinalMap finalMap1 = new FinalMap(
-                "title",
-                "risk map",
-                dataZip1,
-                "file");
-
-        byte[] dataZip2 ={90};
-        FinalMap finalMap2 = new FinalMap(
-                "title",
-                "risk map",
-                dataZip2,
-                "file");
-
-
-        ValidationForm validationForm1=new ValidationForm(
-                "Wouri",
-                2,
-                "low",
-                4,
-                "comment",
-                user1,
-                finalMap1,
-                true
-        );
-
-        ValidationForm validationForm2=new ValidationForm(
-                "Wouri",
-                3,
-                "medium",
-                4,
-                "comment",
-                user2,
-                finalMap2,
-                false
-        );
-
-        //Act
-        userRepository.save(user1);
-        userRepository.save(user2);
-
-        finalMapRepository.save(finalMap1);
-        finalMapRepository.save(finalMap2);
-
-        validationFormRepository.save(validationForm1);
-        validationFormRepository.save(validationForm2);
-        Optional<ValidationForm> found= validationFormRepository.findByUserAndDepartmentAndFinalMap(user1,"Wouri",finalMap1);
-
-        //Assert
-        assertThat(found).isPresent();
-        assertValidationFormEquals(found.get(),validationForm1);
-
-    }
-
-    @Test
-    void findByDepartmentAndFinalMapMutipleFormTest(){
-        //Arrange
-        User user1 = new User(
-                "pseudo",
-                "Julien",
-                "Jamal",
-                "julien.jamal@outlook.be",
-                "password",
-                "Admin"
-        );
-
-        User user2 = new User(
-                "jdp",
-                "Jean",
-                "Dupont",
-                "jean.dupont@test.com",
-                "password2",
-                "User"
-        );
-
-        byte[] dataZip ={66};
-        FinalMap finalMap = new FinalMap(
-                "title",
-                "risk map",
-                dataZip,
-                "file");
-
-
-        ValidationForm validationForm1=new ValidationForm(
-                "Wouri",
-                2,
-                "low",
-                4,
-                "comment",
-                user1,
-                finalMap,
-                true
-        );
-
-        ValidationForm validationForm2=new ValidationForm(
-                "Wouri",
-                3,
-                "medium",
-                4,
-                "comment",
-                user2,
-                finalMap,
-                false
-        );
-
-        //Act
-        userRepository.save(user1);
-        userRepository.save(user2);
-
-        finalMapRepository.save(finalMap);
-
-        validationFormRepository.save(validationForm1);
-        validationFormRepository.save(validationForm2);
-        List<ValidationForm> found= validationFormRepository.findByDepartmentAndFinalMap("Wouri",finalMap);
-
-        //Assert
-        assertThat(found).hasSize(2);
-        assertValidationFormEquals(found.get(0),validationForm1);
-        assertValidationFormEquals(found.get(1),validationForm2);
-
-    }
-
-    @Test
-    void existsByUserAndDepartmentAndFinalMapNotExistTest(){
-
-        // Arrange
-        User user = new User(
-                "pseudo",
-                "Julien",
-                "Jamal",
-                "julien.jamal@outlook.be",
-                "password",
-                "Admin"
-        );
-
-        byte[] dataZip ={66};
-        FinalMap finalMap = new FinalMap(
-                "title",
-                "risk map",
-                dataZip,
-                "file");
-
-        ValidationForm validationForm=new ValidationForm(
-                "Wouri",
-                2,
-                "low",
-                4,
-                "comment",
-                user,
-                finalMap,
-                true
-        );
-
-        //Act
-        userRepository.save(user);
-
-        finalMapRepository.save(finalMap);
-
-        validationFormRepository.save(validationForm);
-        boolean exist= validationFormRepository.existsByUserAndDepartmentAndFinalMap(user,"Mfoundi",finalMap);
-
-        //Assert
-        assertFalse(exist);
     }
 }

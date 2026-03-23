@@ -78,13 +78,13 @@ public class ValidationFormController {
         final User user= optionalUser.get();
         final FinalMap finalMap= optionalFinalMap.get();
 
-        if(validationFormService.hasAlreadyAFormForDepartmentForFinalMap(user, saveFormDto.department(),finalMap)){
-            return ResponseEntity.status(401).body(new MessageDto("You have already a validation form for this department in this map"));
+        if(validationFormService.hasAlreadyAFormForDivisionForFinalMap(user, saveFormDto.division(),finalMap)){
+            return ResponseEntity.status(401).body(new MessageDto("You have already a validation form for this division in this map"));
         }
 
         try{
             final ValidationForm validationForm= validationFormService.saveForm(
-                    saveFormDto.department(),
+                    saveFormDto.division(),
                     saveFormDto.agreementLevel(),
                     saveFormDto.perceivedRisk(),
                     saveFormDto.certaintyLevel(),
@@ -140,7 +140,7 @@ public class ValidationFormController {
 
             final ValidationForm newValidationForm = validationFormService.updateForm(
                     updateValidationFormDto.id(),
-                    validationForm.getDepartment(),
+                    validationForm.getDivision(),
                     updateValidationFormDto.agreementLevel(),
                     updateValidationFormDto.perceivedRisk(),
                     updateValidationFormDto.certaintyLevel(),
@@ -156,40 +156,20 @@ public class ValidationFormController {
         }
     }
 
-    /**
-     * Get a form based on its id
-     *
-     * @param id the id of the form you are looking for
-     *
-     * @return the form information if it exists, not found otherwise
-     */
-    @GetMapping("/form/{id}")
-    public ResponseEntity<Object> getForm(@PathVariable long id){
-
-       final Optional<ValidationForm> optionalValidationForm = validationFormService.findFormById(id);
-
-       if(optionalValidationForm.isEmpty()){
-           return ResponseEntity.status(404).body(new MessageDto("No form with the specify id"));
-       }
-
-        final ValidationForm validationForm= optionalValidationForm.get();
-        final ResponseValidationFormDto responseValidationFormDto= new ResponseValidationFormDto(validationForm);
-        return ResponseEntity.status(200).body(responseValidationFormDto);
-    }
 
     /**
-     * Get the form from the connected user for a specific department for a specific map
+     * Get the form from the connected user for a specific division for a specific map
      *
      * @param finalMapId the id of the map you are intrested in
-     * @param department the department you are interested in
+     * @param division the division you are interested in
      * @param request the Http request containing the JWT token
      *
      * @return the form information if it exists, error message or not found otherwise
      */
-    @GetMapping("/myForm/{finalMapId}/{department}")
-    public ResponseEntity<Object> getConnectUserFormForFinalMapForDepartment(
+    @GetMapping("/myForm/{finalMapId}/{division}")
+    public ResponseEntity<Object> getConnectUserFormForFinalMapForDivision(
             @PathVariable long finalMapId,
-            @PathVariable String department,
+            @PathVariable String division,
             HttpServletRequest request
             ){
 
@@ -210,13 +190,13 @@ public class ValidationFormController {
         final FinalMap finalMap= optionalFinalMap.get();
 
         final Optional<ValidationForm> optionalValidationForm = validationFormService
-                .getFormForUserAndDepartmentAndFinalMap(
+                .getFormForUserAndDivisionAndFinalMap(
                 user,
-                department,
+                division,
                 finalMap);
 
         if(optionalValidationForm.isEmpty()){
-            return ResponseEntity.status(404).body(new MessageDto("You have no form for the specified department for this map"));
+            return ResponseEntity.status(404).body(new MessageDto("You have no form for the specified division for this map"));
         }
 
         final ValidationForm validationForm= optionalValidationForm.get();
@@ -227,7 +207,7 @@ public class ValidationFormController {
     /**
      * Get all existing form for a specific map
      *
-     * @param finalMapId the id of the map you are intrested in
+     * @param finalMapId the id of the map you are interested in
      *
      * @return the froms information for a map in a list, not found if the map doesn't exist
      */
@@ -248,35 +228,5 @@ public class ValidationFormController {
         }
         return ResponseEntity.status(200).body(responseValidationForms);
     }
-
-    /**
-     * Get all the form for a specific department for a specific map
-     *
-     *@param finalMapId the id of the map you are intrested in
-     * @param department the department you are interested in
-     *
-     * @return the forms information for a department for a map in a list, not found if the map doesn't exist
-     */
-    @GetMapping("/allFormForDepartmentForFinalMap/{finalMapId}/{department}")
-    public ResponseEntity<Object> getAllFormForDepartmentForFinalMap(
-            @PathVariable String department,
-            @PathVariable long finalMapId){
-
-        final Optional<FinalMap> optionalFinalMap= finalMapService.findById(finalMapId);
-        if(optionalFinalMap.isEmpty()){
-            return ResponseEntity.status(404).body(new MessageDto("The selected map does not exist"));
-        }
-        final FinalMap finalMap= optionalFinalMap.get();
-
-        final List<ValidationForm> validationForms = validationFormService.getAllFormForDepartmentAndFinalMap(department,finalMap);
-        final List<ResponseValidationFormDto> responseValidationForms = new ArrayList<>();
-        for(ValidationForm validationForm:validationForms){
-            responseValidationForms.add(new ResponseValidationFormDto(validationForm));
-        }
-        return ResponseEntity.status(200).body(responseValidationForms);
-    }
-
-
-
 
 }

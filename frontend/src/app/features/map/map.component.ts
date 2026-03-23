@@ -27,7 +27,9 @@ export class MapComponent implements  OnInit, AfterViewInit {
     {label: 'Medium', color: '#f39c12'},
     {label: 'High', color: '#e74c3c'}];
 
-  selectedDepartment = signal<any>(null);
+  mapId:number=-1;
+
+  selectedDivision = signal<any>(null);
   marker: any = null;
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
@@ -59,7 +61,7 @@ export class MapComponent implements  OnInit, AfterViewInit {
   onCloseValidation(): void {
     this.showValidationModal.set(false);
     this.existingForm.set(null);
-    this.selectedDepartment.set(null);
+    this.selectedDivision.set(null);
     if (this.marker) {
       this.marker.remove();
       this.marker = null;
@@ -96,15 +98,6 @@ export class MapComponent implements  OnInit, AfterViewInit {
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
 
-  this.validationFormService.getAllForm().subscribe({
-    next: (validationForms:ResponseValidationFormDto[])=>{
-      this.allValidationForms.set(validationForms);
-    },
-    error: (err)=>{
-      console.error('Failed to load validation forms', err);
-    }
-  })
-
     this.riskFactorMapService.getAllMaps().subscribe({
           next: (maps:RiskFactorMapListDto[]) => {
             this.riskFactorMaps.set(maps);
@@ -115,6 +108,16 @@ export class MapComponent implements  OnInit, AfterViewInit {
     });
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.mapId=id;
+
+    this.validationFormService.getAllForm(id).subscribe({
+      next: (validationForms:ResponseValidationFormDto[])=>{
+        this.allValidationForms.set(validationForms);
+      },
+      error: (err)=>{
+        console.error('Failed to load validation forms', err);
+      }
+    })
 
     const L = await import('leaflet');
     this.leaflet = L.default ?? L;
@@ -146,14 +149,14 @@ export class MapComponent implements  OnInit, AfterViewInit {
             layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
             layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
             layer.on('click', (e: any) => {
-              if (this.selectedDepartment() === feature.properties) {
+              if (this.selectedDivision() === feature.properties) {
                 this.marker.remove();
                 this.marker = null;
-                this.selectedDepartment.set(null);
+                this.selectedDivision.set(null);
                 this.existingForm.set(null);
                 return;
               }
-              this.selectedDepartment.set(feature.properties);
+              this.selectedDivision.set(feature.properties);
               if (this.marker) this.marker.remove();
               this.marker = this.leaflet.circleMarker(e.latlng, {
                 radius: 5,
@@ -162,7 +165,7 @@ export class MapComponent implements  OnInit, AfterViewInit {
                 fillOpacity: 0.8,
                 pane: 'markerPane',
               }).addTo(this.map);
-              this.validationFormService.getMyFormForADep(feature.properties.NAME_2).subscribe({
+              this.validationFormService.getMyFormForADiv(id,feature.properties.NAME_2).subscribe({
                 next: (form) => this.existingForm.set(form),
                 error: () => this.existingForm.set(null)
               });

@@ -12,7 +12,7 @@ import {MatExpansionPanel, MatExpansionPanelHeader} from '@angular/material/expa
 })
 export class ValidationComment {
   @Input() username: string="";
-  @Input() department: string="";
+  @Input() division: string="";
   @Input() agreementLevel:number|null=0;
   @Input() perceivedRisk:string|null="";
   @Input() certaintyLevel: number|null=0;

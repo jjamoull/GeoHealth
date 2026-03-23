@@ -71,7 +71,7 @@ class ValidationFormServiceTest {
         );
 
         //Assert
-        assertEquals("Mfoundi", updatedValidationForm.getDepartment());
+        assertEquals("Mfoundi", updatedValidationForm.getDivision());
         assertEquals(4, updatedValidationForm.getAgreementLevel());
         assertEquals("medium", updatedValidationForm.getPerceivedRisk());
         assertEquals(3, updatedValidationForm.getCertaintyLevel());
