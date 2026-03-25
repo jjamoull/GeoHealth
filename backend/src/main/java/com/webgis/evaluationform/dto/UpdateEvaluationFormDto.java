@@ -1,9 +1,9 @@
-package com.webgis.validationform.dto;
+package com.webgis.evaluationform.dto;
 
 /**
  * Data Transfer Object containing the validation form information needed to update a form
  */
-public record UpdateValidationFormDto(
+public record UpdateEvaluationFormDto(
         long id,
         Integer agreementLevel,
         String perceivedRisk,

@@ -1,4 +1,4 @@
-package com.webgis.validationform;
+package com.webgis.evaluationform;
 
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapRepository;
@@ -14,10 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @DataJpaTest
-class ValidationFormRepositoryTest {
+class EvaluationFormRepositoryTest {
 
     @Autowired
-    private ValidationFormRepository validationFormRepository;
+    private EvaluationFormRepository evaluationFormRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -25,7 +25,7 @@ class ValidationFormRepositoryTest {
     @Autowired
     private FinalMapRepository finalMapRepository;
 
-    private void assertValidationFormEquals(ValidationForm actual, ValidationForm expected) {
+    private void assertEvaluationFormEquals(EvaluationForm actual, EvaluationForm expected) {
         assertThat(actual.getDivision()).isEqualTo(expected.getDivision());
         assertThat(actual.getAgreementLevel()).isEqualTo(expected.getAgreementLevel());
         assertThat(actual.getPerceivedRisk()).isEqualTo(expected.getPerceivedRisk());
@@ -55,7 +55,7 @@ class ValidationFormRepositoryTest {
                 dataZip,
                 "file");
 
-        ValidationForm validationForm=new ValidationForm(
+        EvaluationForm evaluationForm =new EvaluationForm(
                 "Wouri",
                 2,
                 "low",
@@ -69,11 +69,11 @@ class ValidationFormRepositoryTest {
         //Act
         userRepository.save(user);
         finalMapRepository.save(finalMap);
-        validationFormRepository.save(validationForm);
-        Optional<ValidationForm> found= validationFormRepository.findById(validationForm.getId());
+        evaluationFormRepository.save(evaluationForm);
+        Optional<EvaluationForm> found= evaluationFormRepository.findById(evaluationForm.getId());
 
         //Assert
         assertThat(found).isPresent();
-        assertValidationFormEquals(found.get(),validationForm);
+        assertEvaluationFormEquals(found.get(), evaluationForm);
     }
 }
