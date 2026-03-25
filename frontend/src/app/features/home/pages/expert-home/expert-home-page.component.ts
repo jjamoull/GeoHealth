@@ -2,11 +2,14 @@ import { Component } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
 import {LoginService} from '../../../../core/service/LoginService/loginService';
+import {ButtonComponent} from "../../../../shared/components/button.component/button.component";
 
 
 @Component({
   selector: 'app-home',
-  imports: [],
+    imports: [
+        ButtonComponent
+    ],
   templateUrl: './expert-home-page.component.html',
   styleUrl: './expert-home-page.component.css',
   standalone: true,
@@ -23,6 +26,13 @@ export class ExpertHomePageComponent {
    * */
   goToNavigation(){
       this.router.navigate(['/navigation']);
+  }
+
+  /**
+   * Redirection to register page
+   */
+  goToRegister(){
+    this.router.navigate(['register'])
   }
 
   logout(): void {
