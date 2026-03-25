@@ -46,7 +46,7 @@
   <div class="button-validation">
     @if(selectedDivision() && !showValidationModal()){
       <app-button
-        [text]="existingForm() ? 'Edit Validation' : 'Add Validation'"
+        [text]="existingForm() ? 'Edit Evaluation' : 'Add Evaluation'"
         [variant]="'success'"
         (click)="onOpenValidation()">
       </app-button>
@@ -55,7 +55,7 @@
 
 
   <div class="validation-forms">
-  <h2>Validations</h2>
+  <h2>Evaluations</h2>
   @for(form of allValidationForms(); track form){
     @if(form.division==selectedDivision().NAME_2 && form.isPublic){
       <app-validation-comment
