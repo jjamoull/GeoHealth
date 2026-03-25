@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MapLegend } from './map-legend';
+import {MapLegendComponent } from './map-legend';
 
 describe('MapLegend', () => {
-  let component: MapLegend;
-  let fixture: ComponentFixture<MapLegend>;
+  let component: MapLegendComponent;
+  let fixture: ComponentFixture<MapLegendComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MapLegend]
+      imports: [MapLegendComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MapLegend);
+    fixture = TestBed.createComponent(MapLegendComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

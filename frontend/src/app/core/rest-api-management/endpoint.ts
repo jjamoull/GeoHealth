@@ -37,9 +37,7 @@ export const API_ENDPOINTS = {
   VAlIDATIONFORM:{
     SAVE:"/validationForm/saveForm",
     UPDATE:"/validationForm/updateForm",
-    GETFORM:"/validationForm/form",
-    GETMYFORMFORADEP:"/validationForm/myForm",
-    GETALLFORM:"/validationForm/allForm",
-    GETALLFORMFORADEP:"/validationForm/allFormForDepartment"
+    GETMYFORMFORADIVFORAMAP:"/validationForm/myForm",
+    GETALLFORMFORAMAP:"/validationForm/allFormForFinalMap",
   }
 } as const;

@@ -17,7 +17,8 @@ import { UpdateValidationFormDto } from '../../../shared/models/ValidationFormMo
   styleUrl: './validation-modal.css',
 })
 export class ValidationModalComponent implements OnChanges {
-  @Input() department: any = null;
+  @Input() division: any = null;
+  @Input() mapId: number= -1;
   @Input() existingForm: ResponseValidationFormDto | null = null;
   @Output() close = new EventEmitter<void>();
 
@@ -44,11 +45,12 @@ export class ValidationModalComponent implements OnChanges {
   onSave(isPublic: boolean): void {
     if (this.existingForm === null) {
       const saveValidationFormDto: SaveValidationFormDto = {
-        department: this.department?.NAME_2,
+        division: this.division?.NAME_2,
         agreementLevel: this.agreementLevel,
         certaintyLevel: this.certaintyLevel,
         perceivedRisk: this.perceivedRisk,
         comment: this.comment,
+        finalMapId: this.mapId,
         isPublic: isPublic
       };
 

@@ -1,14 +1,14 @@
 <div cdkDrag class="validation-modal">
   <div class="modal-header" cdkDragHandle>
-    <h2>Validation for a district</h2>
+    <h2>Evaluation for a division</h2>
     <button class="close-btn" (click)="onClose()">×</button>
   </div>
 
   <div class="modal-content">
     <form id="validation-form">
       <div class="item">
-        <label>Department</label>
-        <input type="text" [value]="department?.NAME_2" readonly>
+        <label>Division</label>
+        <input type="text" [value]="division?.NAME_2" readonly>
       </div>
 
       <div class="item">

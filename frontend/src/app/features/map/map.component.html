@@ -3,7 +3,7 @@
 
     <div class="map-selector">
       <select (change)="onMapSelected($event)">
-        <option value="">Departments only</option>
+        <option value="">Division only</option>
         @for (map of riskFactorMaps(); track map.id) {
           <option [value]="map.id">{{ map.title }}</option>
         }
@@ -13,18 +13,18 @@
     <div id="map"></div>
 
     <div class="info-card">
-      <p>{{ selectedDepartment | json }}</p>
-      @if(selectedDepartment()) {
-        <p>Type: {{selectedDepartment().ENGTYPE_2}}</p>
-        <p>Region: {{selectedDepartment().NAME_1}}</p>
-        <p>Name: {{selectedDepartment().NAME_2}}</p>
+      <p>{{selectedDivision | json }}</p>
+      @if(selectedDivision()) {
+        <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
+        <p>Region: {{selectedDivision().NAME_1}}</p>
+        <p>Name: {{selectedDivision().NAME_2}}</p>
         <p class="risk-row">
           Risk:
-          <span class="dot" [style.background]="getRiskColor(selectedDepartment().Risk_categ)"></span>
-          {{selectedDepartment().Risk_categ}}
+          <span class="dot" [style.background]="getRiskColor(selectedDivision().Risk_categ)"></span>
+          {{selectedDivision().Risk_categ}}
         </p>
       } @else {
-        <p class="card-label">Click a Department</p>
+        <p class="card-label">Click a Division</p>
       }
     </div>
 
@@ -44,7 +44,7 @@
 <div class="validations-section">
 
   <div class="button-validation">
-    @if(selectedDepartment() && !showValidationModal()){
+    @if(selectedDivision() && !showValidationModal()){
       <app-button
         [text]="existingForm() ? 'Edit Validation' : 'Add Validation'"
         [variant]="'success'"
@@ -57,10 +57,10 @@
   <div class="validation-forms">
   <h2>Validations</h2>
   @for(form of allValidationForms(); track form){
-    @if(form.department==selectedDepartment().NAME_2 && form.isPublic){
+    @if(form.division==selectedDivision().NAME_2 && form.isPublic){
       <app-validation-comment
         [username]= "form.username"
-        [department]="form.department"
+        [division]="form.division"
         [agreementLevel]="form.agreementLevel"
         [perceivedRisk]="form.perceivedRisk"
         [certaintyLevel]="form.certaintyLevel"
@@ -74,7 +74,8 @@
 
 @if(showValidationModal()) {
   <app-validation-modal
-    [department]="selectedDepartment()"
+    [division]="selectedDivision()"
+    [mapId]="mapId"
     [existingForm]="existingForm()"
     (close)="onCloseValidation()">
   </app-validation-modal>

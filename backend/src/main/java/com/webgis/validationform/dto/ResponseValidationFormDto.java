@@ -7,7 +7,7 @@ import com.webgis.validationform.ValidationForm;
  */
 public record ResponseValidationFormDto(
         long id,
-        String department,
+        String division,
         Integer agreementLevel,
         String perceivedRisk,
         Integer certaintyLevel,
@@ -18,7 +18,7 @@ public record ResponseValidationFormDto(
     public ResponseValidationFormDto(ValidationForm validationForm){
         this(
                 validationForm.getId(),
-                validationForm.getDepartment(),
+                validationForm.getDivision(),
                 validationForm.getAgreementLevel(),
                 validationForm.getPerceivedRisk(),
                 validationForm.getCertaintyLevel(),

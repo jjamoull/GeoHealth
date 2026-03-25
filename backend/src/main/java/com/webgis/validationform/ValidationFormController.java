@@ -1,6 +1,8 @@
 package com.webgis.validationform;
 
 import com.webgis.MessageDto;
+import com.webgis.map.finalmap.FinalMap;
+import com.webgis.map.finalmap.FinalMapService;
 import com.webgis.security.CookieService;
 import com.webgis.security.JwtService;
 import com.webgis.user.User;
@@ -33,14 +35,18 @@ public class ValidationFormController {
     private final JwtService jwtService;
     private final CookieService cookieService;
     private final UserService userService;
+    private final FinalMapService finalMapService;
 
     public ValidationFormController(ValidationFormService validationFormService,
                                     JwtService jwtService,
-                                    CookieService cookieService, UserService userService) {
+                                    CookieService cookieService,
+                                    UserService userService,
+                                    FinalMapService finalMapService) {
         this.validationFormService = validationFormService;
         this.jwtService = jwtService;
         this.cookieService = cookieService;
         this.userService = userService;
+        this.finalMapService=finalMapService;
     }
 
     /**
@@ -59,25 +65,32 @@ public class ValidationFormController {
         final String token = cookieService.getJwtFromCookie(request);
         final String username = jwtService.extractUsername(token);
         final Optional<User> optionalUser = userService.findByUsername(username);
+        final Optional<FinalMap> optionalFinalMap= finalMapService.findById(saveFormDto.finalMapId());
+
+        if(optionalFinalMap.isEmpty()){
+            return ResponseEntity.status(404).body(new MessageDto("The selected map does not exist"));
+        }
 
         if(optionalUser.isEmpty()) {
             return ResponseEntity.status(401).body(new MessageDto("You are not logged in or your cookie is not valid"));
         }
 
         final User user= optionalUser.get();
+        final FinalMap finalMap= optionalFinalMap.get();
 
-        if(validationFormService.hasAlreadyAFormForDepartment(user, saveFormDto.department())){
-            return ResponseEntity.status(401).body(new MessageDto("You have already a validation form for this department"));
+        if(validationFormService.hasAlreadyAFormForDivisionForFinalMap(user, saveFormDto.division(),finalMap)){
+            return ResponseEntity.status(401).body(new MessageDto("You have already a validation form for this division in this map"));
         }
 
         try{
             final ValidationForm validationForm= validationFormService.saveForm(
-                    saveFormDto.department(),
+                    saveFormDto.division(),
                     saveFormDto.agreementLevel(),
                     saveFormDto.perceivedRisk(),
                     saveFormDto.certaintyLevel(),
                     saveFormDto.comment(),
                     user,
+                    finalMap,
                     saveFormDto.isPublic());
             final ResponseValidationFormDto responseValidationFormDto= new ResponseValidationFormDto(validationForm);
             return ResponseEntity.status(200).body(responseValidationFormDto);
@@ -127,12 +140,13 @@ public class ValidationFormController {
 
             final ValidationForm newValidationForm = validationFormService.updateForm(
                     updateValidationFormDto.id(),
-                    validationForm.getDepartment(),
+                    validationForm.getDivision(),
                     updateValidationFormDto.agreementLevel(),
                     updateValidationFormDto.perceivedRisk(),
                     updateValidationFormDto.certaintyLevel(),
                     updateValidationFormDto.comment(),
                     user,
+                    validationForm.getFinalMap(),
                     updateValidationFormDto.isPublic());
             final ResponseValidationFormDto responseValidationFormDto= new ResponseValidationFormDto(newValidationForm);
             return ResponseEntity.status(200).body(responseValidationFormDto);
@@ -142,55 +156,47 @@ public class ValidationFormController {
         }
     }
 
-    /**
-     * Get a form based on its id
-     *
-     * @param id the id of the form you are looking for
-     *
-     * @return the form information if it exists, not found otherwise
-     */
-    @GetMapping("/form/{id}")
-    public ResponseEntity<Object> getForm(@PathVariable long id){
-
-       final Optional<ValidationForm> optionalValidationForm = validationFormService.findFormById(id);
-
-       if(optionalValidationForm.isEmpty()){
-           return ResponseEntity.status(404).body(new MessageDto("No form with the specify id"));
-       }
-
-        final ValidationForm validationForm= optionalValidationForm.get();
-        final ResponseValidationFormDto responseValidationFormDto= new ResponseValidationFormDto(validationForm);
-        return ResponseEntity.status(200).body(responseValidationFormDto);
-    }
 
     /**
-     * Get the form from the conncted user for a specific department
+     * Get the form from the connected user for a specific division for a specific map
      *
-     * @param department the department you are interested in
+     * @param finalMapId the id of the map you are intrested in
+     * @param division the division you are interested in
      * @param request the Http request containing the JWT token
      *
      * @return the form information if it exists, error message or not found otherwise
      */
-    @GetMapping("/myForm/{department}")
-    public ResponseEntity<Object> getConnectUserFormForDepartment(
-            @PathVariable String department,
+    @GetMapping("/myForm/{finalMapId}/{division}")
+    public ResponseEntity<Object> getConnectUserFormForFinalMapForDivision(
+            @PathVariable long finalMapId,
+            @PathVariable String division,
             HttpServletRequest request
             ){
 
         final String token = cookieService.getJwtFromCookie(request);
         final String username = jwtService.extractUsername(token);
         final Optional<User> optionalUser = userService.findByUsername(username);
+        final Optional<FinalMap> optionalFinalMap= finalMapService.findById(finalMapId);
+
+        if(optionalFinalMap.isEmpty()){
+            return ResponseEntity.status(404).body(new MessageDto("The selected map does not exist"));
+        }
 
         if(optionalUser.isEmpty()) {
             return ResponseEntity.status(401).body(new MessageDto("You are not logged in or your cookie is not valid"));
         }
 
         final User user= optionalUser.get();
+        final FinalMap finalMap= optionalFinalMap.get();
 
-        final Optional<ValidationForm> optionalValidationForm = validationFormService.getFormForUserAndDepartment(user,department);
+        final Optional<ValidationForm> optionalValidationForm = validationFormService
+                .getFormForUserAndDivisionAndFinalMap(
+                user,
+                division,
+                finalMap);
 
         if(optionalValidationForm.isEmpty()){
-            return ResponseEntity.status(404).body(new MessageDto("You have no form for the specified department"));
+            return ResponseEntity.status(404).body(new MessageDto("You have no form for the specified division for this map"));
         }
 
         final ValidationForm validationForm= optionalValidationForm.get();
@@ -199,39 +205,28 @@ public class ValidationFormController {
     }
 
     /**
-     * Get all existing form
+     * Get all existing form for a specific map
      *
-     * @return the froms information in a list
+     * @param finalMapId the id of the map you are interested in
+     *
+     * @return the froms information for a map in a list, not found if the map doesn't exist
      */
-    @GetMapping("/allForm")
-    public ResponseEntity<Object> getAllForm(){
-        final List<ValidationForm> validationForms = validationFormService.getAllForm();
+    @GetMapping("/allFormForFinalMap/{finalMapId}")
+    public ResponseEntity<Object> getAllFormForFinalMap(
+            @PathVariable long finalMapId
+    ){
+        final Optional<FinalMap> optionalFinalMap= finalMapService.findById(finalMapId);
+        if(optionalFinalMap.isEmpty()){
+            return ResponseEntity.status(404).body(new MessageDto("The selected map does not exist"));
+        }
+        final FinalMap finalMap= optionalFinalMap.get();
+
+        final List<ValidationForm> validationForms = validationFormService.getAllFormForFinalMap(finalMap);
         final List<ResponseValidationFormDto> responseValidationForms = new ArrayList<>();
         for(ValidationForm validationForm:validationForms){
             responseValidationForms.add(new ResponseValidationFormDto(validationForm));
         }
         return ResponseEntity.status(200).body(responseValidationForms);
     }
-
-    /**
-     * Get all the form for a specific department
-     *
-     * @param department the department you are interested in
-     *
-     * @return the forms information in a list
-     */
-    @GetMapping("/allFormForDepartment/{department}")
-    public ResponseEntity<Object> getAllFormForDepartment(@PathVariable String department){
-
-        final List<ValidationForm> validationForms = validationFormService.getAllFormForDepartment(department);
-        final List<ResponseValidationFormDto> responseValidationForms = new ArrayList<>();
-        for(ValidationForm validationForm:validationForms){
-            responseValidationForms.add(new ResponseValidationFormDto(validationForm));
-        }
-        return ResponseEntity.status(200).body(responseValidationForms);
-    }
-
-
-
 
 }
