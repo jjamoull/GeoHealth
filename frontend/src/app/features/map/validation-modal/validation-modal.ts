@@ -8,11 +8,12 @@ import { ValidationFormService } from '../../../core/service/ValidationFormServi
 import { RatingScalerComponent } from '../rating-scaler/rating-scaler';
 import {ResponseValidationFormDto} from '../../../shared/models/ValidationFormModel/ResponseValidationFormDto';
 import { UpdateValidationFormDto } from '../../../shared/models/ValidationFormModel/UpdateValidationFormDto';
+import {TooltipDescriptionComponent } from '../../../shared/components/tooltip-description/tooltip-description';
 
 @Component({
   selector: 'app-validation-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent],
+  imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent, TooltipDescriptionComponent],
   templateUrl: './validation-modal.html',
   styleUrl: './validation-modal.css',
 })
