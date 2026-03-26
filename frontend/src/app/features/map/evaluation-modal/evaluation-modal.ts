@@ -3,23 +3,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
 import { ButtonComponent } from '../../../shared/components/button.component/button.component';
-import { SaveValidationFormDto } from '../../../shared/models/ValidationFormModel/SaveValidationFormDto';
-import { ValidationFormService } from '../../../core/service/ValidationFormService/validationFormService';
+import { SaveEvaluationFormDto } from '../../../shared/models/EvaluationFormModel/SaveEvaluationFormDto';
+import { EvaluationFormService } from '../../../core/service/EvaluationFormService/EvaluationFormService';
 import { RatingScalerComponent } from '../rating-scaler/rating-scaler';
-import {ResponseValidationFormDto} from '../../../shared/models/ValidationFormModel/ResponseValidationFormDto';
-import { UpdateValidationFormDto } from '../../../shared/models/ValidationFormModel/UpdateValidationFormDto';
+import {ResponseEvaluationFormDto} from '../../../shared/models/EvaluationFormModel/ResponseEvaluationFormDto';
+import { UpdateEvaluationFormDto } from '../../../shared/models/EvaluationFormModel/UpdateEvaluationFormDto';
 
 @Component({
-  selector: 'app-validation-modal',
+  selector: 'app-evaluation-modal',
   standalone: true,
   imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent],
-  templateUrl: './validation-modal.html',
-  styleUrl: './validation-modal.css',
+  templateUrl: './evaluation-modal.html',
+  styleUrl: './evaluation-modal.css',
 })
-export class ValidationModalComponent implements OnChanges {
+export class EvaluationModalComponent implements OnChanges {
   @Input() division: any = null;
   @Input() mapId: number= -1;
-  @Input() existingForm: ResponseValidationFormDto | null = null;
+  @Input() existingForm: ResponseEvaluationFormDto | null = null;
   @Output() close = new EventEmitter<void>();
 
   agreementLevel: number | null = null;
@@ -36,7 +36,7 @@ export class ValidationModalComponent implements OnChanges {
     this.isPublic = this.existingForm?.isPublic || false;
   }
 
-  constructor(private validationFormService: ValidationFormService) {}
+  constructor(private evaluationFormService: EvaluationFormService) {}
 
   onClose(): void {
     this.close.emit();
@@ -44,7 +44,7 @@ export class ValidationModalComponent implements OnChanges {
 
   onSave(isPublic: boolean): void {
     if (this.existingForm === null) {
-      const saveValidationFormDto: SaveValidationFormDto = {
+      const saveEvaluationFormDto: SaveEvaluationFormDto = {
         division: this.division?.NAME_2,
         agreementLevel: this.agreementLevel,
         certaintyLevel: this.certaintyLevel,
@@ -54,7 +54,7 @@ export class ValidationModalComponent implements OnChanges {
         isPublic: isPublic
       };
 
-      this.validationFormService.saveForm(saveValidationFormDto).subscribe({
+      this.evaluationFormService.saveForm(saveEvaluationFormDto).subscribe({
         next: () => {
           console.log('Form saved successfully');
           this.close.emit();
@@ -62,7 +62,7 @@ export class ValidationModalComponent implements OnChanges {
         error: (err) => console.error('Error saving form:', err)
       });
     } else {
-      const updateDto : UpdateValidationFormDto = {
+      const updateDto : UpdateEvaluationFormDto = {
         id: this.existingForm!.id,
         agreementLevel: this.agreementLevel,
         certaintyLevel: this.certaintyLevel?.toString() || null,
@@ -70,7 +70,7 @@ export class ValidationModalComponent implements OnChanges {
         comment: this.comment,
         isPublic: isPublic
       };
-      this.validationFormService.updateForm(updateDto).subscribe({
+      this.evaluationFormService.updateForm(updateDto).subscribe({
         next: () => {
           console.log('Form updated successfully');
           this.close.emit();

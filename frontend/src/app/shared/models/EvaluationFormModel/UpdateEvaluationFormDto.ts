@@ -1,4 +1,4 @@
-export interface UpdateValidationFormDto{
+export interface UpdateEvaluationFormDto {
   id: number,
   agreementLevel: number|null,
   perceivedRisk: string|null,

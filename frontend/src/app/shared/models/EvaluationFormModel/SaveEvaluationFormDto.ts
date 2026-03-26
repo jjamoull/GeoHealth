@@ -1,4 +1,4 @@
-export interface SaveValidationFormDto{
+export interface SaveEvaluationFormDto {
   division: string,
   agreementLevel: number|null,
   perceivedRisk:  string|null,

@@ -41,42 +41,42 @@
   </div>
 </div>
 
-<div class="validations-section">
+<div class="evaluation-section">
 
-  <div class="button-validation">
-    @if(selectedDivision() && !showValidationModal()){
+  <div class="button-evaluation">
+    @if(selectedDivision() && !showEvaluationModal()){
       <app-button
         [text]="existingForm() ? 'Edit Evaluation' : 'Add Evaluation'"
         [variant]="'success'"
-        (click)="onOpenValidation()">
+        (click)="onOpenEvaluation()">
       </app-button>
     }
   </div>
 
 
-  <div class="validation-forms">
+  <div class="evaluation-forms">
   <h2>Evaluations</h2>
-  @for(form of allValidationForms(); track form){
+  @for(form of allEvaluationForms(); track form){
     @if(form.division==selectedDivision().NAME_2 && form.isPublic){
-      <app-validation-comment
+      <app-evaluation-comment
         [username]= "form.username"
         [division]="form.division"
         [agreementLevel]="form.agreementLevel"
         [perceivedRisk]="form.perceivedRisk"
         [certaintyLevel]="form.certaintyLevel"
         [comment]="form.comment">
-      </app-validation-comment>
+      </app-evaluation-comment>
     }
   }
   </div>
 </div>
 
 
-@if(showValidationModal()) {
-  <app-validation-modal
+@if(showEvaluationModal()) {
+  <app-evaluation-modal
     [division]="selectedDivision()"
     [mapId]="mapId"
     [existingForm]="existingForm()"
-    (close)="onCloseValidation()">
-  </app-validation-modal>
+    (close)="onCloseEvaluation()">
+  </app-evaluation-modal>
 }
