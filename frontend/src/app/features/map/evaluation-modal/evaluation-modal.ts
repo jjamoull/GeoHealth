@@ -6,13 +6,16 @@ import { ButtonComponent } from '../../../shared/components/button.component/but
 import { SaveEvaluationFormDto } from '../../../shared/models/EvaluationFormModel/SaveEvaluationFormDto';
 import { EvaluationFormService } from '../../../core/service/EvaluationFormService/EvaluationFormService';
 import { RatingScalerComponent } from '../rating-scaler/rating-scaler';
+
 import {ResponseEvaluationFormDto} from '../../../shared/models/EvaluationFormModel/ResponseEvaluationFormDto';
 import { UpdateEvaluationFormDto } from '../../../shared/models/EvaluationFormModel/UpdateEvaluationFormDto';
+import {TooltipDescriptionComponent } from '../../../shared/components/tooltip-description/tooltip-description';
+
 
 @Component({
   selector: 'app-evaluation-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent],
+  imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent,TooltipDescriptionComponent],
   templateUrl: './evaluation-modal.html',
   styleUrl: './evaluation-modal.css',
 })
