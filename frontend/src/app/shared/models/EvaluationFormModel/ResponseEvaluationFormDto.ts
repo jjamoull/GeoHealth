@@ -1,4 +1,4 @@
-export interface ResponseValidationFormDto{
+export interface ResponseEvaluationFormDto {
   id:number,
   division: string,
   agreementLevel: number|null,

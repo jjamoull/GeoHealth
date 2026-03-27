@@ -1,4 +1,4 @@
-package com.webgis.validationform;
+package com.webgis.evaluationform;
 
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.user.User;
@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ValidationFormService{
+public class EvaluationFormService {
 
-    private final ValidationFormRepository validationFormRepository;
+    private final EvaluationFormRepository evaluationFormRepository;
 
-    public ValidationFormService(ValidationFormRepository validationFormRepository) {
-        this.validationFormRepository = validationFormRepository;
+    public EvaluationFormService(EvaluationFormRepository evaluationFormRepository) {
+        this.evaluationFormRepository = evaluationFormRepository;
     }
 
     /**
-     * Save a validation form
+     * Save an evaluation form
      *
      * @param division the division which is concerned by the form
      * @param agreementLevel the agreement level of the expert for this division (1-4)
@@ -25,12 +25,12 @@ public class ValidationFormService{
      * @param certaintyLevel the certainty level of the expert on its own evaluation (1-4)
      * @param comment any comment of the expert
      * @param user the expert that produce the form
-     * @param finalMap the map for which the validation form is made
+     * @param finalMap the map for which the evaluation form is made
      * @param isPublic whether the form should be public for other experts or not
      *
-     * @return the newly saved validationForm
+     * @return the newly saved evaluation form
      */
-    public ValidationForm saveForm(
+    public EvaluationForm saveForm(
             String division,
             Integer agreementLevel,
             String perceivedRisk,
@@ -40,7 +40,7 @@ public class ValidationFormService{
             FinalMap finalMap,
             boolean isPublic){
 
-        final ValidationForm form = new ValidationForm(
+        final EvaluationForm form = new EvaluationForm(
                 division,
                 agreementLevel,
                 perceivedRisk,
@@ -50,7 +50,7 @@ public class ValidationFormService{
                 finalMap,
                 isPublic);
 
-        return validationFormRepository.save(form);
+        return evaluationFormRepository.save(form);
     }
 
     /**
@@ -60,7 +60,7 @@ public class ValidationFormService{
      *
      * @return the form with the specify id if it exists, empty otherwise
      */
-    public Optional<ValidationForm> findFormById(long id){ return validationFormRepository.findById(id);}
+    public Optional<EvaluationForm> findFormById(long id){ return evaluationFormRepository.findById(id);}
 
     /**
      * Update the value of the form with the specify id
@@ -77,9 +77,9 @@ public class ValidationFormService{
      *
      * @throws IllegalArgumentException if there is no form with the specify id
      *
-     * @return the modified validationForm
+     * @return the modified evaluation form
      */
-    public ValidationForm updateForm(
+    public EvaluationForm updateForm(
             long id,
             String division,
             Integer agreementLevel,
@@ -90,12 +90,12 @@ public class ValidationFormService{
             FinalMap finalMap,
             boolean isPublic){
 
-            final Optional<ValidationForm> optionalForm =findFormById(id);
+            final Optional<EvaluationForm> optionalForm =findFormById(id);
             if(optionalForm.isEmpty()){
                 throw new IllegalArgumentException("Form does not exist");
             }
 
-            final ValidationForm form= optionalForm.get();
+            final EvaluationForm form= optionalForm.get();
 
             form.setDivision(division);
             form.setAgreementLevel(agreementLevel);
@@ -106,18 +106,18 @@ public class ValidationFormService{
             form.setFinalMap(finalMap);
             form.setIsPublic(isPublic);
 
-            return validationFormRepository.save(form);
+            return evaluationFormRepository.save(form);
     }
 
     /**
      * Get all form for a map
      *
-     * @param finalMap the map from which you want the validation forms
+     * @param finalMap the map from which you want the evaluation forms
      *
      * @return A list of all form linked to a specific map
      */
-    public List<ValidationForm> getAllFormForFinalMap(FinalMap finalMap){
-        return validationFormRepository.findByFinalMap(finalMap);
+    public List<EvaluationForm> getAllFormForFinalMap(FinalMap finalMap){
+        return evaluationFormRepository.findByFinalMap(finalMap);
     }
 
     /**
@@ -125,25 +125,25 @@ public class ValidationFormService{
      *
      * @param user the user you are interested in
      * @param division the division you are interested in
-     * @param finalMap the map from which you want the validation forms
+     * @param finalMap the map from which you want the evaluation forms
      *
      * @return the form of the specify user for the specify division for a specific map if it exists, empty otherwise
      */
-    public Optional<ValidationForm> getFormForUserAndDivisionAndFinalMap(User user, String division, FinalMap finalMap){
-        return validationFormRepository.findByUserAndDivisionAndFinalMap(user,division,finalMap);
+    public Optional<EvaluationForm> getFormForUserAndDivisionAndFinalMap(User user, String division, FinalMap finalMap){
+        return evaluationFormRepository.findByUserAndDivisionAndFinalMap(user,division,finalMap);
     }
 
     /**
-     * Check whether a user has a validation form for a division for a specific map
+     * Check whether a user has an evaluation form for a division for a specific map
      *
      * @param user the user you want to check
      * @param division the division you want to check
-     * @param finalMap the map from which you want the validation form
+     * @param finalMap the map from which you want the evaluation form
      *
      * @return True if the specify user has already a form for the specific division for a specific map , False otherwise
      */
     public boolean hasAlreadyAFormForDivisionForFinalMap(User user, String division, FinalMap finalMap){
-        return validationFormRepository.existsByUserAndDivisionAndFinalMap(user,division,finalMap);
+        return evaluationFormRepository.existsByUserAndDivisionAndFinalMap(user,division,finalMap);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.webgis.validationform;
+package com.webgis.evaluationform;
 
 import com.webgis.MessageDto;
 import com.webgis.map.finalmap.FinalMap;
@@ -7,9 +7,9 @@ import com.webgis.security.CookieService;
 import com.webgis.security.JwtService;
 import com.webgis.user.User;
 import com.webgis.user.UserService;
-import com.webgis.validationform.dto.ResponseValidationFormDto;
-import com.webgis.validationform.dto.SaveValidationFormDto;
-import com.webgis.validationform.dto.UpdateValidationFormDto;
+import com.webgis.evaluationform.dto.ResponseEvaluationFormDto;
+import com.webgis.evaluationform.dto.SaveEvaluationFormDto;
+import com.webgis.evaluationform.dto.UpdateEvaluationFormDto;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -28,21 +28,21 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/validationForm")
-public class ValidationFormController {
+@RequestMapping("/evaluationForm")
+public class EvaluationFormController {
 
-    private final ValidationFormService validationFormService;
+    private final EvaluationFormService evaluationFormService;
     private final JwtService jwtService;
     private final CookieService cookieService;
     private final UserService userService;
     private final FinalMapService finalMapService;
 
-    public ValidationFormController(ValidationFormService validationFormService,
+    public EvaluationFormController(EvaluationFormService evaluationFormService,
                                     JwtService jwtService,
                                     CookieService cookieService,
                                     UserService userService,
                                     FinalMapService finalMapService) {
-        this.validationFormService = validationFormService;
+        this.evaluationFormService = evaluationFormService;
         this.jwtService = jwtService;
         this.cookieService = cookieService;
         this.userService = userService;
@@ -59,7 +59,7 @@ public class ValidationFormController {
      */
     @PostMapping("/saveForm")
     public ResponseEntity<Object> saveForm(
-            @RequestBody @Valid SaveValidationFormDto saveFormDto,
+            @RequestBody @Valid SaveEvaluationFormDto saveFormDto,
             HttpServletRequest request){
 
         final String token = cookieService.getJwtFromCookie(request);
@@ -78,12 +78,12 @@ public class ValidationFormController {
         final User user= optionalUser.get();
         final FinalMap finalMap= optionalFinalMap.get();
 
-        if(validationFormService.hasAlreadyAFormForDivisionForFinalMap(user, saveFormDto.division(),finalMap)){
-            return ResponseEntity.status(401).body(new MessageDto("You have already a validation form for this division in this map"));
+        if(evaluationFormService.hasAlreadyAFormForDivisionForFinalMap(user, saveFormDto.division(),finalMap)){
+            return ResponseEntity.status(401).body(new MessageDto("You have already a evaluation form for this division in this map"));
         }
 
         try{
-            final ValidationForm validationForm= validationFormService.saveForm(
+            final EvaluationForm evaluationForm = evaluationFormService.saveForm(
                     saveFormDto.division(),
                     saveFormDto.agreementLevel(),
                     saveFormDto.perceivedRisk(),
@@ -92,8 +92,8 @@ public class ValidationFormController {
                     user,
                     finalMap,
                     saveFormDto.isPublic());
-            final ResponseValidationFormDto responseValidationFormDto= new ResponseValidationFormDto(validationForm);
-            return ResponseEntity.status(200).body(responseValidationFormDto);
+            final ResponseEvaluationFormDto responseEvaluationFormDto = new ResponseEvaluationFormDto(evaluationForm);
+            return ResponseEntity.status(200).body(responseEvaluationFormDto);
 
         } catch (Exception e) {
             return ResponseEntity.status(401).body(new MessageDto(e.getMessage()));
@@ -105,14 +105,14 @@ public class ValidationFormController {
     /**
      * Update a form
      *
-     * @param updateValidationFormDto  information of about the form you want to update
+     * @param updateEvaluationFormDto  information of about the form you want to update
      * @param request the Http request containing the JWT token
      *
      * @return updated form information if it succeeds, error message otherwise
      */
     @PutMapping("/updateForm")
     public ResponseEntity<Object> updateForm(
-            @RequestBody @Valid UpdateValidationFormDto updateValidationFormDto,
+            @RequestBody @Valid UpdateEvaluationFormDto updateEvaluationFormDto,
             HttpServletRequest request){
 
         final String token = cookieService.getJwtFromCookie(request);
@@ -123,33 +123,33 @@ public class ValidationFormController {
             return ResponseEntity.status(401).body(new MessageDto("You are not logged in or your cookie is not valid"));
         }
 
-        final Optional<ValidationForm> optionalValidationForm = validationFormService.findFormById(updateValidationFormDto.id());
+        final Optional<EvaluationForm> optionalEvaluationForm = evaluationFormService.findFormById(updateEvaluationFormDto.id());
 
-        if(optionalValidationForm.isEmpty()){
+        if(optionalEvaluationForm.isEmpty()){
             return ResponseEntity.status(404).body(new MessageDto("No form with the specify id"));
         }
 
         final User user= optionalUser.get();
-        final ValidationForm validationForm =optionalValidationForm.get();
+        final EvaluationForm evaluationForm =optionalEvaluationForm.get();
 
-        if(!user.equals(validationForm.getUser()) && !user.isAdmin()){
+        if(!user.equals(evaluationForm.getUser()) && !user.isAdmin()){
             return ResponseEntity.status(401).body(new MessageDto("You are not an admin or the author of this form"));
         }
 
         try {
 
-            final ValidationForm newValidationForm = validationFormService.updateForm(
-                    updateValidationFormDto.id(),
-                    validationForm.getDivision(),
-                    updateValidationFormDto.agreementLevel(),
-                    updateValidationFormDto.perceivedRisk(),
-                    updateValidationFormDto.certaintyLevel(),
-                    updateValidationFormDto.comment(),
+            final EvaluationForm newEvaluationForm = evaluationFormService.updateForm(
+                    updateEvaluationFormDto.id(),
+                    evaluationForm.getDivision(),
+                    updateEvaluationFormDto.agreementLevel(),
+                    updateEvaluationFormDto.perceivedRisk(),
+                    updateEvaluationFormDto.certaintyLevel(),
+                    updateEvaluationFormDto.comment(),
                     user,
-                    validationForm.getFinalMap(),
-                    updateValidationFormDto.isPublic());
-            final ResponseValidationFormDto responseValidationFormDto= new ResponseValidationFormDto(newValidationForm);
-            return ResponseEntity.status(200).body(responseValidationFormDto);
+                    evaluationForm.getFinalMap(),
+                    updateEvaluationFormDto.isPublic());
+            final ResponseEvaluationFormDto responseEvaluationFormDto = new ResponseEvaluationFormDto(newEvaluationForm);
+            return ResponseEntity.status(200).body(responseEvaluationFormDto);
 
         }catch (Exception e) {
             return ResponseEntity.status(401).body(new MessageDto(e.getMessage()));
@@ -189,19 +189,19 @@ public class ValidationFormController {
         final User user= optionalUser.get();
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final Optional<ValidationForm> optionalValidationForm = validationFormService
+        final Optional<EvaluationForm> optionalEvaluationForm = evaluationFormService
                 .getFormForUserAndDivisionAndFinalMap(
                 user,
                 division,
                 finalMap);
 
-        if(optionalValidationForm.isEmpty()){
+        if(optionalEvaluationForm.isEmpty()){
             return ResponseEntity.status(404).body(new MessageDto("You have no form for the specified division for this map"));
         }
 
-        final ValidationForm validationForm= optionalValidationForm.get();
-        final ResponseValidationFormDto responseValidationFormDto= new ResponseValidationFormDto(validationForm);
-        return ResponseEntity.status(200).body(responseValidationFormDto);
+        final EvaluationForm evaluationForm = optionalEvaluationForm.get();
+        final ResponseEvaluationFormDto responseEvaluationFormDto = new ResponseEvaluationFormDto(evaluationForm);
+        return ResponseEntity.status(200).body(responseEvaluationFormDto);
     }
 
     /**
@@ -221,12 +221,12 @@ public class ValidationFormController {
         }
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final List<ValidationForm> validationForms = validationFormService.getAllFormForFinalMap(finalMap);
-        final List<ResponseValidationFormDto> responseValidationForms = new ArrayList<>();
-        for(ValidationForm validationForm:validationForms){
-            responseValidationForms.add(new ResponseValidationFormDto(validationForm));
+        final List<EvaluationForm> EvaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
+        final List<ResponseEvaluationFormDto> responseEvaluationForms = new ArrayList<>();
+        for(EvaluationForm evaluationForm : EvaluationForms){
+            responseEvaluationForms.add(new ResponseEvaluationFormDto(evaluationForm));
         }
-        return ResponseEntity.status(200).body(responseValidationForms);
+        return ResponseEntity.status(200).body(responseEvaluationForms);
     }
 
 }

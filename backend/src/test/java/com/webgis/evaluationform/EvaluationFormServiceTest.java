@@ -1,4 +1,4 @@
-package com.webgis.validationform;
+package com.webgis.evaluationform;
 
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.user.User;
@@ -15,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ValidationFormServiceTest {
+class EvaluationFormServiceTest {
 
     @Mock
-    private ValidationFormRepository validationFormRepository;
+    private EvaluationFormRepository evaluationFormRepository;
 
     @InjectMocks
-    private ValidationFormService validationFormService;
+    private EvaluationFormService evaluationFormService;
 
     @Test
     void updateFormFound(){
@@ -42,7 +42,7 @@ class ValidationFormServiceTest {
                 dataZip,
                 "file");
 
-        ValidationForm validationForm= new ValidationForm(
+        EvaluationForm evaluationForm = new EvaluationForm(
                 "Wouri",
                 2,
                 "low",
@@ -52,14 +52,14 @@ class ValidationFormServiceTest {
                 finalMap,
                 true
         );
-        validationForm.setId(1);
+        evaluationForm.setId(1);
 
-        when(validationFormService.findFormById(validationForm.getId())).thenReturn(Optional.of(validationForm));
-        when(validationFormRepository.save(validationForm)).thenReturn(validationForm);
+        when(evaluationFormService.findFormById(evaluationForm.getId())).thenReturn(Optional.of(evaluationForm));
+        when(evaluationFormRepository.save(evaluationForm)).thenReturn(evaluationForm);
 
         //Act
-        ValidationForm updatedValidationForm= validationFormService.updateForm(
-                validationForm.getId(),
+        EvaluationForm updatedEvaluationForm = evaluationFormService.updateForm(
+                evaluationForm.getId(),
                 "Mfoundi",
                 4,
                 "medium",
@@ -71,14 +71,14 @@ class ValidationFormServiceTest {
         );
 
         //Assert
-        assertEquals("Mfoundi", updatedValidationForm.getDivision());
-        assertEquals(4, updatedValidationForm.getAgreementLevel());
-        assertEquals("medium", updatedValidationForm.getPerceivedRisk());
-        assertEquals(3, updatedValidationForm.getCertaintyLevel());
-        assertEquals("newComment", updatedValidationForm.getComment());
-        assertEquals(user, updatedValidationForm.getUser());
-        assertEquals(finalMap, updatedValidationForm.getFinalMap());
-        assertFalse(updatedValidationForm.isPublic());
+        assertEquals("Mfoundi", updatedEvaluationForm.getDivision());
+        assertEquals(4, updatedEvaluationForm.getAgreementLevel());
+        assertEquals("medium", updatedEvaluationForm.getPerceivedRisk());
+        assertEquals(3, updatedEvaluationForm.getCertaintyLevel());
+        assertEquals("newComment", updatedEvaluationForm.getComment());
+        assertEquals(user, updatedEvaluationForm.getUser());
+        assertEquals(finalMap, updatedEvaluationForm.getFinalMap());
+        assertFalse(updatedEvaluationForm.isPublic());
 
     }
 

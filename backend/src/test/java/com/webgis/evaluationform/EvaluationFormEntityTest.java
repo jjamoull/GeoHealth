@@ -1,4 +1,4 @@
-package com.webgis.validationform;
+package com.webgis.evaluationform;
 
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.user.User;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ValidationFormEntityTest {
+class EvaluationFormEntityTest {
 
     @Test
     void getterTest(){
@@ -25,7 +25,7 @@ class ValidationFormEntityTest {
                 dataZip,
                 "file");
 
-        ValidationForm validationForm=new ValidationForm(
+        EvaluationForm evaluationForm =new EvaluationForm(
                 "Wouri",
                 2,
                 "low",
@@ -37,14 +37,14 @@ class ValidationFormEntityTest {
         );
 
         //Assert
-        assertEquals("Wouri", validationForm.getDivision());
-        assertEquals(2, validationForm.getAgreementLevel());
-        assertEquals("low", validationForm.getPerceivedRisk());
-        assertEquals(4, validationForm.getCertaintyLevel());
-        assertEquals("comment", validationForm.getComment());
-        assertEquals(user, validationForm.getUser());
-        assertEquals(finalMap,validationForm.getFinalMap());
-        assertTrue(validationForm.isPublic());
+        assertEquals("Wouri", evaluationForm.getDivision());
+        assertEquals(2, evaluationForm.getAgreementLevel());
+        assertEquals("low", evaluationForm.getPerceivedRisk());
+        assertEquals(4, evaluationForm.getCertaintyLevel());
+        assertEquals("comment", evaluationForm.getComment());
+        assertEquals(user, evaluationForm.getUser());
+        assertEquals(finalMap, evaluationForm.getFinalMap());
+        assertTrue(evaluationForm.isPublic());
 
     }
 
@@ -83,7 +83,7 @@ class ValidationFormEntityTest {
                 dataZip2,
                 "file");
 
-        ValidationForm validationForm = new ValidationForm(
+        EvaluationForm evaluationForm = new EvaluationForm(
                 "Wouri",
                 2,
                 "low",
@@ -95,23 +95,23 @@ class ValidationFormEntityTest {
         );
 
         // Act
-        validationForm.setDivision("Mfoundi");
-        validationForm.setAgreementLevel(4);
-        validationForm.setPerceivedRisk("high");
-        validationForm.setCertaintyLevel(1);
-        validationForm.setComment("new comment");
-        validationForm.setUser(user2);
-        validationForm.setFinalMap(finalMap2);
-        validationForm.setIsPublic(false);
+        evaluationForm.setDivision("Mfoundi");
+        evaluationForm.setAgreementLevel(4);
+        evaluationForm.setPerceivedRisk("high");
+        evaluationForm.setCertaintyLevel(1);
+        evaluationForm.setComment("new comment");
+        evaluationForm.setUser(user2);
+        evaluationForm.setFinalMap(finalMap2);
+        evaluationForm.setIsPublic(false);
 
         // Assert
-        assertEquals("Mfoundi", validationForm.getDivision());
-        assertEquals(4, validationForm.getAgreementLevel());
-        assertEquals("high", validationForm.getPerceivedRisk());
-        assertEquals(1, validationForm.getCertaintyLevel());
-        assertEquals("new comment", validationForm.getComment());
-        assertEquals(user2, validationForm.getUser());
-        assertEquals(finalMap2,validationForm.getFinalMap());
-        assertFalse(validationForm.isPublic());
+        assertEquals("Mfoundi", evaluationForm.getDivision());
+        assertEquals(4, evaluationForm.getAgreementLevel());
+        assertEquals("high", evaluationForm.getPerceivedRisk());
+        assertEquals(1, evaluationForm.getCertaintyLevel());
+        assertEquals("new comment", evaluationForm.getComment());
+        assertEquals(user2, evaluationForm.getUser());
+        assertEquals(finalMap2, evaluationForm.getFinalMap());
+        assertFalse(evaluationForm.isPublic());
     }
 }

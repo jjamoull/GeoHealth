@@ -1,4 +1,4 @@
-package com.webgis.validationform;
+package com.webgis.evaluationform;
 
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.user.User;
@@ -15,8 +15,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GenerationType;
 
 @Entity
-@Table(name="validationForms", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "division", "final_map_id"})})
-public class ValidationForm {
+@Table(name="evaluationForms", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "division", "final_map_id"})})
+public class EvaluationForm {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,9 +48,9 @@ public class ValidationForm {
     @Column(nullable = false)
     private boolean isPublic;
 
-    public ValidationForm(){}
+    public EvaluationForm(){}
 
-    public ValidationForm(
+    public EvaluationForm(
             String division,
             Integer agreementLevel,
             String perceivedRisk,
