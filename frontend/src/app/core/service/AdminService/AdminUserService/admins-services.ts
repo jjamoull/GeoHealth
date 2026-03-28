@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import {catchError, map, Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../rest-api-management/environment';
-import {API_ENDPOINTS} from '../../rest-api-management/endpoint';
-import {BanDto} from '../../../shared/models/UserModel/BanDto';
-import {ChangeRoleDto} from '../../../shared/models/UserModel/ChangeRoleDto';
-import {AdminUserDto} from '../../../shared/models/UserModel/AdminUserDto';
-import {UsersServices} from '../UserService/users-services';
+import {environment} from '../../../rest-api-management/environment';
+import {API_ENDPOINTS} from '../../../rest-api-management/endpoint';
+import {BanDto} from '../../../../shared/models/AdminModel/UserModel/BanDto';
+import {ChangeRoleDto} from '../../../../shared/models/AdminModel/UserModel/ChangeRoleDto';
+import {AdminUserDto} from '../../../../shared/models/AdminModel/UserModel/AdminUserDto';
+import {UsersServices} from '../../UserService/users-services';
 import {subscribe} from 'node:diagnostics_channel';
 
 

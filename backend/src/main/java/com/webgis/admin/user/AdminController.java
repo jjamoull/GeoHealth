@@ -1,13 +1,13 @@
-package com.webgis.admin;
+package com.webgis.admin.user;
 
 import com.webgis.MessageDto;
 import com.webgis.user.User;
 import com.webgis.user.UserService;
 
 
-import com.webgis.admin.dto.AdminUserDto;
-import com.webgis.admin.dto.BanDto;
-import com.webgis.admin.dto.ChangeRoleDto;
+import com.webgis.admin.dto.user.AdminUserDto;
+import com.webgis.admin.dto.user.BanDto;
+import com.webgis.admin.dto.user.ChangeRoleDto;
 
 
 import org.springframework.http.ResponseEntity;

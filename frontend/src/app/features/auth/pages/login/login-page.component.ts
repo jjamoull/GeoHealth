@@ -31,7 +31,6 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private cdr:ChangeDetectorRef,
     private router: Router
   ) {}
 
@@ -54,6 +53,7 @@ export class LoginPageComponent implements OnInit {
     this.loginService.login(this.formGroup.value).subscribe({
       next: () => {
         this.router.navigate(['/navigation']);
+        this.loginService.setLoggedIn(true);
         this.loginError.set(false);
         this.errorMessage.set('');
 

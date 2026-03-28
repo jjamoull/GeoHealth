@@ -17,4 +17,6 @@ export class EvaluationCommentComponent {
   @Input() perceivedRisk:string|null="";
   @Input() certaintyLevel: number|null=0;
   @Input() comment: string|null="";
+  @Input() firstName: string="";
+  @Input() lastName: string="";
 }

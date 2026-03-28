@@ -28,8 +28,6 @@ export class PopUpComponent implements OnInit {
     this.typeOfPopUp = this.data.typeOfPopUp;
   }
 
-
-
   /**
    * Check the type of popup component that will be called and display it
    * */
