@@ -142,13 +142,22 @@ export class MapComponent implements AfterViewInit {
 
 
   private tileToPolygon(x: number, y: number, z: number) {
+    const TILE_SIZE = 256;
+    const BLOCK_SIZE = 16;
+
+    const pixelX1 = x * TILE_SIZE + x * BLOCK_SIZE;
+    const pixelY1 = y * TILE_SIZE + y * BLOCK_SIZE;
+    const pixelX2 = pixelX1 + BLOCK_SIZE;
+    const pixelY2 = pixelY1 + BLOCK_SIZE;
+
     const n = Math.pow(2, z);
+    const worldSize = TILE_SIZE *n;
 
-    const lon1 = x / n * 360 - 180;
-    const lon2 = (x + 1) / n * 360 - 180;
+    const lon1 = pixelX1/worldSize*360-180;
+    const lon2 = pixelX2 /worldSize *360-180;
 
-    const lat1 = Math.atan(Math.sinh(Math.PI * (1 - 2 * y / n))) * 180 / Math.PI;
-    const lat2 = Math.atan(Math.sinh(Math.PI * (1 - 2 * (y + 1) / n))) * 180 / Math.PI;
+    const lat1 = Math.atan(Math.sinh(Math.PI * (1-2 * pixelY1/ worldSize))) *180 / Math.PI;
+    const lat2 = Math.atan(Math.sinh(Math.PI*(1-2 *pixelY2/worldSize)))* 180/ Math.PI;
 
     return [
       [lat1, lon1], // top-left

@@ -106,14 +106,7 @@ public class RiskFactorMapService {
                         final int x = Integer.parseInt(path.getParent().getFileName().toString());
                         final int zoom = Integer.parseInt(path.getParent().getParent().getFileName().toString());
 
-                        byte[] pixels = decompressPNGFile(path);
-
-                        float[] floatMeans = computeMean(pixels);
-
-                        byte[] means = convertToBytes(floatMeans);
-
-
-                        tileService.save(mapId, zoom, x, y, data, means);
+                        tileService.save(mapId, zoom, x, y, data);
                     } catch (IOException e) {
                         logger.info("1) Issue with the uploading\n");
                     }
@@ -126,81 +119,6 @@ public class RiskFactorMapService {
     }
 
 
-    /**
-     * compute means of pixels in tile by blocks of size BLOCK_SIZE,
-     *
-     * @return normalized mean of pixels value (0-1) for each block in a tile
-     * */
-    private float[] computeMean(byte[] tileData){
-        float[] means = new float[TILE_SIZE];
-        long sum;
-        int count = BLOCK_SIZE*BLOCK_SIZE;
-
-        //for each block
-        for (int xOffSet = 0; xOffSet < TILE_SIZE; xOffSet=xOffSet+BLOCK_SIZE){
-            for (int yOffSet = 0; yOffSet < TILE_SIZE; yOffSet=yOffSet+BLOCK_SIZE){
-                sum = 0;
-
-                //for each pixel in this block
-                for (int x = 0; x < BLOCK_SIZE; x++){
-                    for (int y = 0; y < BLOCK_SIZE; y++){
-
-                        //0xFF to remove the sign
-                        sum += tileData[yOffSet*x + y*TILE_SIZE + xOffSet + x] & 0xFF;
-                    }
-                }
-
-                means[yOffSet + xOffSet/BLOCK_SIZE] = sum / (float) count*255;
-            }
-        }
-        return means;
-    }
-
-
-    /**
-     * Decompress a png file for tile into a TILE_SIZE x TILE_SIZE byte array
-     *
-     * @param path : path of the file to uncompress
-     * @return byte array of size TILE_SIZE x TILE_SIZE
-     * @throws RuntimeException
-     * */
-    private byte[] decompressPNGFile(@NonNull Path path )throws RuntimeException{
-        BufferedImage img = null;
-
-        try {
-            img = ImageIO.read(path.toFile());
-            BufferedImage grayImg = new BufferedImage(
-                    img.getWidth(),
-                    img.getHeight(),
-                    BufferedImage.TYPE_BYTE_GRAY
-            );
-
-            Graphics g = grayImg.getGraphics();
-            g.drawImage(img, 0, 0, null);
-            g.dispose();
-            return ((DataBufferByte) grayImg.getRaster().getDataBuffer()).getData();
-
-        } catch (IOException e) {
-            logger.error("There is a IOException during the reading of path in decompressPNGFile");
-        }
-
-        throw new RuntimeException();
-    }
-
-
-
-    /**
-     * convert float array to byte array
-     *
-     * @return byte array for input
-     * */
-    private byte[] convertToBytes(float[] floatArray){
-        ByteBuffer buffer = ByteBuffer.allocate(TILE_SIZE * 4);
-        for (float f : floatArray) {
-            buffer.putFloat(f);
-        }
-        return buffer.array();
-    }
 
     /**
      * Gets all risk factor map instances

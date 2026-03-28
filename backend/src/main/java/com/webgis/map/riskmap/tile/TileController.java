@@ -42,49 +42,6 @@ public class TileController {
         }
     }
 
-
-    @GetMapping("/file/{mapId}/{z}/{x}/{y}/{meanIndex}")
-    public ResponseEntity<Object> getTileMeanBlockIndex(@PathVariable Long mapId,
-                                                               @PathVariable int z,
-                                                               @PathVariable int x,
-                                                               @PathVariable int y,
-                                                               @PathVariable int meanIndex){
-        final Optional<Tile> tile = tileService.findById(new TileId(mapId, z, x, y));
-
-        if (tile.isPresent()){
-            return ResponseEntity.status(200).body((float) (tile.get().getTileMeans()[meanIndex] & 0xFF));
-        }else{
-            return ResponseEntity.status(404).body(new MessageDto("Not able to find mean for tile " + mapId));
-        }
-    }
-
-
-
-    //ToDo delete later, testing route
-    @GetMapping("/file/{mapId}/{z}/{x}/{y}/array")
-    public ResponseEntity<Object> getTileMeanBlockIndex(@PathVariable Long mapId,
-                                                        @PathVariable int z,
-                                                        @PathVariable int x,
-                                                        @PathVariable int y){
-        final Optional<Tile> tile = tileService.findById(new TileId(mapId, z, x, y));
-
-        byte[] byteArray = tile.get().getTileMeans();
-        float[] floatArray = new float[byteArray.length];
-
-        for (int i = 0; i < byteArray.length; i++) {
-            floatArray[i] = (byteArray[i] & 0xFF) / 255.0f;
-        }
-
-
-        if (tile.isPresent()){
-            return ResponseEntity.status(200).body(Arrays.toString(floatArray));
-        }else{
-            return ResponseEntity.status(404).body(new MessageDto("Not able to find mean for tile " + mapId));
-        }
-
-    }
-
-
     @GetMapping("/file/mean/{mapId}/{z}/{lat}/{lng}")
     public ResponseEntity<Object> getTileMeanBlock(@PathVariable Long mapId,
                                                         @PathVariable int z,
@@ -98,11 +55,12 @@ public class TileController {
         int[] blockCoordinates = tileService.getBlockCoordinates(z, lat, lng);
 
         if (tile.isPresent()){
-            float mean = (tile.get().getTileMeans()[
-                    tileService.getMeanIndex(blockCoordinates[0],
-                    blockCoordinates[1])
-                    ] & 0xFF) / 255.0f;
+            //extracting pixels from stored file
+            byte[] tilePixels = tileService.decompressPNGFile(tile.get().getTileData());
 
+            float mean = tileService.getTileMeanBlock(tilePixels, blockCoordinates);
+
+            //ToDo tile coordinates is not correct here, should compute block coordinates on leaflet map and return it
             TileMeanAndXYdto dto = new TileMeanAndXYdto(mean, tileCoordinates[0], tileCoordinates[1]);
             return ResponseEntity.status(200).body(dto);
         }else{

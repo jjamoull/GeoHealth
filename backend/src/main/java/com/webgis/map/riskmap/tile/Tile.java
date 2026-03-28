@@ -19,9 +19,6 @@ public class Tile {
     @Column(name = "tile_data", nullable = false)
     private byte[] tileData;
 
-    @Lob
-    @Column(name="tile_means", nullable = false)
-    private byte[] tileMeans;
 
     @ManyToOne
     @MapsId("mapId")
@@ -32,11 +29,9 @@ public class Tile {
 
     public Tile(TileId tileId,
                 byte[] tileData,
-                byte[] tileMeans,
                 RiskFactorMap riskFactorMap){
         this.tileId = tileId;
         this.tileData = tileData;
-        this.tileMeans = tileMeans;
         this.riskFactorMap = riskFactorMap;
     }
 
@@ -49,8 +44,6 @@ public class Tile {
         return tileData;
     }
 
-    public byte[] getTileMeans() {return tileMeans;}
-
     public RiskFactorMap getRiskFactorMap() { return riskFactorMap; }
 
     public void setTileData(byte[] tileData) {
@@ -60,8 +53,6 @@ public class Tile {
     public void setTileId(TileId tileId){
         this.tileId = tileId;
     }
-
-    public void setTileMeans(byte[] tileMeans){this.tileMeans = tileMeans;}
 
     public void setRiskFactorMap(RiskFactorMap riskFactorMap) { this.riskFactorMap = riskFactorMap; }
 }
