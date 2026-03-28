@@ -29,9 +29,6 @@ export class Connectednavbar implements OnInit{
 
   }
 
-  goToHome() {
-    this.router.navigate(['home'])
-  }
   goToNavigation(){
     this.router.navigate(['navigation'])
   }

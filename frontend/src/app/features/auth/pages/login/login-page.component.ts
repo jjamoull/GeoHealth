@@ -49,12 +49,7 @@ export class LoginPageComponent implements OnInit {
       password: new FormControl('', [Validators.required])
     });
   }
-
   private transloco = inject(TranslocoService);
-
-  switchLang(lang: string) {
-    this.transloco.setActiveLang(lang);
-  }
 
   /**
    * Request login to the backend with formGroup information

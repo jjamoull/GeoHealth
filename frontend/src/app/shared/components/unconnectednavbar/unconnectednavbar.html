@@ -1,14 +1,15 @@
 <nav class="navbar">
   <div class="navbar-container">
+    <a class="item" (click)="goToHome()">Home</a>
     <a class="item" (click)="goToLogin()">Login</a>
     <a class="item" (click)="goToRegister()">Register</a>
+  </div>
     <div class="select" tabindex="1">
       <input class="lang" (click)="switchLang('en')" name="test" type="radio" id="opt1" checked>
-      <label for="opt1" class="option">English</label>
+      <label for="opt1" class="option"> <img src="assets/icons/enFlag.png" class="flag">English</label>
       <input class="lang" (click)="switchLang('fr')" name="test" type="radio" id="opt2">
-      <label for="opt2" class="option">French</label>
+      <label for="opt2" class="option"> <img src="assets/icons/frFlag.png" class="flag">French</label>
     </div>
 
-    </div>
 </nav>
 

@@ -38,20 +38,22 @@
 }
 .select {
   display:flex;
+  align-items: flex-end;
   flex-direction: column;
   position:relative;
   width:150px;
   height:40px;
-  margin-top: 10px;
 }
 
 .option {
   padding:0 30px 0 10px;
+  gap: 10px;
   min-height:40px;
   display:flex;
   align-items:center;
   background:#90ee90;
   border-top:#222 solid 1px;
+  border-radius : 30px;
   position:absolute;
   top:0;
   width: 100%;
@@ -107,4 +109,9 @@ input:checked + label:before {
   height: 40px;
   width: 40px;
   content: '';
+}
+.flag{
+  width: 25px;
+  height: 20px;
+  object-fit: cover;
 }
