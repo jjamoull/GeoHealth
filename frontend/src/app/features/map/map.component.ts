@@ -194,6 +194,13 @@ export class MapComponent implements  OnInit, AfterViewInit {
     });
   }
 
+
+  /**
+   * Get the evaluation form for a specific map
+   *
+   * @param isAdmin true if the connected user is an admin, false otherwise
+   * @param mapId the id of the map you are interested in
+   */
   public getAllForm(isAdmin:boolean,mapId:number){
     if(isAdmin){
       this.adminEvaluationFormService.getAllForm(mapId).subscribe({
