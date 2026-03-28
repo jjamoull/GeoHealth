@@ -195,8 +195,4 @@ public class TileService {
 
         throw new RuntimeException();
     }
-
-    public int[] getBlockAbsoluteCoordinates(){
-
-    }
 }
