@@ -62,9 +62,10 @@ export class LoginPageComponent implements OnInit {
 
     this.loginService.login(this.formGroup.value).subscribe({
       next: () => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/navigation']);
         this.loginError.set(false);
         this.errorMessage.set('');
+
       },
       error: () => {
         // Display error message

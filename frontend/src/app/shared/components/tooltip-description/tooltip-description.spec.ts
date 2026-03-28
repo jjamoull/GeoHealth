@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {MapLegendComponent } from './map-legend';
+import { TooltipDescription } from './tooltip-description';
 
-describe('MapLegend', () => {
-  let component: MapLegendComponent;
-  let fixture: ComponentFixture<MapLegendComponent>;
+describe('TooltipDescription', () => {
+  let component: TooltipDescription;
+  let fixture: ComponentFixture<TooltipDescription>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MapLegendComponent]
+      imports: [TooltipDescription]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MapLegendComponent);
+    fixture = TestBed.createComponent(TooltipDescription);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

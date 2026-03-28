@@ -24,7 +24,4 @@ export class Unconnectednavbar{
   goToRegister(){
     this.router.navigate(['register'])
   }
-
-
-
 }

@@ -1,0 +1,83 @@
+<div cdkDrag class="evaluation-modal">
+  <div class="modal-header" cdkDragHandle>
+    <h2>Evaluation for a division</h2>
+    <button class="close-btn" (click)="onClose()">×</button>
+  </div>
+
+  <div class="modal-content">
+    <form id="evaluation-form">
+      <div class="item">
+        <label>Division</label>
+        <input type="text" [value]="division?.NAME_2" readonly>
+      </div>
+
+      <div class="item">
+        <label>
+          Risk assessment (1-4)
+          <app-tooltip-description [description]="'Indiquez votre degré d\'accord entre l\'indice de risque moyen modélisé et le risque réel tel que vous le percevez sur le terrain.\n\nVeuillez répondre sur une échelle de 1 à 4 :\n1 = pas du tout d\'accord\n2 = plutôt pas d\'accord\n3 = plutôt d\'accord\n4 = tout à fait d\'accord'"/>
+        </label>
+        <app-rating-scaler
+          name="agreementLevel"
+          [options]="['4', '3', '2', '1']"
+          [value]="agreementLevel?.toString() || ''"
+          (valueChange)="agreementLevel = +$event">
+        </app-rating-scaler>
+      </div>
+
+      <div class="item">
+        <label>
+          Certainty (1-4)
+          <app-tooltip-description [description]="'Indiquez votre niveau de certitude concernant votre propre évaluation. Autrement dit, à quel point êtes-vous sûr(e) de votre réponse ?\n\n Veuillez répondre sur une échelle de 1 à 4 :\n1 = très incertain(e)\n2 = plutôt incertain(e)\n3 = plutôt certain(e)\n4 = très certain(e)'"/>
+        </label>
+        <app-rating-scaler
+          name="certaintyLevel"
+          [options]="['4', '3', '2', '1']"
+          [value]="certaintyLevel?.toString() || ''"
+          (valueChange)="certaintyLevel = +$event">
+        </app-rating-scaler>
+      </div>
+
+      <div class="item">
+        <label>
+          Perceived risk (low-high)
+          <app-tooltip-description [description]="'Veuillez indiquer la catégorie de risque que vous attribuez à ce département sur la base de votre perception du terrain, de votre expertise et des informations dont vous disposez.\n\nChoix possibles : faible, moyen, élevé.'"/>
+        </label>
+        <app-rating-scaler
+          name="perceivedRisk"
+          [options]="['high', 'medium', 'low']"
+          [value]="perceivedRisk?.toString() || ''"
+          (valueChange)="perceivedRisk = $event">
+        </app-rating-scaler>
+      </div>
+
+      <div class="item">
+        <label>
+          Visibility
+          <app-tooltip-description [description]="'Cliquez pour rendre votre évaluation visible par les autres utilisateurs, et inversement.'"/>
+        </label>
+        <app-rating-scaler
+          name="isPublic"
+          [options]="[isPublic ? 'Public' : 'Private']"
+          [value]="isPublic ? (isPublic ? 'Public' : 'Private') : ''"
+          (valueChange)="isPublic = !isPublic">
+        </app-rating-scaler>
+      </div>
+
+      <div class="item">
+        <label>
+          Comment
+          <app-tooltip-description [description]="'Vous pouvez ajouter un commentaire libre afin de justifier votre évaluation ou d’apporter des précisions contextuelles.\n\n Par exemple : données manquantes, événements récents, connaissance locale, biais perçus, évolution inhabituelle de la situation, etc.'"/>
+        </label>
+        <textarea placeholder="Enter your comment..." [(ngModel)]="comment" name="comment"></textarea>
+      </div>
+    </form>
+  </div>
+
+  <div class="footer">
+    <app-button
+      [text]="existingForm !== null ? 'Save changes' : 'Save'"
+      [variant]="'success'"
+      (click)="onSave(isPublic)">
+    </app-button>
+  </div>
+</div>

@@ -55,7 +55,7 @@
   margin-top: 50px;
 }
 
-.validations-section {
+.evaluation-section {
   padding: 12px 12px;
 }
 
@@ -92,7 +92,7 @@
   height: 8%;
 }
 
-.button-validation {
+.button-evaluation {
   justify-content: center;
   width: 70%;
 }
@@ -114,7 +114,7 @@
     border: 2px solid #e2e6ea;
   }
 
-  .button-validation {
+  .button-evaluation {
     width: 100%;
     justify-content: center;
   }

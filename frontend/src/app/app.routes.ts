@@ -12,9 +12,12 @@ import {adminGuard} from './features/admin/guard/admin-guard';
 
 export const routes: Routes = [
   {
-    path: 'home',
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },{
+    path:'home',
     component: ExpertHomePageComponent,
-    canActivate: [authGuard],
   },{
     path: 'maps/:id',
     component: MapComponent,
@@ -27,10 +30,6 @@ export const routes: Routes = [
     path:'users-list',
     component: UsersListPageComponent,
     canActivate: [authGuard,adminGuard]
-  },{
-  path: '',
-  redirectTo: 'login',
-  pathMatch: 'full'
   },{
     path:'login',
     component: LoginPageComponent,
@@ -46,7 +45,7 @@ export const routes: Routes = [
     component: ChangePasswordPageComponent,
   },{
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];

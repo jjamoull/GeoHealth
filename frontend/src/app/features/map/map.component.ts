@@ -6,16 +6,16 @@ import { FinalMapService } from '../../core/service/MapService/FinalMapService/f
 import { RiskFactorMapService } from '../../core/service/MapService/RiskMapService/riskFactorMapService';
 import { RiskFactorMapListDto } from '../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
 import {ButtonComponent} from '../../shared/components/button.component/button.component';
-import { ValidationModalComponent } from './validation-modal/validation-modal';
+import {EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
 
 import { MapLegendComponent } from './map-legend/map-legend';
-import {ResponseValidationFormDto} from '../../shared/models/ValidationFormModel/ResponseValidationFormDto';
-import {ValidationFormService} from '../../core/service/ValidationFormService/validationFormService';
-import {ValidationComment} from './validation-comment/validation-comment';
+import {ResponseEvaluationFormDto} from '../../shared/models/EvaluationFormModel/ResponseEvaluationFormDto';
+import {EvaluationFormService} from '../../core/service/EvaluationFormService/EvaluationFormService';
+import {EvaluationCommentComponent} from './evaluation-comment/evaluation-comment';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, ValidationModalComponent, ValidationComment],
+  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
@@ -26,15 +26,16 @@ export class MapComponent implements  OnInit, AfterViewInit {
     {label: 'Low', color: '#2ecc71'},
     {label: 'Medium', color: '#f39c12'},
     {label: 'High', color: '#e74c3c'}];
+  mapId:number=-1;
 
-  selectedDepartment = signal<any>(null);
+  selectedDivision = signal<any>(null);
   marker: any = null;
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
   riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
-  showValidationModal = signal<boolean>(false);
-  existingForm = signal<ResponseValidationFormDto | null>(null);
-  allValidationForms= signal<ResponseValidationFormDto[]>([]);
+  showEvaluationModal = signal<boolean>(false);
+  existingForm = signal<ResponseEvaluationFormDto | null>(null);
+  allEvaluationForms= signal<ResponseEvaluationFormDto[]>([]);
 
   private map: any = null;
   private leaflet: any = null;
@@ -48,18 +49,18 @@ export class MapComponent implements  OnInit, AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private mapService: FinalMapService,
     private riskFactorMapService: RiskFactorMapService,
-    private validationFormService: ValidationFormService,
+    private evaluationFormService: EvaluationFormService,
     private route: ActivatedRoute
     ){}
 
-  onOpenValidation(): void {
-    this.showValidationModal.set(true);
+  onOpenEvaluation(): void {
+    this.showEvaluationModal.set(true);
   }
 
-  onCloseValidation(): void {
-    this.showValidationModal.set(false);
+  onCloseEvaluation(): void {
+    this.showEvaluationModal.set(false);
     this.existingForm.set(null);
-    this.selectedDepartment.set(null);
+    this.selectedDivision.set(null);
     if (this.marker) {
       this.marker.remove();
       this.marker = null;
@@ -91,19 +92,10 @@ export class MapComponent implements  OnInit, AfterViewInit {
   }
 
 /**
-* Display the map OSM thanks to Leaflet on Cameron andd load the validation forms
+* Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
 */
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
-
-  this.validationFormService.getAllForm().subscribe({
-    next: (validationForms:ResponseValidationFormDto[])=>{
-      this.allValidationForms.set(validationForms);
-    },
-    error: (err)=>{
-      console.error('Failed to load validation forms', err);
-    }
-  })
 
     this.riskFactorMapService.getAllMaps().subscribe({
           next: (maps:RiskFactorMapListDto[]) => {
@@ -115,6 +107,16 @@ export class MapComponent implements  OnInit, AfterViewInit {
     });
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.mapId=id;
+
+    this.evaluationFormService.getAllForm(id).subscribe({
+      next: (evaluationForms:ResponseEvaluationFormDto[])=>{
+        this.allEvaluationForms.set(evaluationForms);
+      },
+      error: (err)=>{
+        console.error('Failed to load evaluation forms', err);
+      }
+    })
 
     const L = await import('leaflet');
     this.leaflet = L.default ?? L;
@@ -146,14 +148,14 @@ export class MapComponent implements  OnInit, AfterViewInit {
             layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
             layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
             layer.on('click', (e: any) => {
-              if (this.selectedDepartment() === feature.properties) {
+              if (this.selectedDivision() === feature.properties) {
                 this.marker.remove();
                 this.marker = null;
-                this.selectedDepartment.set(null);
+                this.selectedDivision.set(null);
                 this.existingForm.set(null);
                 return;
               }
-              this.selectedDepartment.set(feature.properties);
+              this.selectedDivision.set(feature.properties);
               if (this.marker) this.marker.remove();
               this.marker = this.leaflet.circleMarker(e.latlng, {
                 radius: 5,
@@ -162,7 +164,7 @@ export class MapComponent implements  OnInit, AfterViewInit {
                 fillOpacity: 0.8,
                 pane: 'markerPane',
               }).addTo(this.map);
-              this.validationFormService.getMyFormForADep(feature.properties.NAME_2).subscribe({
+              this.evaluationFormService.getMyFormForADiv(id,feature.properties.NAME_2).subscribe({
                 next: (form) => this.existingForm.set(form),
                 error: () => this.existingForm.set(null)
               });
