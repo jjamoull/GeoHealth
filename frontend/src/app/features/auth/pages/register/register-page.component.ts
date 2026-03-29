@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-success-message.component/error-success-message.component';
+import {TranslocoPipe} from "@jsverse/transloco";
 
 
 
@@ -15,13 +16,14 @@ import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    ButtonComponent,
-    InputboxComponents,
-    ErrorSuccessMessageComponent
-  ],
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        ButtonComponent,
+        InputboxComponents,
+        ErrorSuccessMessageComponent,
+        TranslocoPipe
+    ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
 })

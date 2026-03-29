@@ -9,5 +9,21 @@
     "login-button":  "Login",
     "account-message": "Don't have an account ? ",
     "register" : "Sign in"
+  },
+  "register": {
+    "title": "Register",
+    "username": "Username",
+    "label-username": "Username",
+    "firstname": "Firstname",
+    "label-firstname": "Firstname",
+    "lastname": "Lastname",
+    "label-lastname": "Lastname",
+    "password" : "Password",
+    "label-password": "Password",
+    "confirm-password" : "Confirm password",
+    "label-confirm-password": "Confirm Password",
+    "register-button":  "Sign in",
+    "account-message": "Already have an account ? ",
+    "login" : "Login"
   }
 }
