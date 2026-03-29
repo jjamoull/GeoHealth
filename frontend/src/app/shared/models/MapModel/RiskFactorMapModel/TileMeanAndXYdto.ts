@@ -1,5 +1,7 @@
 export interface TileMeanAndXYdto{
   mean : number
-  x : number
-  y : number
+  tileX : number
+  tileY : number
+  blockX : number
+  blockY : number
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 @RestController
@@ -20,7 +19,6 @@ public class TileController {
 
     private final TileRepository tileRepository;
     private final TileService tileService;
-    final int BLOCK_SIZE = TileConstants.BLOCK_SIZE;
     private final RiskFactorMapService riskFactorMapService;
 
     public TileController(TileRepository tileRepository, TileService tileService, RiskFactorMapService riskFactorMapService){
@@ -52,16 +50,20 @@ public class TileController {
 
         final Optional<Tile> tile = tileService.findById(new TileId(mapId, z, tileCoordinates[0], tileCoordinates[1]));
 
-        int[] blockCoordinates = tileService.getBlockCoordinates(z, lat, lng);
+        final int[] blockCoordinates = tileService.getBlockCoordinates(z, lat, lng);
 
         if (tile.isPresent()){
             //extracting pixels from stored file
-            byte[] tilePixels = tileService.decompressPNGFile(tile.get().getTileData());
+            final byte[] tilePixels = tileService.decompressPNGFile(tile.get().getTileData());
 
-            float mean = tileService.getTileMeanBlock(tilePixels, blockCoordinates);
+            final float mean = tileService.getTileMeanBlock(tilePixels, blockCoordinates);
 
-            //ToDo tile coordinates is not correct here, should compute block coordinates on leaflet map and return it
-            TileMeanAndXYdto dto = new TileMeanAndXYdto(mean, tileCoordinates[0], tileCoordinates[1]);
+
+            final TileMeanAndXYdto dto = new TileMeanAndXYdto(mean,
+                    tileCoordinates[0],
+                    tileCoordinates[1],
+                    blockCoordinates[0],
+                    blockCoordinates[1]);
             return ResponseEntity.status(200).body(dto);
         }else{
             return ResponseEntity.status(404).body(new MessageDto("Not able to find mean for tile " + mapId));

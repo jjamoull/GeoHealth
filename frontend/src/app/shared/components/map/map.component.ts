@@ -104,8 +104,8 @@ export class MapComponent implements AfterViewInit {
 
       if (blockData){
         console.log(blockData.mean);
-        const bounds = this.tileToPolygon(blockData.x, blockData.y, z);
-        this.highlightLayer = null;
+        const bounds = this.tileToPolygon(blockData.tileX, blockData.tileY, z, blockData.blockX, blockData.blockY);
+
         if (this.highlightLayer) {
           this.map.removeLayer(this.highlightLayer);
         }
@@ -116,7 +116,7 @@ export class MapComponent implements AfterViewInit {
           weight: 2,
           fillOpacity: 0.1
         }).addTo(this.map);
-        this.map.fitBounds(bounds);
+        //this.map.fitBounds(bounds);
     }
     });
   }
@@ -141,12 +141,12 @@ export class MapComponent implements AfterViewInit {
   }
 
 
-  private tileToPolygon(x: number, y: number, z: number) {
+  private tileToPolygon(x: number, y: number, z: number, blockX : number, blockY : number) {
     const TILE_SIZE = 256;
     const BLOCK_SIZE = 16;
 
-    const pixelX1 = x * TILE_SIZE + x * BLOCK_SIZE;
-    const pixelY1 = y * TILE_SIZE + y * BLOCK_SIZE;
+    const pixelX1 = x * TILE_SIZE + blockX * BLOCK_SIZE;
+    const pixelY1 = y * TILE_SIZE + blockY * BLOCK_SIZE;
     const pixelX2 = pixelX1 + BLOCK_SIZE;
     const pixelY2 = pixelY1 + BLOCK_SIZE;
 
@@ -169,7 +169,7 @@ export class MapComponent implements AfterViewInit {
 
 
   /**
-   * TODO
+   * get all risk factor map for dropdown that the user will be able to select
    * */
   private getAllRiskFactorMapForDropdown(){
     this.riskFactorMapService.getAllMaps().subscribe({
@@ -183,9 +183,13 @@ export class MapComponent implements AfterViewInit {
   }
 
   /**
-   * TODO
+   * Init the OpenStreetMap
+   *
+   * Parameters of the map :
+   *    - Zoom from 6 to 12
+   *    - Start on the Cameroon coordinates and zoom
    * */
-  private async initOpenStreetMap(){
+  private async initOpenStreetMap(): Promise<void>{
     const L = await import('leaflet');
     this.leaflet = L.default ?? L;
 
@@ -241,7 +245,10 @@ export class MapComponent implements AfterViewInit {
 
 
   /**
-   * TODO
+   * Allow users to select a district if they click on it
+   *
+   * (Work only if the user took the dropdown with "district … " and not a risk factor)
+   *
    * */
   private selectOrNotDistrict(feature:any){
     //select again => remove marker
@@ -259,7 +266,7 @@ export class MapComponent implements AfterViewInit {
 
 
   /**
-   * TODO
+   * Display on the map a blue circle marker where we click
    * */
   private displayMarker(e:any){
     //marker when we click on a district
@@ -274,7 +281,7 @@ export class MapComponent implements AfterViewInit {
 
 
   /**
-   * TODO
+   * Return the color in format " # … " on the point we clicked
    * */
   private getRiskColor(riskClass: string): string {
     for (const level of this.riskLevels) {

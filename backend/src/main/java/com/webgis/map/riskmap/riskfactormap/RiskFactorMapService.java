@@ -2,23 +2,18 @@ package com.webgis.map.riskmap.riskfactormap;
 
 
 import com.converter.TiffFiles;
-import com.webgis.map.riskmap.tile.TileConstants;
 import com.webgis.map.riskmap.tile.TileService;
-import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
+
+import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -31,8 +26,6 @@ public class RiskFactorMapService {
     private final RiskFactorMapRepository riskFactorMapRepository;
     private final TileService tileService;
 
-    final int TILE_SIZE = TileConstants.TILE_SIZE;
-    final int BLOCK_SIZE = TileConstants.BLOCK_SIZE;
 
     public RiskFactorMapService (RiskFactorMapRepository riskFactorMapRepository,
                                  TileService tileService ){
@@ -90,8 +83,9 @@ public class RiskFactorMapService {
      * @param tifFile : the fil file to transform
      * */
     public void transformIntoTileFile(long mapId, MultipartFile tifFile){
+        Path tiles = null;
         try {
-            final Path tiles = transformTifFile(tifFile);
+            tiles = transformTifFile(tifFile);
 
             try (Stream<Path> stream = Files.walk(tiles)) {
                 final List<Path> tileFiles = stream.filter(Files::isRegularFile)
@@ -115,6 +109,16 @@ public class RiskFactorMapService {
             }
         } catch (IOException e) {
             logger.info("2) Issue with the uploading\n");
+        } finally {
+            try {
+                if (tiles != null) {
+                    deleteDirectoryRecursively(tiles);
+                }
+                logger.info("Tile generation and mean computation successfully deleted from the disk memory");
+
+            } catch (IOException e) {
+                logger.error("There is an issue with deletion of tiles in disk memory", e);
+            }
         }
     }
 
@@ -129,4 +133,12 @@ public class RiskFactorMapService {
         return this.riskFactorMapRepository.findAll();
     }
 
+    public void deleteDirectoryRecursively(Path path) throws IOException {
+        if (Files.exists(path)) {
+            Files.walk(path)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        }
+    }
 }
