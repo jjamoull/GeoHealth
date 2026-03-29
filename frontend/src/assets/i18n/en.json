@@ -31,5 +31,31 @@
     "register-button":  "Sign in",
     "account-message": "Already have an account ? ",
     "login" : "Login"
+  },
+  "home": {
+    "first-title": "Welcome to",
+    "second-title": " - GeoHealth",
+    "summary": "GeoHealth, a research group at the University of Namur specializing in spatial epidemiology and modeling, studies infectious diseases using the One Health approach, which links human, animal, and environmental health.",
+    "button-register" : "Sign in >",
+    "mobile-text" : "Mobile Friendly",
+    "tablet-text" : "Tablet Friendly",
+    "desktop-text" : "Desktop Friendly",
+    "third-title" : "How this works?",
+    "first-subtitle" : "Interactive map visualization",
+    "text1" : "Multi-layer WebGIS with zoom, filters, and visualization of risk maps and associated factors.",
+    "second-subtitle" : "Expert Validation Module",
+    "text2" : "Risk assessment by department with visualization, export, and anonymized collaborative tracking",
+    "third-subtitle" : "Automatic update",
+    "text3" : "Integration of new georeferenced datasets and recalculation using the provided R scripts.",
+    "fourth-subtitle" : "Automated reports and recommendations",
+    "text4" : "Identification of the leading risk factors and associated preventive measures by department.",
+    "fourth-title" : "Problem statement",
+    "problem" : "Zoonoses account for 75% of emerging infectious diseases such as Ebola and COVID-19. To prepare for these diseases, it is essential to have reliable, validated risk maps in order to better guide interventions and strengthen the public health response.",
+    "bullet1" : "Scalable prototype",
+    "bullet2" : "Global reach",
+    "bullet3" : "Pandemic prevention",
+    "bullet4" : "Resilience of health care systems",
+    "learn-button" : "Learn more",
+    "namur": "University of Namur"
   }
 }

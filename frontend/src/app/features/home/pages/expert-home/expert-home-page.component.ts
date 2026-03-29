@@ -3,13 +3,15 @@ import {ActivatedRoute} from '@angular/router';
 import { Router } from '@angular/router';
 import {LoginService} from '../../../../core/service/LoginService/loginService';
 import {ButtonComponent} from "../../../../shared/components/button.component/button.component";
+import {TranslocoPipe} from '@jsverse/transloco';
 
 
 @Component({
   selector: 'app-home',
-    imports: [
-        ButtonComponent
-    ],
+  imports: [
+    ButtonComponent,
+    TranslocoPipe
+  ],
   templateUrl: './expert-home-page.component.html',
   styleUrl: './expert-home-page.component.css',
   standalone: true,

@@ -31,5 +31,31 @@
     "register-button":  "S'inscrire",
     "account-message": "Vous avez déjà un compte ? ",
     "login" : "Se connecter"
+  },
+  "home": {
+    "first-title": "Bienvenue sur",
+    "second-title": " - GeoHealth",
+    "summary": "GeoHealth, groupe de recherche de l’Université de Namur, spécialisé en épidémiologie spatiale\n et modélisation, étudie les maladies infectieuses selon l’approche One Health, reliant santé\n humaine, animale et environnementale.",
+    "button-register" : "S'inscrire >",
+    "mobile-text" : "Adapté aux mobiles",
+    "tablet-text" : "Adapté aux tablettes",
+    "desktop-text" : "Adapté aux ordinateurs",
+    "third-title" : "Comment ça fonctionne ?",
+    "first-subtitle" : "Visualisation cartographique interactive",
+    "text1" : "WebGIS multicouche avec zoom, filtres et visualisation des cartes de risque et facteurs associés.",
+    "second-subtitle" : "Module de validation expert",
+    "text2" : "Évaluation des risques par département avec visualisation, export et suivi collaboratif anonymisé.",
+    "third-subtitle" : "Mise à jour automatique",
+    "text3" : "Intégration de nouveaux jeux de données géoréférencés et recalcul via scripts R fournis.",
+    "fourth-subtitle" : "Rapports et recommandations automatisés",
+    "text4" : "Génération par département des facteurs de risque dominants et mesures préventives associées.",
+    "fourth-title" : "Problématique",
+    "problem" : "Les zoonoses sont\n responsables de 75 % des maladies infectieuses émergentes comme Ebola et le COVID-19. Pour anticiper ces maladies, il est essentiel de disposer\n de cartes de risque fiables et validées, afin de mieux orienter les interventions et renforcer la\n réponse sanitaire.",
+    "bullet1" : "Prototype évolutif",
+    "bullet2" : "Portée mondiale",
+    "bullet3" : "Prévention des pandémies",
+    "bullet4" : "Résilience des systèmes de santé",
+    "learn-button" : "En savoir plus",
+    "namur": "Université de Namur"
   }
 }
