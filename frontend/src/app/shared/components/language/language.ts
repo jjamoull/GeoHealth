@@ -10,7 +10,7 @@ import {TranslocoService} from '@jsverse/transloco';
 export class Language implements OnInit{
   constructor(private router: Router,) {}
 
-  selectedLang = "en";
+  selectedLang = "fr";
 
   /**
    * Collect the user information when the component initialize
