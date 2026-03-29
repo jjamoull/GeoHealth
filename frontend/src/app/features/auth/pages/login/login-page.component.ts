@@ -7,6 +7,11 @@ import {ButtonComponent} from '../../../../shared/components/button.component/bu
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-success-message.component/error-success-message.component';
 import { signal } from '@angular/core';
+import {TranslocoModule, TranslocoPipe} from '@jsverse/transloco';
+import { inject } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
+
+
 
 
 
@@ -18,7 +23,9 @@ import { signal } from '@angular/core';
     CommonModule,
     ButtonComponent,
     InputboxComponents,
-    ErrorSuccessMessageComponent
+    ErrorSuccessMessageComponent,
+    TranslocoModule,
+    TranslocoPipe,
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
@@ -28,6 +35,7 @@ export class LoginPageComponent implements OnInit {
   formGroup!: FormGroup;
   loginError = signal(false);
   errorMessage = signal('');
+
 
   constructor(
     private loginService: LoginService,
@@ -41,6 +49,7 @@ export class LoginPageComponent implements OnInit {
       password: new FormControl('', [Validators.required])
     });
   }
+  private transloco = inject(TranslocoService);
 
   /**
    * Request login to the backend with formGroup information

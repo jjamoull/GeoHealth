@@ -7,10 +7,11 @@ import {Connectednavbar} from './shared/components/connectednavbar/connectednavb
 import {Unconnectednavbar} from './shared/components/unconnectednavbar/unconnectednavbar';
 import {Unconnectedsidebar} from './shared/components/unconnectedsidebar/unconnectedsidebar';
 import {Connectedsidebar} from './shared/components/connectedsidebar/connectedsidebar';
+import {Language} from './shared/components/language/language';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Connectednavbar, Unconnectednavbar, Unconnectedsidebar, Connectedsidebar],
+  imports: [RouterOutlet, Connectednavbar, Unconnectednavbar, Unconnectedsidebar, Connectedsidebar, Language],
   templateUrl: './app.html',
   styleUrl: './app.css',
   standalone: true,
@@ -22,6 +23,8 @@ export class App implements OnInit{
               private loginService:LoginService,
               private cdr:ChangeDetectorRef) {
   }
+
+
   ngOnInit() {
     this.authService.isTokenValid().pipe(
       map(isValid => {
