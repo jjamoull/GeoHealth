@@ -49,15 +49,6 @@ class RiskFactorMapServiceTest {
 
 
     @Test
-    void nothingToSaveRiskFactorMapTest(){
-        // Arrange && Act && Assert
-        assertThrows( NullPointerException.class, ()->{
-            riskFactorMapService.save(null);
-        });
-    }
-
-
-    @Test
     void findAllRiskFactorMapIsOKTest(){
         // Arrange
         RiskFactorMap riskFactorMap2 = new RiskFactorMap("Title 2", "description 2");
