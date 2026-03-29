@@ -1,8 +1,5 @@
-package com.webgis.map.finalMap;
+package com.webgis.map.finalmap;
 
-import com.webgis.map.finalmap.FinalMap;
-import com.webgis.map.finalmap.FinalMapController;
-import com.webgis.map.finalmap.FinalMapService;
 import com.webgis.map.finalmap.dto.FinalMapDto;
 import com.webgis.map.finalmap.dto.FinalMapListDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;

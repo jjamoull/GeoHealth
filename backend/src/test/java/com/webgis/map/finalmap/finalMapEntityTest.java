@@ -1,6 +1,5 @@
-package com.webgis.map.finalMap;
+package com.webgis.map.finalmap;
 
-import com.webgis.map.finalmap.FinalMap;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,8 +1,6 @@
-package com.webgis.map.finalMap;
+package com.webgis.map.finalmap;
 
 
-import com.webgis.map.finalmap.FinalMap;
-import com.webgis.map.finalmap.FinalMapRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
