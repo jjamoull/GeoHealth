@@ -4,10 +4,9 @@
     <div class="header">
       <div class="user">
         {{ username }}
-
-        ({{firstName}}
-        {{lastName}})
-
+        @if (firstName || lastName) {
+        ({{firstName}} {{lastName}})
+        }
       </div>
 
       <div class="meta">
