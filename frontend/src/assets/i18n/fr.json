@@ -1,5 +1,13 @@
 {
   "login": {
-    "title": "Connexion"
+    "title": "Connexion",
+    "message": "Veuillez vous connecter à votre compte",
+    "username": "Votre pseudo",
+    "label-username": "Pseudo",
+    "password" : "Votre mot de passe",
+    "label-password": "Mot de passe",
+    "login-button": "Se connecter",
+    "account-message": "Vous n'avez pas de compte ? ",
+    "register" : "S'inscrire"
   }
 }

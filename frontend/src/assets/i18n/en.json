@@ -1,5 +1,13 @@
 {
   "login": {
-    "title": "Login"
+    "title": "Login",
+    "message": "Please log into your account",
+    "username": "Your username",
+    "label-username": "Username",
+    "password" : "Your password",
+    "label-password": "Password",
+    "login-button":  "Login",
+    "account-message": "Don't have an account ? ",
+    "register" : "Sign in"
   }
 }
