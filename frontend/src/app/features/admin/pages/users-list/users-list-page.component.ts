@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {OnInit} from '@angular/core';
-import {AdminsServices} from '../../../../core/service/AdminService/admins-services';
+import {AdminsServices} from '../../../../core/service/AdminService/AdminUserService/admins-services';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
-import {BanDto} from '../../../../shared/models/UserModel/BanDto';
-import {AdminUserDto} from '../../../../shared/models/UserModel/AdminUserDto';
+import {BanDto} from '../../../../shared/models/AdminModel/UserModel/BanDto';
+import {AdminUserDto} from '../../../../shared/models/AdminModel/UserModel/AdminUserDto';
 import { CommonModule } from '@angular/common';
-import {ChangeRoleDto} from '../../../../shared/models/UserModel/ChangeRoleDto';
+import {ChangeRoleDto} from '../../../../shared/models/AdminModel/UserModel/ChangeRoleDto';
 
 @Component({
   selector: 'app-users-list',

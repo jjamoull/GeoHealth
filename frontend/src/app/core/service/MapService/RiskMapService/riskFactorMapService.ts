@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {environment} from '../../../rest-api-management/environment';
 import {API_ENDPOINTS} from '../../../rest-api-management/endpoint';
 import { RiskFactorMapListDto } from '../../../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
-import {AdminUserDto} from '../../../../shared/models/UserModel/AdminUserDto';
+import {AdminUserDto} from '../../../../shared/models/AdminModel/UserModel/AdminUserDto';
 
 @Injectable({
   providedIn: 'root'

@@ -38,6 +38,8 @@ export class NavigationPageComponent implements OnInit{
         this.cdr.detectChanges();
       }
     );
+
+
     }
 
   /**
@@ -59,11 +61,18 @@ export class NavigationPageComponent implements OnInit{
    * Allow the user to open the pop-up on click event
    * */
   openPopUp(paramTypeOfPopUp:string): void {
-    this.dialog.open(PopUpComponent, {
+    const dialog =this.dialog.open(PopUpComponent, {
       data:{
         typeOfPopUp: paramTypeOfPopUp
       }
     });
+
+    dialog.afterClosed().subscribe(
+      result=>{
+        this.getAllMaps();
+        this.cdr.detectChanges();}
+    );
+
   }
 
 

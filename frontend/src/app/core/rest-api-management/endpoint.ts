@@ -25,6 +25,9 @@ export const API_ENDPOINTS = {
       RISKFACTORMAPS: {
         UPLOAD: '/admin/riskFactorMaps/file'
       }
+    },
+    EVALUATIONFORM:{
+      GETALLFORMFORAMAP:"/admin/evaluationForm/allFormForFinalMap",
     }
   },
   FINALMAPS: {

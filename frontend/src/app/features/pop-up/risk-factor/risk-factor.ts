@@ -71,7 +71,7 @@ export class RiskFactor  implements OnInit{
             console.log("The new risk factor is sent to backend");
             this.dialog.close();
 
-            //this.closePopUp()
+
           }, error:(error)=>{
             this.problemWithUploading = true;
             console.error(error);
