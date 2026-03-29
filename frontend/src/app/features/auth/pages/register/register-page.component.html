@@ -14,7 +14,7 @@
       [placeholder]="'register.username' | transloco"
       formControlName="username"
       [label]="'register.label-username' | transloco"
-      [message]="'At least 3 characters long.'"
+      [message]="'register.error-username' | transloco"
       [showError]="nameLength('username')">
     </app-inputbox>
 
@@ -26,7 +26,7 @@
       [placeholder]="'register.firstname' | transloco"
       formControlName="firstName"
       [label]="'register.label-firstname' | transloco"
-      [message]="'At least 3 characters long.'"
+      [message]="'register.error-firstname' | transloco"
       [showError]="nameLength('firstName')">
     </app-inputbox>
 
@@ -35,7 +35,7 @@
       [placeholder]="'register.lastname' | transloco"
       formControlName="lastName"
       [label]="'register.label-lastname' | transloco"
-      [message]="'At least 3 characters long.'"
+      [message]="'register.error-lastname' | transloco"
       [showError]="nameLength('lastName')">
     </app-inputbox>
 
@@ -44,7 +44,7 @@
       [placeholder]="'Email'"
       formControlName="email"
       [label]="'Email'"
-      [message]="'Enter a valid email (e.g. name@example.com)'"
+      [message]="'register.error-email' | transloco"
       [showError]="mailLength('email')">
     </app-inputbox>
 
@@ -54,7 +54,7 @@
       [placeholder]="'register.password' | transloco"
       formControlName="password"
       [label]="'register.label-password' | transloco"
-      [message]="'At least 8 characters long'"
+      [message]="'register.error-password' | transloco"
       [showError]="passwordLength('password')">
     </app-inputbox>
 
@@ -63,7 +63,7 @@
       [placeholder]="'register.confirm-password' | transloco"
       formControlName="confirmPassword"
       [label]="'register.label-confirm-password' | transloco"
-      [message]="'Doesn\'t match'"
+      [message]="'register.error-confirm-password' | transloco"
       [showError]="passwordsMatch()">
     </app-inputbox>
 
