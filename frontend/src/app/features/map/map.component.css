@@ -130,3 +130,25 @@
   width: 12px;
   height: 12px;
 }
+
+.metrics-header {
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #f0f4ed 0%, #f8faf6 100%);
+  border-bottom: 1px solid #e2e6ea;
+  font-weight: 600;
+  color: #2d5016;
+}
+
+.metrics-body {
+  padding: 12px 14px;
+}
+
+.metrics-body p {
+  margin: 8px 0 2px;
+  font-weight: 600;
+}
+
+.metrics-body strong {
+  font-size: 1.3rem;
+  color: #2d5016;
+}

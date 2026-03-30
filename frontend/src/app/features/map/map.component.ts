@@ -15,16 +15,15 @@ import {EvaluationCommentComponent} from './evaluation-comment/evaluation-commen
 import {UsersServices} from '../../core/service/UserService/users-services';
 import {AdminEvaluationFormService} from '../../core/service/AdminService/AdminEvaluationFormService/AdminEvaluationFormService';
 import {AdminResponseEvaluationFormDto} from '../../shared/models/AdminModel/EvaluationFormModel/AdminResponseEvaluationFormDto';
-
 import { MapLayerHelper } from './map-layer-helper';
 import { RISK_LEVELS, getRiskColor } from './map-utils';
-
 import{MeasureService} from '../../core/service/MeasureService/measureService';
 import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
+import {TooltipDescriptionComponent} from '../../shared/components/tooltip-description/tooltip-description';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent],
+  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent, TooltipDescriptionComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
@@ -46,6 +45,8 @@ export class MapComponent implements AfterViewInit {
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
   allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
   allDivisions = signal<{ name: string, risk: string}[]>([]);
+  weightedEntropy = signal<number | null>(null);
+  globalConsensusIndex = signal<number | null>(null);
 
   private mapHelper = new MapLayerHelper();
 
@@ -174,6 +175,8 @@ export class MapComponent implements AfterViewInit {
     if (this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
       this.existingForm.set(null);
+      this.weightedEntropy.set(null);
+      this.globalConsensusIndex.set(null);
       this.mapHelper.clearMarker();
       return;
     }
@@ -186,7 +189,7 @@ export class MapComponent implements AfterViewInit {
 
     this.measureService.getWeightedEntropy(this.mapId, this.selectedDivision().NAME_2, this.selectedDivision().Risk_categ).subscribe({
         next: (weightedEntropy: number) => {
-          console.log(weightedEntropy);
+          this.weightedEntropy.set(weightedEntropy);
           },
         error: (err) => {
           console.error('Failed to load weightedEntropy', err);
@@ -201,7 +204,7 @@ export class MapComponent implements AfterViewInit {
 
     this.measureService.getGlobalConsensusIndex(this.mapId, divisionRiskDto).subscribe({
       next:(globalConcensusIndex: number) => {
-        console.log(globalConcensusIndex);
+        this.globalConsensusIndex.set(globalConcensusIndex)
         },
       error: (err) => {
         console.log('Failed to load globalConsensusIndex', err);

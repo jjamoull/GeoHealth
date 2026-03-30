@@ -38,6 +38,19 @@
     <div class="description">
       <p>{{mapDescription() }}</p>
     </div>
+    @if(selectedDivision()) {
+    <div class="metrics">
+      <div class="metrics-header">Metrics</div>
+      <div class="metrics-body">
+        <p>Weighted Entropy <app-tooltip-description description="description of weighted entropy" /></p>
+        <strong>{{ weightedEntropy() !== -1 ? weightedEntropy() : '/' }}</strong>
+
+        <p>Global Consensus Index <app-tooltip-description description="description of weighted global concensus" /></p>
+        <strong>{{ globalConsensusIndex() !== -1 ? globalConsensusIndex() : '/' }}</strong>
+      </div>
+    </div>
+    }
+
   </div>
 </div>
 
