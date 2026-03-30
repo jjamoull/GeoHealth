@@ -70,7 +70,8 @@ export class LoginPageComponent implements OnInit {
       error: () => {
         // Display error message
         this.loginError.set(true);
-        this.errorMessage.set('Username or password is invalid');
+        const messageTranslate = this.transloco.translate('error.login-error');
+        this.errorMessage.set(messageTranslate);
 
       }
     });

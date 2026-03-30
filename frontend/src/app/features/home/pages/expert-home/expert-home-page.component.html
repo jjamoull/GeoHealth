@@ -6,31 +6,29 @@
     <div class="txt" data-aos="slide-up">
       <div class="head">
         <div class="text-animate">
-          <span><span id="txt1"></span>Welcome to<br></span>
-          <span> - GeoHealth<br><img src="/assets/icons/map.png" alt="" id="txt2"></span>
+          <span><span id="txt1"></span>{{ 'home.first-title' | transloco }}<br></span>
+          <span>{{ 'home.second-title' | transloco }}<br><img src="/assets/icons/map.png" alt="" id="txt2"></span>
         </div>
       </div>
-      <p>GeoHealth, groupe de recherche de l’Université de Namur, spécialisé en épidémiologie spatiale
-        et modélisation, étudie les maladies infectieuses selon l’approche One Health, reliant santé
-        humaine, animale et environnementale.</p>
+      <p>{{ 'home.summary' | transloco }}</p>
       <div class="buttons">
         <app-button
-          [text]="'Sign in >'"
+          [text]="'home.button-register' | transloco"
           variant="success"
           (click)="goToRegister()">
         </app-button>
       </div>
         <ul class="brands">
           <li> <a>
-            <span class="label">Mobile Friendly</span>
+            <span class="label">{{ 'home.mobile-text' | transloco }}</span>
             <i class="fa-solid fa-mobile-screen"></i>
           </a></li>
           <li> <a>
-            <span class="label">Tablet Friendly</span>
+            <span class="label">{{ 'home.tablet-text' | transloco }}</span>
             <i class="fa-solid fa-tablet-screen-button"></i>
           </a></li>
           <li> <a>
-            <span class="label">Desktop Friendly</span>
+            <span class="label">{{ 'home.desktop-text' | transloco }}</span>
             <i class="fa-solid fa-computer"></i>
           </a></li>
         </ul>
@@ -39,27 +37,27 @@
   </div>
 
   <div class="work" data-aos="slide-up">
-    <h1>How this works?</h1>
+    <h1>{{ 'home.third-title' | transloco }}</h1>
     <div class="cards">
       <div class="c1 cc1" data-aos="fade-up" data-aos-delay="450">
         <img src="/assets/icons/minimap.png">
-        <h4>Visualisation cartographique interactive</h4>
-        <p>WebGIS multicouche avec zoom, filtres et visualisation des cartes de risque et facteurs associés.</p>
+        <h4>{{ 'home.first-subtitle' | transloco }}</h4>
+        <p>{{ 'home.text1' | transloco }}</p>
       </div>
       <div class="c1 cc2" data-aos="fade-up" data-aos-delay="300">
         <img src="/assets/icons/validation.png">
-        <h4>Module de validation expert</h4>
-        <p>Évaluation des risques par département avec visualisation, export et suivi collaboratif anonymisé.</p>
+        <h4>{{ 'home.second-subtitle' | transloco }}</h4>
+        <p>{{ 'home.text2' | transloco }}</p>
       </div>
       <div class="c1 cc3" data-aos="fade-up" data-aos-delay="150">
         <img src="/assets/icons/sync.png">
-        <h4> Mise à jour automatique</h4>
-        <p> Intégration de nouveaux jeux de données géoréférencés et recalcul via scripts R fournis.</p>
+        <h4>{{ 'home.third-subtitle' | transloco }}</h4>
+        <p>{{ 'home.text3' | transloco }}</p>
       </div>
       <div class="c1 cc4" data-aos="fade-up" data-aos-delay="0">
         <img src="/assets/icons/rapport.png">
-        <h4>Rapports et recommandations automatisés</h4>
-        <p> Génération par département des facteurs de risque dominants et mesures préventives associées.</p>
+        <h4>{{ 'home.fourth-subtitle' | transloco }}</h4>
+        <p>{{ 'home.text4' | transloco }}</p>
       </div>
     </div>
   </div>
@@ -70,26 +68,23 @@
     <div class="txt" data-aos="slide-up">
       <div class="head">
         <div class="subhead">
-          <span>Problématique</span>
+          <span>{{ 'home.fourth-title' | transloco }}</span>
         </div>
       </div>
-      <p>Les zoonoses sont
-        responsables de 75 % des maladies infectieuses émergentes comme Ebola et le COVID-19. Pour anticiper ces maladies, il est essentiel de disposer
-        de cartes de risque fiables et validées, afin de mieux orienter les interventions et renforcer la
-        réponse sanitaire.</p>
+      <p>{{ 'home.problem' | transloco }}</p>
       <div class="arrow">
         <div class="label1">
-          <div><span>🌍</span><span>Prototype évolutif</span></div>
-          <div><span>🌍</span><span>Portée mondiale</span></div>
+          <div><span>🌍</span><span>{{ 'home.bullet1' | transloco }}</span></div>
+          <div><span>🌍</span><span>{{ 'home.bullet2' | transloco }}</span></div>
         </div>
         <div class="label2">
-          <div><span>🌍</span><span>Prévention des pandémies</span></div>
-          <div><span>🌍</span><span>Résilience des systèmes de santé</span></div>
+          <div><span>🌍</span><span>{{ 'home.bullet3' | transloco }}</span></div>
+          <div><span>🌍</span><span>{{ 'home.bullet4' | transloco }}</span></div>
         </div>
       </div>
       <div class="buttons">
         <app-button
-          [text]="'En savoir plus'"
+          [text]="'home.learn-button' | transloco"
           variant="success">
         </app-button>
       </div>
@@ -100,7 +95,7 @@
   <footer class="footer" data-aos="fade-up">
     <div class="namur-footer">
       <img src="/assets/icons/logoUnamur.png" alt="Logo UNamur">
-      <span>Université de Namur</span>
+      <span>{{ 'home.namur' | transloco }}</span>
     </div>
   </footer>
 </div>

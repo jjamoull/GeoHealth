@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {LoginService} from '../../../../core/service/LoginService/loginService';
 import {User} from '../../../../shared/models/UserModel/User';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -7,7 +7,8 @@ import {Router} from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-success-message.component/error-success-message.component';
-
+import {TranslocoModule, TranslocoPipe} from '@jsverse/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 
@@ -15,13 +16,15 @@ import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    ButtonComponent,
-    InputboxComponents,
-    ErrorSuccessMessageComponent
-  ],
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        ButtonComponent,
+        InputboxComponents,
+        ErrorSuccessMessageComponent,
+        TranslocoModule,
+        TranslocoPipe
+    ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
 })
@@ -45,6 +48,7 @@ export class RegisterPageComponent implements  OnInit {
    */
   formGroup!: FormGroup;
 
+  private transloco = inject(TranslocoService);
   constructor(
     private loginService: LoginService,
     private router: Router) {}
@@ -100,7 +104,8 @@ export class RegisterPageComponent implements  OnInit {
       error: (err) => {
         console.error('Error while creating user', err);
         this.registerError.set(true);
-        this.errorMessage.set('username or password invalid');
+        const messageTranslate = this.transloco.translate('error.register-error');
+        this.errorMessage.set(messageTranslate);
       }
     });
   }

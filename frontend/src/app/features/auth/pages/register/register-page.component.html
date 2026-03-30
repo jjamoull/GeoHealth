@@ -2,7 +2,7 @@
 
 
 <div class="register">
-  <h1 class="registerTitle"> Register </h1>
+  <h1 class="registerTitle">{{ 'register.title' | transloco }}</h1>
 
   <form [formGroup]="formGroup"
         (ngSubmit)="register()"
@@ -11,10 +11,10 @@
   <div class="form-field">
     <app-inputbox
       [type]="'text'"
-      [placeholder]="'Username'"
+      [placeholder]="'register.username' | transloco"
       formControlName="username"
-      [label]="'Username'"
-      [message]="'At least 3 characters long.'"
+      [label]="'register.label-username' | transloco"
+      [message]="'register.error-username' | transloco"
       [showError]="nameLength('username')">
     </app-inputbox>
 
@@ -23,19 +23,19 @@
 
     <app-inputbox
       [type]="'text'"
-      [placeholder]="'Firstname'"
+      [placeholder]="'register.firstname' | transloco"
       formControlName="firstName"
-      [label]="'Firstname'"
-      [message]="'At least 3 characters long.'"
+      [label]="'register.label-firstname' | transloco"
+      [message]="'register.error-firstname' | transloco"
       [showError]="nameLength('firstName')">
     </app-inputbox>
 
     <app-inputbox
       [type]="'text'"
-      [placeholder]="'Lastname'"
+      [placeholder]="'register.lastname' | transloco"
       formControlName="lastName"
-      [label]="'Lastname'"
-      [message]="'At least 3 characters long.'"
+      [label]="'register.label-lastname' | transloco"
+      [message]="'register.error-lastname' | transloco"
       [showError]="nameLength('lastName')">
     </app-inputbox>
 
@@ -44,39 +44,39 @@
       [placeholder]="'Email'"
       formControlName="email"
       [label]="'Email'"
-      [message]="'Enter a valid email (e.g. name@example.com)'"
+      [message]="'register.error-email' | transloco"
       [showError]="mailLength('email')">
     </app-inputbox>
 
 
     <app-inputbox
       [type]="'password'"
-      [placeholder]="'Password'"
+      [placeholder]="'register.password' | transloco"
       formControlName="password"
-      [label]="'Password'"
-      [message]="'At least 8 characters long'"
+      [label]="'register.label-password' | transloco"
+      [message]="'register.error-password' | transloco"
       [showError]="passwordLength('password')">
     </app-inputbox>
 
     <app-inputbox
       [type]="'password'"
-      [placeholder]="'Confirm Password'"
+      [placeholder]="'register.confirm-password' | transloco"
       formControlName="confirmPassword"
-      [label]="'Confirm Password'"
-      [message]="'Doesn\'t match'"
+      [label]="'register.label-confirm-password' | transloco"
+      [message]="'register.error-confirm-password' | transloco"
       [showError]="passwordsMatch()">
     </app-inputbox>
 
 
     <div class="register-button-container">
       <app-button
-        [text]="'Register'"
+        [text]="'register.register-button' | transloco"
         variant="success">
       </app-button>
     </div>
 
     <div class="loginLink">
-      <p>Already have an account ? <a (click)="goToLogin()">Login</a></p>
+      <p>{{ 'register.account-message' | transloco }}<a (click)="goToLogin()">{{ 'register.login' | transloco }}</a></p>
     </div>
 
     <app-error-success-message
