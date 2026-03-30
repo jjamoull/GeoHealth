@@ -32,11 +32,14 @@ public class MeasureService {
                  finalMap,
                  division);
 
+         if (evaluationForms.isEmpty()) {
+             return -1;
+         }
+
          double sum =0;
          for(EvaluationForm evaluationForm:evaluationForms){
              sum+= computeAgreementScore(divisionRisk,evaluationForm.getPerceivedRisk())*((double) evaluationForm.getCertaintyLevel()/4);
          }
-
          return sum/evaluationForms.size();
      }
 
@@ -75,6 +78,9 @@ public class MeasureService {
 
        final List<String> evaluatedDivisions= evaluationFormRepository.findDivisionsWithPublicEvaluationForms();
 
+       if (evaluatedDivisions.isEmpty()){
+           return -1;
+       }
        double sum =0;
        for(String division:evaluatedDivisions){
            sum+= computeWeightedEntropyForADivision(finalMap,division, riskForDivision.get(division));
