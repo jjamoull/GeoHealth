@@ -40,7 +40,6 @@ export class RegisterPageComponent implements  OnInit {
     role: "Admin"
   };
 
-
   registerError = signal(false);
   errorMessage = signal('');
 
@@ -50,6 +49,9 @@ export class RegisterPageComponent implements  OnInit {
   formGroup!: FormGroup;
 
   private transloco = inject(TranslocoService);
+  constructor(
+    private loginService: LoginService,
+    private router: Router) {}
 
 
   ngOnInit(): void {
@@ -64,8 +66,6 @@ export class RegisterPageComponent implements  OnInit {
   }
 
 
-  constructor(private LoginService: LoginService, private router: Router) {
-  }
   /**
    * Redirection to login page
    */
@@ -73,12 +73,6 @@ export class RegisterPageComponent implements  OnInit {
     this.router.navigate(['login'])
   }
 
-  /**
-   * Redirection to home page
-   */
-  goToHome(){
-    this.router.navigate(['home'])
-  }
 
   /**
    * @modifies : User with the new data that the user has recorded
@@ -99,10 +93,11 @@ export class RegisterPageComponent implements  OnInit {
       password: formValue.password
     };
 
-    this.LoginService.register(registerDto).subscribe({
+    this.loginService.register(registerDto).subscribe({
       next: (response) => {
         console.log('Registration successful!', response);
-        this.goToHome()
+        this.router.navigate(['/navigation']);
+        this.loginService.setLoggedIn(true);
         this.registerError.set(false);
         this.errorMessage.set('');
       },

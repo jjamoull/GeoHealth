@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, OnInit} from '@angular/core';
+import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, OnInit, ChangeDetectorRef} from '@angular/core';
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
@@ -12,6 +12,13 @@ import { MapLegendComponent } from './map-legend/map-legend';
 import {ResponseEvaluationFormDto} from '../../shared/models/EvaluationFormModel/ResponseEvaluationFormDto';
 import {EvaluationFormService} from '../../core/service/EvaluationFormService/EvaluationFormService';
 import {EvaluationCommentComponent} from './evaluation-comment/evaluation-comment';
+import {UsersServices} from '../../core/service/UserService/users-services';
+import {
+  AdminEvaluationFormService
+} from '../../core/service/AdminService/AdminEvaluationFormService/AdminEvaluationFormService';
+import {
+  AdminResponseEvaluationFormDto
+} from '../../shared/models/AdminModel/EvaluationFormModel/AdminResponseEvaluationFormDto';
 
 @Component({
   selector: 'app-map',
@@ -35,7 +42,8 @@ export class MapComponent implements  OnInit, AfterViewInit {
   riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
   showEvaluationModal = signal<boolean>(false);
   existingForm = signal<ResponseEvaluationFormDto | null>(null);
-  allEvaluationForms= signal<ResponseEvaluationFormDto[]>([]);
+  allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
+  allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
 
   private map: any = null;
   private leaflet: any = null;
@@ -45,12 +53,17 @@ export class MapComponent implements  OnInit, AfterViewInit {
    CAMEROON_COORDINATES:LatLngExpression[] = [[6.8, 12.38]];
    CAMEROON_ZOOM:number = 6.6;
 
+  public isAdmin:boolean=false;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private mapService: FinalMapService,
+    private usersServices: UsersServices,
     private riskFactorMapService: RiskFactorMapService,
     private evaluationFormService: EvaluationFormService,
-    private route: ActivatedRoute
+    private adminEvaluationFormService:AdminEvaluationFormService,
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
     ){}
 
   onOpenEvaluation(): void {
@@ -65,6 +78,8 @@ export class MapComponent implements  OnInit, AfterViewInit {
       this.marker.remove();
       this.marker = null;
     }
+    this.getAllForm(this.isAdmin,this.mapId);
+    this.cdr.detectChanges();
   }
 
   onMapSelected(event: Event): void {
@@ -87,7 +102,9 @@ export class MapComponent implements  OnInit, AfterViewInit {
     ).addTo(this.map);
   }
 
-
+  /**
+   * Check whether the connected user is an admin or not
+   */
   ngOnInit() {
   }
 
@@ -96,6 +113,7 @@ export class MapComponent implements  OnInit, AfterViewInit {
 */
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
+
 
     this.riskFactorMapService.getAllMaps().subscribe({
           next: (maps:RiskFactorMapListDto[]) => {
@@ -109,14 +127,12 @@ export class MapComponent implements  OnInit, AfterViewInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.mapId=id;
 
-    this.evaluationFormService.getAllForm(id).subscribe({
-      next: (evaluationForms:ResponseEvaluationFormDto[])=>{
-        this.allEvaluationForms.set(evaluationForms);
-      },
-      error: (err)=>{
-        console.error('Failed to load evaluation forms', err);
-      }
-    })
+    this.usersServices.isAdmin().subscribe(
+    bool =>{
+      this.isAdmin=bool;
+      this.getAllForm(bool,id)
+    });
+
 
     const L = await import('leaflet');
     this.leaflet = L.default ?? L;
@@ -176,6 +192,36 @@ export class MapComponent implements  OnInit, AfterViewInit {
       },
       error: (err) => console.error('Failed to load map data', err)
     });
+  }
+
+
+  /**
+   * Get the evaluation form for a specific map
+   *
+   * @param isAdmin true if the connected user is an admin, false otherwise
+   * @param mapId the id of the map you are interested in
+   */
+  public getAllForm(isAdmin:boolean,mapId:number){
+    if(isAdmin){
+      this.adminEvaluationFormService.getAllForm(mapId).subscribe({
+        next: (evaluationForms:AdminResponseEvaluationFormDto[])=>{
+          this.allEvaluationFormsAdmin.set(evaluationForms);
+        },
+        error: (err)=>{
+          console.error('Failed to load evaluation forms', err);
+        }
+      })
+    }
+    else{
+      this.evaluationFormService.getAllForm(mapId).subscribe({
+        next: (evaluationForms:ResponseEvaluationFormDto[])=>{
+          this.allEvaluationFormsUser.set(evaluationForms);
+        },
+        error: (err)=>{
+          console.error('Failed to load evaluation forms', err);
+        }
+      })
+    }
   }
 
   public getRiskColor(riskClass: string): string {

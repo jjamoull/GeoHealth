@@ -1,4 +1,4 @@
-package com.webgis.admin.dto;
+package com.webgis.admin.dto.user;
 
 import com.webgis.user.User;
 

@@ -4,6 +4,9 @@
     <div class="header">
       <div class="user">
         {{ username }}
+        @if (firstName || lastName) {
+        ({{firstName}} {{lastName}})
+        }
       </div>
 
       <div class="meta">

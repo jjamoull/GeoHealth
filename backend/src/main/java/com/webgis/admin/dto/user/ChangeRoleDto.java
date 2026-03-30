@@ -1,4 +1,4 @@
-package com.webgis.admin.dto;
+package com.webgis.admin.dto.user;
 
 /**
  * Data Transfer Object containing needed field to change an account's role.

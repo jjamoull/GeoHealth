@@ -56,16 +56,34 @@
 
   <div class="evaluation-forms">
   <h2>Evaluations</h2>
-  @for(form of allEvaluationForms(); track form){
-    @if(form.division==selectedDivision().NAME_2 && form.isPublic){
-      <app-evaluation-comment
-        [username]= "form.username"
-        [division]="form.division"
-        [agreementLevel]="form.agreementLevel"
-        [perceivedRisk]="form.perceivedRisk"
-        [certaintyLevel]="form.certaintyLevel"
-        [comment]="form.comment">
-      </app-evaluation-comment>
+  @if(isAdmin){
+    @for(form of allEvaluationFormsAdmin(); track form){
+      @if(form.division==selectedDivision().NAME_2 && form.isPublic){
+        <app-evaluation-comment
+          [username]= "form.username",
+          [firstName]="form.firstName",
+          [lastName]="form.lastName",
+          [division]="form.division"
+          [agreementLevel]="form.agreementLevel"
+          [perceivedRisk]="form.perceivedRisk"
+          [certaintyLevel]="form.certaintyLevel"
+          [comment]="form.comment">
+        </app-evaluation-comment>
+      }
+    }
+  }
+  @else {
+    @for(form of allEvaluationFormsUser(); track form){
+      @if(form.division==selectedDivision().NAME_2 && form.isPublic){
+        <app-evaluation-comment
+          [username]= "form.username"
+          [division]="form.division"
+          [agreementLevel]="form.agreementLevel"
+          [perceivedRisk]="form.perceivedRisk"
+          [certaintyLevel]="form.certaintyLevel"
+          [comment]="form.comment">
+        </app-evaluation-comment>
+      }
     }
   }
   </div>
