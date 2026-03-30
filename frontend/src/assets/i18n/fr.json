@@ -88,5 +88,10 @@
     "input-confirmpassword": "Saisissez à nouveau votre nouveau mot de passe",
     "message-confirmpassword": "Les mots de passe ne correspondent pas",
     "button-applychange": "Appliquer les changements"
+  },
+  "error":{
+    "login-error": "Pseudo ou mot de passe invalide",
+    "register-error" : "Ce compte existe déjà",
+    "changepassword-success": "Le mot de passe a été modifié avec succès !"
   }
 }

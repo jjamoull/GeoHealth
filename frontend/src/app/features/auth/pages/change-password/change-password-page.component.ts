@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UserResponseDto} from '../../../../shared/models/UserModel/UserResponseDto';
 import {UsersServices} from '../../../../core/service/UserService/users-services';
 import {UpdatePasswordDto} from '../../../../shared/models/UserModel/UpdatePasswordDto';
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
-import {TranslocoPipe} from '@jsverse/transloco';
+import {TranslocoPipe, TranslocoService} from '@jsverse/transloco';
 
 @Component({
   selector: 'app-changepassword',
@@ -38,6 +38,8 @@ export class ChangePasswordPageComponent implements OnInit{
   public messageError:string|null=null;
 
   public passwordForm!: FormGroup;
+
+  private transloco = inject(TranslocoService);
 
   constructor(private userService:UsersServices,private cdr: ChangeDetectorRef){}
 
@@ -105,7 +107,8 @@ export class ChangePasswordPageComponent implements OnInit{
     this.userService.changePassword(updatePasswordDto).subscribe({
       next: (response) => {
         console.log('Changing password successful!', response);
-        this.messageSuccess='Changing password successful!';
+        const messageTranslate = this.transloco.translate('error.changepassword-success')
+        this.messageSuccess= messageTranslate;
         this.messageError=null;
         this.cdr.detectChanges();
 

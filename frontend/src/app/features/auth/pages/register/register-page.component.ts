@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {LoginService} from '../../../../core/service/LoginService/loginService';
 import {User} from '../../../../shared/models/UserModel/User';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -7,8 +7,8 @@ import {Router} from '@angular/router';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ErrorSuccessMessageComponent} from '../../../../shared/components/error-success-message.component/error-success-message.component';
-import {TranslocoPipe} from "@jsverse/transloco";
-
+import {TranslocoModule, TranslocoPipe} from '@jsverse/transloco';
+import { TranslocoService } from '@jsverse/transloco';
 
 
 
@@ -22,6 +22,7 @@ import {TranslocoPipe} from "@jsverse/transloco";
         ButtonComponent,
         InputboxComponents,
         ErrorSuccessMessageComponent,
+        TranslocoModule,
         TranslocoPipe
     ],
   templateUrl: './register-page.component.html',
@@ -47,6 +48,8 @@ export class RegisterPageComponent implements  OnInit {
    * Init the form to add a new user/account to the database
    */
   formGroup!: FormGroup;
+
+  private transloco = inject(TranslocoService);
 
 
   ngOnInit(): void {
@@ -106,7 +109,8 @@ export class RegisterPageComponent implements  OnInit {
       error: (err) => {
         console.error('Error while creating user', err);
         this.registerError.set(true);
-        this.errorMessage.set('username or password invalid');
+        const messageTranslate = this.transloco.translate('error.register-error');
+        this.errorMessage.set(messageTranslate);
       }
     });
   }

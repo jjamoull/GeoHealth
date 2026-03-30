@@ -88,5 +88,10 @@
     "input-confirmpassword": "Your new password again",
     "message-confirmpassword": "Doesn't match",
     "button-applychange": "Apply change"
+  },
+  "error":{
+    "login-error": "Username or password is invalid",
+    "register-error" : "Account already exists",
+    "changepassword-success": "Changing password successful!"
   }
 }
