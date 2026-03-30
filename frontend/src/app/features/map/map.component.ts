@@ -19,6 +19,9 @@ import {AdminResponseEvaluationFormDto} from '../../shared/models/AdminModel/Eva
 import { MapLayerHelper } from './map-layer-helper';
 import { RISK_LEVELS, getRiskColor } from './map-utils';
 
+import{MeasureService} from '../../core/service/MeasureService/measureService';
+import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
+
 @Component({
   selector: 'app-map',
   imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent],
@@ -42,6 +45,7 @@ export class MapComponent implements AfterViewInit {
   existingForm = signal<ResponseEvaluationFormDto | null>(null);
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
   allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
+  allDivisions = signal<{ name: string, risk: string}[]>([]);
 
   private mapHelper = new MapLayerHelper();
 
@@ -54,6 +58,7 @@ export class MapComponent implements AfterViewInit {
     private adminEvaluationFormService:AdminEvaluationFormService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private measureService: MeasureService,
     ){}
 
   onOpenEvaluation(): void {
@@ -145,6 +150,18 @@ export class MapComponent implements AfterViewInit {
       next: (mapData) => {
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
+
+        const geoJson = JSON.parse(mapData.fileGeoJson);
+        const divisions: { name: string, risk: string }[] = [];
+
+        for (const feature of geoJson.features) {
+          divisions.push({
+            name: feature.properties.NAME_2,
+            risk: feature.properties.Risk_categ
+          });
+        }
+        this.allDivisions.set(divisions);
+
         this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
           this.onDivisionClicked(event);
             });
@@ -166,6 +183,30 @@ export class MapComponent implements AfterViewInit {
       next: (form) => this.existingForm.set(form),
       error: () => this.existingForm.set(null)
     });
+
+    this.measureService.getWeightedEntropy(this.mapId, this.selectedDivision().NAME_2, this.selectedDivision().Risk_categ).subscribe({
+        next: (weightedEntropy: number) => {
+          console.log(weightedEntropy);
+          },
+        error: (err) => {
+          console.error('Failed to load weightedEntropy', err);
+          }
+        })
+
+    const divisionRiskDto: DivisionRiskDto = {
+      divisionRiskLevel: Object.fromEntries(
+        this.allDivisions().map(d => [d.name, d.risk])
+      )
+    };
+
+    this.measureService.getGlobalConsensusIndex(this.mapId, divisionRiskDto).subscribe({
+      next:(globalConcensusIndex: number) => {
+        console.log(globalConcensusIndex);
+        },
+      error: (err) => {
+        console.log('Failed to load globalConsensusIndex', err);
+        }
+      });
   }
 
   getRiskColor(riskClass: string): string {
