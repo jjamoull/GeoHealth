@@ -5,13 +5,15 @@ import {UsersServices} from '../../../../core/service/UserService/users-services
 import {UpdatePasswordDto} from '../../../../shared/models/UserModel/UpdatePasswordDto';
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'app-changepassword',
   imports: [
     ReactiveFormsModule,
     InputboxComponents,
-    ButtonComponent
+    ButtonComponent,
+    TranslocoPipe
   ],
   templateUrl: './change-password-page.component.html',
   styleUrl: './change-password-page.component.css',

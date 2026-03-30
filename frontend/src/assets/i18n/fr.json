@@ -78,7 +78,7 @@
     "account-cancel-button": "Annuler"
   },
   "password": {
-    "title": " Modifier le mot de passe ",
+    "title": "Modifier votre mot de passe",
     "label-oldpassword": "Ancien mot de passe",
     "input-oldpassword": "Votre ancien mot de passe",
     "label-newpassword": "Nouveau mot de passe",
