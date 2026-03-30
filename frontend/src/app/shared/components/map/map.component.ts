@@ -1,139 +1,195 @@
-import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, OnInit, ChangeDetectorRef} from '@angular/core';
+
+import {Component, AfterViewInit, Inject, PLATFORM_ID, signal} from '@angular/core';
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
-import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
-import { RiskFactorMapService } from '../../core/service/MapService/RiskMapService/riskFactorMapService';
-import { RiskFactorMapListDto } from '../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
-import {ButtonComponent} from '../../shared/components/button.component/button.component';
-import {EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
-
-import { MapLegendComponent } from './map-legend/map-legend';
-import {ResponseEvaluationFormDto} from '../../shared/models/EvaluationFormModel/ResponseEvaluationFormDto';
-import {EvaluationFormService} from '../../core/service/EvaluationFormService/EvaluationFormService';
-import {EvaluationCommentComponent} from './evaluation-comment/evaluation-comment';
-import {UsersServices} from '../../core/service/UserService/users-services';
-import {
-  AdminEvaluationFormService
-} from '../../core/service/AdminService/AdminEvaluationFormService/AdminEvaluationFormService';
-import {
-  AdminResponseEvaluationFormDto
-} from '../../shared/models/AdminModel/EvaluationFormModel/AdminResponseEvaluationFormDto';
+import { FinalMapService } from '../../../core/service/MapService/FinalMapService/finalMapService';
+import { RiskFactorMapService } from '../../../core/service/MapService/RiskMapService/riskFactorMapService';
+import { RiskFactorMapListDto } from '../../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
+import {TileMeanAndXYdto} from '../../../shared/models/MapModel/RiskFactorMapModel/TileMeanAndXYdto';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent],
+  imports: [RouterModule, CommonModule],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
 })
-export class MapComponent implements  OnInit, AfterViewInit {
+export class MapComponent implements AfterViewInit {
 
-  riskLevels = [
+  riskLevels:({label: string; color: string }[]) = [
     {label: 'Low', color: '#2ecc71'},
     {label: 'Medium', color: '#f39c12'},
-    {label: 'High', color: '#e74c3c'}];
-  mapId:number=-1;
+    {label: 'High', color: '#e74c3c'}
+  ];
 
-  selectedDivision = signal<any>(null);
+  selectedDistrict = signal<any>(null);
   marker: any = null;
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
   riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
-  showEvaluationModal = signal<boolean>(false);
-  existingForm = signal<ResponseEvaluationFormDto | null>(null);
-  allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
-  allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
 
   private map: any = null;
   private leaflet: any = null;
   private tileLayer: any = null;
   private geoJsonLayer: any = null;
+  private highlightLayer: any = null;
 
-   CAMEROON_COORDINATES:LatLngExpression[] = [[6.8, 12.38]];
-   CAMEROON_ZOOM:number = 6.6;
-
-  public isAdmin:boolean=false;
+  private readonly CAMEROON_COORDINATES:LatLngExpression[] = [[6.8, 12.38]];
+  private readonly CAMEROON_ZOOM:number = 6.6;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private readonly platformId: Object,
     private mapService: FinalMapService,
-    private usersServices: UsersServices,
     private riskFactorMapService: RiskFactorMapService,
-    private evaluationFormService: EvaluationFormService,
-    private adminEvaluationFormService:AdminEvaluationFormService,
-    private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
     ){}
 
-  onOpenEvaluation(): void {
-    this.showEvaluationModal.set(true);
+  /**
+   * Display the map OSM thanks to Leaflet on Cameroon
+   */
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId))return;
+
+    this.getAllRiskFactorMapForDropdown();
+    this.initOpenStreetMap();
+    this.setFinalRiskMap();
   }
 
-  onCloseEvaluation(): void {
-    this.showEvaluationModal.set(false);
-    this.existingForm.set(null);
-    this.selectedDivision.set(null);
-    if (this.marker) {
-      this.marker.remove();
-      this.marker = null;
-    }
-    this.getAllForm(this.isAdmin,this.mapId);
-    this.cdr.detectChanges();
-  }
 
-  onMapSelected(event: Event): void {
+  /**
+   * TODO
+   * */
+  protected onMapSelected(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
     if (this.tileLayer) {
       this.tileLayer.remove();
       this.tileLayer = null;
     }
+
     if (!value) {
       if (this.geoJsonLayer) this.geoJsonLayer.setStyle({ fillOpacity: 0.5 });
       return;
     }
-    const mapId = Number(value);
+
     if (this.geoJsonLayer){
       this.geoJsonLayer.setStyle({ fillOpacity: 0 });
       }
+
+    const mapId = Number(value);
     this.tileLayer = this.leaflet.tileLayer(
       `/tile/file/${mapId}/{z}/{x}/{y}.png`,
       { opacity: 0.7, zIndex: 500 }
+
     ).addTo(this.map);
+
+    this.onTileSelected(event, mapId);
+  }
+
+
+  /**
+   * TODO
+   * */
+  private async onTileSelected(event:Event, mapId:number):Promise<void>{
+    this.map.on('click', async (e:any)=>{
+      console.log("\n [onTileSelected] : " + e.latlng)
+      const coordinates : any = e.latlng
+      const z : number = this.map.getZoom();
+
+
+      console.log(mapId);
+      console.log(coordinates.lat, coordinates.lng);
+      const blockData : TileMeanAndXYdto | null = await this.getTileMean(mapId, z, coordinates.lat, coordinates.lng);
+
+
+      if (blockData){
+        console.log(blockData.mean);
+        const bounds = this.tileToPolygon(blockData.tileX, blockData.tileY, z, blockData.blockX, blockData.blockY);
+
+        if (this.highlightLayer) {
+          this.map.removeLayer(this.highlightLayer);
+        }
+
+
+        this.highlightLayer = this.leaflet.polygon(bounds, {
+          color: 'red',
+          weight: 2,
+          fillOpacity: 0.1
+        }).addTo(this.map);
+        //this.map.fitBounds(bounds);
+    }
+    });
+  }
+
+  private async getTileMean(mapId: number,
+                            z : number,
+                            lat : number,
+                            lng : number){
+    try {
+      const response: Response = await fetch(`tile/file/mean/${mapId}/${z}/${lat}/${lng}`);
+
+      if (!response.ok) {
+        throw new Error("Server request failed to obtain mean tile ");
+      }
+      const data: TileMeanAndXYdto = await response.json();
+      return data;
+    }
+    catch (err) {
+      console.error(err);
+      return null;
+    }
+  }
+
+
+  private tileToPolygon(x: number, y: number, z: number, blockX : number, blockY : number) {
+    const TILE_SIZE = 256;
+    const BLOCK_SIZE = 16;
+
+    const pixelX1 = x * TILE_SIZE + blockX * BLOCK_SIZE;
+    const pixelY1 = y * TILE_SIZE + blockY * BLOCK_SIZE;
+    const pixelX2 = pixelX1 + BLOCK_SIZE;
+    const pixelY2 = pixelY1 + BLOCK_SIZE;
+
+    const n = Math.pow(2, z);
+    const worldSize = TILE_SIZE *n;
+
+    const lon1 = pixelX1/worldSize*360-180;
+    const lon2 = pixelX2 /worldSize *360-180;
+
+    const lat1 = Math.atan(Math.sinh(Math.PI * (1-2 * pixelY1/ worldSize))) *180 / Math.PI;
+    const lat2 = Math.atan(Math.sinh(Math.PI*(1-2 *pixelY2/worldSize)))* 180/ Math.PI;
+
+    return [
+      [lat1, lon1], // top-left
+      [lat1, lon2], // top-right
+      [lat2, lon2], // bottom-right
+      [lat2, lon1]  // bottom-left
+    ];
+  }
+
+
+  /**
+   * get all risk factor map for dropdown that the user will be able to select
+   * */
+  private getAllRiskFactorMapForDropdown(){
+    this.riskFactorMapService.getAllMaps().subscribe({
+      next: (maps:RiskFactorMapListDto[]) => {
+        this.riskFactorMaps.set(maps);
+      },
+      error: (err) => {
+        console.error('Failed to load risk factor maps', err);
+      }
+    });
   }
 
   /**
-   * Check whether the connected user is an admin or not
-   */
-  ngOnInit() {
-  }
-
-/**
-* Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
-*/
-  async ngAfterViewInit(): Promise<void> {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-
-    this.riskFactorMapService.getAllMaps().subscribe({
-          next: (maps:RiskFactorMapListDto[]) => {
-            this.riskFactorMaps.set(maps);
-          },
-          error: (err) => {
-            console.error('Failed to load risk factor maps', err);
-          }
-    });
-
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.mapId=id;
-
-    this.usersServices.isAdmin().subscribe(
-    bool =>{
-      this.isAdmin=bool;
-      this.getAllForm(bool,id)
-    });
-
-
+   * Init the OpenStreetMap
+   *
+   * Parameters of the map :
+   *    - Zoom from 6 to 12
+   *    - Start on the Cameroon coordinates and zoom
+   * */
+  private async initOpenStreetMap(): Promise<void>{
     const L = await import('leaflet');
     this.leaflet = L.default ?? L;
 
@@ -141,10 +197,20 @@ export class MapComponent implements  OnInit, AfterViewInit {
 
     this.map.createPane('markerPane');
     this.map.getPane('markerPane').style.zIndex = 400;
+    this.map.setMinZoom(6);
+    this.map.setMaxZoom(12);
 
     this.leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
+  }
+
+
+  /**
+   * TODO
+   * */
+  private setFinalRiskMap(){
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
     this.mapService.getMap(id).subscribe({
       next: (mapData) => {
@@ -164,26 +230,8 @@ export class MapComponent implements  OnInit, AfterViewInit {
             layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
             layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
             layer.on('click', (e: any) => {
-              if (this.selectedDivision() === feature.properties) {
-                this.marker.remove();
-                this.marker = null;
-                this.selectedDivision.set(null);
-                this.existingForm.set(null);
-                return;
-              }
-              this.selectedDivision.set(feature.properties);
-              if (this.marker) this.marker.remove();
-              this.marker = this.leaflet.circleMarker(e.latlng, {
-                radius: 5,
-                color: '#1356eb',
-                fillColor: '#1959e6',
-                fillOpacity: 0.8,
-                pane: 'markerPane',
-              }).addTo(this.map);
-              this.evaluationFormService.getMyFormForADiv(id,feature.properties.NAME_2).subscribe({
-                next: (form) => this.existingForm.set(form),
-                error: () => this.existingForm.set(null)
-              });
+              this.selectOrNotDistrict(feature);
+              this.displayMarker(e);
             });
           }
         }).addTo(this.map);
@@ -195,41 +243,53 @@ export class MapComponent implements  OnInit, AfterViewInit {
   }
 
 
+
   /**
-   * Get the evaluation form for a specific map
+   * Allow users to select a district if they click on it
    *
-   * @param isAdmin true if the connected user is an admin, false otherwise
-   * @param mapId the id of the map you are interested in
-   */
-  public getAllForm(isAdmin:boolean,mapId:number){
-    if(isAdmin){
-      this.adminEvaluationFormService.getAllForm(mapId).subscribe({
-        next: (evaluationForms:AdminResponseEvaluationFormDto[])=>{
-          this.allEvaluationFormsAdmin.set(evaluationForms);
-        },
-        error: (err)=>{
-          console.error('Failed to load evaluation forms', err);
-        }
-      })
+   * (Work only if the user took the dropdown with "district … " and not a risk factor)
+   *
+   * */
+  private selectOrNotDistrict(feature:any){
+    //select again => remove marker
+    if (this.selectedDistrict() === feature.properties) {
+      this.marker.remove();
+      this.marker = null;
+      this.selectedDistrict.set(null);
+      return;
     }
-    else{
-      this.evaluationFormService.getAllForm(mapId).subscribe({
-        next: (evaluationForms:ResponseEvaluationFormDto[])=>{
-          this.allEvaluationFormsUser.set(evaluationForms);
-        },
-        error: (err)=>{
-          console.error('Failed to load evaluation forms', err);
-        }
-      })
+    this.selectedDistrict.set(feature.properties);
+    if (this.marker){
+      this.marker.remove();
     }
   }
 
-  public getRiskColor(riskClass: string): string {
+
+  /**
+   * Display on the map a blue circle marker where we click
+   * */
+  private displayMarker(e:any){
+    //marker when we click on a district
+    this.marker = this.leaflet.circleMarker(e.latlng, {
+      radius: 5,
+      color: '#1356eb',
+      fillColor: '#1959e6',
+      fillOpacity: 0.8,
+      pane: 'markerPane',
+    }).addTo(this.map);
+  }
+
+
+  /**
+   * Return the color in format " # … " on the point we clicked
+   * */
+  private getRiskColor(riskClass: string): string {
     for (const level of this.riskLevels) {
       if (level.label === riskClass){
         return level.color;
         }
       }
-    return '#aaaaaa';
+    return '#dc0a0a';
   }
+
 }
