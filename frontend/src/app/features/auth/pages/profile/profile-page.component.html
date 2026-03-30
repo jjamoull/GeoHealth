@@ -2,8 +2,8 @@
 
 <div class="profile-page">
   <div class="profile-title">
-    <span class="text1">Welcome to</span>
-    <span class="text2">Your profile</span>
+    <span class="text1">{{ 'profile.first-title' | transloco }}</span>
+    <span class="text2">{{ 'profile.second-title' | transloco }}</span>
   </div>
     <div class="container">
       <div class="card">
@@ -24,45 +24,45 @@
         <div class="grid-container">
 
           <app-inputbox
-            [label]="'Username'"
+            [label]="'profile.username' | transloco"
             [(ngModel)]="user.username"
             [disabled]="!isEditingField">
           </app-inputbox>
 
           <app-inputbox
-            [label]="'Firstname'"
+            [label]="'profile.firstname' | transloco"
             [(ngModel)]="user.firstName"
             [disabled]="!isEditingField">
           </app-inputbox>
 
           <app-inputbox
-            [label]="'Lastname'"
+            [label]="'profile.lastname' | transloco"
             [(ngModel)]="user.lastName"
             [disabled]="!isEditingField">
           </app-inputbox>
 
           <app-inputbox
-            [label]="'Email'"
+            [label]="'profile.email' | transloco"
             [(ngModel)]="user.email"
             [disabled]="!isEditingField">
           </app-inputbox>
 
           @if(isEditingField){
             <app-button
-              [text]="'Apply Change'"
+              [text]="'profile.change-button' | transloco"
               variant="success"
               (clicked)="updateProfile()">
             </app-button>
 
             <app-button
-              [text]="'Cancel'"
+              [text]="'profile.cancel-button' | transloco"
               variant="danger"
               (clicked)="cancel()">
             </app-button>
           }
           @else if(!isEditingField){
             <app-button
-              [text]="'Edit'"
+              [text]="'profile.edit-button' | transloco"
               variant="success"
               (clicked)="toggleEdit()">
             </app-button>
@@ -74,7 +74,7 @@
           }
           @if (!showWindow){
             <app-button
-              [text]="'Delete my account'"
+              [text]="'profile.delete-button' | transloco"
               variant="danger"
               (clicked)="openWindow()">
             </app-button>
@@ -82,24 +82,24 @@
           @if (showWindow) {
             <div class="deleteAccountWindow">
               <div class="window">
-                <h3>Confirmation</h3>
-                <p>Please type and validate your password to confirm</p>
+                <h3>{{ 'profile.account-first-title' | transloco }}</h3>
+                <p>{{ 'profile.account-second-title' | transloco }}</p>
 
                 <app-inputbox
                   [type]="'password'"
-                  [placeholder]="'password'"
+                  [placeholder]="'profile.password-input' | transloco"
                   [(ngModel)]="userToDelete.password"
                 >
                 </app-inputbox>
 
                 <app-button
-                  [text]="'Cancel'"
+                  [text]="'profile.account-cancel-button' | transloco"
                   variant="success"
                   (clicked)="closeWindow()">
                 </app-button>
 
                 <app-button
-                  [text]="'Delete forever'"
+                  [text]="'profile.delete-forever-button' | transloco"
                   variant="danger"
                   (clicked)="delete()"
                   [disabled]="!userToDelete.password">
@@ -109,7 +109,7 @@
           }
         </div>
         <div class="change-password-link">
-          <p>You want to change your password ? <a (click)="goToChangePassword()">Change password</a></p>
+          <p>{{ 'profile.password-message' | transloco }}<a (click)="goToChangePassword()">{{ 'profile.password-button' | transloco }}</a></p>
         </div>
 
     </div>

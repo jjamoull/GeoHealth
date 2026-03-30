@@ -18,8 +18,8 @@
     "firstname": "Prénom",
     "label-firstname": "Prénom",
     "error-firstname": "Doit contenir au moins 3 caractères.",
-    "lastname": "Nom de famille",
-    "label-lastname": "Nom de famille",
+    "lastname": "Nom",
+    "label-lastname": "Nom",
     "error-lastname": "Doit contenir au moins 3 caractères.",
     "error-email": "Entrez une adresse e-mail valide (par exemple, name@example.com)",
     "password" : "Mot de passe",
@@ -57,5 +57,36 @@
     "bullet4" : "Résilience des systèmes de santé",
     "learn-button" : "En savoir plus",
     "namur": "Université de Namur"
+  },
+  "profile": {
+    "first-title": "Bienvenue",
+    "second-title": "Sur votre profil",
+    "username": "Pseudo",
+    "firstname": "Prénom",
+    "lastname": "Nom",
+    "email": "Email",
+    "edit-button": "Modifier",
+    "delete-button": "Supprimer mon compte",
+    "password-message": "Vous souhaitez modifier votre mot de passe ? ",
+    "password-button": "Modifier le mot de passe",
+    "change-button": "Appliquer les changements",
+    "cancel-button": "Annuler",
+    "account-first-title": "Confirmation",
+    "account-second-title": "Veuillez saisir et valider votre mot de passe pour confirmer",
+    "delete-forever-button": "Suppression définitive",
+    "password-input": "Mot de passe",
+    "account-cancel-button": "Annuler"
+  },
+  "password": {
+    "title": " Modifier le mot de passe ",
+    "label-oldpassword": "Ancien mot de passe",
+    "input-oldpassword": "Votre ancien mot de passe",
+    "label-newpassword": "Nouveau mot de passe",
+    "input-newpassword": "Votre nouveau mot de passe",
+    "message-newpassword": "Doit contenir au moins 8 caractères.",
+    "label-confirmpassword": "Confirmez votre nouveau mot de passe",
+    "input-confirmpassword": "Saisissez à nouveau votre nouveau mot de passe",
+    "message-confirmpassword": "Les mots de passe ne correspondent pas",
+    "button-applychange": "Appliquer les changements"
   }
 }

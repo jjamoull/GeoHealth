@@ -9,11 +9,12 @@ import {Router} from '@angular/router';
 import {disabled} from '@angular/forms/signals';
 import {InputboxComponents} from '../../../../shared/components/inputbox.components/inputbox.components';
 import {ButtonComponent} from '../../../../shared/components/button.component/button.component';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, FormsModule, InputboxComponents, ButtonComponent],
+  imports: [CommonModule, FormsModule, InputboxComponents, ButtonComponent, TranslocoPipe],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.css',
 })

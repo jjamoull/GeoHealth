@@ -57,5 +57,36 @@
     "bullet4" : "Resilience of health care systems",
     "learn-button" : "Learn more",
     "namur": "University of Namur"
+  },
+  "profile": {
+    "first-title": "Welcome to",
+    "second-title": "Your profile",
+    "username": "Username",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "email": "Email",
+    "edit-button": "Edit",
+    "delete-button": "Delete my account",
+    "password-message": "You want to change your password ? ",
+    "password-button": "Change password",
+    "change-button": "Apply change",
+    "cancel-button": "Cancel",
+    "account-first-title": "Confirmation",
+    "account-second-title": "Please type and validate your password to confirm",
+    "delete-forever-button": "Delete forever",
+    "password-input": "Password",
+    "account-cancel-button": "Cancel"
+  },
+  "password": {
+    "title": " Update password ",
+    "label-oldpassword": "Old Password",
+    "input-oldpassword": "Your old password",
+    "label-newpassword": "New Password",
+    "input-newpassword": "Your new password",
+    "message-newpassword": "At least 8 characters long",
+    "label-confirmpassword": "Confirm New Password",
+    "input-confirmpassword": "Your new password again",
+    "message-confirmpassword": "Doesn't match",
+    "button-applychange": "Apply change"
   }
 }
