@@ -17,8 +17,6 @@ public class MeasureService {
         this.evaluationFormRepository = evaluationFormRepository;
     }
 
-    //Est ce qu'on utilise le repo ou le service pour avoir les formulaire ici ? ou autre chose ?
-
     /**
      * Compute the weighted degree of consensus among experts for a map for a division
      *
@@ -36,7 +34,7 @@ public class MeasureService {
 
          double sum =0;
          for(EvaluationForm evaluationForm:evaluationForms){
-             sum+= computeAgreementScore(divisionRisk,evaluationForm.getPerceivedRisk())*((double) evaluationForm.getCertaintyLevel() /4);
+             sum+= computeAgreementScore(divisionRisk,evaluationForm.getPerceivedRisk())*((double) evaluationForm.getCertaintyLevel()/4);
          }
 
          return sum/evaluationForms.size();
@@ -93,7 +91,7 @@ public class MeasureService {
      * @return Kippensdroff's Aplha
      */
     public void computeKrippensdroffAplha(FinalMap finalMap){
-      //TODO
+       //TODO
     }
 
 
