@@ -8,9 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -23,11 +26,11 @@ public class RiskFactorMapService {
     private final RiskFactorMapRepository riskFactorMapRepository;
     private final TileService tileService;
 
+
     public RiskFactorMapService (RiskFactorMapRepository riskFactorMapRepository,
                                  TileService tileService ){
         this.riskFactorMapRepository = riskFactorMapRepository;
         this.tileService= tileService;
-
     }
 
 
@@ -80,8 +83,9 @@ public class RiskFactorMapService {
      * @param tifFile : the fil file to transform
      * */
     public void transformIntoTileFile(long mapId, MultipartFile tifFile){
+        Path tiles = null;
         try {
-            final Path tiles = transformTifFile(tifFile);
+            tiles = transformTifFile(tifFile);
 
             try (Stream<Path> stream = Files.walk(tiles)) {
                 final List<Path> tileFiles = stream.filter(Files::isRegularFile)
@@ -101,11 +105,24 @@ public class RiskFactorMapService {
                         logger.info("1) Issue with the uploading\n");
                     }
                 });
+               logger.info("Tile generation and mean computation successfully conducted");
             }
         } catch (IOException e) {
             logger.info("2) Issue with the uploading\n");
+        } finally {
+            try {
+                if (tiles != null) {
+                    deleteDirectoryRecursively(tiles);
+                }
+                logger.info("Tile generation and mean computation successfully deleted from the disk memory");
+
+            } catch (IOException e) {
+                logger.error("There is an issue with deletion of tiles in disk memory", e);
+            }
         }
     }
+
+
 
     /**
      * Gets all risk factor map instances
@@ -114,5 +131,14 @@ public class RiskFactorMapService {
      * */
     public List<RiskFactorMap> findAll(){
         return this.riskFactorMapRepository.findAll();
+    }
+
+    public void deleteDirectoryRecursively(Path path) throws IOException {
+        if (Files.exists(path)) {
+            Files.walk(path)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        }
     }
 }

@@ -18,6 +18,8 @@ public class Tile {
     @Lob
     @Column(name = "tile_data", nullable = false)
     private byte[] tileData;
+
+
     @ManyToOne
     @MapsId("mapId")
     @JoinColumn(name = "map_id")
