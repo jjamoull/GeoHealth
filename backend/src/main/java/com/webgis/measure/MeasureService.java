@@ -92,7 +92,7 @@ public class MeasureService {
      *
      * @return Kippensdroff's Aplha
      */
-    public void computeKippensdroffAplha(FinalMap finalMap){
+    public void computeKrippensdroffAplha(FinalMap finalMap){
       //TODO
     }
 

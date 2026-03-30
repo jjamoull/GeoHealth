@@ -69,7 +69,7 @@ public class MeasureController {
         return ResponseEntity.status(200).body(golbalConsensusIndex);
     }
 
-    @GetMapping("/kippensdroffAplha/{mapId}")
+    @GetMapping("/krippensdroffAplha/{mapId}")
     public void getKippensdroffAplha(
             @PathVariable long mapId){
              // TODO
