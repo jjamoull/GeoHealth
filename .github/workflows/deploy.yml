@@ -3,7 +3,7 @@ name: Deploy GeoHealth
 on:
   pull_request:
     branches: [main]
-    types: [closed]
+    types: [closed, opened, synchronize]
 
 jobs:
   deploy:
@@ -79,7 +79,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /opt/geohealth
-            export $(cat .env | xargs)
+            docker-compose down
             docker-compose --env-file .env up -d
             sudo pkill -f webgis || true
             sleep 2
