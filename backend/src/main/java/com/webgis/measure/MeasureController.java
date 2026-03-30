@@ -22,12 +22,19 @@ public class MeasureController {
 
     public MeasureController(MeasureService measureService,
                              FinalMapService finalMapService){
-
         this.measureService = measureService;
         this.finalMapService=finalMapService;
     }
 
-
+    /**
+     * Get the weighted entropy for a division for a map
+     *
+     * @param mapId the id of the map you are interested in
+     * @param division the name of the division you are interested in
+     * @param divisionRisk the riskLevel of the division on the map that you are interested in
+     *
+     * @return weighted entropy for a division for a map if the map exist, not found otherwise
+     */
     @GetMapping("/weightedEntropy/{mapId}/{division}/{divisionRisk}")
     public ResponseEntity<Object> getWeightedEntropyForADivision(
             @PathVariable long mapId,
@@ -49,6 +56,14 @@ public class MeasureController {
 
     }
 
+    /**
+     * Get the global consensus index for a map
+     *
+     * @param mapId the name of the division you are interested in
+     * @param divisionRiskDto a Dto containing for each division its risk level
+     *
+     * @return global consensus index for a map if the map exist, not found otherwise
+     */
     @GetMapping("/globalConsensusIndex/{mapId}")
     public ResponseEntity<Object> getGlobalConsensusIndex(
             @PathVariable long mapId,
