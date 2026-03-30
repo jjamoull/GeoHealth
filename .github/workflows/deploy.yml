@@ -3,7 +3,7 @@ name: Deploy GeoHealth
 on:
   pull_request:
     branches: [main]
-    types: [closed, opened, synchronize]
+    types: [closed, synchronize]
 
 jobs:
   deploy:
