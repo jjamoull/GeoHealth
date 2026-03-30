@@ -70,7 +70,7 @@ export class RiskFactor  implements OnInit{
             this.isUploading = false;
             console.log("The new risk factor is sent to backend");
             this.dialog.close();
-
+            this.reloadPage();
 
           }, error:(error)=>{
             this.problemWithUploading = true;
@@ -107,6 +107,13 @@ export class RiskFactor  implements OnInit{
   isFieldValid(name: string){
     const formControl = this.formGroup.get(name);
     return formControl?.invalid && formControl?.dirty;
+  }
+
+  /*
+  * Reload the page to actualize the data displayed on the website
+  * */
+  public reloadPage(){
+    window.location.reload();
   }
 
 
