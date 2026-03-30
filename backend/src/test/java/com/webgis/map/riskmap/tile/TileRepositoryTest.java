@@ -42,7 +42,6 @@ public class TileRepositoryTest {
 
         tile1 = new Tile(tileId1, byteArray1, riskFactorMap);
         tile2 = new Tile(tileId2, byteArray2, riskFactorMap2);
-        tile3 = new Tile(tileId3, byteArray2, riskFactorMap2);
     }
 
 
