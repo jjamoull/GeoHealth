@@ -1,0 +1,100 @@
+<div class="map-section">
+  <div class="map-container">
+
+    <div class="map-selector">
+      <select (change)="onMapSelected($event)">
+        <option value="">Division only</option>
+        @for (map of riskFactorMaps(); track map.id) {
+          <option [value]="map.id">{{ map.title }}</option>
+        }
+      </select>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="info-card">
+      <p>{{selectedDivision | json }}</p>
+      @if(selectedDivision()) {
+        <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
+        <p>Region: {{selectedDivision().NAME_1}}</p>
+        <p>Name: {{selectedDivision().NAME_2}}</p>
+        <p class="risk-row">
+          Risk:
+          <span class="dot" [style.background]="getRiskColor(selectedDivision().Risk_categ)"></span>
+          {{selectedDivision().Risk_categ}}
+        </p>
+      } @else {
+        <p class="card-label">Click a Division</p>
+      }
+    </div>
+
+    <map-legend [riskLevels]="riskLevels"/>
+
+  </div>
+  <div class="side">
+    <div class="title">
+      <p>{{mapTitle() | json }}</p>
+    </div>
+    <div class="description">
+      <p>{{mapDescription() }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="evaluation-section">
+
+  <div class="button-evaluation">
+    @if(selectedDivision() && !showEvaluationModal()){
+      <app-button
+        [text]="existingForm() ? 'Edit Evaluation' : 'Add Evaluation'"
+        [variant]="'success'"
+        (click)="onOpenEvaluation()">
+      </app-button>
+    }
+  </div>
+
+
+  <div class="evaluation-forms">
+  <h2>Evaluations</h2>
+  @if(isAdmin){
+    @for(form of allEvaluationFormsAdmin(); track form){
+      @if(form.division==selectedDivision().NAME_2 && form.isPublic){
+        <app-evaluation-comment
+          [username]= "form.username",
+          [firstName]="form.firstName",
+          [lastName]="form.lastName",
+          [division]="form.division"
+          [agreementLevel]="form.agreementLevel"
+          [perceivedRisk]="form.perceivedRisk"
+          [certaintyLevel]="form.certaintyLevel"
+          [comment]="form.comment">
+        </app-evaluation-comment>
+      }
+    }
+  }
+  @else {
+    @for(form of allEvaluationFormsUser(); track form){
+      @if(form.division==selectedDivision().NAME_2 && form.isPublic){
+        <app-evaluation-comment
+          [username]= "form.username"
+          [division]="form.division"
+          [agreementLevel]="form.agreementLevel"
+          [perceivedRisk]="form.perceivedRisk"
+          [certaintyLevel]="form.certaintyLevel"
+          [comment]="form.comment">
+        </app-evaluation-comment>
+      }
+    }
+  }
+  </div>
+</div>
+
+
+@if(showEvaluationModal()) {
+  <app-evaluation-modal
+    [division]="selectedDivision()"
+    [mapId]="mapId"
+    [existingForm]="existingForm()"
+    (close)="onCloseEvaluation()">
+  </app-evaluation-modal>
+}

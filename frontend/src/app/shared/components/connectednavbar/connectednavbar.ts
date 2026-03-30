@@ -29,9 +29,6 @@ export class Connectednavbar implements OnInit{
 
   }
 
-  goToHome() {
-    this.router.navigate(['home'])
-  }
   goToNavigation(){
     this.router.navigate(['navigation'])
   }
@@ -49,7 +46,7 @@ export class Connectednavbar implements OnInit{
       next: (response) => {
         console.log("logout");
         this.loginService.setLoggedIn(false);
-        this.router.navigate(['login']);
+        this.router.navigate(['home']);
         this.cdr.detectChanges();
       },
       error: (err) => {

@@ -25,6 +25,10 @@ export class ChangePasswordPageComponent implements OnInit{
     email: '',
     role:''
   }
+  /**
+   * Init the form to add a new user/account to the database
+   */
+  formGroup!: FormGroup;
 
 
   public messageSuccess:string|null=null;
@@ -38,6 +42,7 @@ export class ChangePasswordPageComponent implements OnInit{
   ngOnInit(): void{
     this.userService.getConnectedUser().subscribe(
       userData=>this.userReponseDto=userData
+
     )
 
     this.passwordForm = new FormGroup({
@@ -47,17 +52,6 @@ export class ChangePasswordPageComponent implements OnInit{
     })
 
     this.cdr.detectChanges();
-  }
-
-  /**
-   * Check if a field respects the conventions or not
-   *
-   * @param name name of the field to check
-   * @return true if field is valid, false otherwise
-   */
-  public isFieldValid(name: string):boolean|undefined{
-    const formControl = this.passwordForm.get(name);
-    return formControl?.invalid && formControl?.dirty;
   }
 
 
@@ -121,9 +115,34 @@ export class ChangePasswordPageComponent implements OnInit{
         this.cdr.detectChanges();
       }
     });
-
-
   }
+  /**
+   * @param : name of the form field
+   * @return : boolean true if minlength is not respected
+   * */
+  passwordLength(name: string): boolean {
+    if (this.passwordForm==null){
+      return false;
+    }
+    const control = this.passwordForm.get(name);
+    if (!control || !control.value) return false;
+
+    return !!control.errors?.['minlength'];
+  }
+
+  /**
+   * @return : boolean true if password and confirmPassword do not match
+   * */
+  passwordsMatch(): boolean {
+    if (this.passwordForm==null){
+      return false;
+    }
+    const password = this.passwordForm.get("newPassword")?.value
+    const confirmPassword = this.passwordForm.get("confirmNewPassword")?.value
+
+    return !!confirmPassword && password !== confirmPassword;
+  }
+
 
 
 }

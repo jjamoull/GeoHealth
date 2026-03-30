@@ -1,0 +1,10 @@
+<div class="rating-system">
+  @for (option of options; track option; let i = $index) {
+    <input type="radio"
+           [name]="name"
+           [id]="name + '_' + i"
+           [checked]="option === value"
+           (click)="onSelect(option)" />
+    <label [for]="name + '_' + i">{{ option }}</label>
+  }
+</div>

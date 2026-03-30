@@ -1,13 +1,13 @@
 .all-page{
   padding-top:55px;
 }
-@media (max-width: 768px){
+@media (max-width: 768px) and (orientation: portrait){
   app-connectednavbar,
   app-unconnectednavbar{
     display: none;
   }
 }
-@media (max-width: 768px){
+@media (max-width: 768px) and (orientation: portrait){
   .all-page{
     padding-top:0px;
   }

@@ -1,213 +1,239 @@
-.body {
-  font-family: "Lato", sans-serif
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400;500&display=swap");
+
+.homepage {
+  background: linear-gradient(to bottom left, #EBEFFF, white, white);
+  padding-left: 10px;
+  padding-right: 10px;
+  height: auto;
+  padding-top: 10px;
 }
-
-/*HEADER*/
-
-.visual{
-  min-height: 100vh;
+.txt {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: center;
+  gap: 30px;
+  padding: 50px 20px;
+  text-wrap: wrap;
+  width: 50%;
 }
-
-.image{
+.head span {
+  position: relative;
+  font-size: 50px;
+  color: black;
+  margin: 0;
+  line-height: 1.2;
+  z-index: 1;
+  font-weight: 500;
+}
+.head {
+  position: relative;
+  margin-bottom: 20px;
+  font-family: 'Baloo Paaji 2', cursive;
+}
+.txt p {
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  margin: 0;
+}
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 24px;
+  font-family: 'Baloo Paaji 2', cursive;
+}
+.brands {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 30px;
+  height: 100px;
+  margin-top: -20px;
+}
+.brands a{
+  display: inline-block;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.label {
+  color: black;
+  font-family: 'Baloo Paaji 2', cursive;
+}
+.label :nth-child(2) {
+  color: black;
+  font-weight: bold;
+}
+.label :nth-child(1) {
+  color: white;
+  padding: 3px 6px;
+  border-radius: 50%;
+}
+#txt1 {
   position: absolute;
+  transform: rotate(180deg) translateX(30px) translateY(10px);
+  width: 40px;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+#txt2 {
+  position: absolute;
+  width: 70px;
+  right: 0;
+  bottom: 0;
+  transform: translateX(60px) translateY(30px);
+}
+.flex {
+  width: 100%;
+  display: flex;
+  height: 600px;
+  gap: 10px;
+}
+.flex1{
+  margin-top:30px;
+}
+.img-hand img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  z-index: -1;
+  object-fit: contain;
 }
-.rectangle{
+.img-work img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: float 3s ease-in-out infinite 0.3s;
+}
+.brands li {
+  display: inline-block;
+  margin: 0.15em;
+  position: relative;
+  font-size: 1em;
+}
+.brands i {
+  color: #fff;
   position: absolute;
-  border: thick double #cccccc;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 400px;
-  height: 250px;
-
+  top: 0.95em;
+  left: 0.96em;
+  transition: all 265ms ease-out;
 }
-.rectangle h1{
-  text-align: center;
-  font-size: 50px;
-  text-transform: uppercase;
-  color: black;
-  font-family: 'Julius Sans One', sans-serif;
-
-}
-.rectangle h1 span{
+.brands a:before {
+  transform: scale(1);
+  -ms-transform: scale(1);
+  -webkit-transform: scale(1);
+  content: " ";
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
   display: block;
-  margin-top: 10px;
-  color: black;
-}
-/*HEADER*/
-
-/*RECENT SECTION*/
-.carouselSection{
-  padding-top: 4rem;
-  min-height: 70vh;
-}
-.cardTitle{
-  display: flex;
-  justify-content: center;
-  color: black;
-}
-.carousel {
-  margin: 50px auto;
-  width: 90%;
-  display : flex;
-  overflow-x : auto;
-  gap: 1em;
-}
-.carousel::-webkit-scrollbar{
-  /*display: none;*/
-}
-.group{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1em;
-  animation: spin 40s infinite linear;
-  padding-right: 1em;
-}
-.carousel-preference-form{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
+  background: linear-gradient(45deg, #90ee90, #1691fd);
+  transition: all 265ms ease-out;
 }
 
-.radio-group {
-  width: 60%;
-  display: flex;
-  gap: 20px;
-  padding: 12px;
-  display: flex;
-  justify-content: center;
+.brands a:hover:before {
+  transform: scale(0);
+  transition: all 265ms ease-in;
 }
 
-.radio-card {
-  width: 30%;
-  padding: 18px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 200;
-  font-size: 14px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  transition: 0.2s;
+.brands a:hover i {
+  transform: scale(2.2);
+  -ms-transform: scale(2.2);
+  -webkit-transform: scale(2.2);
+  color: #90ee90;
+  background: linear-gradient(45deg, #90ee90, #1691fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 265ms ease-in;
 }
 
-.radio-card:hover {
-  border-color: #007bff;
-}
-
-.radio-card:has(input:checked) {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
-}
-
-.radio-card input {
-  display: none;
-}
-
-.card {
-  flex: 0 0 5em;
-  height: 5em;
-  padding: 1em;
-  background-image: url("/assets/background/worldMap.png");
-  font-size: 3rem;
-  border-radius: .2em;
-  text-align: center;
-  align-content: center;
-}
-
-@keyframes spin {
-  from {translate: 0;}
-  to {translate: -100%}
-}
-/*RECENT SECTION*/
-
-/*COMMENT SECTION*/
-.commentSection{
-  padding-top: 5rem;
-  min-height: 100vh;
-  background-color: black;
-}
-.commentContent{
-  max-width: 1000px;
-  margin: 0 auto;
-}
-.commentTitle{
-  display: flex;
-  justify-content: center;
-  color: white;
-}
-
-.cardSection{
-  display: flex;
+.work {
   margin-top: 100px;
-  justify-content: center;
-  gap: 24px;
-}
-.commentCard{
-  background-color: white;
-}
-.commentCard img {
-  width: 100%;
-  display : block;
-  transition: background 0.3s;
-}
-.commentCard img:hover {
-  opacity: 0.6;
-  cursor: pointer;
-}
-.commentButton {
-  background: black;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.3s;
-}
-.commentButton:hover {
-  background: #333;
-}
-/*RECENT SECTION*/
-
-
-/*CONTACT SECTION*/
-
-.contactSection{
-  min-height: 40vh;
-  background-color: white;
-  padding-top: 5rem;
+  height: 450px;
   text-align: center;
+  font-family: 'Baloo Paaji 2', cursive;
 }
-.contactTitle{
+.cards {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+.cc1 {
+  background-color: #cdebf8;
+}
+.cc2 {
+  background-color: #f5ecb5;
+}
+.cc3 {
+  background-color: #e1d6fa;
+}
+.cc4 {
+  background-color: #f8e2e2;
+}
+.c1 {
+  text-align: center;
+  padding: 20px;
+  height: 300px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+}
+.c1 img {
+  height: 50px;
+}
+.arrow {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 16px;
+}
+.label1,
+.label2 {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 30px;
+}
+.img-hand {
+  width: 50%;
+  animation: float 3s ease-in-out infinite 0.3s;
+}
+.footer{
   display: flex;
   justify-content: center;
-  color: black;
-  text-transform: uppercase;
+  align-items: center;
+  gap: 5px;
+  background-color: #EBEFFF;
 }
-.contactContent{
-  margin-top: 70px;
+.namur-footer img{
+  width: 50px;
+  height: 50px;
 }
-/*CONTACT SECTION*/
+.namur-footer{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
 
-/*FOOTER*/
-.copyright{
-  display: flex;
-  justify-content: center;
-}
