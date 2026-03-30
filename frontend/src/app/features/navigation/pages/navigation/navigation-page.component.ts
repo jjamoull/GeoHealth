@@ -7,6 +7,9 @@ import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
 import {FinalMapService} from '../../../../core/service/MapService/FinalMapService/finalMapService';
 import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/FinalMapListDto';
 import {UsersServices} from '../../../../core/service/UserService/users-services';
+import {MapComponent} from '../../../map/map.component';
+import {CAMEROON_COORDINATES} from '../../../../features/map/map.constants';
+import {CAMEROON_ZOOM} from '../../../../features/map/map.constants';
 
 @Component({
   selector: 'app-navigation',
@@ -75,11 +78,21 @@ export class NavigationPageComponent implements OnInit{
 
   }
 
-
   /**
    * Go to the page with the id of the map
    */
   goToMap(id: number) {
     this.router.navigate(['/maps', id]);
   }
+
+  /**
+   *
+   * */
+  getStaticMapUrl(): string {
+    let lat = CAMEROON_COORDINATES[0];
+    let lng = CAMEROON_COORDINATES[1];
+    let zoom = CAMEROON_ZOOM;
+    return `https://staticmap.openstreetmap.de/staticmap.php?center=${lat},${lng}&zoom=${zoom}&size=400x200&markers=${lat},${lng},red`;
+  }
+
 }

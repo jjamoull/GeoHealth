@@ -18,6 +18,8 @@ import {AdminResponseEvaluationFormDto} from '../../shared/models/AdminModel/Eva
 
 import { MapLayerHelper } from './map-layer-helper';
 import { RISK_LEVELS, getRiskColor } from './map-utils';
+import {CAMEROON_COORDINATES} from './map.constants';
+import {CAMEROON_ZOOM} from './map.constants';
 
 @Component({
   selector: 'app-map',
@@ -28,8 +30,6 @@ import { RISK_LEVELS, getRiskColor } from './map-utils';
 })
 export class MapComponent implements AfterViewInit {
 
-  CAMEROON_COORDINATES:LatLngExpression[] = [[6.8, 12.38]];
-  CAMEROON_ZOOM:number = 6.6;
   riskLevels = RISK_LEVELS;
 
   mapId: number = -1;
@@ -87,7 +87,7 @@ export class MapComponent implements AfterViewInit {
     this.loadAvailableMaps();
     this.mapId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadUserRole();
-    await this.mapHelper.initMap('map', this.CAMEROON_COORDINATES[0], this.CAMEROON_ZOOM);
+    await this.mapHelper.initMap('map', CAMEROON_COORDINATES[0], CAMEROON_ZOOM);
     this.loadBaseMap();
   }
 
