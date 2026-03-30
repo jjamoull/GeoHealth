@@ -5,6 +5,7 @@
   align-items: center;
   pointer-events: none;
   top:10px;
+  right: 0;
 }
 
 .select {
