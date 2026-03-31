@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
 
@@ -64,7 +65,7 @@ public class MeasureController {
      *
      * @return global consensus index for a map if the map exist, not found otherwise
      */
-    @GetMapping("/globalConsensusIndex/{mapId}")
+    @PostMapping("/globalConsensusIndex/{mapId}")
     public ResponseEntity<Object> getGlobalConsensusIndex(
             @PathVariable long mapId,
             @RequestBody DivisionRiskDto divisionRiskDto){
