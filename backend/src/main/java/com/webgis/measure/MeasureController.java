@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -85,8 +86,23 @@ public class MeasureController {
     }
 
     @GetMapping("/krippensdroffAplha/{mapId}")
-    public void getKippensdroffAplha(
+    public ResponseEntity<Object> getKrippensdorffAplha(
             @PathVariable long mapId){
-             // TODO
+
+        final Optional<FinalMap> optionalFinalMap= finalMapService.findById(mapId);
+
+        if(optionalFinalMap.isEmpty()){
+            return ResponseEntity.status(404).body(new MessageDto("The selected map does not exist"));
+        }
+
+        final FinalMap finalMap= optionalFinalMap.get();
+
+        try{
+            final double krippensdorffAlpha= measureService.computeKrippensdorffAplha(finalMap);
+            return ResponseEntity.status(200).body(krippensdorffAlpha);
+        } catch (Exception e){
+            return ResponseEntity.status(404).body(new MessageDto("Error while computing krippensdorff"));
+        }
+
     }
 }
