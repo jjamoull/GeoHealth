@@ -1,10 +1,16 @@
 package com.webgis.measure;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webgis.evaluationform.EvaluationForm;
 import com.webgis.evaluationform.EvaluationFormRepository;
 import com.webgis.map.finalmap.FinalMap;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +18,9 @@ import java.util.Map;
 public class MeasureService {
 
     private final EvaluationFormRepository evaluationFormRepository;
+
+    @Value("${script.path}")
+    private String scriptPath;
 
     public MeasureService(EvaluationFormRepository evaluationFormRepository) {
         this.evaluationFormRepository = evaluationFormRepository;
@@ -94,11 +103,73 @@ public class MeasureService {
      *
      * @param finalMap the map you are interested in
      *
-     * @return Kippensdroff's Aplha
+     * @return Krippensdroff's Aplha
      */
-    public void computeKrippensdroffAplha(FinalMap finalMap){
-       //TODO
+    public double computeKrippensdorffAplha(FinalMap finalMap) throws IOException{
+        final List<EvaluationForm> evaluationForms = evaluationFormRepository.findByFinalMap(finalMap);
+
+        final List<List<Integer>> krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
+
+        System.out.println(krippensdorffMatrix);
+
+        final ObjectMapper mapper = new ObjectMapper();
+        final String json = mapper.writeValueAsString(krippensdorffMatrix);
+
+        final String path= scriptPath+"krippendorff_Alpha.py";
+        System.out.println(path);
+
+        final ProcessBuilder pb = new ProcessBuilder("python",path);
+        final Process p = pb.start();
+
+        final OutputStream os = p.getOutputStream();
+        os.write(json.getBytes());
+        os.flush();
+        os.close();
+
+        final String result= new String(p.getInputStream().readAllBytes());
+
+        return Double.parseDouble(result.trim());
     }
 
+    private List<List<Integer>> buildKrippensdorffMatrix(List<EvaluationForm> evaluationForms){
+        final List<Long> usersIdList= evaluationForms.stream()
+                .map(form->form.getUser().getId())
+                .distinct()
+                .sorted()
+                .toList();
+
+        final List<String> evaluatedDivisionsList= evaluationForms.stream()
+                .map(form->form.getDivision())
+                .distinct()
+                .sorted()
+                .toList();
+
+        final Map<Long,Map<String,Integer>> krippendorffHashMap = buildKrippendorffHashMap(evaluationForms);
+
+        final List<List<Integer>> krippensdroffMatrix= new ArrayList<>();
+        for(long id: usersIdList){
+            final List<Integer> krippensdorffMatrixRow= new ArrayList<>();
+            for(String division:evaluatedDivisionsList){
+                krippensdorffMatrixRow.add(krippendorffHashMap.get(id).get(division));
+            }
+            krippensdroffMatrix.add(krippensdorffMatrixRow);
+        }
+        return krippensdroffMatrix;
+    }
+
+    private Map<Long,Map<String,Integer>> buildKrippendorffHashMap(List<EvaluationForm> evaluationForms){
+        final Map<Long,Map<String,Integer>> krippendorffHashMap= new HashMap<>();
+
+        for(EvaluationForm form: evaluationForms){
+            if(!krippendorffHashMap.containsKey(form.getUser().getId())){
+                krippendorffHashMap.put(form.getUser().getId(), new HashMap<>());
+            }
+            krippendorffHashMap
+                    .get(form.getUser().getId())
+                    .put(form.getDivision(), RiskLevel.fromString(form.getPerceivedRisk()).getScore());
+
+        }
+        return krippendorffHashMap;
+    }
 
 }

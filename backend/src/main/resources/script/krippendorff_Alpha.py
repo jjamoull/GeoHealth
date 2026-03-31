@@ -6,8 +6,8 @@ import sys
 
 # Compute kippendorff value
 
-data = json.loads(sys.argv[1])
-matrix= np.array(data)
+data = json.loads(sys.stdin.read())
+matrix= np.array(data, dtype=float)
 
-alpha= krippendorff.alpha(reliability_data=matrix,level_of_measurent='ordinal')
+alpha= krippendorff.alpha(reliability_data=matrix,level_of_measurement='ordinal')
 print(alpha)

@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,6 +45,7 @@ class MeasureServiceTest {
                 "password1",
                 "Admin"
         );
+        user1.setId(1L);
 
         user2 = new User(
                 "pseudo2",
@@ -53,6 +55,7 @@ class MeasureServiceTest {
                 "password2",
                 "USER"
         );
+        user2.setId(2L);
 
         user3 = new User(
                 "pseudo3",
@@ -62,6 +65,7 @@ class MeasureServiceTest {
                 "password3",
                 "Admin"
         );
+        user3.setId(3L);
 
         byte[] dataZip = {66};
 
@@ -122,4 +126,5 @@ class MeasureServiceTest {
         // Assert
         assertEquals(0.5, result);
     }
+
 }
