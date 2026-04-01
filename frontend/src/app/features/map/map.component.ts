@@ -15,15 +15,17 @@ import {EvaluationCommentComponent} from './evaluation-comment/evaluation-commen
 import {UsersServices} from '../../core/service/UserService/users-services';
 import {AdminEvaluationFormService} from '../../core/service/AdminService/AdminEvaluationFormService/AdminEvaluationFormService';
 import {AdminResponseEvaluationFormDto} from '../../shared/models/AdminModel/EvaluationFormModel/AdminResponseEvaluationFormDto';
-
 import { MapLayerHelper } from './map-layer-helper';
 import { RISK_LEVELS, getRiskColor } from './map-utils';
 import {CAMEROON_COORDINATES} from './map.constants';
 import {CAMEROON_ZOOM} from './map.constants';
+import{MeasureService} from '../../core/service/MeasureService/measureService';
+import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
+import {TooltipDescriptionComponent} from '../../shared/components/tooltip-description/tooltip-description';
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent],
+  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent, TooltipDescriptionComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
@@ -42,6 +44,9 @@ export class MapComponent implements AfterViewInit {
   existingForm = signal<ResponseEvaluationFormDto | null>(null);
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
   allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
+  allDivisions = signal<{ name: string, risk: string}[]>([]);
+  weightedEntropy = signal<number | null>(null);
+  globalConsensusIndex = signal<number | null>(null);
 
   private mapHelper = new MapLayerHelper();
 
@@ -54,6 +59,7 @@ export class MapComponent implements AfterViewInit {
     private adminEvaluationFormService:AdminEvaluationFormService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private measureService: MeasureService,
     ){}
 
   onOpenEvaluation(): void {
@@ -145,6 +151,18 @@ export class MapComponent implements AfterViewInit {
       next: (mapData) => {
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
+
+        const geoJson = JSON.parse(mapData.fileGeoJson);
+        const divisions: { name: string, risk: string }[] = [];
+
+        for (const feature of geoJson.features) {
+          divisions.push({
+            name: feature.properties.NAME_2,
+            risk: feature.properties.Risk_categ
+          });
+        }
+        this.allDivisions.set(divisions);
+
         this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
           this.onDivisionClicked(event);
             });
@@ -157,6 +175,8 @@ export class MapComponent implements AfterViewInit {
     if (this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
       this.existingForm.set(null);
+      this.weightedEntropy.set(null);
+      this.globalConsensusIndex.set(null);
       this.mapHelper.clearMarker();
       return;
     }
@@ -166,6 +186,30 @@ export class MapComponent implements AfterViewInit {
       next: (form) => this.existingForm.set(form),
       error: () => this.existingForm.set(null)
     });
+
+    this.measureService.getWeightedEntropy(this.mapId, this.selectedDivision().NAME_2, this.selectedDivision().Risk_categ).subscribe({
+        next: (weightedEntropy: number) => {
+          this.weightedEntropy.set(weightedEntropy);
+          },
+        error: (err) => {
+          console.error('Failed to load weightedEntropy', err);
+          }
+        })
+
+    const divisionRiskDto: DivisionRiskDto = {
+      divisionRiskLevel: Object.fromEntries(
+        this.allDivisions().map(d => [d.name, d.risk])
+      )
+    };
+
+    this.measureService.getGlobalConsensusIndex(this.mapId, divisionRiskDto).subscribe({
+      next:(globalConcensusIndex: number) => {
+        this.globalConsensusIndex.set(globalConcensusIndex)
+        },
+      error: (err) => {
+        console.log('Failed to load globalConsensusIndex', err);
+        }
+      });
   }
 
   getRiskColor(riskClass: string): string {

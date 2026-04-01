@@ -3,6 +3,7 @@ package com.webgis.map.riskmap.tile;
 import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class TileId implements Serializable {
@@ -54,7 +55,40 @@ public class TileId implements Serializable {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TileId)) return false;
 
+        final TileId tileId = (TileId) o;
+
+        if (zoom != tileId.zoom){
+            return false;
+        }
+        if (x != tileId.x) {
+            return false;
+        }
+        if (y != tileId.y) {
+            return false;
+        }
+        return Objects.equals(mapId, tileId.mapId);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        if (mapId != null) {
+            result = mapId.hashCode();
+        } else {
+            result = 0;
+        }
+
+        result = 31 * result + zoom;
+        result = 31 * result + x;
+        result = 31 * result + y;
+
+        return result;
+    }
 
 
 
