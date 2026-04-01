@@ -65,7 +65,6 @@ export class FinalMap implements OnInit{
           this.isUploading = false;
           console.log("The new final map is sent to backend");
           this.dialog.close();
-          this.reloadPage();
 
         }, error:(error)=>{
           console.error(error);
@@ -102,12 +101,7 @@ export class FinalMap implements OnInit{
     return formControl?.invalid && formControl?.dirty;
   }
 
-  /*
-* Reload the page to actualize the data displayed on the website
-* */
-  public reloadPage(){
-    window.location.reload();
-  }
+
 
 
 
