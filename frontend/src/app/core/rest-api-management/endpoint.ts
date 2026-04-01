@@ -46,5 +46,6 @@ export const API_ENDPOINTS = {
   MEASURE: {
     GLOBALCONSENSUSINDEX: "/measure/globalConsensusIndex",
     WEIGHTEDENTROPY: "/measure/weightedEntropy",
+    KRIPPENDORFF:"/measure/krippendorffAlpha"
     }
 } as const;

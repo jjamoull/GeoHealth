@@ -85,9 +85,24 @@ public class MeasureController {
         return ResponseEntity.status(200).body(golbalConsensusIndex);
     }
 
-    @GetMapping("/krippensdroffAplha/{mapId}")
-    public void getKippensdroffAplha(
+    @GetMapping("/krippendorffAlpha/{mapId}")
+    public ResponseEntity<Object> getkrippendorffAlpha(
             @PathVariable long mapId){
-             // TODO
+
+        final Optional<FinalMap> optionalFinalMap= finalMapService.findById(mapId);
+
+        if(optionalFinalMap.isEmpty()){
+            return ResponseEntity.status(404).body(new MessageDto("The selected map does not exist"));
+        }
+
+        final FinalMap finalMap= optionalFinalMap.get();
+
+        try{
+            final double krippendorffAlpha= measureService.computekrippendorffAlpha(finalMap);
+            return ResponseEntity.status(200).body(krippendorffAlpha);
+        } catch (Exception e){
+            return ResponseEntity.status(404).body(new MessageDto("Error while computing krippensdorff"));
+        }
+
     }
 }
