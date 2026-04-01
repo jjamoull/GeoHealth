@@ -42,5 +42,9 @@ export const API_ENDPOINTS = {
     UPDATE:"/evaluationForm/updateForm",
     GETMYFORMFORADIVFORAMAP:"/evaluationForm/myForm",
     GETALLFORMFORAMAP:"/evaluationForm/allFormForFinalMap",
-  }
+  },
+  MEASURE: {
+    GLOBALCONSENSUSINDEX: "/measure/globalConsensusIndex",
+    WEIGHTEDENTROPY: "/measure/weightedEntropy",
+    }
 } as const;
