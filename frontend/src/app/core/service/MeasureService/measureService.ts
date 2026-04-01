@@ -33,7 +33,7 @@ export class MeasureService {
    *
    * @param mapId the id of the map you are interested in
    * @param division the name of the division you are interested in
-   * @param divisionRisk the risk evaluated in the map for the division 
+   * @param divisionRisk the risk evaluated in the map for the division
    */
   public getWeightedEntropy(mapId: number, division: string, divisionRisk: string): Observable<number> {
     return this.httpClient.get<number>(`${this.baseUrl}${API_ENDPOINTS.MEASURE.WEIGHTEDENTROPY}/${mapId}/${division}/${divisionRisk}`,
@@ -45,7 +45,7 @@ export class MeasureService {
    *
    * @param mapId the id of the map you are interested in
    */
-  public  getKrippensdorff(mapId: number): Observable<number> {
+  public  getKrippendorff(mapId: number): Observable<number> {
     return this.httpClient.get<number>(`${this.baseUrl}${API_ENDPOINTS.MEASURE.KRIPPENSDORFF}/${mapId}`,
       {withCredentials: true})
   }

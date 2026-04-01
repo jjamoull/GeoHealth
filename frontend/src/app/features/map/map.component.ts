@@ -193,7 +193,7 @@ export class MapComponent implements AfterViewInit {
           this.weightedEntropy.set(weightedEntropy);
           },
         error: (err) => {
-          console.error('Failed to load weightedEntropy', err);
+          console.log('Failed to load weightedEntropy', err);
           }
         })
 
@@ -212,9 +212,8 @@ export class MapComponent implements AfterViewInit {
         }
       });
 
-    this.measureService.getKrippensdorff(this.mapId).subscribe({
-      next:(krippensdorff: number) => {
-        this.krippendorff.set(krippensdorff)
+    this.measureService.getKrippendorff(this.mapId).subscribe({
+      next:(krippendorff: number) => {
       },
       error: (err) => {
         console.log('Failed to load krippendorff', err);

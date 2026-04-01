@@ -85,8 +85,8 @@ public class MeasureController {
         return ResponseEntity.status(200).body(golbalConsensusIndex);
     }
 
-    @GetMapping("/krippensdorffAplha/{mapId}")
-    public ResponseEntity<Object> getKrippensdorffAplha(
+    @GetMapping("/krippensdorffAlpha/{mapId}")
+    public ResponseEntity<Object> getKrippensdorffAlpha(
             @PathVariable long mapId){
 
         final Optional<FinalMap> optionalFinalMap= finalMapService.findById(mapId);
@@ -98,7 +98,7 @@ public class MeasureController {
         final FinalMap finalMap= optionalFinalMap.get();
 
         try{
-            final double krippensdorffAlpha= measureService.computeKrippensdorffAplha(finalMap);
+            final double krippensdorffAlpha= measureService.computeKrippensdorffAlpha(finalMap);
             return ResponseEntity.status(200).body(krippensdorffAlpha);
         } catch (Exception e){
             return ResponseEntity.status(404).body(new MessageDto("Error while computing krippensdorff"));
