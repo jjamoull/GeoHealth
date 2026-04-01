@@ -45,8 +45,8 @@ export class MeasureService {
    *
    * @param mapId the id of the map you are interested in
    */
-  public  getKrippendorff(mapId: number): Observable<number> {
-    return this.httpClient.get<number>(`${this.baseUrl}${API_ENDPOINTS.MEASURE.KRIPPENSDORFF}/${mapId}`,
+  public getKrippendorff(mapId: number): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}${API_ENDPOINTS.MEASURE.KRIPPENDORFF}/${mapId}`,
       {withCredentials: true})
   }
 

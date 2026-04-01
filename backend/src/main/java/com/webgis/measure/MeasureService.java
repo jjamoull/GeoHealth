@@ -105,7 +105,7 @@ public class MeasureService {
      *
      * @return Krippensdroff's Alpha
      */
-    public double computeKrippensdorffAlpha(FinalMap finalMap) throws IOException{
+    public double computekrippendorffAlpha(FinalMap finalMap) throws IOException{
         final List<EvaluationForm> evaluationForms = evaluationFormRepository.findByFinalMap(finalMap);
 
         final List<List<Integer>> krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);

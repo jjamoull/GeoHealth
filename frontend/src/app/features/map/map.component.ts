@@ -214,6 +214,7 @@ export class MapComponent implements AfterViewInit {
 
     this.measureService.getKrippendorff(this.mapId).subscribe({
       next:(krippendorff: number) => {
+        this.krippendorff.set(krippendorff)
       },
       error: (err) => {
         console.log('Failed to load krippendorff', err);
