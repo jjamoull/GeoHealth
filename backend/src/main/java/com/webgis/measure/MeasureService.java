@@ -110,13 +110,10 @@ public class MeasureService {
 
         final List<List<Integer>> krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
 
-        System.out.println(krippensdorffMatrix);
-
         final ObjectMapper mapper = new ObjectMapper();
         final String json = mapper.writeValueAsString(krippensdorffMatrix);
 
         final String path= scriptPath+"krippendorff_Alpha.py";
-        System.out.println(path);
 
         final ProcessBuilder pb = new ProcessBuilder("python",path);
         final Process p = pb.start();
@@ -131,6 +128,14 @@ public class MeasureService {
         return Double.parseDouble(result.trim());
     }
 
+    /**
+     * Build the matrix needed to compute Krippendorff's alpha measure
+     *
+     * @param evaluationForms all the evaluation forms of the map you are interested in
+     *
+     * @return the matrix required to compute the krippendorff measure
+     *         (row: evaluator,column: evaluation for a division)
+     */
     private List<List<Integer>> buildKrippensdorffMatrix(List<EvaluationForm> evaluationForms){
         final List<Long> usersIdList= evaluationForms.stream()
                 .map(form->form.getUser().getId())
@@ -157,6 +162,13 @@ public class MeasureService {
         return krippensdroffMatrix;
     }
 
+    /**
+     * Build the hashmap used to infer the Krippendorff's alpha matrix
+     *
+     * @param evaluationForms all the evaluation forms of the map you are interested in
+     *
+     * @return a Map containing for each user (id) the divisions the user evaluated and the risk perceived for these divisions
+     */
     private Map<Long,Map<String,Integer>> buildKrippendorffHashMap(List<EvaluationForm> evaluationForms){
         final Map<Long,Map<String,Integer>> krippendorffHashMap= new HashMap<>();
 

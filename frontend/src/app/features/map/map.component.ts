@@ -47,6 +47,7 @@ export class MapComponent implements AfterViewInit {
   allDivisions = signal<{ name: string, risk: string}[]>([]);
   weightedEntropy = signal<number | null>(null);
   globalConsensusIndex = signal<number | null>(null);
+  krippendorff= signal<number | null>(null);
 
   private mapHelper = new MapLayerHelper();
 
@@ -210,6 +211,15 @@ export class MapComponent implements AfterViewInit {
         console.log('Failed to load globalConsensusIndex', err);
         }
       });
+
+    this.measureService.getKrippensdorff(this.mapId).subscribe({
+      next:(krippensdorff: number) => {
+        this.krippendorff.set(krippensdorff)
+      },
+      error: (err) => {
+        console.log('Failed to load krippendorff', err);
+      }
+    });
   }
 
   getRiskColor(riskClass: string): string {

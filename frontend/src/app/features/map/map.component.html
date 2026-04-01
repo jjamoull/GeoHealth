@@ -47,6 +47,9 @@
 
         <p>Global Consensus Index <app-tooltip-description description="description of weighted global concensus" /></p>
         <strong>{{ globalConsensusIndex() !== -1 ? globalConsensusIndex() : '/' }}</strong>
+
+        <p>Krippendorff's Alpha<app-tooltip-description description="description of Krippendorff alpha" /></p>
+        <strong>{{ krippendorff() !== null ? krippendorff() : '/' }}</strong>
       </div>
     </div>
     }
