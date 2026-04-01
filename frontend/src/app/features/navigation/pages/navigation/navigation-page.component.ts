@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {PopUpComponent} from '../../../pop-up/pop-up.component';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Router} from '@angular/router';
@@ -7,13 +7,12 @@ import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
 import {FinalMapService} from '../../../../core/service/MapService/FinalMapService/finalMapService';
 import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/FinalMapListDto';
 import {UsersServices} from '../../../../core/service/UserService/users-services';
-import {MapComponent} from '../../../map/map.component';
-import {CAMEROON_COORDINATES} from '../../../../features/map/map.constants';
-import {CAMEROON_ZOOM} from '../../../../features/map/map.constants';
+import {MapPreviewComponent} from '../../../map-preview-component/map-preview-component';
+
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatDialogModule, ButtonComponent, Checkbox],
+  imports: [MatDialogModule, ButtonComponent, Checkbox, MapPreviewComponent],
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })
@@ -25,7 +24,7 @@ export class NavigationPageComponent implements OnInit{
     private finalMapService: FinalMapService,
     private cdr: ChangeDetectorRef,
     private usersServices: UsersServices
-    ){}
+  ){}
 
   isAdmin:boolean =false;
 
@@ -41,9 +40,7 @@ export class NavigationPageComponent implements OnInit{
         this.cdr.detectChanges();
       }
     );
-
-
-    }
+  }
 
   /**
    * add all the maps into ListOfAllMaps
@@ -85,14 +82,5 @@ export class NavigationPageComponent implements OnInit{
     this.router.navigate(['/maps', id]);
   }
 
-  /**
-   *
-   * */
-  getStaticMapUrl(): string {
-    let lat = CAMEROON_COORDINATES[0];
-    let lng = CAMEROON_COORDINATES[1];
-    let zoom = CAMEROON_ZOOM;
-    return `https://staticmap.openstreetmap.de/staticmap.php?center=${lat},${lng}&zoom=${zoom}&size=400x200&markers=${lat},${lng},red`;
-  }
 
 }

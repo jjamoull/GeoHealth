@@ -133,9 +133,14 @@
       <div class="all-the-maps">
         @for (map of listOfAllMaps; track map.id){
           <div class="new-case" (click)="goToMap(map.id)">
+
+            <app-map-preview [mapId]="map.id"></app-map-preview>
+
             <h4 style="text-align: center">{{map.title}}</h4>
             <h6 style="text-align: center">{{map.description}}</h6>
+
           </div>
+
         }
       </div>
     </div>
