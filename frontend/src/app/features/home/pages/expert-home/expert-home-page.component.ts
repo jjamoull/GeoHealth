@@ -36,6 +36,12 @@ export class ExpertHomePageComponent {
   goToRegister(){
     this.router.navigate(['register'])
   }
+  /**
+   * Redirection to about page
+   */
+  goToAbout(){
+    this.router.navigate(['about'])
+  }
 
   logout(): void {
     this.loginService.logout().subscribe({
