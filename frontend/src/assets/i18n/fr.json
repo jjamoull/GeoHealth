@@ -10,7 +10,8 @@
     "account-message": "Vous n'avez pas de compte ? ",
     "register" : "S'inscrire",
     "cookie-p": "GeoHealth utilise uniquement des cookies strictement nécessaires à son bon fonctionnement. Aucun autre cookie n'est utilisé.",
-    "cookie-button":  "j'ai compris"
+    "cookie-button":  "j'ai compris",
+    "learn-more": "En savoir plus"
   },
   "register": {
     "title": "S'inscrire",

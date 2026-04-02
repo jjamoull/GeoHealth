@@ -8,15 +8,15 @@
         <img src="assets/icons/planet_cookie.png">
         <h3>Cookies</h3>
         <div class="link">
-          <p>{{ 'login.cookie-p' | transloco }}<a> Learn more</a></p>
+          <p>{{ 'login.cookie-p' | transloco }}<a>{{ 'login.learn-more' | transloco }}</a></p>
         </div>
-
+        <div class="popup-button">
         <app-button
           [text]="'login.cookie-button' | transloco"
           variant="success"
           (clicked)="closeWindow()">
         </app-button>
-
+        </div>
       </div>
     </div>
   }

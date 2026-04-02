@@ -52,7 +52,7 @@
   z-index: 9999;
 }
 .window{
-  height:22vw;
+  height:auto;
   width: 62vh;
   border-radius: 30px;
   border: 5px solid #90ee90;
@@ -61,12 +61,14 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 0.5rem 0.5rem;
 }
 .window img{
   width: 100px;
   height: 100px;
   animation: float 3s ease-in-out infinite 0.3s;
 }
+
 @keyframes float {
   0% {
     transform: translateY(0px);
