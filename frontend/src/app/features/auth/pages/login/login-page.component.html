@@ -1,24 +1,6 @@
 <div class="login-page">
 
 <div class="login">
-  @if (showWindow) {
-    <div class="cookie-popup">
-      <div class="window" data-aos="zoom-in">
-        <img src="assets/icons/planet_cookie.png">
-        <h3>Cookies</h3>
-        <div class="link">
-          <p>{{ 'login.cookie-p' | transloco }}<a> Learn more</a></p>
-        </div>
-
-        <app-button
-          [text]="'login.cookie-button' | transloco"
-          variant="success"
-          (clicked)="closeWindow()">
-        </app-button>
-
-      </div>
-  </div>
-  }
   <div class="title-container">
     <h1 class="login-title">{{ 'login.title' | transloco }}</h1>
     <p class="login-message">{{ 'login.message' | transloco }}</p>

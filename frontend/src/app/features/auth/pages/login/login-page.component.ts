@@ -50,7 +50,6 @@ export class LoginPageComponent implements OnInit {
   }
   private transloco = inject(TranslocoService);
 
-  public showWindow:boolean = true;
   /**
    * Request login to the backend with formGroup information
    */
@@ -86,7 +85,5 @@ export class LoginPageComponent implements OnInit {
   }
 
 
-  public closeWindow(){
-    this.showWindow=false;
-  }
+
 }

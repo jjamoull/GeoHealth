@@ -42,6 +42,7 @@ export class RegisterPageComponent implements  OnInit {
 
   registerError = signal(false);
   errorMessage = signal('');
+  public showWindow:boolean = true;
 
   /**
    * Init the form to add a new user/account to the database
@@ -151,6 +152,8 @@ export class RegisterPageComponent implements  OnInit {
 
     return !!confirmPassword && password !== confirmPassword;
   }
-
+  public closeWindow(){
+    this.showWindow=false;
+  }
 
 }

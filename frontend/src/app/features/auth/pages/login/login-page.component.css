@@ -59,34 +59,6 @@
 .link p a:hover{
   text-decoration: underline;
 }
-.cookie-popup{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-}
-.window{
-  height:22vw;
-  width: 62vh;
-  border-radius: 30px;
-  border: 5px solid #90ee90;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.window img{
-  width: 100px;
-  height: 100px;
-}
-
 /* phone portrait */
 @media (max-width: 768px) and (orientation: portrait){
 
