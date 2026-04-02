@@ -222,9 +222,9 @@ public class EvaluationFormController {
         }
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final List<EvaluationForm> EvaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
+        final List<EvaluationForm> evaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
         final List<ResponseEvaluationFormDto> responseEvaluationForms = new ArrayList<>();
-        for(EvaluationForm evaluationForm : EvaluationForms){
+        for(EvaluationForm evaluationForm : evaluationForms){
             responseEvaluationForms.add(new ResponseEvaluationFormDto(evaluationForm));
         }
         return ResponseEntity.status(200).body(responseEvaluationForms);
