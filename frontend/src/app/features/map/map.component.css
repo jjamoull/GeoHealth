@@ -159,4 +159,8 @@
     padding: 12px;
   }
 
+  .evaluation-list {
+    justify-content: center;
+  }
+
 }
