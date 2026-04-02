@@ -230,6 +230,14 @@ public class EvaluationFormController {
         return ResponseEntity.status(200).body(responseEvaluationForms);
     }
 
+    /**
+     * Delete a form by id if the requesting user is the owner
+     *
+     * @param id the id of the form to delete
+     * @param request the Http request containing the JWT token
+     *
+     * @return the deleted form confirmation if it succeeds, error message otherwise
+     */
     @DeleteMapping("/deleteForm/{id}")
     public ResponseEntity<Object> deleteForm(
             @PathVariable long id,
