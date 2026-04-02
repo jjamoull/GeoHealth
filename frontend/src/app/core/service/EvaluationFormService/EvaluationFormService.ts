@@ -72,5 +72,14 @@ export class EvaluationFormService {
     );
   }
 
-
+  /**
+   * Delete a form by an id
+   *
+   * @param id the id of the form to delete
+   */
+  public deleteForm(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.baseUrl}${API_ENDPOINTS.EVALUATIONFORM.DELETEFORM}/${id}`,
+      {withCredentials: true}
+      );
+    }
 }

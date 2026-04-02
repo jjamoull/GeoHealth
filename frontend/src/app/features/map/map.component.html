@@ -64,7 +64,8 @@
       @if(existingForm()) {
       <app-button
         [text]="'Delete Evaluation'"
-        [variant]="'danger'">
+        [variant]="'danger'"
+        (click)="onDeleteEvaluation()">
       </app-button>
       }
     </div>

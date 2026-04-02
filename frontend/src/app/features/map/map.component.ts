@@ -69,11 +69,22 @@ export class MapComponent implements AfterViewInit {
 
   onCloseEvaluation(): void {
     this.showEvaluationModal.set(false);
-    this.existingForm.set(null);
-    this.selectedDivision.set(null);
-    this.mapHelper.clearMarker();
     this.getAllForm(this.isAdmin,this.mapId);
     this.cdr.detectChanges();
+  }
+
+  onDeleteEvaluation(): void {
+    if (!confirm('Are you sure you want to delete this evaluation?')) return;
+
+    this.evaluationFormService.deleteForm(this.existingForm()!.id).subscribe({
+      next: () => {
+        this.existingForm.set(null);
+        this.getAllForm(this.isAdmin, this.mapId);
+        },
+      error: (err) => {
+          console.error('Failed to delete evaluation form', err);
+      }
+    });
   }
 
   onMapSelected(event: Event): void {
