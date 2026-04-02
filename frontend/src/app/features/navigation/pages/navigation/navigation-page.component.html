@@ -115,8 +115,8 @@
        <div class="all-the-maps">
          @for (map of listOfAllRecentMaps; track map.id){
            <div class="new-case" (click)="goToMap(map.id)">
-             <h4 style="text-align: center">{{map.title}}</h4>
-             <h6 style="text-align: center">{{map.description}}</h6>
+             <h4 class="map-title" style="text-align: center">{{map.title}}</h4>
+             <h6 class="map-description" style="text-align: center">{{map.description}}</h6>
            </div>
          }
        </div>
@@ -136,8 +136,10 @@
 
             <app-map-preview [mapId]="map.id"></app-map-preview>
 
-            <h4 style="text-align: center">{{map.title}}</h4>
-            <h6 style="text-align: center">{{map.description}}</h6>
+            <div class="preview-meta-data">
+              <h4 class="map-title" style="text-align: center">{{map.title}}</h4>
+              <h6 class="map-description" style="text-align: center">{{map.description}}</h6>
+            </div>
 
           </div>
 
