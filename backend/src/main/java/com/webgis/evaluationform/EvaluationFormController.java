@@ -10,13 +10,19 @@ import com.webgis.user.UserService;
 import com.webgis.evaluationform.dto.ResponseEvaluationFormDto;
 import com.webgis.evaluationform.dto.SaveEvaluationFormDto;
 import com.webgis.evaluationform.dto.UpdateEvaluationFormDto;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -224,17 +230,6 @@ public class EvaluationFormController {
         return ResponseEntity.status(200).body(responseEvaluationForms);
     }
 
-    /**
-     * Delete a form by id if the requesting user is the owner
-     *
-     * @param id the id of the form to delete
-     * @param request the Http request containing the JWT token
-     *
-     * @return 200 "Form has been deleted" if successful
-     *         401 "Incorrect credentials" if the user is not logged in
-     *         401 "User does not have permission to delete this form" if the user is not the owner
-     *         404 "Form does not exist" if no form with the specified id exists
-     */
     @DeleteMapping("/deleteForm/{id}")
     public ResponseEntity<Object> deleteForm(
             @PathVariable long id,
