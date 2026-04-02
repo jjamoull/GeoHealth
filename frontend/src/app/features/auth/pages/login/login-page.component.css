@@ -36,31 +36,29 @@
   font-weight: lighter;
 }
 
-.register-link{
+.link{
   font-size:14.5px;
   text-align: center;
   margin-top: 20px;
 }
-.register-link p a{
+.link p a{
   color: darkblue;
   text-decoration: none;
 }
-.register-link p {
+.link p {
   color: black;
   text-decoration: none;
   font-weight: lighter;
 }
 
-.register-link a {
+.link a {
   cursor: pointer;
   font-weight: 500;
 }
 
-.registerlink p a:hover{
+.link p a:hover{
   text-decoration: underline;
 }
-
-
 /* phone portrait */
 @media (max-width: 768px) and (orientation: portrait){
 

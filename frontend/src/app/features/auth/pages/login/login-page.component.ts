@@ -13,8 +13,6 @@ import { TranslocoService } from '@jsverse/transloco';
 
 
 
-
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -83,5 +81,7 @@ export class LoginPageComponent implements OnInit {
   goToRegister(){
     this.router.navigate(['register'])
   }
+
+
 
 }

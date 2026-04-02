@@ -9,12 +9,17 @@ import { authGuard } from './features/auth/services/authguard/authguard-guard';
 import {ProfilePageComponent} from './features/auth/pages/profile/profile-page.component';
 import {ChangePasswordPageComponent} from './features/auth/pages/change-password/change-password-page.component';
 import {adminGuard} from './features/admin/guard/admin-guard';
+import {AboutComponent} from './features/about/pages/about/about/about.component';
+
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },{
+    path:'about',
+    component: AboutComponent,
   },{
     path:'home',
     component: ExpertHomePageComponent,

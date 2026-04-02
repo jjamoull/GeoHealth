@@ -8,7 +8,10 @@
     "label-password": "Mot de passe",
     "login-button": "Se connecter",
     "account-message": "Vous n'avez pas de compte ? ",
-    "register" : "S'inscrire"
+    "register" : "S'inscrire",
+    "cookie-p": "GeoHealth utilise uniquement des cookies strictement nécessaires à son bon fonctionnement. Aucun autre cookie n'est utilisé.",
+    "cookie-button":  "j'ai compris",
+    "learn-more": "En savoir plus"
   },
   "register": {
     "title": "S'inscrire",
