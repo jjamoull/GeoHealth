@@ -13,6 +13,8 @@
   --light-green2: #8FC378;
   --orange: #FFC452;
   --red: #E44242;
+
+  --glass-shadow: 0 4.2px 6.2px hsl(0deg 0% 0% / 0.2);
 }
 
 body {
