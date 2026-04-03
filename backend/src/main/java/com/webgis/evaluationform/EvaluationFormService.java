@@ -146,4 +146,25 @@ public class EvaluationFormService {
         return evaluationFormRepository.existsByUserAndDivisionAndFinalMap(user,division,finalMap);
     }
 
+    /**
+     * Deletes the form corresponding to the id
+     *
+     * @param id the id of the form
+     * @param user the user you want to check
+     *
+     * @throws IllegalArgumentException if there is no form with the specified id
+     * @throws IllegalArgumentException if the user is not the owner of the form
+     */
+    public void deleteForm(long id, User user){
+        final Optional<EvaluationForm> optionalForm = findFormById(id);
+        if(optionalForm.isEmpty()){
+            throw new IllegalArgumentException("Form does not exist");
+        }
+        final EvaluationForm form = optionalForm.get();
+        if (form.getUser().getId() != user.getId()) {
+            throw new IllegalArgumentException("User does not have permission to delete this form");
+        }
+        evaluationFormRepository.delete(form);
+    }
+
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -221,12 +222,42 @@ public class EvaluationFormController {
         }
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final List<EvaluationForm> EvaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
+        final List<EvaluationForm> evaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
         final List<ResponseEvaluationFormDto> responseEvaluationForms = new ArrayList<>();
-        for(EvaluationForm evaluationForm : EvaluationForms){
+        for(EvaluationForm evaluationForm : evaluationForms){
             responseEvaluationForms.add(new ResponseEvaluationFormDto(evaluationForm));
         }
         return ResponseEntity.status(200).body(responseEvaluationForms);
     }
 
+    /**
+     * Delete a form by id if the requesting user is the owner
+     *
+     * @param id the id of the form to delete
+     * @param request the Http request containing the JWT token
+     *
+     * @return the deleted form confirmation if it succeeds, error message otherwise
+     */
+    @DeleteMapping("/deleteForm/{id}")
+    public ResponseEntity<Object> deleteForm(
+            @PathVariable long id,
+            HttpServletRequest request
+    ) {
+        final String token = cookieService.getJwtFromCookie(request);
+        final String username = jwtService.extractUsername(token);
+        final Optional<User> optionalUser = userService.findByUsername(username);
+
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.status(401).body(new MessageDto("Incorrect credentials"));
+        }
+
+        final User user = optionalUser.get();
+
+        try {
+            evaluationFormService.deleteForm(id, user);
+            return ResponseEntity.status(200).body(new MessageDto("Form has been deleted"));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(new MessageDto(e.getMessage()));
+        }
+    }
 }

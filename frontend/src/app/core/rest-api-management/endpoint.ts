@@ -42,6 +42,7 @@ export const API_ENDPOINTS = {
     UPDATE:"/evaluationForm/updateForm",
     GETMYFORMFORADIVFORAMAP:"/evaluationForm/myForm",
     GETALLFORMFORAMAP:"/evaluationForm/allFormForFinalMap",
+    DELETEFORM:"/evaluationForm/deleteForm"
   },
   MEASURE: {
     GLOBALCONSENSUSINDEX: "/measure/globalConsensusIndex",

@@ -13,7 +13,6 @@
     <div id="map"></div>
 
     <div class="info-card">
-      <p>{{selectedDivision | json }}</p>
       @if(selectedDivision()) {
         <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
         <p>Region: {{selectedDivision().NAME_1}}</p>
@@ -33,7 +32,7 @@
   </div>
   <div class="side">
     <div class="title">
-      <p>{{mapTitle() | json }}</p>
+      <p>{{mapTitle()}}</p>
     </div>
     <div class="description">
       <p>{{mapDescription() }}</p>
@@ -48,30 +47,45 @@
         <p>Global Consensus Index <app-tooltip-description description="description of weighted global concensus" /></p>
         <strong>{{ globalConsensusIndex() !== -1 ? globalConsensusIndex() : '/' }}</strong>
 
-        <p>Krippendorff's Alpha<app-tooltip-description description="description of Krippendorff alpha" /></p>
+        <p>Krippendorff's Alpha <app-tooltip-description description="description of Krippendorff alpha" /></p>
         <strong>{{ krippendorff() !== null ? krippendorff() : '/' }}</strong>
       </div>
     </div>
     }
 
-  </div>
-</div>
-
-<div class="evaluation-section">
-
-  <div class="button-evaluation">
-    @if(selectedDivision() && !showEvaluationModal()){
+    <div class="side-footer">
+      @if(selectedDivision() && !showEvaluationModal()){
       <app-button
         [text]="existingForm() ? 'Edit Evaluation' : 'Add Evaluation'"
         [variant]="'success'"
         (click)="onOpenEvaluation()">
       </app-button>
-    }
+      }
+      @if(existingForm()) {
+      <app-button
+        [text]="'Delete Evaluation'"
+        [variant]="'danger'"
+        (click)="onDeleteEvaluation()">
+      </app-button>
+      }
+    </div>
+
   </div>
+</div>
 
 
-  <div class="evaluation-forms">
+@if(showEvaluationModal()) {
+<app-evaluation-modal
+  [division]="selectedDivision()"
+  [mapId]="mapId"
+  [existingForm]="existingForm()"
+  (close)="onCloseEvaluation()">
+</app-evaluation-modal>
+}
+
+<div class="evaluation-section">
   <h2>Evaluations</h2>
+  <div class="evaluation-list">
   @if(isAdmin){
     @for(form of allEvaluationFormsAdmin(); track form){
       @if(form.division==selectedDivision().NAME_2 && form.isPublic){
@@ -104,13 +118,3 @@
   }
   </div>
 </div>
-
-
-@if(showEvaluationModal()) {
-  <app-evaluation-modal
-    [division]="selectedDivision()"
-    [mapId]="mapId"
-    [existingForm]="existingForm()"
-    (close)="onCloseEvaluation()">
-  </app-evaluation-modal>
-}
