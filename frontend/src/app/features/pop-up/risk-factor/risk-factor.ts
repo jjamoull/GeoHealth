@@ -71,7 +71,6 @@ export class RiskFactor  implements OnInit{
             console.log("The new risk factor is sent to backend");
             this.dialog.close();
 
-
           }, error:(error)=>{
             this.problemWithUploading = true;
             console.error(error);
@@ -108,6 +107,8 @@ export class RiskFactor  implements OnInit{
     const formControl = this.formGroup.get(name);
     return formControl?.invalid && formControl?.dirty;
   }
+
+
 
 
 }

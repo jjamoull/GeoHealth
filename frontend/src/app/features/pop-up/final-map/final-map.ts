@@ -65,6 +65,7 @@ export class FinalMap implements OnInit{
           this.isUploading = false;
           console.log("The new final map is sent to backend");
           this.dialog.close();
+
         }, error:(error)=>{
           console.error(error);
           this.isUploading = false;
@@ -99,6 +100,7 @@ export class FinalMap implements OnInit{
     const formControl = this.formGroup.get(name);
     return formControl?.invalid && formControl?.dirty;
   }
+
 
 
 

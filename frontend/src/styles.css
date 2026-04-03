@@ -2,6 +2,19 @@
 :root {
   /*Colors: */
   --blue : #007bff;
+  --white: white;
+  --black: black;
+  --transparent-grey: rgba(210, 210, 210, 0.4);
+  --light-grey: rgba(144, 144, 144, .3);
+  --dark-grey: rgb(75, 75, 75);
+  --dark-blue: #143A51;
+  --darker-blue: #0c2e41;
+  --light-green: #90ee90;
+  --light-green2: #8FC378;
+  --orange: #FFC452;
+  --red: #E44242;
+
+  --glass-shadow: 0 4.2px 6.2px hsl(0deg 0% 0% / 0.2);
 }
 
 body {

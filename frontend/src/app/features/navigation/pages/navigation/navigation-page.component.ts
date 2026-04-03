@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {PopUpComponent} from '../../../pop-up/pop-up.component';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Router} from '@angular/router';
@@ -7,10 +7,12 @@ import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
 import {FinalMapService} from '../../../../core/service/MapService/FinalMapService/finalMapService';
 import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/FinalMapListDto';
 import {UsersServices} from '../../../../core/service/UserService/users-services';
+import {MapPreviewComponent} from '../../../map-preview-component/map-preview-component';
+
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatDialogModule, ButtonComponent, Checkbox],
+  imports: [MatDialogModule, ButtonComponent, Checkbox, MapPreviewComponent],
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })
@@ -22,7 +24,7 @@ export class NavigationPageComponent implements OnInit{
     private finalMapService: FinalMapService,
     private cdr: ChangeDetectorRef,
     private usersServices: UsersServices
-    ){}
+  ){}
 
   isAdmin:boolean =false;
 
@@ -38,9 +40,7 @@ export class NavigationPageComponent implements OnInit{
         this.cdr.detectChanges();
       }
     );
-
-
-    }
+  }
 
   /**
    * add all the maps into ListOfAllMaps
@@ -75,11 +75,12 @@ export class NavigationPageComponent implements OnInit{
 
   }
 
-
   /**
    * Go to the page with the id of the map
    */
   goToMap(id: number) {
     this.router.navigate(['/maps', id]);
   }
+
+
 }

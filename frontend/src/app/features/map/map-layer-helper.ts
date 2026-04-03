@@ -11,14 +11,14 @@ export class MapLayerHelper {
   private marker: any = null;
   private highlightLayer: any = null;
 
-  async initMap(elementId: string, center: any, zoom: number): Promise<void> {
+  async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number): Promise<void> {
     const L = await import('leaflet');
     this.leaflet = L.default ?? L;
 
     this.map = this.leaflet.map(elementId).setView(center, zoom);
 
-    this.map.setMinZoom(6);
-    this.map.setMaxZoom(12);
+    this.map.setMinZoom(minZoom);
+    this.map.setMaxZoom(maxZoom);
     this.map.createPane('markerPane');
     this.map.getPane('markerPane').style.zIndex = 400;
 
