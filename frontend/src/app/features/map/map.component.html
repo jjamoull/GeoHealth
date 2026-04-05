@@ -2,9 +2,17 @@
   <div class="map-container">
 
     <!--
-    The division or risk fatcor map to select
+    The division or risk factor map to select
     -->
     <div class="map-selector">
+
+      <!--  search bar -->
+      <input
+        type="text"
+        placeholder="Look for a risk factor…"
+        (input)="onSearchMap($event)"
+      />
+      <!--  dropdown -->
       <select (change)="onMapSelected($event)">
         <option value="">Division only</option>
         @for (map of riskFactorMaps(); track map.id) {

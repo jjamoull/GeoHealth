@@ -87,19 +87,33 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * Method called when the user selected (or not with division only by default)
+   * a risk factor map to adapt the map displayed
+   *
+   * @param event :
+   *    - division only : if no risk factors were selected
+   *    - "name of risk factor map" : otherwise
+   * */
   onMapSelected(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
-    if (!value) {
+
+    if (!value) {     // if value is empty
       this.mapHelper.switchTo({ id: null, kind: 'divisions', title: 'Risk Overview - Divisions' });
       return;
     }
     this.mapHelper.switchTo({ id: Number(value), kind: 'tile', title: '' });
   }
 
+  /**
+   * Method to search a risk factor map 
+   * */
+  onSearchMap(event: Event): void {}
 
-/**
-* Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
-*/
+
+  /**
+    * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
+  */
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadAvailableMaps();

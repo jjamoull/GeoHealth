@@ -49,6 +49,7 @@ export class MapLayerHelper {
     this.map.fitBounds(this.geoJsonLayer.getBounds());
   }
 
+
   switchTo(option: MapOption): void {
     this.clearTileLayer();
     if (option.kind === 'divisions') {
