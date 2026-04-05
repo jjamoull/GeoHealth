@@ -1,6 +1,9 @@
 package com.webgis.measure;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.rcaller.rstuff.RCaller;
+import com.github.rcaller.rstuff.RCallerOptions;
+import com.github.rcaller.rstuff.RCode;
 import com.webgis.evaluationform.EvaluationForm;
 import com.webgis.evaluationform.EvaluationFormRepository;
 import com.webgis.map.finalmap.FinalMap;
@@ -108,27 +111,21 @@ public class MeasureService {
     public double computekrippendorffAlpha(FinalMap finalMap) throws IOException{
         final List<EvaluationForm> evaluationForms = evaluationFormRepository.findByFinalMap(finalMap);
 
-        final List<List<Integer>> krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
+        final double[][] krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
+        System.out.println("In compute Krippendorff");
 
-        final ObjectMapper mapper = new ObjectMapper();
-        final String json = mapper.writeValueAsString(krippensdorffMatrix);
+        RCode code = RCode.create();
 
-        final String path= scriptPath+"krippendorff_Alpha.py";
+        code.addDoubleMatrix("krippensdorff_matrix", krippensdorffMatrix);
+        code.addRCode("library(irr)");
+        code.addRCode("result <- kripp.alpha(krippensdorff_matrix,\"ordinal\")");
+        code.addRCode("alpha_value <- result$value");
 
-        final ProcessBuilder pb = new ProcessBuilder("python",path);
-        final Process p = pb.start();
+        RCallerOptions options = RCallerOptions.create();
+        RCaller caller = RCaller.create(code, RCallerOptions.create());
+        caller.runAndReturnResult("alpha_value");
 
-        final OutputStream os = p.getOutputStream();
-        os.write(json.getBytes());
-        os.flush();
-        os.close();
-
-        final String result = new String(p.getInputStream().readAllBytes());
-        final String error = new String(p.getErrorStream().readAllBytes());
-        System.out.println("Python result: " + result);
-        System.out.println("Python error: " + error);
-        System.out.println("Working dir: " + System.getProperty("user.dir"));
-        return Double.parseDouble(result.trim());
+        return caller.getParser().getAsDoubleArray("alpha_value")[0];
     }
 
     /**
@@ -139,7 +136,7 @@ public class MeasureService {
      * @return the matrix required to compute the krippendorff measure
      *         (row: evaluator,column: evaluation for a division)
      */
-    private List<List<Integer>> buildKrippensdorffMatrix(List<EvaluationForm> evaluationForms){
+    private double[][] buildKrippensdorffMatrix(List<EvaluationForm> evaluationForms){
         final List<Long> usersIdList= evaluationForms.stream()
                 .map(form->form.getUser().getId())
                 .distinct()
@@ -154,15 +151,29 @@ public class MeasureService {
 
         final Map<Long,Map<String,Integer>> krippendorffHashMap = buildKrippendorffHashMap(evaluationForms);
 
-        final List<List<Integer>> krippensdroffMatrix= new ArrayList<>();
-        for(long id: usersIdList){
-            final List<Integer> krippensdorffMatrixRow= new ArrayList<>();
-            for(String division:evaluatedDivisionsList){
-                krippensdorffMatrixRow.add(krippendorffHashMap.get(id).get(division));
+        int rows = usersIdList.size();
+        int cols = evaluatedDivisionsList.size();
+        double[][] matrix = new double[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            long userId = usersIdList.get(i);
+
+            for (int j = 0; j < cols; j++) {
+                String division = evaluatedDivisionsList.get(j);
+
+                Integer value = null;
+                if (krippendorffHashMap.containsKey(userId)) {
+                    value = krippendorffHashMap.get(userId).get(division);
+                }
+
+                if (value == null) {
+                    matrix[i][j] = Double.NaN;
+                } else {
+                    matrix[i][j] = value.doubleValue();
+                }
             }
-            krippensdroffMatrix.add(krippensdorffMatrixRow);
         }
-        return krippensdroffMatrix;
+        return matrix;
     }
 
     /**
