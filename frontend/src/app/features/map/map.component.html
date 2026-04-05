@@ -9,16 +9,19 @@
       <!--  search bar -->
       <input
         type="text"
+        list="risk-factor-list"
         placeholder="Look for a risk factor…"
-        (input)="onSearchMap($event)"
+        (change)="onMapSelected($event)"
+        (keydown.enter)="onMapSelected($event)"
       />
       <!--  dropdown -->
-      <select (change)="onMapSelected($event)">
-        <option value="">Division only</option>
+      <datalist id="risk-factor-list">
+        <option value="Division only">Division only</option>
+
         @for (map of riskFactorMaps(); track map.id) {
-          <option [value]="map.id">{{ map.title }}</option>
+          <option [value]="map.title">{{map.id}} - {{ map.title }} </option>
         }
-      </select>
+      </datalist>
     </div>
 
     <div id="map"></div>

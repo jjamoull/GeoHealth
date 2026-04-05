@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, ChangeDetectorRef} from '@angular/core';
+import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, ChangeDetectorRef, computed} from '@angular/core';
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
@@ -97,27 +97,35 @@ export class MapComponent implements AfterViewInit {
   }
 
   /**
-   * Method called when the user selected (or not with division only by default)
-   * a risk factor map to adapt the map displayed
+   * Method called when the user selects a risk factor map
+   * (or division only by default) to adapt the map displayed
    *
    * @param event :
-   *    - division only : if no risk factors were selected
+   *    - division only : if no risk factors were selected or division only selected
    *    - "name of risk factor map" : otherwise
    * */
   onMapSelected(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
+    const value : string = (event.target as HTMLSelectElement).value;
 
-    if (!value) {     // if value is empty
+    if (!value || value == 'Division only') { // if value is empty or equal Division only
       this.mapHelper.switchTo({ id: null, kind: 'divisions', title: 'Risk Overview - Divisions' });
       return;
     }
-    this.mapHelper.switchTo({ id: Number(value), kind: 'tile', title: '' });
-  }
 
-  /**
-   * Method to search a risk factor map
-   * */
-  onSearchMap(event: Event): void {}
+    // If the user write the name of the risk factor instead of its ID
+    const findWordForRiskFactor = this.riskFactorMaps().find(
+      map => map.title == value || map.id == Number(value)
+    );
+
+    if (findWordForRiskFactor) { // findWordForRiskFactor is not empty
+      this.mapHelper.switchTo({ id: findWordForRiskFactor.id, kind: 'tile', title: '' });
+      return;
+    } else {
+      this.mapHelper.switchTo({ id: null, kind: 'divisions', title: 'Risk Overview - Divisions' });
+      return;
+    }
+
+  }
 
 
   /**
