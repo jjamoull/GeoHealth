@@ -10,7 +10,7 @@ import {TranslocoPipe} from '@jsverse/transloco';
   selector: 'app-home',
   imports: [
     ButtonComponent,
-    TranslocoPipe
+    TranslocoPipe,
   ],
   templateUrl: './expert-home-page.component.html',
   styleUrl: './expert-home-page.component.css',

@@ -2,7 +2,7 @@
   min-height: 100vh;
   display: flex;
   justify-content: right;
-  background-image: url('/assets/background/registerBackgroungPlanet.png');
+  background-image: url('/assets/background/registerBackgroungPlanet.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -84,7 +84,7 @@
 @media (max-width: 768px) and (orientation: portrait){
 
   .register-page{
-    background-image: url("/assets/background/phoneRegisterBackgroundPlanet.png");
+    background-image: url("/assets/background/phoneRegisterBackgroundPlanet.webp");
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,7 +100,7 @@
 /* phone landscape */
 @media (max-width: 768px) and (orientation: landscape){
   .register-page{
-    background-image: url("/assets/background/phoneRegisterLandscapeBackground.png");
+    background-image: url("/assets/background/phoneRegisterLandscapeBackground.webp");
   }
 
   .register{
@@ -111,7 +111,7 @@
 /* Tablet portrait */
 @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
     .register-page{
-      background-image: url("/assets/background/tabletRegisterBackgroundPlanet.png");
+      background-image: url("/assets/background/tabletRegisterBackgroundPlanet.webp");
       justify-content: left;
     }
 

@@ -1,6 +1,6 @@
 .login-page{
   min-height: 100vh;
-  background-image: url('/assets/background/loginBackgroundPlanet.png');
+  background-image: url('/assets/background/loginBackgroundPlanet.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -63,7 +63,7 @@
 @media (max-width: 768px) and (orientation: portrait){
 
   .login-page{
-    background-image: url("/assets/background/phoneLoginBackgroundPlanet.png");
+    background-image: url("/assets/background/phoneLoginBackgroundPlanet.webp");
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +80,7 @@
 /* Tablet portrait */
 @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
   .login-page{
-    background-image: url("/assets/background/tabletLoginBackgroundPlanet.png");
+    background-image: url("/assets/background/tabletLoginBackgroundPlanet.webp");
   }
 
   .login{
