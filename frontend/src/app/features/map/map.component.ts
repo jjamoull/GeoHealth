@@ -63,16 +63,25 @@ export class MapComponent implements AfterViewInit {
     private measureService: MeasureService,
     ){}
 
+  /**
+   * TODO
+   */
   onOpenEvaluation(): void {
     this.showEvaluationModal.set(true);
   }
 
+  /**
+   * TODO
+   */
   onCloseEvaluation(): void {
     this.showEvaluationModal.set(false);
     this.getAllForm(this.isAdmin,this.mapId);
     this.cdr.detectChanges();
   }
 
+  /**
+   * TODO
+   */
   onDeleteEvaluation(): void {
     if (!confirm('Are you sure you want to delete this evaluation?')) return;
 
@@ -106,7 +115,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   /**
-   * Method to search a risk factor map 
+   * Method to search a risk factor map
    * */
   onSearchMap(event: Event): void {}
 
@@ -153,6 +162,9 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * TODO
+   */
   private loadAvailableMaps(): void {
     this.riskFactorMapService.getAllMaps().subscribe({
           next: (maps:RiskFactorMapListDto[]) => {
@@ -164,6 +176,10 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+
+  /**
+   * TODO
+   */
   private loadUserRole(): void {
     this.usersServices.isAdmin().subscribe(
     bool =>{
@@ -172,6 +188,9 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * TODO
+   */
   private loadBaseMap(): void {
     this.mapService.getMap(this.mapId).subscribe({
       next: (mapData) => {
@@ -197,6 +216,9 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * TODO and PLEASE : It's better to have several methods than one big one… Not easy to discover this method and understand it
+   */
   private onDivisionClicked(event: { properties: any, latlng: any }): void {
     if (this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
@@ -247,6 +269,9 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * TODO
+   */
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);
   }
