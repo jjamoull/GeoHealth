@@ -139,7 +139,7 @@ public class MeasureService {
      * @return the matrix required to compute the krippendorff measure
      *         (row: evaluator,column: evaluation for a division)
      */
-    private List<List<Integer>> buildKrippensdorffMatrix(List<EvaluationForm> evaluationForms){
+    public List<List<Integer>> buildKrippensdorffMatrix(List<EvaluationForm> evaluationForms){
         final List<Long> usersIdList= evaluationForms.stream()
                 .map(form->form.getUser().getId())
                 .distinct()
@@ -172,7 +172,7 @@ public class MeasureService {
      *
      * @return a Map containing for each user (id) the divisions the user evaluated and the risk perceived for these divisions
      */
-    private Map<Long,Map<String,Integer>> buildKrippendorffHashMap(List<EvaluationForm> evaluationForms){
+      public Map<Long,Map<String,Integer>> buildKrippendorffHashMap(List<EvaluationForm> evaluationForms){
         final Map<Long,Map<String,Integer>> krippendorffHashMap= new HashMap<>();
 
         for(EvaluationForm form: evaluationForms){
