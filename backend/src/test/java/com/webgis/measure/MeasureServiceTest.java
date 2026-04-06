@@ -11,9 +11,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -125,5 +129,61 @@ class MeasureServiceTest {
         // Assert
         assertEquals(0.5, result);
     }
+
+    @Test
+    void  computeGlobalConsensusIndexTest() {
+
+        // Arrange
+        Map<String,String> riskEvaluationMap = new HashMap<>();
+        riskEvaluationMap.put("Wouri", "low");
+
+        when(evaluationFormRepository.findDivisionsWithPublicEvaluationForms()
+        ).thenReturn(List.of("Wouri"));
+
+        when(evaluationFormRepository
+                .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
+                        finalMap,
+                        "Wouri")
+        ).thenReturn(evaluationForms);
+
+        // Act
+        double result = measureService.computeGlobalConsensusIndex(finalMap,riskEvaluationMap);
+
+        // Assert
+        assertEquals(0.5, result);
+    }
+
+    @Test
+    void buildKrippendorffHashMapTest(){
+        //Act
+        Map<Long, Map<String, Integer>> krippendorffHashMap= measureService.buildKrippendorffHashMap(evaluationForms);
+
+        //Assert
+        assertEquals(3, krippendorffHashMap.size());
+
+        assertTrue(krippendorffHashMap.get(1L).containsKey("Wouri"));
+        assertTrue(krippendorffHashMap.get(2L).containsKey("Wouri"));
+        assertTrue(krippendorffHashMap.get(3L).containsKey("Wouri"));
+
+
+        assertEquals(1,krippendorffHashMap.get(1L).get("Wouri"));
+        assertEquals(2, krippendorffHashMap.get(2L).get("Wouri"));
+        assertEquals(1,krippendorffHashMap.get(3L).get("Wouri"));
+
+    }
+
+
+    @Test
+    void buildKrippendorffHashMapEmptyTest(){
+        //Arrange
+        List<EvaluationForm> emptyEvaluationFromsList= new ArrayList<>();
+
+        //Act
+        Map<Long, Map<String, Integer>> krippendorffHashMap= measureService.buildKrippendorffHashMap(emptyEvaluationFromsList);
+
+        //Assert
+        assertEquals(0, krippendorffHashMap.size());
+    }
+
 
 }
