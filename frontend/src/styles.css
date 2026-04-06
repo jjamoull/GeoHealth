@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 :root {
   /*Colors: */
   --blue : #007bff;
@@ -19,4 +22,8 @@
 
 body {
   background-color: #EBEFFF;
+}
+
+* {
+  font-family: 'Inter', sans-serif;
 }
