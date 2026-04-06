@@ -42,7 +42,6 @@ public class AdminFinalRasterMapController {
         } catch (Exception e) {
             return ResponseEntity.status(404).build();
         }
-
     }
 
 }
