@@ -31,6 +31,31 @@
   cursor: pointer;
 }
 
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-wrapper input {
+  padding: 5px 30px 5px 10px;
+  border-radius: 6px;
+  border: 1px solid green;
+  background: white;
+  font-size: 15px;
+  cursor: pointer;
+  width: 200px;
+}
+
+.dropdown-arrow {
+  position: absolute;
+  right: 8px;
+  font-size: 15px;
+  color: green;
+  pointer-events: none;
+
+}
+
 .info-card {
   position: absolute;
   bottom: 20px;

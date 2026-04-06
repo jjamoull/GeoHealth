@@ -7,13 +7,18 @@
     <div class="map-selector">
 
       <!--  search bar -->
-      <input
-        type="text"
-        list="risk-factor-list"
-        placeholder="Look for a risk factor…"
-        (change)="onMapSelected($event)"
-        (keydown.enter)="onMapSelected($event)"
-      />
+      <div class="search-wrapper">
+        <input
+          type="text"
+          list="risk-factor-list"
+          placeholder="Look for a risk factor…"
+          (change)="onMapSelected($event)"
+          (keydown.enter)="onMapSelected($event)"
+        />
+        <span class="dropdown-arrow">▼</span>
+
+      </div>
+
       <!--  dropdown -->
       <datalist id="risk-factor-list">
         <option value="Division only">Division only</option>
