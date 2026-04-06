@@ -1,6 +1,6 @@
 .profile-page{
   min-height: 100vh;
-  background-image: url('/assets/background/profilePageUserBackground.png');
+  background-image: url('/assets/background/profilePageUserBackground.webp');
   background-size: cover;
   background-position: center;
   display: flex;

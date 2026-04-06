@@ -42,7 +42,7 @@ export class ProfilePageComponent implements OnInit{
 
   public profilePictureUpdate :boolean= false;
 
-  selectedAvatar = "assets/icons/user.png"
+  selectedAvatar = "assets/icons/user.webp"
 
 
   constructor(private userService:UsersServices, private cdr: ChangeDetectorRef,private router: Router) {}
