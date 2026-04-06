@@ -24,6 +24,9 @@ export const API_ENDPOINTS = {
       },
       RISKFACTORMAPS: {
         UPLOAD: '/admin/riskFactorMaps/file'
+      },
+      FINALRASTERMAPS: {
+        UPLOAD: '/admin/finalRasterMaps/file'
       }
     },
     EVALUATIONFORM:{
