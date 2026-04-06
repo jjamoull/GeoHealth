@@ -1,7 +1,11 @@
 package com.webgis.admin.map;
 
+import com.webgis.map.finalmap.FinalMap;
+import com.webgis.map.finalrastermap.FinalRasterMap;
+import com.webgis.map.finalrastermap.FinalRasterMapService;
 import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
 import com.webgis.map.riskmap.riskfactormap.RiskFactorMapService;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,14 +13,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping("admin/riskFactorMaps")
+@RequestMapping("admin/finalRasterMaps")
 public class AdminFinalRasterMapController {
-    
+
+    private final FinalRasterMapService finalRasterMapService;
     private final RiskFactorMapService riskFactorMapService;
 
-    public AdminFinalRasterMapController (RiskFactorMapService riskFactorMapService){
+    public AdminFinalRasterMapController (
+            FinalRasterMapService finalRasterMapService,
+            RiskFactorMapService riskFactorMapService){
+        this.finalRasterMapService = finalRasterMapService;
         this.riskFactorMapService = riskFactorMapService;
+
     }
 
     @PostMapping(value = "/file", consumes = "multipart/form-data")
@@ -26,15 +37,16 @@ public class AdminFinalRasterMapController {
             @RequestParam(value="tifFile") MultipartFile tifFile) {
 
         try {
-            final RiskFactorMap riskFactorMap = new RiskFactorMap(title, description);
-            riskFactorMapService.save(riskFactorMap);
+            final FinalRasterMap finalRasterMap = new FinalRasterMap(title, description);
+            finalRasterMapService.save(finalRasterMap);
 
-            riskFactorMapService.transformIntoTileFile(riskFactorMap.getId(), tifFile);
+            riskFactorMapService.transformIntoTileFile(finalRasterMap.getId(), tifFile);
 
-            return ResponseEntity.status(200).body(riskFactorMapService.save(riskFactorMap));
+            return ResponseEntity.status(200).body(finalRasterMapService.save(finalRasterMap));
         } catch (Exception e) {
             return ResponseEntity.status(404).build();
         }
 
     }
+
 }
