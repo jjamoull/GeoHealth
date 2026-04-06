@@ -1,26 +1,15 @@
 package com.webgis.map.finalrastermap;
 
-import com.converter.TiffFiles;
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
-import com.webgis.map.riskmap.tile.TileService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Comparator;
+import com.webgis.map.riskmap.tile.TileService;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class FinalRasterMapService {
 
-    static Logger logger = LoggerFactory.getLogger(FinalRasterMapService.class);
 
     private final FinalRasterMapRepository finalRasterMapRepository;
     private final TileService tileService;

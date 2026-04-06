@@ -1,11 +1,8 @@
 package com.webgis.admin.map;
 
-import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalrastermap.FinalRasterMap;
 import com.webgis.map.finalrastermap.FinalRasterMapService;
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
 import com.webgis.map.riskmap.riskfactormap.RiskFactorMapService;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("admin/finalRasterMaps")
