@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, ChangeDetectorRef} from '@angular/core';
+import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, ChangeDetectorRef, computed} from '@angular/core';
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
@@ -63,16 +63,25 @@ export class MapComponent implements AfterViewInit {
     private measureService: MeasureService,
     ){}
 
+  /**
+   * TODO
+   */
   onOpenEvaluation(): void {
     this.showEvaluationModal.set(true);
   }
 
+  /**
+   * TODO
+   */
   onCloseEvaluation(): void {
     this.showEvaluationModal.set(false);
     this.getAllForm(this.isAdmin,this.mapId);
     this.cdr.detectChanges();
   }
 
+  /**
+   * TODO
+   */
   onDeleteEvaluation(): void {
     if (!confirm('Are you sure you want to delete this evaluation?')) return;
 
@@ -87,19 +96,41 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * Method called when the user selects a risk factor map
+   * (or division only by default) to adapt the map displayed
+   *
+   * @param event :
+   *    - division only : if no risk factors were selected or division only selected
+   *    - "name of risk factor map" : otherwise
+   * */
   onMapSelected(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
-    if (!value) {
+    const value : string = (event.target as HTMLSelectElement).value;
+
+    if (!value || value == 'Division only') { // if value is empty or equal Division only
       this.mapHelper.switchTo({ id: null, kind: 'divisions', title: 'Risk Overview - Divisions' });
       return;
     }
-    this.mapHelper.switchTo({ id: Number(value), kind: 'tile', title: '' });
+
+    // If the user write the name of the risk factor instead of its ID
+    const findWordForRiskFactor = this.riskFactorMaps().find(
+      map => map.title == value || map.id == Number(value)
+    );
+
+    if (findWordForRiskFactor) { // findWordForRiskFactor is not empty
+      this.mapHelper.switchTo({ id: findWordForRiskFactor.id, kind: 'tile', title: '' });
+      return;
+    } else {
+      this.mapHelper.switchTo({ id: null, kind: 'divisions', title: 'Risk Overview - Divisions' });
+      return;
+    }
+
   }
 
 
-/**
-* Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
-*/
+  /**
+    * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
+  */
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadAvailableMaps();
@@ -139,6 +170,9 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * TODO
+   */
   private loadAvailableMaps(): void {
     this.riskFactorMapService.getAllMaps().subscribe({
           next: (maps:RiskFactorMapListDto[]) => {
@@ -150,6 +184,10 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+
+  /**
+   * TODO
+   */
   private loadUserRole(): void {
     this.usersServices.isAdmin().subscribe(
     bool =>{
@@ -158,6 +196,9 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * TODO
+   */
   private loadBaseMap(): void {
     this.mapService.getMap(this.mapId).subscribe({
       next: (mapData) => {
@@ -183,6 +224,9 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * TODO and PLEASE : It's better to have several methods than one big one… Not easy to discover this method and understand it
+   */
   private onDivisionClicked(event: { properties: any, latlng: any }): void {
     if (this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
@@ -233,6 +277,9 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * TODO
+   */
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);
   }

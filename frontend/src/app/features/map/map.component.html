@@ -1,17 +1,41 @@
 <div class="map-section">
   <div class="map-container">
 
+    <!--
+    The division or risk factor map to select
+    -->
     <div class="map-selector">
-      <select (change)="onMapSelected($event)">
-        <option value="">Division only</option>
+
+      <!--  search bar -->
+      <div class="search-wrapper">
+        <input
+          type="text"
+          list="risk-factor-list"
+          placeholder="Look for a risk factor…"
+          (change)="onMapSelected($event)"
+          (keydown.enter)="onMapSelected($event)"
+        />
+        <span class="dropdown-arrow">▼</span>
+
+      </div>
+
+      <!--  dropdown -->
+      <datalist id="risk-factor-list">
+        <option value="Division only">Division only</option>
+
         @for (map of riskFactorMaps(); track map.id) {
-          <option [value]="map.id">{{ map.title }}</option>
+          <option [value]="map.title">{{map.id}} - {{ map.title }} </option>
         }
-      </select>
+      </datalist>
     </div>
 
     <div id="map"></div>
 
+    <!--
+    Little square on the left of the map which display :
+      - Click a Division : if a division is not selected
+      - All information about a division  : otherwise
+    -->
     <div class="info-card">
       @if(selectedDivision()) {
         <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
@@ -29,6 +53,9 @@
 
     <map-legend [riskLevels]="riskLevels"/>
 
+    <!--
+      All information about the map on the right of the page
+    -->
   </div>
   <div class="side">
     <div class="title">
@@ -53,6 +80,10 @@
     </div>
     }
 
+
+    <!--
+    TODO
+    -->
     <div class="side-footer">
       @if(selectedDivision() && !showEvaluationModal()){
       <app-button
@@ -74,6 +105,9 @@
 </div>
 
 
+<!--
+    TODO
+    -->
 @if(showEvaluationModal()) {
 <app-evaluation-modal
   [division]="selectedDivision()"
@@ -83,6 +117,9 @@
 </app-evaluation-modal>
 }
 
+<!--
+    TODO
+    -->
 <div class="evaluation-section">
   <h2>Evaluations</h2>
   <div class="evaluation-list">
@@ -90,9 +127,9 @@
     @for(form of allEvaluationFormsAdmin(); track form){
       @if(form.division==selectedDivision().NAME_2 && form.isPublic){
         <app-evaluation-comment
-          [username]= "form.username",
-          [firstName]="form.firstName",
-          [lastName]="form.lastName",
+          [username]= "form.username"
+          [firstName]="form.firstName"
+          [lastName]="form.lastName"
           [division]="form.division"
           [agreementLevel]="form.agreementLevel"
           [perceivedRisk]="form.perceivedRisk"
