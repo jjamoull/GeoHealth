@@ -1,9 +1,11 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AdminFinalRasterMapService} from '../../../core/service/AdminService/AdminMapService/AdminFinalRasterMapService';
+import {AdminRasterMapService} from '../../../core/service/AdminService/AdminMapService/AdminRiskFactorMapService';
 
 import {InputboxComponents} from '../../../shared/components/inputbox.components/inputbox.components';
+
+
 @Component({
   selector: 'app-final-raster-map',
   imports: [
@@ -16,7 +18,7 @@ import {InputboxComponents} from '../../../shared/components/inputbox.components
 })
 export class FinalRasterMap implements OnInit{
   constructor(private dialog: MatDialogRef <FinalRasterMap>,
-              private adminFinalRasterMapService: AdminFinalRasterMapService,
+              private adminRasterMapService: AdminRasterMapService,
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 
 
@@ -65,7 +67,7 @@ export class FinalRasterMap implements OnInit{
    * Methods that contain all situation of sending data to backend
    * */
   private sendData(formData: FormData){
-    this.adminFinalRasterMapService.uploadNewFinalRasterMap(formData).subscribe(
+    this.adminRasterMapService.uploadRasterMap(formData).subscribe(
       {
         next:()=>{
           this.isUploading = false;
@@ -92,6 +94,7 @@ export class FinalRasterMap implements OnInit{
     const formData = new FormData();
     formData.append("title", this.formGroup.value.title);
     formData.append("description", this.formGroup.value.description);
+    formData.append("typeOfRaster", "final_raster_map");
     formData.append("tifFile", this.selectedFile);
 
 

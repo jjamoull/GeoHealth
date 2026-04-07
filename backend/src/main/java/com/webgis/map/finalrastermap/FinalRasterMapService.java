@@ -1,7 +1,7 @@
 package com.webgis.map.finalrastermap;
 
 
-import com.webgis.map.riskmap.tile.TileService;
+import com.webgis.map.tile.TileService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

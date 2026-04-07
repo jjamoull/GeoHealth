@@ -22,11 +22,8 @@ export const API_ENDPOINTS = {
         DELETE: '/admin/finalMaps',
         UPLOAD: '/admin/finalMaps/uploadShapeFile'
       },
-      RISKFACTORMAPS: {
-        UPLOAD: '/admin/riskFactorMaps/file'
-      },
-      FINALRASTERMAPS: {
-        UPLOAD: '/admin/finalRasterMaps/file'
+      RASTERMAPS: {
+        UPLOAD: '/admin/rasterMaps/file'
       }
     },
     EVALUATIONFORM:{

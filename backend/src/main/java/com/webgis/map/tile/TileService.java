@@ -1,7 +1,7 @@
-package com.webgis.map.riskmap.tile;
+package com.webgis.map.tile;
 
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMapRepository;
+import com.webgis.map.raster.RasterMap;
+import com.webgis.map.raster.RasterMapRepository;
 import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,13 +20,13 @@ import java.awt.Graphics;
 @Service
 public class TileService {
     private final TileRepository tileRepository;
-    private final RiskFactorMapRepository riskFactorMapRepository;
+    private final RasterMapRepository riskFactorMapRepository;
     static Logger logger = LoggerFactory.getLogger(TileService.class);
     final int tileSize = TileConstants.TILE_SIZE;
     final int blockSize = TileConstants.BLOCK_SIZE;
     private static final float MAX_PIXEL_VALUE = 255f;
 
-    public TileService (TileRepository tileRepository, RiskFactorMapRepository riskFactorMapRepository){
+    public TileService (TileRepository tileRepository, RasterMapRepository riskFactorMapRepository){
         this.tileRepository = tileRepository;
         this.riskFactorMapRepository = riskFactorMapRepository;
     }
@@ -43,7 +43,7 @@ public class TileService {
      * @return : tile
      * */
     public Tile save(long mapId, int zoom, int x, int y, byte[] data){
-        final RiskFactorMap riskFactorMap = riskFactorMapRepository.findById(mapId)
+        final RasterMap riskFactorMap = riskFactorMapRepository.findById(mapId)
                 .orElseThrow(() -> new RuntimeException("Map not found: " + mapId));
 
         final TileId tileId = new TileId(mapId, zoom, x, y);

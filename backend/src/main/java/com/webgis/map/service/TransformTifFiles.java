@@ -2,8 +2,8 @@ package com.webgis.map.service;
 
 import com.converter.TiffFiles;
 import com.webgis.map.finalrastermap.FinalRasterMapRepository;
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMapRepository;
-import com.webgis.map.riskmap.tile.TileService;
+import com.webgis.map.raster.RasterMapRepository;
+import com.webgis.map.tile.TileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -22,13 +22,13 @@ public class TransformTifFiles {
     static Logger logger = LoggerFactory.getLogger(TransformTifFiles.class);
 
 
-    private final RiskFactorMapRepository riskFactorMapRepository;
+    private final RasterMapRepository riskFactorMapRepository;
     private final TileService tileService;
     private final FinalRasterMapRepository finalRasterMapRepository;
 
 
     public TransformTifFiles (
-            RiskFactorMapRepository riskFactorMapRepository,
+            RasterMapRepository riskFactorMapRepository,
             TileService tileService,
             FinalRasterMapRepository finalRasterMapRepository){
         this.riskFactorMapRepository = riskFactorMapRepository;

@@ -1,4 +1,4 @@
-package com.webgis.map.riskmap.riskfactormap;
+package com.webgis.map.raster;
 
 
 import jakarta.persistence.Entity;
@@ -8,20 +8,22 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "riskFactorMap")
-public class RiskFactorMap {
+@Table(name = "rasterMap")
+public class RasterMap {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
+    private String typeOfRaster;
 
-    public RiskFactorMap(){}
+    public RasterMap(){}
 
-    public RiskFactorMap(String title, String description){
+    public RasterMap(String title, String description, String typeOfRaster){
         this.title = title;
         this.description = description;
+        this.typeOfRaster = typeOfRaster;
     }
 
     public Long getId(){return id; }

@@ -1,4 +1,4 @@
-package com.webgis.map.riskmap.tile;
+package com.webgis.map.tile;
 
 public class TileConstants {
     public static final int TILE_SIZE = 256;

@@ -1,8 +1,8 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AdminRiskFactorMapService} from '../../../core/service/AdminService/AdminMapService/AdminRiskFactorMapService';
 import {InputboxComponents} from '../../../shared/components/inputbox.components/inputbox.components';
+import {AdminRasterMapService} from '../../../core/service/AdminService/AdminMapService/AdminRiskFactorMapService';
 
 @Component({
   selector: 'app-risk-factor',
@@ -15,7 +15,7 @@ import {InputboxComponents} from '../../../shared/components/inputbox.components
 })
 export class RiskFactor  implements OnInit{
   constructor(private dialog: MatDialogRef <RiskFactor>,
-              private adminRiskFactorMapService: AdminRiskFactorMapService,
+              private adminRasterMapService: AdminRasterMapService,
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 
 
@@ -64,7 +64,7 @@ export class RiskFactor  implements OnInit{
    * Methods that contain all situation of sending data to backend
    * */
   private sendData(formData: FormData){
-    this.adminRiskFactorMapService.uploadNewRiskFactor(formData).subscribe(
+    this.adminRasterMapService.uploadRasterMap(formData).subscribe(
         {
           next:()=>{
             this.isUploading = false;
@@ -92,6 +92,7 @@ export class RiskFactor  implements OnInit{
     const formData = new FormData();
     formData.append("title", this.formGroup.value.title);
     formData.append("description", this.formGroup.value.description);
+    formData.append("typeOfRaster", "risk_factor");
     formData.append("tifFile", this.selectedFile);
 
     this.sendData(formData);

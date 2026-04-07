@@ -1,8 +1,8 @@
-package com.webgis.map.riskmap.tile;
+package com.webgis.map.tile;
 
 import com.webgis.MessageDto;
-import com.webgis.map.riskmap.dto.TileMeanAndXYdto;
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMapService;
+import com.webgis.map.raster.dto.TileMeanAndXYdto;
+import com.webgis.map.raster.RasterMapService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -19,9 +19,9 @@ public class TileController {
 
     private final TileRepository tileRepository;
     private final TileService tileService;
-    private final RiskFactorMapService riskFactorMapService;
+    private final RasterMapService riskFactorMapService;
 
-    public TileController(TileRepository tileRepository, TileService tileService, RiskFactorMapService riskFactorMapService){
+    public TileController(TileRepository tileRepository, TileService tileService, RasterMapService riskFactorMapService){
         this.tileRepository = tileRepository;
         this.tileService = tileService;
         this.riskFactorMapService = riskFactorMapService;

@@ -1,6 +1,6 @@
-package com.webgis.map.riskmap.tile;
+package com.webgis.map.tile;
 
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
+import com.webgis.map.raster.RasterMap;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.MapsId;
@@ -23,16 +23,16 @@ public class Tile {
     @ManyToOne
     @MapsId("mapId")
     @JoinColumn(name = "map_id")
-    private RiskFactorMap riskFactorMap;
+    private RasterMap rasterMap;
 
     public Tile(){}
 
     public Tile(TileId tileId,
                 byte[] tileData,
-                RiskFactorMap riskFactorMap){
+                RasterMap rasterMap){
         this.tileId = tileId;
         this.tileData = tileData;
-        this.riskFactorMap = riskFactorMap;
+        this.rasterMap = rasterMap;
     }
 
 
@@ -44,7 +44,7 @@ public class Tile {
         return tileData;
     }
 
-    public RiskFactorMap getRiskFactorMap() { return riskFactorMap; }
+    public RasterMap getRiskFactorMap() { return rasterMap; }
 
     public void setTileData(byte[] tileData) {
         this.tileData = tileData;
@@ -54,7 +54,7 @@ public class Tile {
         this.tileId = tileId;
     }
 
-    public void setRiskFactorMap(RiskFactorMap riskFactorMap) { this.riskFactorMap = riskFactorMap; }
+    public void setRiskFactorMap(RasterMap rasterMap) { this.rasterMap = rasterMap; }
 }
 
 
