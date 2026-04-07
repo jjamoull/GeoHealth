@@ -3,8 +3,8 @@ import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
 import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
-import { RiskFactorMapService } from '../../core/service/MapService/RiskMapService/riskFactorMapService';
-import { RiskFactorMapListDto } from '../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
+import { RasterMapService } from '../../core/service/MapService/RiskMapService/RasterMapService';
+import { RasterMapListDto } from '../../shared/models/MapModel/RasterMapModel/RasterMapListDto';
 import {ButtonComponent} from '../../shared/components/button.component/button.component';
 import {EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
 
@@ -39,7 +39,7 @@ export class MapComponent implements AfterViewInit {
   selectedDivision = signal<any>(null);
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
-  riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
+  rasterMaps = signal<RasterMapListDto[]>([]);
   showEvaluationModal = signal<boolean>(false);
   existingForm = signal<ResponseEvaluationFormDto | null>(null);
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
@@ -55,7 +55,7 @@ export class MapComponent implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private mapService: FinalMapService,
     private usersServices: UsersServices,
-    private riskFactorMapService: RiskFactorMapService,
+    private rasterMapService: RasterMapService,
     private evaluationFormService: EvaluationFormService,
     private adminEvaluationFormService:AdminEvaluationFormService,
     private cdr: ChangeDetectorRef,
@@ -113,7 +113,7 @@ export class MapComponent implements AfterViewInit {
     }
 
     // If the user write the name of the risk factor instead of its ID
-    const findWordForRiskFactor = this.riskFactorMaps().find(
+    const findWordForRiskFactor = this.rasterMaps().find(
       map => map.title == value || map.id == Number(value)
     );
 
@@ -174,9 +174,9 @@ export class MapComponent implements AfterViewInit {
    * TODO
    */
   private loadAvailableMaps(): void {
-    this.riskFactorMapService.getAllMaps().subscribe({
-          next: (maps:RiskFactorMapListDto[]) => {
-            this.riskFactorMaps.set(maps);
+    this.rasterMapService.getAllMapsOfType("risk_factor").subscribe({
+          next: (maps:RasterMapListDto[]) => {
+            this.rasterMaps.set(maps);
           },
           error: (err) => {
             console.error('Failed to load risk factor maps', err);

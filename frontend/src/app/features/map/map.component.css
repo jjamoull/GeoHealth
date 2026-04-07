@@ -38,14 +38,16 @@
 }
 
 .search-wrapper input {
-  padding: 5px 30px 5px 10px;
+  padding: 5px 1px 5px 10px;
   border-radius: 6px;
   border: 1px solid green;
   background: white;
   font-size: 15px;
   cursor: pointer;
   width: 200px;
+  color: black;
 }
+
 
 .dropdown-arrow {
   position: absolute;

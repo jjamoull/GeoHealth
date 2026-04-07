@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("admin/riskFactorMaps")
+@RequestMapping("admin/rasterMaps")
 public class AdminRasterMapController {
 
     private final RasterMapService rasterMapService;

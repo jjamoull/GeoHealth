@@ -34,8 +34,8 @@ export const API_ENDPOINTS = {
     ALLMAPS: '/finalMaps/allMaps',
     GET: '/finalMaps'
   },
-  RISKFACTORMAPS: {
-    ALLMAPS: '/riskFactorMaps/allMaps'
+  RASTERMAPS: {
+    ALLMAPS: '/rasterMaps/allMaps'
   },
   EVALUATIONFORM:{
     SAVE:"/evaluationForm/saveForm",

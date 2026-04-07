@@ -25,8 +25,8 @@ public class RasterMapRepositoryTest {
         assertThat(actual.getId()).isEqualTo(expected.getId());
     }
 
-    private RasterMap riskFactorMap1 = new RasterMap("Title1", "Description1");
-    private RasterMap riskFactorMap2 = new RasterMap("Title2", "Description2");
+    private RasterMap riskFactorMap1 = new RasterMap("Title1", "Description1", "risk_factor");
+    private RasterMap riskFactorMap2 = new RasterMap("Title2", "Description2", "risk_factor");
 
     @Test
     void findByIdIsOKTest(){

@@ -39,11 +39,11 @@ class TileServiceTest {
     private int x = 3;
     private int y = 4;
     private final byte[] data = new byte[]{1,2,3};
-    private final RasterMap riskFactorMap = new RasterMap("Title1", "Description1");
+    private final RasterMap riskFactorMap = new RasterMap("Title1", "Description1", "risk_factor");
 
     private final TileId expectedId = new TileId(mapId, zoom, x, y);
     private final Tile expectedTile = new Tile(expectedId, data, riskFactorMap);
-    private final RasterMap expectedRiskFactorMap = new RasterMap("Title2", "Description2");
+    private final RasterMap expectedRiskFactorMap = new RasterMap("Title2", "Description2", "risk_factor");
 
     @Test
     void testSaveTile() {

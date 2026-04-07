@@ -3,19 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import {Observable} from "rxjs";
 import {environment} from '../../../rest-api-management/environment';
 import {API_ENDPOINTS} from '../../../rest-api-management/endpoint';
-import { RiskFactorMapListDto } from '../../../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
+import { RasterMapListDto } from '../../../../shared/models/MapModel/RasterMapModel/RasterMapListDto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RiskFactorMapService {
+export class RasterMapService {
 
   private baseUrl= environment.apiBaseUrl;
 
   constructor(private HttpClient: HttpClient) {}
 
-  getAllMaps(): Observable<RiskFactorMapListDto[]> {
-    return this.HttpClient.get<RiskFactorMapListDto[]>(`${this.baseUrl}${API_ENDPOINTS.RISKFACTORMAPS.ALLMAPS}`,
+  getAllMapsOfType(rasterType : string): Observable<RasterMapListDto[]> {
+    return this.HttpClient.get<RasterMapListDto[]>(`${this.baseUrl}${API_ENDPOINTS.RASTERMAPS.ALLMAPS}/${rasterType}`,
       { withCredentials: true }
     );
   }
