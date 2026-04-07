@@ -44,8 +44,6 @@ public class RiskFactorMapService {
         return riskFactorMapRepository.findById(id);
     }
 
-
-
     /**
      * Save the geoJSON file and the files used to create it for a risk factor identified by its id
      *
@@ -59,72 +57,6 @@ public class RiskFactorMapService {
 
 
     /**
-     * Update the type of param tifFile to be interpretable by the method that is called
-     *  after to transform tif into Tiles
-     *
-     * @param tifFile : the file to transform into Tiles
-     * @return the path of the file transformed
-     * @throws IOException : if there is an issue to execute method called in return
-     * */
-    public Path transformTifFile(MultipartFile tifFile)throws IOException{
-        try{
-            final byte[] byteTifFile = tifFile.getBytes();
-            final TiffFiles tifToTransform = new TiffFiles(byteTifFile);
-            return tifToTransform.executeTransformationCommand();
-        } catch (IOException e) {
-            throw new IOException(e);
-        }
-    }
-
-    /**
-     * Main method to transform tif files into tiles and stored them into the DB
-     *
-     * @param mapId : the id of the risk factor map that the result will be linked
-     * @param tifFile : the fil file to transform
-     * */
-    public void transformIntoTileFile(long mapId, MultipartFile tifFile){
-        Path tiles = null;
-        try {
-            tiles = transformTifFile(tifFile);
-
-            try (Stream<Path> stream = Files.walk(tiles)) {
-                final List<Path> tileFiles = stream.filter(Files::isRegularFile)
-                        .filter(p -> p.toString().endsWith(".png"))
-                        .toList();
-
-                tileFiles.forEach(path -> {
-                    try {
-                        final byte[] data = Files.readAllBytes(path);
-
-                        final int y = Integer.parseInt(path.getFileName().toString().replace(".png",""));
-                        final int x = Integer.parseInt(path.getParent().getFileName().toString());
-                        final int zoom = Integer.parseInt(path.getParent().getParent().getFileName().toString());
-
-                        tileService.save(mapId, zoom, x, y, data);
-                    } catch (IOException e) {
-                        logger.info("1) Issue with the uploading\n");
-                    }
-                });
-               logger.info("Tile generation and mean computation successfully conducted");
-            }
-        } catch (IOException e) {
-            logger.info("2) Issue with the uploading\n");
-        } finally {
-            try {
-                if (tiles != null) {
-                    deleteDirectoryRecursively(tiles);
-                }
-                logger.info("Tile generation and mean computation successfully deleted from the disk memory");
-
-            } catch (IOException e) {
-                logger.error("There is an issue with deletion of tiles in disk memory", e);
-            }
-        }
-    }
-
-
-
-    /**
      * Gets all risk factor map instances
      *
      * @return list of all the risk factor maps contained in database
@@ -133,12 +65,4 @@ public class RiskFactorMapService {
         return this.riskFactorMapRepository.findAll();
     }
 
-    public void deleteDirectoryRecursively(Path path) throws IOException {
-        if (Files.exists(path)) {
-            Files.walk(path)
-                    .sorted(Comparator.reverseOrder())
-                    .map(Path::toFile)
-                    .forEach(File::delete);
-        }
-    }
 }

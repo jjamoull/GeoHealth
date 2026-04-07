@@ -2,6 +2,7 @@ package com.webgis.admin.map;
 
 import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
 import com.webgis.map.riskmap.riskfactormap.RiskFactorMapService;
+import com.webgis.map.service.TransformTifFiles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +15,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class AdminRiskFactorMapController {
 
     private final RiskFactorMapService riskFactorMapService;
+    private final TransformTifFiles transformTifFiles;
 
-    public AdminRiskFactorMapController (RiskFactorMapService riskFactorMapService){
+    public AdminRiskFactorMapController (
+            RiskFactorMapService riskFactorMapService,
+            TransformTifFiles transformTifFiles){
         this.riskFactorMapService = riskFactorMapService;
+        this.transformTifFiles = transformTifFiles;
+
     }
 
     @PostMapping(value = "/file", consumes = "multipart/form-data")
@@ -29,7 +35,7 @@ public class AdminRiskFactorMapController {
             final RiskFactorMap riskFactorMap = new RiskFactorMap(title, description);
             riskFactorMapService.save(riskFactorMap);
 
-            riskFactorMapService.transformIntoTileFile(riskFactorMap.getId(), tifFile);
+            transformTifFiles.transformIntoTileFile(riskFactorMap.getId(), tifFile);
 
             return ResponseEntity.status(200).body(riskFactorMapService.save(riskFactorMap));
         } catch (Exception e) {
