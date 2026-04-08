@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -101,10 +102,12 @@ public class TransformTifFiles {
 
     public void deleteDirectoryRecursively(Path path) throws IOException {
         if (Files.exists(path)) {
-            Files.walk(path)
-                    .sorted(Comparator.reverseOrder())
-                    .map(Path::toFile)
-                    .forEach(File::delete);
+            try (Stream<Path> stream = Files.walk(path)) {
+                stream.sorted(Comparator.reverseOrder()).forEach(p -> {
+                            try { Files.delete(p); }
+                            catch (IOException e) { throw new UncheckedIOException(e); }
+                        });
+            }
         }
     }
 }
