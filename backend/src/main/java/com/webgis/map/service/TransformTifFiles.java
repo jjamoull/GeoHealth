@@ -1,7 +1,6 @@
 package com.webgis.map.service;
 
 import com.converter.TiffFiles;
-import com.webgis.map.finalrastermap.FinalRasterMapRepository;
 import com.webgis.map.raster.RasterMapRepository;
 import com.webgis.map.tile.TileService;
 import org.slf4j.Logger;
@@ -22,18 +21,15 @@ public class TransformTifFiles {
     static Logger logger = LoggerFactory.getLogger(TransformTifFiles.class);
 
 
-    private final RasterMapRepository riskFactorMapRepository;
+    private final RasterMapRepository rasterMapRepository;
     private final TileService tileService;
-    private final FinalRasterMapRepository finalRasterMapRepository;
 
 
     public TransformTifFiles (
-            RasterMapRepository riskFactorMapRepository,
-            TileService tileService,
-            FinalRasterMapRepository finalRasterMapRepository){
-        this.riskFactorMapRepository = riskFactorMapRepository;
+            RasterMapRepository rasterMapRepository,
+            TileService tileService){
+        this.rasterMapRepository = rasterMapRepository;
         this.tileService= tileService;
-        this.finalRasterMapRepository= finalRasterMapRepository;
 
     }
 
