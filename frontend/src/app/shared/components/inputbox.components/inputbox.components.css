@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative;
 }
 
 .inputbox-container input{
@@ -17,6 +18,21 @@
   color: black;
   background-color: white;
   padding: 20px 45px 20px 20px ;
+}
+.inputbox-wrapper{
+  position: relative;
+}
+.inputbox-wrapper button {
+  position: absolute;
+  height: 100%;
+  background: none;
+  border: none;
+  color: #888;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 0.3rem;
+  top:0;
 }
 .inputbox-container input:disabled {
   color: #3a3838;
