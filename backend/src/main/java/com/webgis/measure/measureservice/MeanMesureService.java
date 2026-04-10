@@ -95,7 +95,7 @@ public class MeanMesureService {
         final Map<RiskLevel, Double> weightForRiskLevel = new HashMap<>();
 
         for (EvaluationForm evaluationForm : evaluationForms) {
-            final RiskLevel riskLevel = RiskLevel.valueOf(evaluationForm.getPerceivedRisk());
+            final RiskLevel riskLevel = RiskLevel.fromString(evaluationForm.getPerceivedRisk());
             final double weight = evaluationForm.getCertaintyLevel() / 4.0;
 
             weightForRiskLevel.merge(riskLevel, weight, Double::sum);
