@@ -10,7 +10,7 @@
     <div class="scrollbox-inner">
       <div class="navigation-button-container">
         @if(isAdmin){
-          <app-button
+          <!--<app-button
             [text]="'Add a new map'"
             variant="success"
             (clicked) ="openPopUp('addMap')">
@@ -20,7 +20,12 @@
             [text]="'Add a new risk factor'"
             variant="success"
             (clicked) = "openPopUp('addRiskFactor')">
-          </app-button>
+          </app-button>-->
+          <div class="new-map-title">
+            Add a new map :
+          </div>
+          <button class="new-map-button" id="final-risk" (click)="openPopUp('addMap')">Final risk<i class="fas fa-plus" id="plus-icon" aria-hidden="true"></i></button>
+          <button class="new-map-button" id="risk-factor" (click)="openPopUp('addRiskFactor')">Risk factor<i class="fas fa-plus" id="plus-icon"></i></button>
         }
 
       </div>
@@ -30,14 +35,23 @@
       </label>
       <div class="search-bar-container">
         <div class="search-bar">
-          <input id="map-search" name="map-search" type="search" class="search-field"  placeholder="Rechercher…" autocomplete="off">
-          <button class="search-button">
-            <svg  class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                  fill="currentColor" viewBox="0 0 24 24" >
-              <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-              <path d="M18 10c0-4.41-3.59-8-8-8s-8 3.59-8 8 3.59 8 8 8c1.85 0 3.54-.63 4.9-1.69l5.1 5.1L21.41 20l-5.1-5.1A8 8 0 0 0 18 10M4 10c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6"></path>
-            </svg>
-          </button>
+          <input id="map-search"
+                 name="map-search"
+                 type="search"
+                 class="search-field"
+                 placeholder="Rechercher…"
+                 autocomplete="off"
+                 [(ngModel)]="searchText"
+                 (input)="searchMaps()">
+          @if(true){
+            <button class="search-button">
+              <svg  class="search-icon" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 24 24" >
+                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                <path d="M18 10c0-4.41-3.59-8-8-8s-8 3.59-8 8 3.59 8 8 8c1.85 0 3.54-.63 4.9-1.69l5.1 5.1L21.41 20l-5.1-5.1A8 8 0 0 0 18 10M4 10c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6"></path>
+              </svg>
+            </button>
+          }
         </div>
       </div>
           <div class ="filter-title">
@@ -138,26 +152,69 @@
       <!-- ------------------------ -->
       <!-- Lines about all the maps -->
       <!-- ------------------------ -->
-    <div class="all-available-maps">
-      <div class="rounded-card">
-        <h3 class="title">Annotated maps</h3>
-      </div>
-      <div class="all-the-maps">
-        @for (map of listOfAllMaps; track map.id){
-          <div class="new-case" (click)="goToMap(map.id)">
+    @if(!isSearching){
 
-            <app-map-preview [mapId]="map.id"></app-map-preview>
+      <div class="all-available-maps">
+        <div class="rounded-card">
+          <h3 class="title">Annotated maps</h3>
+        </div>
 
-            <div class="preview-meta-data">
-              <h4 class="map-title">{{map.title}}</h4>
-              <h6 class="map-description">{{map.description}}</h6>
+        <div class="all-the-maps">
+          @for (map of listOfAllMaps; track map.id){
+            <div class="new-case" (click)="goToMap(map.id)">
+
+              <app-map-preview [mapId]="map.id"></app-map-preview>
+
+              <div class="preview-meta-data">
+                <h4 class="map-title">{{map.title}}</h4>
+                <h6 class="map-description">{{map.description}}</h6>
+              </div>
+
             </div>
-
-          </div>
-
-        }
+          }
+        </div>
       </div>
-    </div>
+
+    }
+
+    @if(isSearching && !noResults){
+
+      <div class="all-available-maps">
+        <div class="rounded-card">
+          <h3 class="title">Search results</h3>
+        </div>
+
+        <div class="all-the-maps">
+          @for (map of filteredMaps; track map.id){
+            <div class="new-case" (click)="goToMap(map.id)">
+
+              <app-map-preview [mapId]="map.id"></app-map-preview>
+
+              <div class="preview-meta-data">
+                <h4 class="map-title">{{map.title}}</h4>
+                <h6 class="map-description">{{map.description}}</h6>
+              </div>
+
+            </div>
+          }
+        </div>
+      </div>
+
+    }
+
+    @if(noResults){
+
+      <div class="no-results">
+        <i class="fas fa-search"></i>
+        <h3>No map found</h3>
+        <p>Try another title or clear the search.</p>
+
+        <button class="clear-search-button" (click)="clearSearch()">
+          Back to all maps
+        </button>
+      </div>
+
+    }
 
   </div>
 </div>

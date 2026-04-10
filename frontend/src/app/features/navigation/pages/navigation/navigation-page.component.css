@@ -18,7 +18,7 @@
   position: fixed;
   left: -250px;
   bottom:0;
-  background: linear-gradient(10deg, #ffffff, #EBEFFF);
+  background: linear-gradient(var(--white), var(--super-light-green));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: left 0.5s ease;
@@ -100,6 +100,8 @@ span {
 }
 .scrollbox{
   overflow: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 40px;
 }
 ::-webkit-scrollbar{
   width: 5px;
@@ -144,15 +146,66 @@ span {
 .search-button {
   background: #7ee87e;
   width: 20%;
+  margin-left: 4px;
   outline: none;
   border: solid 1px var(--light-grey);
   border-radius: 32px;
+}
+
+.search-bar .clear-search-button {
+  background: var(--light-grey);
+  width: 24px;
+  margin-left: 4px;
+  margin-top: auto;
+  margin-bottom: auto;
+  outline: none;
+  border: solid 1px var(--light-grey);
+  border-radius: 32px;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-bar .clear-search-button svg {
+  width: 12px;
+  height: 12px;
+}
+
+.search-icon, .cross-icon {
+  height: 24px;
+  width: 24px;
 }
 
 .search-icon path {
   color: var(--white);
 }
 
+.cross-icon path {
+  color: var(--white);
+}
+
+.no-results{
+  text-align:center;
+  margin-top:40px;
+  opacity:0.7;
+}
+
+.no-results i{
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+.no-results .clear-search-button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: solid 2px var(--light-green);
+  border-radius: 12px;
+  background-color: var(--super-light-grey);
+  color: var(--black);
+  font-weight: bold;
+}
 
 /* MAPS */
 .all-maps {
@@ -250,7 +303,52 @@ span {
 
 .navigation-button-container{
   margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
 }
+
+.new-map-title {
+  font-size: 1.2em;
+  margin-bottom: 12px;
+}
+
+.new-map-button {
+  position: relative;
+  width: 60%;
+  height: 48px;
+
+  background-color: var(--super-light-grey);
+  border: solid 1px var(--dark-grey);
+  border-radius: 12px;
+  padding: 10px 12px 8px 12px;
+
+  margin: 6px;
+
+  font-size: 14px;
+
+  box-shadow: 0 2px 4px 1px rgba(0,0,0, .1);
+
+  transition: all ease-in-out .2s;
+}
+
+.new-map-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px 1px rgba(0,0,0, .1);
+}
+
+.new-map-button:active {
+  transform: translateY(1px);
+}
+
+#plus-icon {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  color: var(--dark-grey);
+}
+
 .filter-title {
   background: transparent;
   padding: 0.5rem;
