@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,20 @@ public class AdminEvaluationFromController {
             responseEvaluationForms.add(new AdminResponseEvaluationFormDto(evaluationForm));
         }
         return ResponseEntity.status(200).body(responseEvaluationForms);
+    }
+
+    @DeleteMapping("/deleteForm/{Id}")
+    public ResponseEntity<?> deleteForm(@PathVariable long Id){
+        try {
+            final Optional<EvaluationForm> optionalEvaluationForm= evaluationFormService.findFormById(Id);
+            if(optionalEvaluationForm.isEmpty()){
+                return ResponseEntity.status(404).body(new MessageDto("The evaluation form does not exist"));
+            }
+            evaluationFormService.deleteForm(Id, optionalEvaluationForm.get().getUser());
+            return ResponseEntity.status(200).body(new MessageDto("Form deleted successfully"));
+        } catch(Exception e){
+            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
+        }
     }
 
 }
