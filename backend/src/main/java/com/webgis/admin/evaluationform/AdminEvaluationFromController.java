@@ -47,9 +47,9 @@ public class AdminEvaluationFromController {
         }
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final List<EvaluationForm> EvaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
+        final List<EvaluationForm> evaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
         final List<AdminResponseEvaluationFormDto> responseEvaluationForms = new ArrayList<>();
-        for(EvaluationForm evaluationForm : EvaluationForms){
+        for(EvaluationForm evaluationForm : evaluationForms){
             if (evaluationForm.getUser().isDeleted()) {
                 evaluationForm.getUser().setUsername("Deleted user");
                 evaluationForm.getUser().setFirstName(" ");
@@ -61,7 +61,7 @@ public class AdminEvaluationFromController {
     }
 
     @DeleteMapping("/deleteForm/{id}")
-    public ResponseEntity<?> deleteForm(@PathVariable long id){
+    public ResponseEntity<MessageDto> deleteForm(@PathVariable long id){
         try {
             final Optional<EvaluationForm> optionalEvaluationForm= evaluationFormService.findFormById(id);
             if(optionalEvaluationForm.isEmpty()){
