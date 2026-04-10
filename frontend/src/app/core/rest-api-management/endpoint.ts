@@ -28,6 +28,7 @@ export const API_ENDPOINTS = {
     },
     EVALUATIONFORM:{
       GETALLFORMFORAMAP:"/admin/evaluationForm/allFormForFinalMap",
+      DELETEFORM:"/admin/evaluationForm/deleteForm"
     }
   },
   FINALMAPS: {
