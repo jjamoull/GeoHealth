@@ -60,14 +60,14 @@ public class AdminEvaluationFromController {
         return ResponseEntity.status(200).body(responseEvaluationForms);
     }
 
-    @DeleteMapping("/deleteForm/{Id}")
-    public ResponseEntity<?> deleteForm(@PathVariable long Id){
+    @DeleteMapping("/deleteForm/{id}")
+    public ResponseEntity<?> deleteForm(@PathVariable long id){
         try {
-            final Optional<EvaluationForm> optionalEvaluationForm= evaluationFormService.findFormById(Id);
+            final Optional<EvaluationForm> optionalEvaluationForm= evaluationFormService.findFormById(id);
             if(optionalEvaluationForm.isEmpty()){
                 return ResponseEntity.status(404).body(new MessageDto("The evaluation form does not exist"));
             }
-            evaluationFormService.deleteForm(Id, optionalEvaluationForm.get().getUser());
+            evaluationFormService.deleteForm(id, optionalEvaluationForm.get().getUser());
             return ResponseEntity.status(200).body(new MessageDto("Form deleted successfully"));
         } catch(Exception e){
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
