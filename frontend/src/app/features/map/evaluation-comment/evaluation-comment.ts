@@ -27,6 +27,10 @@ export class EvaluationCommentComponent {
 
   constructor(private adminEvaluationFormService: AdminEvaluationFormService) {}
 
+  /**
+    * Delete an evaluation form
+    * Shows confirmation dialog before deletion
+    */
   onDeleteEvaluation(): void {
     if(confirm('Are you sure you want to delete this form?')) {
       this.adminEvaluationFormService.deleteForm(this.formId).subscribe(
