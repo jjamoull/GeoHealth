@@ -225,6 +225,11 @@ public class EvaluationFormController {
         final List<EvaluationForm> evaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
         final List<ResponseEvaluationFormDto> responseEvaluationForms = new ArrayList<>();
         for(EvaluationForm evaluationForm : evaluationForms){
+            if (evaluationForm.getUser().isDeleted()) {
+                evaluationForm.getUser().setUsername("Deleted user");
+                evaluationForm.getUser().setFirstName(" ");
+                evaluationForm.getUser().setLastName(" ");
+            }
             responseEvaluationForms.add(new ResponseEvaluationFormDto(evaluationForm));
         }
         return ResponseEntity.status(200).body(responseEvaluationForms);
