@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {API_ENDPOINTS} from '../../../rest-api-management/endpoint';
 import {Observable} from 'rxjs';
 import {AdminResponseEvaluationFormDto} from '../../../../shared/models/AdminModel/EvaluationFormModel/AdminResponseEvaluationFormDto';
+import {MessageDto} from '../../../../shared/models/MessageDto'
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,19 @@ export class AdminEvaluationFormService {
       {withCredentials:true}
     );
   }
+
+  /**
+   * Delete a specific evaluation form
+   *
+   * @param evaluationFormId the id of the evaluation form to delete
+   *
+   * @return A success or error message
+   */
+  public deleteForm(evaluationFormId:number):Observable<MessageDto>{
+    return this.httpClient.delete<MessageDto>(
+      `${this.baseUrl}${API_ENDPOINTS.ADMIN.EVALUATIONFORM.DELETEFORM}/${evaluationFormId}`,
+      {withCredentials:true}
+    );
+  }
+
 }
