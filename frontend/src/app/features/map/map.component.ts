@@ -32,16 +32,20 @@ import {TooltipDescriptionComponent} from '../../shared/components/tooltip-descr
 })
 export class MapComponent implements AfterViewInit {
 
+  // risk levels used to display the map legend
   riskLevels = RISK_LEVELS;
-
+  // id of the current shapefile map loaded from the route
   mapId: number = -1;
   isAdmin:boolean=false;
   selectedDivision = signal<any>(null);
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
+  // the raster layer linked to this specific map, used in the dropdown
   rasterMap = signal<RasterMapListDto | null>(null);
+  // list of all standalone risk factor maps, used in the dropdown
   riskFactorMaps = signal<RasterMapListDto[]>([]);
   showEvaluationModal = signal<boolean>(false);
+  // the existing evaluation form for the selected division
   existingForm = signal<ResponseEvaluationFormDto | null>(null);
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
   allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
@@ -49,7 +53,7 @@ export class MapComponent implements AfterViewInit {
   weightedEntropy = signal<number | null>(null);
   globalConsensusIndex = signal<number | null>(null);
   krippendorff= signal<number | null>(null);
-
+  // helper class managing the Leaflet map layers and interactions
   private mapHelper = new MapLayerHelper();
 
   constructor(
