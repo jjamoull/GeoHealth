@@ -1,8 +1,9 @@
-package com.webgis.measure;
+package com.webgis.measure.measureservice;
 
 import com.webgis.evaluationform.EvaluationForm;
 import com.webgis.evaluationform.EvaluationFormRepository;
 import com.webgis.map.finalmap.FinalMap;
+import com.webgis.measure.RiskLevel;
 import com.webgis.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,23 +12,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class MeasureServiceTest {
+class MeanMesureServiceTest {
 
     @Mock
     private EvaluationFormRepository evaluationFormRepository;
 
     @InjectMocks
-    private MeasureService measureService;
+    private MeanMesureService meanMesureService;
+
 
     private User user1;
     private User user2;
@@ -104,7 +102,7 @@ class MeasureServiceTest {
                         "Wouri",
                         2,
                         "low",
-                        0,
+                        4,
                         "comment",
                         user3,
                         finalMap,
@@ -114,76 +112,53 @@ class MeasureServiceTest {
     }
 
     @Test
-    void computeWeightedEntropyForADivisionTest() {
-
+    void computeMeanDivisionalAgreementScoreTest(){
         // Arrange
         when(evaluationFormRepository
-                .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
+                .findByFinalMapAndDivisionAndAgreementLevelIsNotNullAndIsPublicTrue(
                         finalMap,
                         "Wouri")
-            ).thenReturn(evaluationForms);
+        ).thenReturn(evaluationForms);
 
-        // Act
-        double result = measureService.computeWeightedEntropyForADivision(finalMap,"Wouri", "low");
+        //Act
+        Double result = meanMesureService.computeMeanDivisionalAgreementScore(finalMap,"Wouri");
 
-        // Assert
-        assertEquals(0.5, result);
+        //Assert
+        assertEquals(2,result);
     }
 
     @Test
-    void  computeGlobalConsensusIndexTest() {
-
+    void computeMeanCertaintyForMapForDivisionTest(){
         // Arrange
-        Map<String,String> riskEvaluationMap = new HashMap<>();
-        riskEvaluationMap.put("Wouri", "low");
+        when(evaluationFormRepository
+                .findByFinalMapAndDivisionAndCertaintyLevelIsNotNullAndIsPublicTrue(
+                        finalMap,
+                        "Wouri")
+        ).thenReturn(evaluationForms);
 
-        when(evaluationFormRepository.findDivisionsWithPublicEvaluationForms()
-        ).thenReturn(List.of("Wouri"));
+        //Act
+        Double result = meanMesureService.computeMeanCertaintyForMapForDivision(finalMap,"Wouri");
 
+        //Assert
+        assertEquals(4,result);
+    }
+
+    @Test
+    void computeDominantPerceivedRiskLevelForMapForDivision(){
+        //Arrange
         when(evaluationFormRepository
                 .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
                         finalMap,
                         "Wouri")
         ).thenReturn(evaluationForms);
 
-        // Act
-        double result = measureService.computeGlobalConsensusIndex(finalMap,riskEvaluationMap);
-
-        // Assert
-        assertEquals(0.5, result);
-    }
-
-    @Test
-    void buildKrippendorffHashMapTest(){
         //Act
-        Map<Long, Map<String, Integer>> krippendorffHashMap= measureService.buildKrippendorffHashMap(evaluationForms);
+        RiskLevel result = meanMesureService.computeDominantPerceivedRiskLevelForMapForDivision(finalMap,"Wouri");
 
         //Assert
-        assertEquals(3, krippendorffHashMap.size());
-
-        assertTrue(krippendorffHashMap.get(1L).containsKey("Wouri"));
-        assertTrue(krippendorffHashMap.get(2L).containsKey("Wouri"));
-        assertTrue(krippendorffHashMap.get(3L).containsKey("Wouri"));
-
-
-        assertEquals(1,krippendorffHashMap.get(1L).get("Wouri"));
-        assertEquals(2, krippendorffHashMap.get(2L).get("Wouri"));
-        assertEquals(1,krippendorffHashMap.get(3L).get("Wouri"));
-
+        assertEquals(RiskLevel.LOW,result);
     }
 
-
-    @Test
-    void buildKrippendorffHashMapEmptyTest(){
-        //Arrange
-        List<EvaluationForm> emptyEvaluationFromsList= new ArrayList<>();
-
-        //Act
-        Map<Long, Map<String, Integer>> krippendorffHashMap= measureService.buildKrippendorffHashMap(emptyEvaluationFromsList);
-
-        //Assert
-        assertEquals(0, krippendorffHashMap.size());
-    }
 
 
 }
