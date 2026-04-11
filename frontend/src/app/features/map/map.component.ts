@@ -39,7 +39,8 @@ export class MapComponent implements AfterViewInit {
   selectedDivision = signal<any>(null);
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
-  rasterMaps = signal<RasterMapListDto[]>([]);
+  rasterMap = signal<RasterMapListDto | null>(null);
+  riskFactorMaps = signal<RasterMapListDto[]>([]);
   showEvaluationModal = signal<boolean>(false);
   existingForm = signal<ResponseEvaluationFormDto | null>(null);
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
@@ -113,9 +114,15 @@ export class MapComponent implements AfterViewInit {
     }
 
     // If the user write the name of the risk factor instead of its ID
-    const findWordForRiskFactor = this.rasterMaps().find(
+    const findWordForRiskFactor = this.riskFactorMaps().find(
       map => map.title == value || map.id == Number(value)
     );
+
+    const raster = this.rasterMap();
+    if (raster && (raster.title == value || raster.id == Number(value))) {
+      this.mapHelper.switchTo({ id: raster.id, kind: 'tile', title: '' });
+      return;
+    }
 
     if (findWordForRiskFactor) { // findWordForRiskFactor is not empty
       this.mapHelper.switchTo({ id: findWordForRiskFactor.id, kind: 'tile', title: '' });
@@ -176,7 +183,7 @@ export class MapComponent implements AfterViewInit {
   private loadAvailableMaps(): void {
     this.rasterMapService.getRiskFactors().subscribe({
           next: (maps:RasterMapListDto[]) => {
-            this.rasterMaps.set(maps);
+            this.riskFactorMaps.set(maps);
           },
           error: (err) => {
             console.error('Failed to load risk factor maps', err);
@@ -204,6 +211,7 @@ export class MapComponent implements AfterViewInit {
       next: (mapData) => {
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
+        this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
 
         const geoJson = JSON.parse(mapData.fileGeoJson);
         const divisions: { name: string, risk: string }[] = [];

@@ -23,7 +23,11 @@
       <datalist id="risk-factor-list">
         <option value="Division only">Division only</option>
 
-        @for (map of rasterMaps(); track map.id) {
+        @if(rasterMap()) {
+        <option [value]="rasterMap()!.title">{{ rasterMap()!.title }}</option>
+        }
+
+        @for (map of riskFactorMaps(); track map.id) {
           <option [value]="map.title" class="optionInDropbar">{{ map.title }} </option>
         }
       </datalist>
