@@ -18,8 +18,7 @@ public class RasterMapService {
     private final RasterMapRepository rasterMapRepository;
 
 
-    public RasterMapService(RasterMapRepository rasterMapRepository,
-                            TileService tileService ){
+    public RasterMapService(RasterMapRepository rasterMapRepository){
         this.rasterMapRepository = rasterMapRepository;
     }
 
