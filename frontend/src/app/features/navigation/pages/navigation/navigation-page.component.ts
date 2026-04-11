@@ -123,6 +123,17 @@ export class NavigationPageComponent implements OnInit{
   }
 
 
+  /**
+   * Searches the list of maps based on the current `searchText` value.
+   *
+   * @param searchText The user input used to filter the list of maps.
+   * @return void
+   *
+   * Updates:
+   * - `isSearching` to indicate whether a search is in progress.
+   * - `filteredMaps` with the maps whose titles match the search term.
+   * - `noResults` to true when no map matches the search term.
+   */
   searchMaps(): void {
 
     const search = this.normalize(this.searchText);
@@ -143,6 +154,7 @@ export class NavigationPageComponent implements OnInit{
 
     this.noResults = this.filteredMaps.length === 0;
   }
+
 
   clearSearch(): void {
     this.searchText = '';
