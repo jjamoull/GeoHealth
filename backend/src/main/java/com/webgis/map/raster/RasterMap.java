@@ -51,5 +51,9 @@ public class RasterMap {
     public void setFinalMap(FinalMap finalMap) {
         this.finalMap = finalMap;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
 

@@ -1,4 +1,4 @@
-package com.webgis.map.riskmap.raster;
+package com.webgis.map.raster;
 
 
 import com.webgis.map.raster.RasterMap;
