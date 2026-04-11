@@ -5,6 +5,7 @@ public class TileConstants {
     private static final int BLOCK_SIZE = 16;
     private static final int BLOCKS_PER_TILE = TILE_SIZE / BLOCK_SIZE;
 
+    private TileConstants(){}
 
     public static int getBlocksPerTile() {
         return BLOCKS_PER_TILE;

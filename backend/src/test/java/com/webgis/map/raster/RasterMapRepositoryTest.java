@@ -1,8 +1,7 @@
 package com.webgis.map.raster;
 
 
-import com.webgis.map.raster.RasterMap;
-import com.webgis.map.raster.RasterMapRepository;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

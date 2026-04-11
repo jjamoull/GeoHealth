@@ -1,15 +1,12 @@
 package com.webgis.map.tile;
 
 import com.webgis.exception.CanDecompress;
-import com.webgis.map.raster.RasterMapRepository;
 import org.junit.jupiter.api.Test;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +25,6 @@ class TileServiceTest {
         // Arrange & Act
         int result = tileService.getMeanIndex(x,y);
         // Assert
-        assertNotNull(result);
         assertEquals(170, result);
     }
 
@@ -89,19 +85,17 @@ class TileServiceTest {
         // Arrange
         byte[] tileData = new byte[256 * 256];
 
-        for (int y = 0; y < 16; y++) {
-            for (int x = 0; x < 16; x++) {
-                tileData[y * 256 + x] = (byte) 10;
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
+                tileData[i * 256 + j] = (byte) 10;
             }
         }
 
         // Act
-        float resultAt_0_0 = tileService.getTileMeanBlock(tileData, new int[]{0,0});
-        float resultAt_16_16 = tileService.getTileMeanBlock(tileData, new int[]{0,0});
+        float resultAt00 = tileService.getTileMeanBlock(tileData, new int[]{0,0});
 
         // Assert
-        assertEquals( ((float) 10 /255), resultAt_0_0);
-        assertEquals( ((float) 10 /255), resultAt_16_16);
+        assertEquals( ((float) 10 /255), resultAt00);
     }
 
     @Test
@@ -109,10 +103,10 @@ class TileServiceTest {
 
         // Arrange
         BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_BYTE_GRAY);
-        for (int y = 0; y < 16; y++) {
-            for (int x = 0; x < 16; x++) {
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
                 int value = 120;
-                img.getRaster().setSample(x, y, 0, value);
+                img.getRaster().setSample(j, i, 0, value);
             }
         }
 
