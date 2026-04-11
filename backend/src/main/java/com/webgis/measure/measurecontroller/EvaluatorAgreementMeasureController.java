@@ -62,7 +62,7 @@ public class EvaluatorAgreementMeasureController {
      *
      * @return the national consensus score if map exists, not found otherwise
      */
-    @GetMapping("/nationalConsensusScore/{mapId}/{division}")
+    @GetMapping("/nationalConsensusScore/{mapId}")
     public ResponseEntity<Object> getNationalConsensusScore(
             @PathVariable long mapId){
 
