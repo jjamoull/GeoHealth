@@ -26,6 +26,7 @@ export class InputboxComponents implements ControlValueAccessor {
   @Input() label:string='';
   value = '';
 
+  public showPassword:boolean = false;
   onChange = (value: any) => {};
   onTouched = () => {};
 
@@ -43,6 +44,10 @@ export class InputboxComponents implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  public togglePassword(){
+    this.showPassword = !this.showPassword;
   }
 
 
