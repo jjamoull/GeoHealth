@@ -64,9 +64,13 @@ public class TileService {
      *
      * @param x : int representing the x coordinates of mean BLOCK (0-blockSize)
      * @param y : int representing the y coordinate of mean BLOCK (0-blockSize)
-     * @return index for mean of mean in 1D array of size constant blockSize
+     * @return  —  index for mean of mean in 1D array of size constant blockSize
+     *          —  -1 if the specification is not respected
      * */
     public int getMeanIndex(int x, int y){
+        if (x < 0 || y < 0 || x > blockSize || y > blockSize){
+            return -1;
+        }
         return y*blockSize + x;
     }
 
@@ -181,6 +185,11 @@ public class TileService {
 
         try {
             final BufferedImage img = ImageIO.read(new ByteArrayInputStream(tileData));
+
+            if (img == null) {
+                throw new CanDecompress("The PNG data are invalid and null");
+            }
+
             final BufferedImage grayImg = new BufferedImage(
                     img.getWidth(),
                     img.getHeight(),

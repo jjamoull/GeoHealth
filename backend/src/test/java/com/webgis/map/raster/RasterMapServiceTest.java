@@ -1,9 +1,7 @@
-package com.webgis.map.riskmap.raster;
+package com.webgis.map.raster;
 
 
-import com.webgis.map.raster.RasterMap;
-import com.webgis.map.raster.RasterMapRepository;
-import com.webgis.map.raster.RasterMapService;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
