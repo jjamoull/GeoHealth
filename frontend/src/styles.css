@@ -23,10 +23,9 @@
   --glass-shadow: 0 4.2px 6.2px hsl(0deg 0% 0% / 0.2);
 }
 
-body {
+html, body{
   background-color: #EBEFFF;
 }
-
 *{
   font-family: 'Pacifico', sans-serif;
 }
