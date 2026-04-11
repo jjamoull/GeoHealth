@@ -3,7 +3,7 @@ import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
 import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
-import { RasterMapService } from '../../core/service/MapService/RiskMapService/RasterMapService';
+import { RasterMapService } from '../../core/service/MapService/RasterService/RasterMapService';
 import { RasterMapListDto } from '../../shared/models/MapModel/RasterMapModel/RasterMapListDto';
 import {ButtonComponent} from '../../shared/components/button.component/button.component';
 import {EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
@@ -174,7 +174,7 @@ export class MapComponent implements AfterViewInit {
    * TODO
    */
   private loadAvailableMaps(): void {
-    this.rasterMapService.getAllMapsOfType("risk_factor").subscribe({
+    this.rasterMapService.getRiskFactors().subscribe({
           next: (maps:RasterMapListDto[]) => {
             this.rasterMaps.set(maps);
           },

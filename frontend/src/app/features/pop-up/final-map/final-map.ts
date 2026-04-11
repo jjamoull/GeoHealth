@@ -21,6 +21,7 @@ export class FinalMap implements OnInit{
 
   formGroup!: FormGroup;
   selectedFile: File | null = null;
+  selectedTifFile: File | null = null;
   isUploading = false;
   @Input()
   requiredFileType:string = '';
@@ -78,7 +79,7 @@ export class FinalMap implements OnInit{
    * Allow the user to close the pop-up
    * */
   closePopUp(): void {
-    if (!this.selectedFile) {
+    if (!this.selectedFile || !this.selectedTifFile) {
       return;
     }
     //add all values from the form in FormData to send in DB
@@ -86,6 +87,7 @@ export class FinalMap implements OnInit{
     formData.append("title", this.formGroup.value.title);
     formData.append("description", this.formGroup.value.description);
     formData.append("zipFile", this.selectedFile);
+    formData.append("tifFile", this.selectedTifFile!);
 
     this.sendData(formData);
     console.log("the final map '" + this.formGroup.value.name + "' is sent")
@@ -103,6 +105,11 @@ export class FinalMap implements OnInit{
 
 
 
-
+  onTifFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedTifFile = input.files[0];
+    }
+  }
 
 }

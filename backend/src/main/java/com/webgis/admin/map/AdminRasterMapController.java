@@ -29,11 +29,10 @@ public class AdminRasterMapController {
     public ResponseEntity<Object> postTifFile(
             @RequestParam("title") String title,
             @RequestParam("description") String description,
-            @RequestParam("typeOfRaster") String typeOfRaster,
             @RequestParam(value="tifFile") MultipartFile tifFile) {
 
         try {
-            final RasterMap rasterMap = new RasterMap(title, description, typeOfRaster);
+            final RasterMap rasterMap = new RasterMap(title, description);
             rasterMapService.save(rasterMap);
 
             transformTifFiles.transformIntoTileFile(rasterMap.getId(), tifFile);

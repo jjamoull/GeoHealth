@@ -5,6 +5,9 @@ import com.webgis.exception.NotFound;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapService;
 import com.webgis.map.finalmap.dto.FinalMapListDto;
+import com.webgis.map.raster.RasterMap;
+import com.webgis.map.raster.RasterMapService;
+import com.webgis.map.service.TransformTifFiles;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.io.IOException;
 
 @RestController
@@ -21,9 +25,17 @@ import java.io.IOException;
 public class AdminFinalMapController {
 
     private final FinalMapService finalMapService;
+    private final RasterMapService rasterMapService;
+    private final TransformTifFiles transformTifFiles;
 
-    public AdminFinalMapController(FinalMapService finalMapService){
+    public AdminFinalMapController(
+            FinalMapService finalMapService,
+            RasterMapService rasterMapService,
+            TransformTifFiles transformTifFiles
+    ){
         this.finalMapService = finalMapService;
+        this.rasterMapService = rasterMapService;
+        this.transformTifFiles = transformTifFiles;
     }
 
 
@@ -43,6 +55,7 @@ public class AdminFinalMapController {
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("zipFile") MultipartFile zipFile,
+            @RequestParam("tifFile") MultipartFile tifFile,
             @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile){
 
         try {
@@ -63,6 +76,12 @@ public class AdminFinalMapController {
                 }
             }
             final FinalMap savedFinalMap = finalMapService.save(finalMap);
+
+            final RasterMap rasterMap = new RasterMap(title, description);
+            rasterMap.setFinalMap(savedFinalMap);
+            rasterMapService.save(rasterMap);
+            transformTifFiles.transformIntoTileFile(rasterMap.getId(), tifFile);
+
             return ResponseEntity.status(200).body(
                     new FinalMapListDto(savedFinalMap.getId(),
                             savedFinalMap.getTitle(),

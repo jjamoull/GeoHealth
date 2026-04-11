@@ -55,7 +55,11 @@ public class RasterMapService {
         return this.rasterMapRepository.findAll();
     }
 
-    public List<RasterMap> findByTypeOfRaster(String rasterType){
-        return this.rasterMapRepository.findByTypeOfRaster(rasterType);
+    public List<RasterMap> findRiskFactors(){
+        return this.rasterMapRepository.findByFinalMapIsNull();
+    }
+
+    public List<RasterMap> findRasters(){
+        return this.rasterMapRepository.findByFinalMapIsNotNull();
     }
 }

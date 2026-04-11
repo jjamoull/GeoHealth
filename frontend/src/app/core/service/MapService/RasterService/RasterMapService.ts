@@ -14,9 +14,15 @@ export class RasterMapService {
 
   constructor(private HttpClient: HttpClient) {}
 
-  getAllMapsOfType(rasterType : string): Observable<RasterMapListDto[]> {
-    return this.HttpClient.get<RasterMapListDto[]>(`${this.baseUrl}${API_ENDPOINTS.RASTERMAPS.ALLMAPS}/${rasterType}`,
-      { withCredentials: true }
+  getRasters(): Observable<RasterMapListDto[]> {
+    return this.HttpClient.get<RasterMapListDto[]>(`${this.baseUrl}${API_ENDPOINTS.RASTERMAPS.RASTERS}`,
+      { withCredentials: true}
+    );
+  }
+
+  getRiskFactors(): Observable<RasterMapListDto[]> {
+    return this.HttpClient.get<RasterMapListDto[]>(`${this.baseUrl}${API_ENDPOINTS.RASTERMAPS.RISKFACTORS}`,
+      {withCredentials: true}
     );
   }
 }

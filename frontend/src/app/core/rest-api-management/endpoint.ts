@@ -35,7 +35,8 @@ export const API_ENDPOINTS = {
     GET: '/finalMaps'
   },
   RASTERMAPS: {
-    ALLMAPS: '/rasterMaps/allMaps'
+    RASTERS: '/rasterMaps/rasters',
+    RISKFACTORS: '/rasterMaps/riskFactors'
   },
   EVALUATIONFORM:{
     SAVE:"/evaluationForm/saveForm",

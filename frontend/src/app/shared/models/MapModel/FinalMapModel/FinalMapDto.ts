@@ -3,4 +3,5 @@ export interface FinalMapDto {
   title: string;
   description: string;
   fileGeoJson: string;
+  rasterMapId: number;
   }

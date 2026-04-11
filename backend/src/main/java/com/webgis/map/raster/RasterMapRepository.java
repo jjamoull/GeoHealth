@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface RasterMapRepository extends JpaRepository<RasterMap, Integer> {
     Optional<RasterMap> findById(long id);
-    List<RasterMap> findByTypeOfRaster(String typeOfRaster);
+    List<RasterMap> findByFinalMapIsNull();
+    List<RasterMap> findByFinalMapIsNotNull();
 }

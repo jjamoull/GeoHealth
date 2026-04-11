@@ -7,5 +7,6 @@ public record FinalMapDto(
     Long id,
     String title,
     String description,
-    String fileGeoJson
+    String fileGeoJson,
+    Long rasterMapId
 ){}

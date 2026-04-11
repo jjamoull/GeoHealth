@@ -35,14 +35,31 @@ public class RasterMapController {
         return ResponseEntity.status(404).build();
     }
 
-    @GetMapping("/allMaps/{rasterType}")
-    public ResponseEntity<List<RasterMapListDto>> getAllRasterMaps(@PathVariable String rasterType) {
+    @GetMapping("/rasters")
+    public ResponseEntity<List<RasterMapListDto>> getAllRasterMaps() {
         try {
             final List<RasterMapListDto> dtoList = new ArrayList<>();
 
-            final List<RasterMap> riskFactorMapList = rasterMapService.findByTypeOfRaster(rasterType);
+            final List<RasterMap> riskFactorMapList = rasterMapService.findRasters();
             for (RasterMap rf : riskFactorMapList) {
                 final RasterMapListDto dto = new RasterMapListDto(rf.getId(), rf.getTitle());
+                dtoList.add(dto);
+            }
+
+            return ResponseEntity.status(200).body(dtoList);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).build();
+        }
+    }
+
+    @GetMapping("/riskFactors")
+    public ResponseEntity<List<RasterMapListDto>> getRiskFactors() {
+        try {
+            final List<RasterMapListDto> dtoList = new ArrayList<>();
+
+            final List<RasterMap> riskFactorList = rasterMapService.findRiskFactors();
+            for (RasterMap rasterMap : riskFactorList) {
+                final RasterMapListDto dto = new RasterMapListDto(rasterMap.getId(), rasterMap.getTitle());
                 dtoList.add(dto);
             }
 
