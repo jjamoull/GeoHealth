@@ -38,6 +38,14 @@
       {{ comment }}
     </p>
 
+    @if (isAdmin) {
+    <app-button
+      [text]="'Delete evaluation'"
+      [variant]="'danger'"
+      (click)="onDeleteEvaluation()">
+    </app-button>
+    }
+
   </div>
 
 </mat-expansion-panel>

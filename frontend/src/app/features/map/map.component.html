@@ -23,8 +23,12 @@
       <datalist id="risk-factor-list">
         <option value="Division only">Division only</option>
 
+        @if(rasterMap()) {
+        <option [value]="rasterMap()!.title">{{ rasterMap()!.title }}</option>
+        }
+
         @for (map of riskFactorMaps(); track map.id) {
-          <option [value]="map.title">{{map.id}} - {{ map.title }} </option>
+          <option [value]="map.title" class="optionInDropbar">{{ map.title }} </option>
         }
       </datalist>
     </div>
@@ -134,7 +138,9 @@
           [agreementLevel]="form.agreementLevel"
           [perceivedRisk]="form.perceivedRisk"
           [certaintyLevel]="form.certaintyLevel"
-          [comment]="form.comment">
+          [comment]="form.comment"
+          [formId]="form.id"
+          [isAdmin]="true">
         </app-evaluation-comment>
       }
     }
@@ -148,7 +154,9 @@
           [agreementLevel]="form.agreementLevel"
           [perceivedRisk]="form.perceivedRisk"
           [certaintyLevel]="form.certaintyLevel"
-          [comment]="form.comment">
+          [comment]="form.comment"
+          [formId]="form.id"
+          [isAdmin]="false">
         </app-evaluation-comment>
       }
     }

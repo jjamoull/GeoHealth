@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +47,31 @@ public class AdminEvaluationFromController {
         }
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final List<EvaluationForm> EvaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
+        final List<EvaluationForm> evaluationForms = evaluationFormService.getAllFormForFinalMap(finalMap);
         final List<AdminResponseEvaluationFormDto> responseEvaluationForms = new ArrayList<>();
-        for(EvaluationForm evaluationForm : EvaluationForms){
+        for(EvaluationForm evaluationForm : evaluationForms){
+            if (evaluationForm.getUser().isDeleted()) {
+                evaluationForm.getUser().setUsername("Deleted user");
+                evaluationForm.getUser().setFirstName(" ");
+                evaluationForm.getUser().setLastName(" ");
+            }
             responseEvaluationForms.add(new AdminResponseEvaluationFormDto(evaluationForm));
         }
         return ResponseEntity.status(200).body(responseEvaluationForms);
+    }
+
+    @DeleteMapping("/deleteForm/{id}")
+    public ResponseEntity<MessageDto> deleteForm(@PathVariable long id){
+        try {
+            final Optional<EvaluationForm> optionalEvaluationForm= evaluationFormService.findFormById(id);
+            if(optionalEvaluationForm.isEmpty()){
+                return ResponseEntity.status(404).body(new MessageDto("The evaluation form does not exist"));
+            }
+            evaluationFormService.deleteForm(id, optionalEvaluationForm.get().getUser());
+            return ResponseEntity.status(200).body(new MessageDto("Form deleted successfully"));
+        } catch(Exception e){
+            return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
+        }
     }
 
 }

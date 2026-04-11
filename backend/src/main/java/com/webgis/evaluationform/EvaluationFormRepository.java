@@ -4,6 +4,7 @@ import com.webgis.map.finalmap.FinalMap;
 import com.webgis.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,17 @@ public interface EvaluationFormRepository extends JpaRepository<EvaluationForm,I
             FinalMap
             finalMap, String division);
 
+    List<EvaluationForm>
+    findByFinalMapAndDivisionAndAgreementLevelIsNotNullAndIsPublicTrue(
+            FinalMap finalMap,
+            String division);
+
+    List<EvaluationForm>
+    findByFinalMapAndDivisionAndCertaintyLevelIsNotNullAndIsPublicTrue(
+            FinalMap finalMap,
+            String division);
+
+
     Optional<EvaluationForm> findByUserAndDivisionAndFinalMap(User user, String division, FinalMap finalMap);
 
     boolean existsByUserAndDivisionAndFinalMap(User user, String division, FinalMap finalMap);
@@ -27,6 +39,9 @@ public interface EvaluationFormRepository extends JpaRepository<EvaluationForm,I
     SELECT DISTINCT e.division
     FROM EvaluationForm e
     WHERE e.isPublic = true
+      AND e.finalMap = :map
+      AND e.perceivedRisk IS NOT NULL
+      AND e.certaintyLevel IS NOT NULL
     """)
-    List<String> findDivisionsWithPublicEvaluationForms();
+    List<String> findDivisionsWithValidPublicEvaluationForms(@Param("map") FinalMap map);
 }

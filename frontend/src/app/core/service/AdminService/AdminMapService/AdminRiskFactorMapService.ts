@@ -8,7 +8,7 @@ import { API_ENDPOINTS } from '../../../rest-api-management/endpoint';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminRiskFactorMapService{
+export class AdminRasterMapService{
 
   private baseUrl= environment.apiBaseUrl;
 
@@ -19,8 +19,8 @@ export class AdminRiskFactorMapService{
    *
    * @param formData information about the risk factor map you want to upload
    */
-  uploadNewRiskFactor(formData: FormData ): Observable<any> {
-    return this.HttpClient.post(`${this.baseUrl}${API_ENDPOINTS.ADMIN.MAPS.RISKFACTORMAPS.UPLOAD}`,
+  uploadRasterMap(formData: FormData ): Observable<any> {
+    return this.HttpClient.post(`${this.baseUrl}${API_ENDPOINTS.ADMIN.MAPS.RASTERMAPS.UPLOAD}`,
       formData,
       { withCredentials: true }
     );

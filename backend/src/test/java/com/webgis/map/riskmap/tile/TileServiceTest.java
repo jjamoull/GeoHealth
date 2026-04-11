@@ -1,8 +1,12 @@
 package com.webgis.map.riskmap.tile;
 
 
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMapRepository;
+import com.webgis.map.raster.RasterMap;
+import com.webgis.map.raster.RasterMapRepository;
+import com.webgis.map.tile.Tile;
+import com.webgis.map.tile.TileId;
+import com.webgis.map.tile.TileRepository;
+import com.webgis.map.tile.TileService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,7 +28,7 @@ class TileServiceTest {
     private TileRepository tileRepository;
 
     @Mock
-    private RiskFactorMapRepository riskFactorMapRepository;
+    private RasterMapRepository riskFactorMapRepository;
 
     @InjectMocks
     private TileService tileService;
@@ -35,11 +39,11 @@ class TileServiceTest {
     private int x = 3;
     private int y = 4;
     private final byte[] data = new byte[]{1,2,3};
-    private final RiskFactorMap riskFactorMap = new RiskFactorMap("Title1", "Description1");
+    private final RasterMap riskFactorMap = new RasterMap("Title1", "Description1");
 
     private final TileId expectedId = new TileId(mapId, zoom, x, y);
     private final Tile expectedTile = new Tile(expectedId, data, riskFactorMap);
-    private final RiskFactorMap expectedRiskFactorMap = new RiskFactorMap("Title2", "Description2");
+    private final RasterMap expectedRiskFactorMap = new RasterMap("Title2", "Description2");
 
     @Test
     void testSaveTile() {

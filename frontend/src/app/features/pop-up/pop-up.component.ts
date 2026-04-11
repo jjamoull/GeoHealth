@@ -18,7 +18,7 @@ export class PopUpComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: { typeOfPopUp: string }) {}
   //************ Constants ************
   addMap:string ="addMap";
-  addRiskFactor : string = "addRiskFactor"
+  addRiskFactor : string = "addRiskFactor";
   //***********************************
 
   //******** Global variables *********

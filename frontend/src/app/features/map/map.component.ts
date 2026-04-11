@@ -3,8 +3,8 @@ import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import {LatLngExpression} from 'leaflet';
 import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
-import { RiskFactorMapService } from '../../core/service/MapService/RiskMapService/riskFactorMapService';
-import { RiskFactorMapListDto } from '../../shared/models/MapModel/RiskFactorMapModel/RiskFactorMapListDto';
+import { RasterMapService } from '../../core/service/MapService/RasterService/RasterMapService';
+import { RasterMapListDto } from '../../shared/models/MapModel/RasterMapModel/RasterMapListDto';
 import {ButtonComponent} from '../../shared/components/button.component/button.component';
 import {EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
 
@@ -39,7 +39,8 @@ export class MapComponent implements AfterViewInit {
   selectedDivision = signal<any>(null);
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
-  riskFactorMaps = signal<RiskFactorMapListDto[]>([]);
+  rasterMap = signal<RasterMapListDto | null>(null);
+  riskFactorMaps = signal<RasterMapListDto[]>([]);
   showEvaluationModal = signal<boolean>(false);
   existingForm = signal<ResponseEvaluationFormDto | null>(null);
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
@@ -55,7 +56,7 @@ export class MapComponent implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private mapService: FinalMapService,
     private usersServices: UsersServices,
-    private riskFactorMapService: RiskFactorMapService,
+    private rasterMapService: RasterMapService,
     private evaluationFormService: EvaluationFormService,
     private adminEvaluationFormService:AdminEvaluationFormService,
     private cdr: ChangeDetectorRef,
@@ -117,6 +118,12 @@ export class MapComponent implements AfterViewInit {
       map => map.title == value || map.id == Number(value)
     );
 
+    const raster = this.rasterMap();
+    if (raster && (raster.title == value || raster.id == Number(value))) {
+      this.mapHelper.switchTo({ id: raster.id, kind: 'tile', title: '' });
+      return;
+    }
+
     if (findWordForRiskFactor) { // findWordForRiskFactor is not empty
       this.mapHelper.switchTo({ id: findWordForRiskFactor.id, kind: 'tile', title: '' });
       return;
@@ -174,8 +181,8 @@ export class MapComponent implements AfterViewInit {
    * TODO
    */
   private loadAvailableMaps(): void {
-    this.riskFactorMapService.getAllMaps().subscribe({
-          next: (maps:RiskFactorMapListDto[]) => {
+    this.rasterMapService.getRiskFactors().subscribe({
+          next: (maps:RasterMapListDto[]) => {
             this.riskFactorMaps.set(maps);
           },
           error: (err) => {
@@ -204,6 +211,7 @@ export class MapComponent implements AfterViewInit {
       next: (mapData) => {
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
+        this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
 
         const geoJson = JSON.parse(mapData.fileGeoJson);
         const divisions: { name: string, risk: string }[] = [];

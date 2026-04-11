@@ -1,6 +1,6 @@
 import { getRiskColor } from './map-utils';
 import { MapOption } from './map-types';
-import { TileMeanAndXYdto } from '../../shared/models/MapModel/RiskFactorMapModel/TileMeanAndXYdto';
+import { TileMeanAndXYdto } from '../../shared/models/MapModel/RasterMapModel/TileMeanAndXYdto';
 
 export class MapLayerHelper {
 
@@ -90,7 +90,6 @@ export class MapLayerHelper {
             weight: 2,
             fillOpacity: 0.1
           }).addTo(this.map);
-          //this.map.fitBounds(bounds);
       }
       });
     }

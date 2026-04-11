@@ -1,6 +1,6 @@
 package com.webgis.map.finalmap;
 
-
+import com.webgis.map.raster.RasterMap;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Column;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.CascadeType;
 
 @Entity
 @Table(name = "maps")
@@ -28,6 +30,9 @@ public class FinalMap {
     @Column(name = "fileGeoJson", columnDefinition = "TEXT")
     private String fileGeoJson;
 
+    @OneToOne(mappedBy = "finalMap", cascade = CascadeType.ALL)
+    private RasterMap rasterMap;
+
     public FinalMap(){}
 
     public FinalMap(String title,
@@ -40,9 +45,6 @@ public class FinalMap {
         this.fileGeoJson = fileGeoJson;
     }
 
-    /* ***************************************
-     * **************** GETTER ***************
-     * ****************************************/
     public Long getId() {
         return id;
     }
@@ -61,9 +63,8 @@ public class FinalMap {
         return fileGeoJson;
     }
 
-    /** ***************************************
-     * *************** SETTER *****************
-     * **************************************** */
+    public RasterMap getRasterMap() { return rasterMap; }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -82,5 +83,7 @@ public class FinalMap {
     public void setFileGeoJson(String fileGeoJson) {
         this.fileGeoJson = fileGeoJson;
     }
+
+    public void setRasterMap(RasterMap rasterMap) { this.rasterMap = rasterMap; }
 }
 
