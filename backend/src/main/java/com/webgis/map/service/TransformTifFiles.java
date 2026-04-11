@@ -21,16 +21,11 @@ public class TransformTifFiles {
     static Logger logger = LoggerFactory.getLogger(TransformTifFiles.class);
 
 
-    private final RasterMapRepository rasterMapRepository;
     private final TileService tileService;
 
 
-    public TransformTifFiles (
-            RasterMapRepository rasterMapRepository,
-            TileService tileService){
-        this.rasterMapRepository = rasterMapRepository;
+    public TransformTifFiles (TileService tileService){
         this.tileService= tileService;
-
     }
 
     /**

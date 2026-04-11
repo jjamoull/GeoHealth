@@ -17,14 +17,10 @@ import java.util.Optional;
 @RequestMapping("/tile")
 public class TileController {
 
-    private final TileRepository tileRepository;
     private final TileService tileService;
-    private final RasterMapService riskFactorMapService;
 
-    public TileController(TileRepository tileRepository, TileService tileService, RasterMapService riskFactorMapService){
-        this.tileRepository = tileRepository;
+    public TileController(TileService tileService){
         this.tileService = tileService;
-        this.riskFactorMapService = riskFactorMapService;
     }
 
     @GetMapping("/file/{mapId}/{z}/{x}/{y}.png")
