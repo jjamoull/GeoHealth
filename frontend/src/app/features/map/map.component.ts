@@ -120,12 +120,12 @@ export class MapComponent implements AfterViewInit {
 
     const raster = this.rasterMap();
     if (raster && (raster.title == value || raster.id == Number(value))) {
-      this.mapHelper.switchTo({ id: raster.id, kind: 'tile', title: '' });
+      this.mapHelper.switchTo({ id: raster.id, kind: 'raster', title: '' });
       return;
     }
 
     if (findWordForRiskFactor) { // findWordForRiskFactor is not empty
-      this.mapHelper.switchTo({ id: findWordForRiskFactor.id, kind: 'tile', title: '' });
+      this.mapHelper.switchTo({ id: findWordForRiskFactor.id, kind: 'raster', title: '' });
       return;
     } else {
       this.mapHelper.switchTo({ id: null, kind: 'divisions', title: 'Risk Overview - Divisions' });

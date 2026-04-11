@@ -1,16 +1,33 @@
 import { getRiskColor } from './map-utils';
 import { MapOption } from './map-types';
 import { TileMeanAndXYdto } from '../../shared/models/MapModel/RasterMapModel/TileMeanAndXYdto';
+import { getTileMean, tileToPolygon } from './tile-utils';
 
 export class MapLayerHelper {
 
+  // Leaflet library instance
   private leaflet: any = null;
+  // the main Leaflet map instance
   private map: any = null;
+  // the GeoJSON layer displaying the divisions
   private geoJsonLayer: any = null;
+  // the raster tile layer displayed
   private tileLayer: any = null;
+  // the blue dot marker placed on division click
   private marker: any = null;
+  // the red rectangle highlighting the clicked tile block
   private highlightLayer: any = null;
 
+  /**
+   * Initializes the Leaflet map on the given HTML element
+   * and adds the OpenStreetMap background tiles
+   *
+   * @param elementId - the id of the HTML element to render the map in
+   * @param center - the initial center coordinates [lat, lng]
+   * @param zoom - the initial zoom level
+   * @param minZoom - the minimum allowed zoom level
+   * @param maxZoom - the maximum allowed zoom level
+   */
   async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number): Promise<void> {
     const L = await import('leaflet');
     this.leaflet = L.default ?? L;
@@ -27,6 +44,13 @@ export class MapLayerHelper {
     }).addTo(this.map);
   }
 
+  /**
+   * Draws the GeoJSON divisions layer on the map
+   * and colors each division based on its risk category
+   *
+   * @param geoJsonString - the GeoJSON string representing the divisions
+   * @param onDivisionClick - callback fired when a division is clicked
+   */
   applyDivisionsLayer(geoJsonString: string, onDivisionClick: (event: any) => void): void {
     const geoJson = JSON.parse(geoJsonString);
 
@@ -49,7 +73,11 @@ export class MapLayerHelper {
     this.map.fitBounds(this.geoJsonLayer.getBounds());
   }
 
-
+  /**
+   * Switches the map display between divisions and a raster tile layer
+   *
+   * @param option - the selected map option containing the kind (divisions or tile) and optional id
+   */
   switchTo(option: MapOption): void {
     this.clearTileLayer();
     if (option.kind === 'divisions') {
@@ -64,6 +92,12 @@ export class MapLayerHelper {
     }
   }
 
+  /**
+   * Listens for clicks on the map when a raster tile layer is active
+   * fetches the mean value of the clicked block and highlights it in red
+   *
+   * @param mapId - the id of the raster map currently displayed
+   */
   onTileSelected(mapId:number):void{
       this.map.on('click', async (e:any)=>{
         console.log("\n [onTileSelected] : " + e.latlng)
@@ -73,17 +107,16 @@ export class MapLayerHelper {
 
         console.log(mapId);
         console.log(coordinates.lat, coordinates.lng);
-        const blockData : TileMeanAndXYdto | null = await this.getTileMean(mapId, z, coordinates.lat, coordinates.lng);
+        const blockData : TileMeanAndXYdto | null = await getTileMean(mapId, z, coordinates.lat, coordinates.lng);
 
 
         if (blockData){
           console.log(blockData.mean);
-          const bounds = this.tileToPolygon(blockData.tileX, blockData.tileY, z, blockData.blockX, blockData.blockY);
+          const bounds = tileToPolygon(blockData.tileX, blockData.tileY, z, blockData.blockX, blockData.blockY);
 
           if (this.highlightLayer) {
             this.map.removeLayer(this.highlightLayer);
           }
-
 
           this.highlightLayer = this.leaflet.polygon(bounds, {
             color: 'red',
@@ -94,6 +127,11 @@ export class MapLayerHelper {
       });
     }
 
+  /**
+   * Places a blue circle marker at the given coordinates
+   *
+   * @param latlng - the coordinates where the marker should be placed
+   */
   placeMarker(latlng: any): void {
     this.clearMarker();
     this.marker = this.leaflet.circleMarker(latlng, {
@@ -105,6 +143,9 @@ export class MapLayerHelper {
     }).addTo(this.map);
   }
 
+  /**
+   * Removes the current marker from the map if one exists
+   */
   clearMarker(): void {
     if (this.marker) {
       this.marker.remove();
@@ -112,55 +153,13 @@ export class MapLayerHelper {
     }
   }
 
+  /**
+   * Removes the current raster tile layer from the map if one exists
+   */
   clearTileLayer(): void {
     if (this.tileLayer) {
       this.tileLayer.remove();
       this.tileLayer = null;
     }
   }
-
-    private async getTileMean(mapId: number,
-                              z : number,
-                              lat : number,
-                              lng : number){
-      try {
-        const response: Response = await fetch(`tile/file/mean/${mapId}/${z}/${lat}/${lng}`);
-
-        if (!response.ok) {
-          throw new Error("Server request failed to obtain mean tile ");
-        }
-        const data: TileMeanAndXYdto = await response.json();
-        return data;
-      }
-      catch (err) {
-        console.error(err);
-        return null;
-      }
-    }
-
-    private tileToPolygon(x: number, y: number, z: number, blockX : number, blockY : number) {
-      const TILE_SIZE = 256;
-      const BLOCK_SIZE = 16;
-
-      const pixelX1 = x * TILE_SIZE + blockX * BLOCK_SIZE;
-      const pixelY1 = y * TILE_SIZE + blockY * BLOCK_SIZE;
-      const pixelX2 = pixelX1 + BLOCK_SIZE;
-      const pixelY2 = pixelY1 + BLOCK_SIZE;
-
-      const n = Math.pow(2, z);
-      const worldSize = TILE_SIZE *n;
-
-      const lon1 = pixelX1/worldSize*360-180;
-      const lon2 = pixelX2 /worldSize *360-180;
-
-      const lat1 = Math.atan(Math.sinh(Math.PI * (1-2 * pixelY1/ worldSize))) *180 / Math.PI;
-      const lat2 = Math.atan(Math.sinh(Math.PI*(1-2 *pixelY2/worldSize)))* 180/ Math.PI;
-
-      return [
-        [lat1, lon1], // top-left
-        [lat1, lon2], // top-right
-        [lat2, lon2], // bottom-right
-        [lat2, lon1]  // bottom-left
-      ];
-    }
 }
