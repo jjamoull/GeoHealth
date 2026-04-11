@@ -31,7 +31,7 @@ public class TileController {
         if (tile.isPresent()){
             return ResponseEntity.status(200).contentType(MediaType.IMAGE_PNG).body(tile.get().getTileData());
         }else {
-            return ResponseEntity.status(500).body((("Tile for map :" + mapId + " doesn't exist")));
+            return ResponseEntity.status(500).body("Tile for map :" + mapId + " doesn't exist");
         }
     }
 

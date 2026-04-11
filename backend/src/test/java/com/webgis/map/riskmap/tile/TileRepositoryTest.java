@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-public class TileRepositoryTest {
+class TileRepositoryTest {
     @Autowired
     private TileRepository tileRepository;
 

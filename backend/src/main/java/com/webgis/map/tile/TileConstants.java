@@ -6,7 +6,9 @@ public class TileConstants {
     private static final int BLOCKS_PER_TILE = TILE_SIZE / BLOCK_SIZE;
 
 
-    public TileConstants(){}
+    public TileConstants(){
+        // Utility class, should not be instantiated
+    }
 
     public static int getBlocksPerTile() {
         return BLOCKS_PER_TILE;

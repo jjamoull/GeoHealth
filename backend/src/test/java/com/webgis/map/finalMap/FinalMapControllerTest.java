@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class finalMapControllerTest {
+class FinalMapControllerTest {
 
     @Mock
     private FinalMapService finalMapService;
@@ -35,7 +35,6 @@ public class finalMapControllerTest {
     private FinalMap fm1;
     private FinalMap fm2;
     private long id;
-    private FinalMapDto finalMapDto;
 
     @BeforeEach
     void setUp() {
