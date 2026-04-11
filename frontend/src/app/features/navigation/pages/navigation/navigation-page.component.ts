@@ -2,7 +2,6 @@ import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {PopUpComponent} from '../../../pop-up/pop-up.component';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Router} from '@angular/router';
-import {ButtonComponent} from "../../../../shared/components/button.component/button.component";
 import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
 import {FinalMapService} from '../../../../core/service/MapService/FinalMapService/finalMapService';
 import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/FinalMapListDto';
@@ -12,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatDialogModule, ButtonComponent, Checkbox, MapPreviewComponent, FormsModule],
+  imports: [MatDialogModule, Checkbox, MapPreviewComponent, FormsModule],
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })
