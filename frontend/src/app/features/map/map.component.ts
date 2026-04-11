@@ -80,7 +80,8 @@ export class MapComponent implements AfterViewInit {
   // --- Map Loading ---
 
   /**
-   * TODO
+   * Fetches the shapefile map data from the backend, draws the divisions layer
+   * and loads the raster layer linked to this map into the dropdown
    */
   private loadBaseMap(): void {
     this.mapService.getMap(this.mapId).subscribe({
@@ -109,7 +110,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   /**
-   * TODO
+   * Fetches all standalone risk factor maps and populates the dropdown
    */
   private loadAvailableMaps(): void {
     this.rasterMapService.getRiskFactors().subscribe({
@@ -123,7 +124,8 @@ export class MapComponent implements AfterViewInit {
   }
 
   /**
-   * TODO
+   * Checks if the connected user is an admin
+   * and loads the appropriate evaluation forms accordingly
    */
   private loadUserRole(): void {
     this.usersServices.isAdmin().subscribe(
@@ -171,9 +173,15 @@ export class MapComponent implements AfterViewInit {
     }
   }
 
-
   /**
-   * TODO and PLEASE : It's better to have several methods than one big one… Not easy to discover this method and understand it
+   * Handles a click on a division.
+   * If the division is already selected, deselects it and clears the marker.
+   * Otherwise, selects it, places a marker, loads the existing evaluation form
+   * and computes the risk measurements for that division.
+   *
+   * @param event - the click event containing:
+   *   - properties: the GeoJSON properties of the clicked division (name, risk category, etc.)
+   *   - latlng: the coordinates of the click on the map
    */
   private onDivisionClicked(event: { properties: any, latlng: any }): void {
     if (this.selectedDivision() === event.properties) {
@@ -191,14 +199,24 @@ export class MapComponent implements AfterViewInit {
       error: () => this.existingForm.set(null)
     });
 
-    this.measureService.getWeightedEntropy(this.mapId, this.selectedDivision().NAME_2, this.selectedDivision().Risk_categ).subscribe({
-        next: (weightedEntropy: number) => {
-          this.weightedEntropy.set(weightedEntropy);
-          },
-        error: (err) => {
-          console.log('Failed to load weightedEntropy', err);
-          }
-        })
+  this.loadMeasurements(event.properties.NAME_2, event.properties.Risk_categ);
+  }
+
+  /**
+   * Loads all risk measurements for the selected division
+   *
+   * @param divisionName - the name of the selected division (NAME_2 in GeoJSON)
+   * @param riskCategory - the risk category of the selected division (Risk_categ in GeoJSON)
+   */
+  private loadMeasurements(divisionName: string, riskCategory: string): void {
+    this.measureService.getWeightedEntropy(this.mapId, divisionName, riskCategory).subscribe({
+      next: (weightedEntropy: number) => {
+        this.weightedEntropy.set(weightedEntropy);
+        },
+      error: (err) => {
+        console.log('Failed to load weightedEntropy', err);
+        }
+      });
 
     const divisionRiskDto: DivisionRiskDto = {
       divisionRiskLevel: Object.fromEntries(
@@ -257,14 +275,14 @@ export class MapComponent implements AfterViewInit {
   }
 
   /**
-   * TODO
+   * Opens the evaluation modal for the selected division
    */
   onOpenEvaluation(): void {
     this.showEvaluationModal.set(true);
   }
 
   /**
-   * TODO
+   * Closes the evaluation modal and reloads the evaluation forms
    */
   onCloseEvaluation(): void {
     this.showEvaluationModal.set(false);
@@ -273,7 +291,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   /**
-   * TODO
+   * Deletes the current evaluation form after user confirmation
    */
   onDeleteEvaluation(): void {
     if (!confirm('Are you sure you want to delete this evaluation?')) return;
@@ -292,7 +310,10 @@ export class MapComponent implements AfterViewInit {
   // --- Utilities ---
 
   /**
-   * TODO
+   * gives the color associated with the risk category
+   *
+   * @param riskClass - the risk category string (e.g. 'High', 'Low')
+   * @returns the color string associated with the risk class
    */
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);
