@@ -8,12 +8,15 @@
   --white: white;
   --black: black;
   --transparent-grey: rgba(210, 210, 210, 0.4);
+  --super-light-grey: rgb(236, 236, 236);
   --light-grey: rgba(144, 144, 144, .3);
   --dark-grey: rgb(75, 75, 75);
   --dark-blue: #143A51;
   --darker-blue: #0c2e41;
   --light-green: #90ee90;
   --light-green2: #8FC378;
+  --light-green3: #7ee87e ;
+  --super-light-green: #E1FFE1FF;
   --orange: #FFC452;
   --red: #E44242;
 

@@ -18,7 +18,7 @@
   position: fixed;
   left: -250px;
   bottom:0;
-  background: linear-gradient(10deg, #ffffff, #EBEFFF);
+  background: linear-gradient(var(--white), var(--super-light-green));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: left 0.5s ease;
@@ -69,7 +69,7 @@ ol li:hover a{
   color: #00eaff;
   letter-spacing: 5px;
 }
-input{
+#check-nav{
   -webkit-appearance: none;
   visibility: hidden;
   display: none;
@@ -77,6 +77,7 @@ input{
 span {
   position: absolute;
   right: -36px;
+  margin-left: 12px;
   top: 10px;
   font-size: 25px;
   border-radius: 3px;
@@ -99,6 +100,8 @@ span {
 }
 .scrollbox{
   overflow: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 40px;
 }
 ::-webkit-scrollbar{
   width: 5px;
@@ -112,6 +115,103 @@ span {
 }
 /* SIDEBAR */
 
+.search-bar-container {
+  height: 70px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.search-map-title {
+  font-size: 1em;
+  justify-self: center;
+}
+
+.search-bar {
+  height: 40px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.search-field {
+  background-color: #eaeaea;
+  height: 100%;
+  width: 78%;
+  border: solid 1px var(--light-grey);
+  outline: none;
+
+  border-radius: 24px;
+
+  padding: 0 12px;
+}
+
+.search-button {
+  background: #7ee87e;
+  width: 20%;
+  margin-left: 4px;
+  outline: none;
+  border: solid 1px var(--light-grey);
+  border-radius: 32px;
+}
+
+.search-bar .clear-search-button {
+  background: var(--light-grey);
+  width: 24px;
+  margin-left: 4px;
+  margin-top: auto;
+  margin-bottom: auto;
+  outline: none;
+  border: solid 1px var(--light-grey);
+  border-radius: 32px;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-bar .clear-search-button svg {
+  width: 12px;
+  height: 12px;
+}
+
+.search-icon, .cross-icon {
+  height: 24px;
+  width: 24px;
+}
+
+.search-icon path {
+  color: var(--white);
+}
+
+.cross-icon path {
+  color: var(--white);
+}
+
+.no-results{
+  text-align:center;
+  margin-top:40px;
+  opacity:0.7;
+}
+
+.no-results i{
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+.no-results .clear-search-button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: solid 2px var(--light-green);
+  border-radius: 12px;
+  background-color: var(--super-light-grey);
+  color: var(--black);
+  font-weight: bold;
+}
+
 /* MAPS */
 .all-maps {
   flex: 1;
@@ -121,7 +221,6 @@ span {
   grid-row: span 5;
   grid-gap: 12px;
   width: 100%;
-  height: 100%;
   padding: 0 60px;
   margin-right: 2px;
   display: grid;
@@ -130,15 +229,16 @@ span {
   gap: 8px;
   overflow-y: auto;
 }
-.recent-maps{
+
+.final-risk-maps{
   grid-row: span 1;
   padding-bottom: 40px;
   border-bottom: solid 2px var(--light-grey);
 }
 
-.all-available-maps{
+.risk-factor-maps{
   grid-row: 2 / span 4;
-  padding-bottom: 140px;
+  padding-bottom: 40px;
   border-bottom: solid 2px var(--light-grey);
 }
 
@@ -161,7 +261,7 @@ span {
 }
 
 .map-title {
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 600;
   margin-bottom: 8px;
 }
@@ -181,6 +281,8 @@ span {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
+  padding-bottom: 40px;
+  padding-top: 12px;
 }
 
 .new-case {
@@ -191,35 +293,166 @@ span {
 }
 
 .new-case:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 /*OTHER*/
 .title{
   text-align: center;
   font-size: 3em;
+  width: 80%;
 }
 
 .rounded-card {
-  width: 100%;
+  width: 45%;
   padding: 1.2rem ;
   border-radius: 1.2rem;
   margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.dropdown-arrow {
+  position: relative;
+  right: 5%;
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-top: 12px;
+
+  transition: all ease-in-out .2s;
+}
+
+.dropdown-arrow:hover {
+  transform: scale(1.1);
 }
 
 .navigation-button-container{
   margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
 }
+
+.new-map-title {
+  font-size: 1.2em;
+  margin-bottom: 12px;
+}
+
+.new-map-button {
+  position: relative;
+  width: 60%;
+  height: 48px;
+
+  background-color: var(--super-light-grey);
+  border: solid 1px var(--dark-grey);
+  border-radius: 12px;
+  padding: 10px 12px 8px 12px;
+
+  margin: 6px;
+
+  font-size: 14px;
+
+  box-shadow: 0 2px 4px 1px rgba(0,0,0, .1);
+
+  transition: all ease-in-out .2s;
+}
+
+.new-map-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px 1px rgba(0,0,0, .1);
+}
+
+.new-map-button:active {
+  transform: translateY(1px);
+}
+
+#plus-icon {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  color: var(--dark-grey);
+}
+
 .filter-title {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
   background: transparent;
   padding: 0.5rem;
   border: 0.2rem solid #90ee90;
   border-radius: 1.2rem;
   max-width: 200px;
   margin: 2rem auto 2rem auto;
-}
-.filter-title {
+
   text-align: center;
   color: black;
+}
+
+/* ================= HEADER ================= */
+
+.clickable-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: background 0.25s ease;
+}
+
+.clickable-header:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+
+/* ================= ARROW ================= */
+
+.dropdown-arrow {
+  width: 22px;
+  height: 22px;
+
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+
+/* ================= DROPDOWN ANIMATION ================= */
+
+.dropdown-content {
+  overflow: hidden;
+
+  max-height: 0;
+  opacity: 0;
+
+  transform: translateY(-8px);
+
+  transition:
+    max-height 0.45s cubic-bezier(.4,0,.2,1),
+    opacity 0.3s ease,
+    transform 0.35s ease;
+}
+
+.dropdown-content.open {
+  max-height: 2000px; /* grand nombre */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ================= MAP CARDS ================= */
+
+.new-case {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.new-case:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
