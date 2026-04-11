@@ -207,10 +207,6 @@ public class EvaluatorAgreementMeasureService {
         os.close();
 
         final String result = new String(p.getInputStream().readAllBytes());
-        final String error = new String(p.getErrorStream().readAllBytes());
-        System.out.println("Python result: " + result);
-        System.out.println("Python error: " + error);
-        System.out.println("Working dir: " + System.getProperty("user.dir"));
         return Double.parseDouble(result.trim());
     }
 
