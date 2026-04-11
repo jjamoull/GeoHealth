@@ -73,14 +73,54 @@
     <div class="metrics">
       <div class="metrics-header">Metrics</div>
       <div class="metrics-body">
-        <p>Weighted Entropy <app-tooltip-description description="description of weighted entropy" /></p>
-        <strong>{{ weightedEntropy() !== -1 ? weightedEntropy() : '/' }}</strong>
+        <p>
+          Divisional Consensus Score
+          <app-tooltip-description description="Description of value" />
+        </p>
+        <strong>{{ mapMetrics.divisionalConsensusScore() ?? '/' }}</strong>
 
-        <p>Global Consensus Index <app-tooltip-description description="description of weighted global concensus" /></p>
-        <strong>{{ globalConsensusIndex() !== -1 ? globalConsensusIndex() : '/' }}</strong>
+        <p>
+          National Consensus Score
+          <app-tooltip-description description="Description of value" />
+        </p>
+        <strong>{{ mapMetrics.nationalConsensusScore() ?? '/' }}</strong>
 
-        <p>Krippendorff's Alpha <app-tooltip-description description="description of Krippendorff alpha" /></p>
-        <strong>{{ krippendorff() !== null ? krippendorff() : '/' }}</strong>
+        <p>
+          Krippendorff Alpha
+          <app-tooltip-description description="Description of value" />
+        </p>
+        <strong>{{ mapMetrics.krippendorffAlpha() ?? '/' }}</strong>
+
+        <p>
+          Mean Divisional Agreement Score
+          <app-tooltip-description description="Description of value" />
+        </p>
+        <strong>{{ mapMetrics.meanDivisionalAgreementScore() ?? '/' }}</strong>
+
+        <p>
+          Mean Certainty
+          <app-tooltip-description description="Description of value" />
+        </p>
+        <strong>{{ mapMetrics.meanCertaintyForMapForDivision() ?? '/' }}</strong>
+
+        <p>
+          Dominant Perceived Risk
+          <app-tooltip-description description="Description of value" />
+        </p>
+        <strong>{{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}</strong>
+
+        <p>
+          Weighted Divisional Level Agreement
+          <app-tooltip-description description="Description of value" />
+        </p>
+        <strong>{{ mapMetrics.weightedDivisionalLevelAgreementScore() ?? '/' }}</strong>
+
+        <p>
+          National Model Field Agreement
+          <app-tooltip-description description="Description of value" />
+        </p>
+        <strong>{{ mapMetrics.nationalModelFieldAgreementScore() ?? '/' }}</strong>
+
       </div>
     </div>
     }

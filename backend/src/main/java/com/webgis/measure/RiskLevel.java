@@ -1,6 +1,7 @@
 package com.webgis.measure;
 
 public enum RiskLevel {
+    UNDEFINED(0),
     LOW(1),
     MEDIUM(2),
     HIGH(3);

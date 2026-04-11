@@ -28,11 +28,11 @@ export class MeanMeasureService {
       {withCredentials: true})
   }
 
-  public getDominantPerceivedRiskLevelForMapForDivision(mapId: number, division: string): Observable<number> {
-    return this.httpClient.get<number>(
+  public getDominantPerceivedRiskLevelForMapForDivision(mapId: number, division: string): Observable<string> {
+    return this.httpClient.get(
       `${this.baseUrl}${API_ENDPOINTS.MEASURE.MEAN.DOMINANTPERCEIVEDRISKLEVEL}/${mapId}/${division}`,
-      {withCredentials: true})
+      {responseType: 'text', withCredentials: true}
+    );
   }
-
 }
 

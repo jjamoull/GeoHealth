@@ -18,7 +18,7 @@ export class EvaluatorAgreementMeasureService{
 
   public getDivisionalConsensusScore(mapId: number, division: string): Observable<number> {
     return this.httpClient.get<number>(
-      `${this.baseUrl}${API_ENDPOINTS.MEASURE.EVAlUATORAGREEMENT.NATIONALCONSENSUSSCORE}/${mapId}/${division}`,
+      `${this.baseUrl}${API_ENDPOINTS.MEASURE.EVAlUATORAGREEMENT.DIVISIONALCONSENSUSSCORE}/${mapId}/${division}`,
       {withCredentials: true})
   }
 

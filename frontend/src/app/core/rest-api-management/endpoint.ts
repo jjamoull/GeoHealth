@@ -54,7 +54,7 @@ export const API_ENDPOINTS = {
     },
     MEAN: {
       DIVISIONALAGREEMENTSCORE:"/meanMeasure/meanDivisionalAgreementScore",
-      CERTAINTY: "/meanMeasure/MeanCertainty",
+      CERTAINTY: "/meanMeasure/meanCertainty",
       DOMINANTPERCEIVEDRISKLEVEL:"/meanMeasure/dominantPerceivedRiskLevel"
     },
     MODELEVALUATION:{
