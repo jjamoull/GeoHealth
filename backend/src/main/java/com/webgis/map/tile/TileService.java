@@ -1,5 +1,6 @@
 package com.webgis.map.tile;
 
+import com.webgis.exception.CanDecompress;
 import com.webgis.map.raster.RasterMap;
 import com.webgis.map.raster.RasterMapRepository;
 import org.jspecify.annotations.NonNull;
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.util.Optional;
 import java.awt.Graphics;
 
+import static com.webgis.map.tile.TileConstants.getTileSize;
+import static com.webgis.map.tile.TileConstants.getBlockSize;
 
 
 @Service
@@ -22,8 +25,8 @@ public class TileService {
     private final TileRepository tileRepository;
     private final RasterMapRepository riskFactorMapRepository;
     static Logger logger = LoggerFactory.getLogger(TileService.class);
-    final int tileSize = TileConstants.TILE_SIZE;
-    final int blockSize = TileConstants.BLOCK_SIZE;
+    final int tileSize = getTileSize();
+    final int blockSize = getBlockSize();
     private static final float MAX_PIXEL_VALUE = 255f;
 
     public TileService (TileRepository tileRepository, RasterMapRepository riskFactorMapRepository){
@@ -171,9 +174,9 @@ public class TileService {
      *
      * @param tileData : byte array with tile data
      * @return byte array of size tileSize x tileSize containing each pixel of the tile
-     * @throws RuntimeException
+     * @throws CanDecompress
      * */
-    public byte[] decompressPNGFile(@NonNull byte[] tileData)throws RuntimeException{
+    public byte[] decompressPNGFile(@NonNull byte[] tileData)throws CanDecompress{
 
 
         try {
@@ -193,6 +196,6 @@ public class TileService {
             logger.error("There is a IOException during the reading of path in decompressPNGFile");
         }
 
-        throw new RuntimeException();
+        throw new CanDecompress("The PNG file could not be decompressed");
     }
 }

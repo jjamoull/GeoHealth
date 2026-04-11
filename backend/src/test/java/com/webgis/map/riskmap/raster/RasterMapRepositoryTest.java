@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-public class RasterMapRepositoryTest {
+class RasterMapRepositoryTest {
 
     @Autowired
     private RasterMapRepository riskFactorMapRepository;
@@ -63,7 +63,7 @@ public class RasterMapRepositoryTest {
         assertNotNull(result1);
 
         assertThrows(NoSuchElementException.class,
-                ()-> result2.get());
+                result2::get);
 
         assertTrue(result1.isPresent());
         assertTrue(result2.isEmpty());
