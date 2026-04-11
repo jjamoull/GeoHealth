@@ -1,4 +1,4 @@
-export type MapKind = 'divisions' | 'tile';
+export type MapKind = 'divisions' | 'raster';
 
 export interface MapOption {
   id: number | null;
