@@ -35,8 +35,8 @@ public class TileRepositoryTest {
     @BeforeEach
     void init(){
         // Arrange
-        RasterMap riskFactorMap = new RasterMap("Title1", "Description1", " risk_factor");
-        RasterMap riskFactorMap2 = new RasterMap("Title2", "Description2", "risk_factor");
+        RasterMap riskFactorMap = new RasterMap("Title1", "Description1");
+        RasterMap riskFactorMap2 = new RasterMap("Title2", "Description2");
         TileId tileId1 = new TileId(1L,1,1,1);
         tileId2 = new TileId(2L,2,2,2);
         tileId3 = new TileId(3L,3,3,3);

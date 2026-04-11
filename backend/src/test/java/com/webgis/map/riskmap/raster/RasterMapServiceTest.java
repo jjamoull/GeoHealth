@@ -30,7 +30,7 @@ class RasterMapServiceTest {
 
     private String description = "description";
     private String title = "title";
-    private RasterMap riskFactorMap = new RasterMap(title, description, "risk_factor");
+    private RasterMap riskFactorMap = new RasterMap(title, description);
 
 
 
@@ -54,7 +54,7 @@ class RasterMapServiceTest {
     @Test
     void findAllRiskFactorMapIsOKTest(){
         // Arrange
-        RasterMap riskFactorMap2 = new RasterMap("Title 2", "description 2", "risk_factor");
+        RasterMap riskFactorMap2 = new RasterMap("Title 2", "description 2");
         List<RasterMap> expectedResult = List.of(new RasterMap[]{
                 riskFactorMap,
                 riskFactorMap2
