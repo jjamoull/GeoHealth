@@ -1,7 +1,6 @@
 package com.webgis.map.raster;
 
 
-import com.webgis.map.tile.TileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,6 @@ package com.webgis.map.tile;
 
 import com.webgis.MessageDto;
 import com.webgis.map.raster.dto.TileMeanAndXYdto;
-import com.webgis.map.raster.RasterMapService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
