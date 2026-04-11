@@ -42,7 +42,7 @@
     margin-top: 20px;
   }
   .logo {
-    background-image: url("/assets/icons/image.png");
+    background-image: url("/frontend/src/assets/icons/logoGeoHealth.png");
     width: 80px;
     height: 80px;
     background-size: cover;

@@ -12,13 +12,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
   }
+
   .sidebar {
     position: fixed;
-    height: 100vh;
+    height: 100%;
     width: 280px;
     left: -280px;
+    top: 0;
     background: rgba(235, 239, 255, 0.4);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -42,10 +43,11 @@
     cursor: pointer;
   }
   .logo {
-    background-image: url("/assets/icons/image.png");
-    width: 80px;
+    background-image: url("/assets/icons/logoGeoHealth.png");
+    width:80px;
     height: 80px;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
     box-shadow: 0px 2px 4px rgba(255, 255, 255, 0.5);
   }

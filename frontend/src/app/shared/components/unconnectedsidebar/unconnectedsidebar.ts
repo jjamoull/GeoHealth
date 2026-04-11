@@ -10,6 +10,10 @@ import {Router} from '@angular/router';
 export class Unconnectedsidebar {
   constructor(private router: Router,) {}
 
+  goToHome() {
+    this.router.navigate(['home'])
+  }
+
   goToLogin() {
     this.router.navigate(['login']);
   }
