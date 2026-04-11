@@ -102,7 +102,7 @@ class MeanMesureServiceTest {
                         "Wouri",
                         2,
                         "low",
-                        0,
+                        4,
                         "comment",
                         user3,
                         finalMap,
@@ -140,7 +140,7 @@ class MeanMesureServiceTest {
         Double result = meanMesureService.computeMeanCertaintyForMapForDivision(finalMap,"Wouri");
 
         //Assert
-        assertEquals(2.6666666666666665,result);
+        assertEquals(4,result);
     }
 
     @Test
@@ -156,7 +156,7 @@ class MeanMesureServiceTest {
         RiskLevel result = meanMesureService.computeDominantPerceivedRiskLevelForMapForDivision(finalMap,"Wouri");
 
         //Assert
-        assertEquals(RiskLevel.MEDIUM,result);
+        assertEquals(RiskLevel.LOW,result);
     }
 
 

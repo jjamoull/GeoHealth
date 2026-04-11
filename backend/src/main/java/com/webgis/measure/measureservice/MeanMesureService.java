@@ -6,7 +6,7 @@ import com.webgis.map.finalmap.FinalMap;
 import com.webgis.measure.RiskLevel;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,7 +92,7 @@ public class MeanMesureService {
                         finalMap,
                         division);
 
-        final Map<RiskLevel, Double> weightForRiskLevel = new HashMap<>();
+        final EnumMap<RiskLevel, Double> weightForRiskLevel = new EnumMap<>(RiskLevel.class);
 
         for (EvaluationForm evaluationForm : evaluationForms) {
             final RiskLevel riskLevel = RiskLevel.fromString(evaluationForm.getPerceivedRisk());

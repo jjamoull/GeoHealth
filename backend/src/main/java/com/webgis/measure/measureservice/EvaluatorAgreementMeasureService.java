@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+
 
 @Service
 public class EvaluatorAgreementMeasureService {
@@ -42,7 +44,7 @@ public class EvaluatorAgreementMeasureService {
 
         //Compute weight
 
-        final Map<RiskLevel, Double> weightForRiskLevel = new HashMap<>();
+        final EnumMap<RiskLevel, Double> weightForRiskLevel = new EnumMap<>(RiskLevel.class);
         double totalWeight = 0.0;
 
         for (EvaluationForm form : forms) {
