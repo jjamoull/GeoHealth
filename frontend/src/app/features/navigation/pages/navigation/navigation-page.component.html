@@ -4,219 +4,243 @@
 />
 <div class="navigation-page">
 
-<input type="checkbox" name="" id="check-nav" checked="checked">
-<div class ="side-navbar">
-  <div class="scrollbox">
-    <div class="scrollbox-inner">
-      <div class="navigation-button-container">
-        @if(isAdmin){
-          <!--<app-button
-            [text]="'Add a new map'"
-            variant="success"
-            (clicked) ="openPopUp('addMap')">
-          </app-button>
+  <input type="checkbox" name="" id="check-nav">
+  <div class ="side-navbar">
+    <div class="scrollbox">
+      <div class="scrollbox-inner">
+        <div class="navigation-button-container">
+          @if(isAdmin){
+            <!--<app-button
+              [text]="'Add a new map'"
+              variant="success"
+              (clicked) ="openPopUp('addMap')">
+            </app-button>
 
-          <app-button
-            [text]="'Add a new risk factor'"
-            variant="success"
-            (clicked) = "openPopUp('addRiskFactor')">
-          </app-button>-->
-          <div class="new-map-title">
-            Add a new map :
-          </div>
-          <button class="new-map-button" id="final-risk" (click)="openPopUp('addMap')">Final risk<i class="fas fa-plus" id="plus-icon" aria-hidden="true"></i></button>
-          <button class="new-map-button" id="risk-factor" (click)="openPopUp('addRiskFactor')">Risk factor<i class="fas fa-plus" id="plus-icon"></i></button>
-        }
-
-      </div>
-      <label for="check-nav">
-        <span class ="fas fa-times" id="times"> </span>
-        <span class ="fas fa-bars" id="bars"> </span>
-      </label>
-      <div class="search-bar-container">
-        <div class="search-bar">
-          <input id="map-search"
-                 name="map-search"
-                 type="search"
-                 class="search-field"
-                 placeholder="Rechercher…"
-                 autocomplete="off"
-                 [(ngModel)]="searchText"
-                 (input)="searchMaps()">
-          @if(true){
-            <button class="search-button">
-              <svg  class="search-icon" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 24 24" >
-                <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-                <path d="M18 10c0-4.41-3.59-8-8-8s-8 3.59-8 8 3.59 8 8 8c1.85 0 3.54-.63 4.9-1.69l5.1 5.1L21.41 20l-5.1-5.1A8 8 0 0 0 18 10M4 10c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6"></path>
-              </svg>
-            </button>
+            <app-button
+              [text]="'Add a new risk factor'"
+              variant="success"
+              (clicked) = "openPopUp('addRiskFactor')">
+            </app-button>-->
+            <div class="new-map-title">
+              Add a new map :
+            </div>
+            <button class="new-map-button" id="final-risk" (click)="openPopUp('addMap')">Final risk<i class="fas fa-plus" id="plus-icon" aria-hidden="true"></i></button>
+            <button class="new-map-button" id="risk-factor" (click)="openPopUp('addRiskFactor')">Risk factor<i class="fas fa-plus" id="plus-icon"></i></button>
           }
+
         </div>
+        <label for="check-nav">
+          <span class ="fas fa-times" id="times"> </span>
+          <span class ="fas fa-bars" id="bars"> </span>
+        </label>
+        <div class="search-map-title">Search for a map :</div>
+        <div class="search-bar-container">
+          <div class="search-bar">
+            <input id="map-search"
+                   name="map-search"
+                   type="search"
+                   class="search-field"
+                   placeholder="Rechercher…"
+                   autocomplete="off"
+                   [(ngModel)]="searchText"
+                   (input)="searchMaps()">
+            @if(true){
+              <button class="search-button">
+                <svg  class="search-icon" xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor" viewBox="0 0 24 24" >
+                  <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                  <path d="M18 10c0-4.41-3.59-8-8-8s-8 3.59-8 8 3.59 8 8 8c1.85 0 3.54-.63 4.9-1.69l5.1 5.1L21.41 20l-5.1-5.1A8 8 0 0 0 18 10M4 10c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6"></path>
+                </svg>
+              </button>
+            }
+          </div>
+        </div>
+        <div class ="filter-title">
+          <div class="text">Diseases</div>
+        </div>
+        <ol>
+          <app-checkbox
+            [id]="'Ebola'"
+            [label]="'Ebola'"
+            [name]="'souscription'">
+          </app-checkbox>
+          <app-checkbox
+            [id]="'Covid'"
+            [label]="'Covid'"
+            [name]="'souscription'">
+          </app-checkbox>
+          <app-checkbox
+            [id]="'Other'"
+            [label]="'Other'"
+            [name]="'souscription'">
+          </app-checkbox>
+          <app-checkbox
+            [id]="'Other'"
+            [label]="'Other'"
+            [name]="'souscription'">
+          </app-checkbox>
+        </ol>
+        <div class ="filter-title">
+          <div class="text">Annotations</div>
+        </div>
+        <ol>
+          <app-checkbox
+            [id]="'Annotated'"
+            [label]="'Annotated'"
+            [name]="'souscription'">
+          </app-checkbox>
+          <app-checkbox
+            [id]="'Unannotated'"
+            [label]="'Unannotated'"
+            [name]="'souscription'">
+          </app-checkbox>
+          <app-checkbox
+            [id]="'Other'"
+            [label]="'Other'"
+            [name]="'souscription'">
+          </app-checkbox>
+          <app-checkbox
+            [id]="'Other'"
+            [label]="'Other'"
+            [name]="'souscription'">
+          </app-checkbox>
+        </ol>
+
+        <div class ="filter-title">
+          <div class="text">Risk factors</div>
+        </div>
+        <ol>
+          <app-checkbox
+            [id]="'Cattle'"
+            [label]="'Cattle'"
+            [name]="'souscription'">
+          </app-checkbox>
+          <app-checkbox
+            [id]="'Rivers'"
+            [label]="'Rivers'"
+            [name]="'souscription'">
+          </app-checkbox>
+          <app-checkbox
+            [id]="'Other'"
+            [label]="'Other'"
+            [name]="'souscription'">
+          </app-checkbox>
+          <app-checkbox
+            [id]="'Other'"
+            [label]="'Other'"
+            [name]="'souscription'">
+          </app-checkbox>
+        </ol>
       </div>
-          <div class ="filter-title">
-            <div class="text">Diseases</div>
-          </div>
-          <ol>
-            <app-checkbox
-              [id]="'Ebola'"
-              [label]="'Ebola'"
-              [name]="'souscription'">
-            </app-checkbox>
-            <app-checkbox
-              [id]="'Covid'"
-              [label]="'Covid'"
-              [name]="'souscription'">
-            </app-checkbox>
-            <app-checkbox
-              [id]="'Other'"
-              [label]="'Other'"
-              [name]="'souscription'">
-            </app-checkbox>
-            <app-checkbox
-              [id]="'Other'"
-              [label]="'Other'"
-              [name]="'souscription'">
-            </app-checkbox>
-          </ol>
-          <div class ="filter-title">
-            <div class="text">Annotations</div>
-          </div>
-          <ol>
-            <app-checkbox
-              [id]="'Annotated'"
-              [label]="'Annotated'"
-              [name]="'souscription'">
-            </app-checkbox>
-            <app-checkbox
-              [id]="'Unannotated'"
-              [label]="'Unannotated'"
-              [name]="'souscription'">
-            </app-checkbox>
-            <app-checkbox
-              [id]="'Other'"
-              [label]="'Other'"
-              [name]="'souscription'">
-            </app-checkbox>
-            <app-checkbox
-              [id]="'Other'"
-              [label]="'Other'"
-              [name]="'souscription'">
-            </app-checkbox>
-          </ol>
-          <div class ="filter-title">
-            <div class="text">Risk factors</div>
-          </div>
-          <ol>
-            <app-checkbox
-              [id]="'Cattle'"
-              [label]="'Cattle'"
-              [name]="'souscription'">
-            </app-checkbox>
-            <app-checkbox
-              [id]="'Rivers'"
-              [label]="'Rivers'"
-              [name]="'souscription'">
-            </app-checkbox>
-            <app-checkbox
-              [id]="'Other'"
-              [label]="'Other'"
-              [name]="'souscription'">
-            </app-checkbox>
-            <app-checkbox
-              [id]="'Other'"
-              [label]="'Other'"
-              [name]="'souscription'">
-            </app-checkbox>
-          </ol>
     </div>
   </div>
-</div>
 
   <div class="all-maps">
-     <div class="recent-maps">
-       <div class="rounded-card">
-         <h3 class="title">Risk maps</h3>
-       </div>
-       <div class="all-the-maps">
-         @for (map of listOfAllRecentMaps; track map.id){
-           <div class="new-case" (click)="goToMap(map.id)">
-             <h4 class="map-title">{{map.title}}</h4>
-             <h6 class="map-description">{{map.description}}</h6>
-           </div>
-         }
-       </div>
-     </div>
-
-
-      <!-- ------------------------ -->
-      <!-- Lines about all the maps -->
-      <!-- ------------------------ -->
-    @if(!isSearching){
-
-      <div class="all-available-maps">
+    @if (!isSearching) {
+      <div class="final-risk-maps">
         <div class="rounded-card">
-          <h3 class="title">Annotated maps</h3>
-        </div>
-
-        <div class="all-the-maps">
-          @for (map of listOfAllMaps; track map.id){
-            <div class="new-case" (click)="goToMap(map.id)">
-
-              <app-map-preview [mapId]="map.id"></app-map-preview>
-
-              <div class="preview-meta-data">
-                <h4 class="map-title">{{map.title}}</h4>
-                <h6 class="map-description">{{map.description}}</h6>
-              </div>
-
-            </div>
+          <h3 (click)="toggleDropdown('finalRisks')" class="title">Final risk maps</h3>
+          @if (finalRisksOpen) {
+            <svg (click)="toggleDropdown('finalRisks')" class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg"
+                 fill="currentColor" viewBox="0 0 24 24" >
+              <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+              <path d="m12 15.41 5.71-5.7-1.42-1.42-4.29 4.3-4.29-4.3-1.42 1.42z"></path>
+            </svg>
+          } @else {
+            <svg (click)="toggleDropdown('finalRisks')" class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor" viewBox="0 0 24 24" >
+              <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+              <path d="m7.71 15.71 4.29-4.3 4.29 4.3 1.42-1.42L12 8.59l-5.71 5.7z"></path>
+            </svg>
           }
         </div>
-      </div>
+        <div class="dropdown-content"
+             [class.open]="finalRisksOpen">
+          <div class="all-the-maps">
+            @for (map of listOfAllMaps; track map.id){
+              <div class="new-case" (click)="goToMap(map.id)">
 
+                <app-map-preview [mapId]="map.id"></app-map-preview>
+
+                <div class="preview-meta-data">
+                  <h4 class="map-title">{{map.title}}</h4>
+                  <h6 class="map-description">{{map.description}}</h6>
+                </div>
+
+              </div>
+            }
+          </div>
+        </div>
+      </div>
     }
 
-    @if(isSearching && !noResults){
+    @if (!isSearching) {
+      <div class="risk-factor-maps">
+        <div class="rounded-card">
+          <h3 (click)="toggleDropdown('riskFactors')" class="title">Risk factor maps</h3>
+          @if (riskFactorsOpen) {
+            <svg (click)="toggleDropdown('riskFactors')" id="up" class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg"
+                 fill="currentColor" viewBox="0 0 24 24" >
+              <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+              <path d="m12 15.41 5.71-5.7-1.42-1.42-4.29 4.3-4.29-4.3-1.42 1.42z"></path>
+            </svg>
+          } @else {
+            <svg (click)="toggleDropdown('riskFactors')" id="down" class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  fill="currentColor" viewBox="0 0 24 24" >
+              <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+              <path d="m7.71 15.71 4.29-4.3 4.29 4.3 1.42-1.42L12 8.59l-5.71 5.7z"></path>
+            </svg>
+          }
+        </div>
+        <div class="dropdown-content"
+             [class.open]="riskFactorsOpen">
+          <div class="all-the-maps">
+            @for (map of listOfAllMaps; track map.id){
+              <div class="new-case" (click)="goToMap(map.id)">
 
+                <app-map-preview [mapId]="map.id"></app-map-preview>
+
+                <div class="preview-meta-data">
+                  <h4 class="map-title">{{map.title}}</h4>
+                  <h6 class="map-description">{{map.description}}</h6>
+                </div>
+
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+
+    @if (isSearching && !noResults) {
       <div class="all-available-maps">
         <div class="rounded-card">
           <h3 class="title">Search results</h3>
         </div>
 
         <div class="all-the-maps">
-          @for (map of filteredMaps; track map.id){
+          @for (map of filteredMaps; track map.id) {
             <div class="new-case" (click)="goToMap(map.id)">
-
               <app-map-preview [mapId]="map.id"></app-map-preview>
 
               <div class="preview-meta-data">
-                <h4 class="map-title">{{map.title}}</h4>
-                <h6 class="map-description">{{map.description}}</h6>
+                <h4 class="map-title">{{ map.title }}</h4>
+                <h6 class="map-description">{{ map.description }}</h6>
               </div>
-
             </div>
           }
         </div>
       </div>
-
     }
 
-    @if(noResults){
-
+    @if (noResults) {
       <div class="no-results">
         <i class="fas fa-search"></i>
         <h3>No map found</h3>
         <p>Try another title or clear the search.</p>
-
         <button class="clear-search-button" (click)="clearSearch()">
           Back to all maps
         </button>
       </div>
-
     }
-
-  </div>
-</div>
-
-

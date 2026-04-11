@@ -116,11 +116,16 @@ span {
 /* SIDEBAR */
 
 .search-bar-container {
-  height: 80px;
+  height: 70px;
   padding: 8px 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.search-map-title {
+  font-size: 1em;
+  justify-self: center;
 }
 
 .search-bar {
@@ -216,7 +221,6 @@ span {
   grid-row: span 5;
   grid-gap: 12px;
   width: 100%;
-  height: 100%;
   padding: 0 60px;
   margin-right: 2px;
   display: grid;
@@ -225,15 +229,16 @@ span {
   gap: 8px;
   overflow-y: auto;
 }
-.recent-maps{
+
+.final-risk-maps{
   grid-row: span 1;
   padding-bottom: 40px;
   border-bottom: solid 2px var(--light-grey);
 }
 
-.all-available-maps{
+.risk-factor-maps{
   grid-row: 2 / span 4;
-  padding-bottom: 140px;
+  padding-bottom: 40px;
   border-bottom: solid 2px var(--light-grey);
 }
 
@@ -256,7 +261,7 @@ span {
 }
 
 .map-title {
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 600;
   margin-bottom: 8px;
 }
@@ -276,6 +281,8 @@ span {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-content: space-between;
+  padding-bottom: 40px;
+  padding-top: 12px;
 }
 
 .new-case {
@@ -286,19 +293,40 @@ span {
 }
 
 .new-case:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 /*OTHER*/
 .title{
   text-align: center;
   font-size: 3em;
+  width: 80%;
 }
 
 .rounded-card {
-  width: 100%;
+  width: 45%;
   padding: 1.2rem ;
   border-radius: 1.2rem;
   margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.dropdown-arrow {
+  position: relative;
+  right: 5%;
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-top: 12px;
+
+  transition: all ease-in-out .2s;
+}
+
+.dropdown-arrow:hover {
+  transform: scale(1.1);
 }
 
 .navigation-button-container{
@@ -359,4 +387,72 @@ span {
 
   text-align: center;
   color: black;
+}
+
+/* ================= HEADER ================= */
+
+.clickable-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: background 0.25s ease;
+}
+
+.clickable-header:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+
+/* ================= ARROW ================= */
+
+.dropdown-arrow {
+  width: 22px;
+  height: 22px;
+
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+
+/* ================= DROPDOWN ANIMATION ================= */
+
+.dropdown-content {
+  overflow: hidden;
+
+  max-height: 0;
+  opacity: 0;
+
+  transform: translateY(-8px);
+
+  transition:
+    max-height 0.45s cubic-bezier(.4,0,.2,1),
+    opacity 0.3s ease,
+    transform 0.35s ease;
+}
+
+.dropdown-content.open {
+  max-height: 2000px; /* grand nombre */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ================= MAP CARDS ================= */
+
+.new-case {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.new-case:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }

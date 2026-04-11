@@ -37,6 +37,21 @@ export class NavigationPageComponent implements OnInit{
   listOfAllMaps:FinalMapListDto[] = [];
   listOfAllRecentMaps:FinalMapListDto[] = [];
 
+  finalRisksOpen = true;
+  riskFactorsOpen = false;
+
+  toggleDropdown(section: string) {
+    switch(section) {
+      case 'finalRisks':
+        this.finalRisksOpen = !this.finalRisksOpen;
+        break;
+
+      case 'riskFactors':
+        this.riskFactorsOpen = !this.riskFactorsOpen;
+        break;
+    }
+  }
+
   ngOnInit() {
     this.getAllMaps();
 
