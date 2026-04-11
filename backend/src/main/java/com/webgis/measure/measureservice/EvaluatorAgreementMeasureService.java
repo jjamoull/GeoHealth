@@ -186,6 +186,7 @@ public class EvaluatorAgreementMeasureService {
      *
      * @param finalMap the map you are interested in
      *
+     * @throw IOException if python script not found or failed to open it
      * @return Krippensdroff's Alpha
      */
     public double computekrippendorffAlpha(FinalMap finalMap) throws IOException {
