@@ -65,37 +65,75 @@ export class MapComponent implements AfterViewInit {
     ){}
 
   /**
-   * TODO
-   */
-  onOpenEvaluation(): void {
-    this.showEvaluationModal.set(true);
+    * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
+  */
+  async ngAfterViewInit(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.loadAvailableMaps();
+    this.mapId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadUserRole();
+    await this.mapHelper.initMap('map', CAMEROON_COORDINATES[0], CAMEROON_ZOOM, 6, 12);
+    this.loadBaseMap();
   }
+
+
+  // --- Map Loading ---
 
   /**
    * TODO
    */
-  onCloseEvaluation(): void {
-    this.showEvaluationModal.set(false);
-    this.getAllForm(this.isAdmin,this.mapId);
-    this.cdr.detectChanges();
-  }
+  private loadBaseMap(): void {
+    this.mapService.getMap(this.mapId).subscribe({
+      next: (mapData) => {
+        this.mapTitle.set(mapData.title);
+        this.mapDescription.set(mapData.description);
+        this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
 
-  /**
-   * TODO
-   */
-  onDeleteEvaluation(): void {
-    if (!confirm('Are you sure you want to delete this evaluation?')) return;
+        const geoJson = JSON.parse(mapData.fileGeoJson);
+        const divisions: { name: string, risk: string }[] = [];
 
-    this.evaluationFormService.deleteForm(this.existingForm()!.id).subscribe({
-      next: () => {
-        this.existingForm.set(null);
-        this.getAllForm(this.isAdmin, this.mapId);
-        },
-      error: (err) => {
-          console.error('Failed to delete evaluation form', err);
-      }
+        for (const feature of geoJson.features) {
+          divisions.push({
+            name: feature.properties.NAME_2,
+            risk: feature.properties.Risk_categ
+          });
+        }
+        this.allDivisions.set(divisions);
+
+        this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
+          this.onDivisionClicked(event);
+            });
+          },
+      error: (err) => console.error('Failed to load map data', err)
     });
   }
+
+  /**
+   * TODO
+   */
+  private loadAvailableMaps(): void {
+    this.rasterMapService.getRiskFactors().subscribe({
+          next: (maps:RasterMapListDto[]) => {
+            this.riskFactorMaps.set(maps);
+          },
+          error: (err) => {
+            console.error('Failed to load risk factor maps', err);
+          }
+    });
+  }
+
+  /**
+   * TODO
+   */
+  private loadUserRole(): void {
+    this.usersServices.isAdmin().subscribe(
+    bool =>{
+      this.isAdmin=bool;
+      this.getAllForm(bool,this.mapId)
+    });
+  }
+
+  // --- Map Interaction ---
 
   /**
    * Method called when the user selects a risk factor map
@@ -131,106 +169,8 @@ export class MapComponent implements AfterViewInit {
       this.mapHelper.switchTo({ id: null, kind: 'divisions', title: 'Risk Overview - Divisions' });
       return;
     }
-
   }
 
-
-  /**
-    * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
-  */
-  async ngAfterViewInit(): Promise<void> {
-    if (!isPlatformBrowser(this.platformId)) return;
-    this.loadAvailableMaps();
-    this.mapId = Number(this.route.snapshot.paramMap.get('id'));
-    this.loadUserRole();
-    await this.mapHelper.initMap('map', CAMEROON_COORDINATES[0], CAMEROON_ZOOM, 6, 12);
-    this.loadBaseMap();
-  }
-
-
-  /**
-   * Get the evaluation form for a specific map
-   *
-   * @param isAdmin true if the connected user is an admin, false otherwise
-   * @param mapId the id of the map you are interested in
-   */
-  private getAllForm(isAdmin:boolean,mapId:number){
-    if(isAdmin){
-      this.adminEvaluationFormService.getAllForm(mapId).subscribe({
-        next: (evaluationForms:AdminResponseEvaluationFormDto[])=>{
-          this.allEvaluationFormsAdmin.set(evaluationForms);
-        },
-        error: (err)=>{
-          console.error('Failed to load evaluation forms', err);
-        }
-      })
-    }
-    else{
-      this.evaluationFormService.getAllForm(mapId).subscribe({
-        next: (evaluationForms:ResponseEvaluationFormDto[])=>{
-          this.allEvaluationFormsUser.set(evaluationForms);
-        },
-        error: (err)=>{
-          console.error('Failed to load evaluation forms', err);
-        }
-      })
-    }
-  }
-
-  /**
-   * TODO
-   */
-  private loadAvailableMaps(): void {
-    this.rasterMapService.getRiskFactors().subscribe({
-          next: (maps:RasterMapListDto[]) => {
-            this.riskFactorMaps.set(maps);
-          },
-          error: (err) => {
-            console.error('Failed to load risk factor maps', err);
-          }
-    });
-  }
-
-
-  /**
-   * TODO
-   */
-  private loadUserRole(): void {
-    this.usersServices.isAdmin().subscribe(
-    bool =>{
-      this.isAdmin=bool;
-      this.getAllForm(bool,this.mapId)
-    });
-  }
-
-  /**
-   * TODO
-   */
-  private loadBaseMap(): void {
-    this.mapService.getMap(this.mapId).subscribe({
-      next: (mapData) => {
-        this.mapTitle.set(mapData.title);
-        this.mapDescription.set(mapData.description);
-        this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
-
-        const geoJson = JSON.parse(mapData.fileGeoJson);
-        const divisions: { name: string, risk: string }[] = [];
-
-        for (const feature of geoJson.features) {
-          divisions.push({
-            name: feature.properties.NAME_2,
-            risk: feature.properties.Risk_categ
-          });
-        }
-        this.allDivisions.set(divisions);
-
-        this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
-          this.onDivisionClicked(event);
-            });
-          },
-      error: (err) => console.error('Failed to load map data', err)
-    });
-  }
 
   /**
    * TODO and PLEASE : It's better to have several methods than one big one… Not easy to discover this method and understand it
@@ -284,6 +224,72 @@ export class MapComponent implements AfterViewInit {
       }
     });
   }
+
+  // --- Evaluation ---
+
+  /**
+   * Get the evaluation form for a specific map
+   *
+   * @param isAdmin true if the connected user is an admin, false otherwise
+   * @param mapId the id of the map you are interested in
+   */
+  private getAllForm(isAdmin:boolean,mapId:number){
+    if(isAdmin){
+      this.adminEvaluationFormService.getAllForm(mapId).subscribe({
+        next: (evaluationForms:AdminResponseEvaluationFormDto[])=>{
+          this.allEvaluationFormsAdmin.set(evaluationForms);
+        },
+        error: (err)=>{
+          console.error('Failed to load evaluation forms', err);
+        }
+      })
+    }
+    else{
+      this.evaluationFormService.getAllForm(mapId).subscribe({
+        next: (evaluationForms:ResponseEvaluationFormDto[])=>{
+          this.allEvaluationFormsUser.set(evaluationForms);
+        },
+        error: (err)=>{
+          console.error('Failed to load evaluation forms', err);
+        }
+      })
+    }
+  }
+
+  /**
+   * TODO
+   */
+  onOpenEvaluation(): void {
+    this.showEvaluationModal.set(true);
+  }
+
+  /**
+   * TODO
+   */
+  onCloseEvaluation(): void {
+    this.showEvaluationModal.set(false);
+    this.getAllForm(this.isAdmin,this.mapId);
+    this.cdr.detectChanges();
+  }
+
+  /**
+   * TODO
+   */
+  onDeleteEvaluation(): void {
+    if (!confirm('Are you sure you want to delete this evaluation?')) return;
+
+    this.evaluationFormService.deleteForm(this.existingForm()!.id).subscribe({
+      next: () => {
+        this.existingForm.set(null);
+        this.getAllForm(this.isAdmin, this.mapId);
+        },
+      error: (err) => {
+          console.error('Failed to delete evaluation form', err);
+      }
+    });
+  }
+
+  // --- Utilities ---
 
   /**
    * TODO
