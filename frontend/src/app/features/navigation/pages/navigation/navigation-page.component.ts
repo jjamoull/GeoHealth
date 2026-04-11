@@ -122,6 +122,7 @@ export class NavigationPageComponent implements OnInit{
     return matrix[b.length][a.length];
   }
 
+
   searchMaps(): void {
 
     const search = this.normalize(this.searchText);
