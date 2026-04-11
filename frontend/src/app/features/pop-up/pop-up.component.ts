@@ -3,15 +3,13 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FinalMap} from './final-map/final-map';
 import {RiskFactor} from './risk-factor/risk-factor';
-import {FinalRasterMap} from './final-raster-map/final-raster-map';
 
 @Component({
   selector: 'app-pop-up',
   imports: [
     ReactiveFormsModule,
     FinalMap,
-    RiskFactor,
-    FinalRasterMap
+    RiskFactor
   ],
   templateUrl: './pop-up.component.html',
   styleUrl: './pop-up.component.css',
@@ -21,7 +19,6 @@ export class PopUpComponent implements OnInit {
   //************ Constants ************
   addMap:string ="addMap";
   addRiskFactor : string = "addRiskFactor";
-  addFinalRasterMap :string = "addFinalRasterMap";
   //***********************************
 
   //******** Global variables *********
