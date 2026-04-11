@@ -28,6 +28,14 @@ public class EvaluatorAgreementMeasureController {
         this.finalMapService=finalMapService;
     }
 
+    /**
+     * Get the divisional consensus score for a specific division of a map
+     *
+     * @param mapId the id of the map you are interested
+     * @param division the division you are interested in
+     *
+     * @return the divisionalConsensusScore if the map exists, not found otherwise
+     */
     @GetMapping("/divisionalConsensusScore/{mapId}/{division}")
     public ResponseEntity<Object> getDivisionalConsensusScore(
             @PathVariable long mapId,
@@ -47,6 +55,13 @@ public class EvaluatorAgreementMeasureController {
         return ResponseEntity.status(200).body(divisionalConsensusScore);
     }
 
+    /**
+     * Get the national consensus score for a map
+     *
+     * @param mapId the id of the map you are interested
+     *
+     * @return the national consensus score if map exists, not found otherwise
+     */
     @GetMapping("/nationalConsensusScore/{mapId}/{division}")
     public ResponseEntity<Object> getNationalConsensusScore(
             @PathVariable long mapId){
@@ -65,6 +80,13 @@ public class EvaluatorAgreementMeasureController {
         return ResponseEntity.status(200).body(NationalConsensusScore);
     }
 
+    /**
+     * Get the krippendorff alpha score for a map
+     *
+     * @param mapId the id of the map you are interested
+     *
+     * @return krippendorff alpha score if the map exists, not found otherwise
+     */
     @GetMapping("/krippendorffAlpha/{mapId}")
     public ResponseEntity<Object> getkrippendorffAlpha(
             @PathVariable long mapId){

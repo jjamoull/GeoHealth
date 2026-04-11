@@ -11,21 +11,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ModelEvaluationMeasureServiceTest {
+class EvaluatorAgreementMeasureServiceTest {
 
     @Mock
     private EvaluationFormRepository evaluationFormRepository;
 
     @InjectMocks
-    private ModelEvaluationMeasureService modelEvaluationMeasureService;
+    private EvaluatorAgreementMeasureService evaluatorAgreementMeasureService;
+
 
     private User user1;
     private User user2;
@@ -33,7 +32,8 @@ class ModelEvaluationMeasureServiceTest {
 
     private FinalMap finalMap;
 
-    private List<EvaluationForm> evaluationForms;
+    private List<EvaluationForm> evaluationFormsWouri;
+    private List<EvaluationForm> evaluationFormsMbam;
 
     @BeforeEach
     void setUp() {
@@ -77,7 +77,7 @@ class ModelEvaluationMeasureServiceTest {
                 "file"
         );
 
-        evaluationForms = List.of(
+        evaluationFormsWouri = List.of(
                 new EvaluationForm(
                         "Wouri",
                         2,
@@ -109,45 +109,71 @@ class ModelEvaluationMeasureServiceTest {
                         true
                 )
         );
+
+
+        evaluationFormsMbam= List.of(
+                new EvaluationForm(
+                        "Mbam",
+                        4,
+                        "High",
+                        4,
+                        "comment",
+                        user1,
+                        finalMap,
+                        true
+                ),
+                new EvaluationForm(
+                        "Mbam",
+                        3,
+                        "High",
+                        3,
+                        "comment",
+                        user2,
+                        finalMap,
+                        true
+                )
+        );
     }
 
     @Test
-    void computeWeightedDivisionalLevelAgreementScoreTest() {
-
-        // Arrange
+    void computeDivisionalConsensusScoreTest(){
+        //Arrange
         when(evaluationFormRepository
                 .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
                         finalMap,
                         "Wouri")
-        ).thenReturn(evaluationForms);
+        ).thenReturn(evaluationFormsWouri);
 
-        // Act
-        double result = modelEvaluationMeasureService.computeWeightedDivisionalLevelAgreementScore(finalMap,"Wouri", "low");
+        //Act
+        double result= evaluatorAgreementMeasureService.computeDivisionalConsensusScore(finalMap,"Wouri");
 
-        // Assert
-        assertEquals(0.5, result);
+        //Assert
+        assertEquals(0.3690702464285426,result);
     }
 
     @Test
-    void  computeNationalModelFieldAgreementScoreTest() {
-
-        // Arrange
-        Map<String,String> riskEvaluationMap = new HashMap<>();
-        riskEvaluationMap.put("Wouri", "low");
-
-        when(evaluationFormRepository.findDivisionsWithValidPublicEvaluationForms(finalMap)
-        ).thenReturn(List.of("Wouri"));
-
+    void computeNationalConsensusScoreTest(){
+        //Arrange
         when(evaluationFormRepository
                 .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
                         finalMap,
                         "Wouri")
-        ).thenReturn(evaluationForms);
+        ).thenReturn(evaluationFormsWouri);
 
-        // Act
-        double result = modelEvaluationMeasureService.computeNationalModelFieldAgreementScore(finalMap,riskEvaluationMap);
+        when(evaluationFormRepository
+                .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
+                        finalMap,
+                        "Mbam")
+        ).thenReturn(evaluationFormsMbam);
 
-        // Assert
-        assertEquals(0.5, result);
+        when(evaluationFormRepository
+                .findDivisionsWithValidPublicEvaluationForms(finalMap)
+        ).thenReturn(List.of("Mbam","Wouri"));
+
+        //Act
+        double result= evaluatorAgreementMeasureService.computeNationalConsensusScore(finalMap);
+
+        //Assert
+        assertEquals(0.6845351232142713,result);
     }
 }

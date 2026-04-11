@@ -30,6 +30,15 @@ public class ModelEvaluationMeasureController {
         this.finalMapService=finalMapService;
     }
 
+    /**
+     * Get the weighted divisional level agreement score for a specific division of a map
+     *
+     * @param mapId the id of the map you are interested in
+     * @param division the division you are interested in
+     * @param divisionRisk the risk level of the division in the model (original map)
+     *
+     * @return weighted divisional level agreement score for a specific division of a map if the map exists, not found otherwise
+     */
     @GetMapping("/weightedDivisionalLevelAgreementScore/{mapId}/{division}/{divisionRisk}")
     public ResponseEntity<Object> getWeightedDivisionalLevelAgreementScore(
             @PathVariable long mapId,
@@ -52,6 +61,14 @@ public class ModelEvaluationMeasureController {
     }
 
 
+    /**
+     * Get the national model field agreement score for a map
+     *
+     * @param mapId the id of the map you are interested in
+     * @param divisionRiskDto a mapping of the risk level for each division
+     *
+     * @return national model field agreement score for a map if the map exists, not found otherwise
+     */
     @PostMapping("/nationalModelFieldAgreementScore/{mapId}")
     public ResponseEntity<Object> getNationalModelFieldAgreementScore(
             @PathVariable long mapId,

@@ -46,7 +46,7 @@ public class EvaluatorAgreementMeasureService {
         double totalWeight = 0.0;
 
         for (EvaluationForm form : forms) {
-            final RiskLevel risk = RiskLevel.valueOf(form.getPerceivedRisk());
+            final RiskLevel risk = RiskLevel.fromString(form.getPerceivedRisk());
             final double weight = form.getCertaintyLevel() / 4.0;
 
             weightForRiskLevel.merge(risk, weight, Double::sum);
