@@ -1,7 +1,10 @@
 package com.webgis.map.riskmap.tile;
 
 
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMap;
+import com.webgis.map.raster.RasterMap;
+import com.webgis.map.tile.Tile;
+import com.webgis.map.tile.TileId;
+import com.webgis.map.tile.TileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
-public class TileRepositoryTest {
+class TileRepositoryTest {
     @Autowired
     private TileRepository tileRepository;
 
@@ -32,8 +35,8 @@ public class TileRepositoryTest {
     @BeforeEach
     void init(){
         // Arrange
-        RiskFactorMap riskFactorMap = new RiskFactorMap("Title1", "Description1");
-        RiskFactorMap riskFactorMap2 = new RiskFactorMap("Title2", "Description2");
+        RasterMap riskFactorMap = new RasterMap("Title1", "Description1");
+        RasterMap riskFactorMap2 = new RasterMap("Title2", "Description2");
         TileId tileId1 = new TileId(1L,1,1,1);
         tileId2 = new TileId(2L,2,2,2);
         tileId3 = new TileId(3L,3,3,3);

@@ -1,8 +1,7 @@
-package com.webgis.map.riskmap.tile;
+package com.webgis.map.tile;
 
 import com.webgis.MessageDto;
-import com.webgis.map.riskmap.dto.TileMeanAndXYdto;
-import com.webgis.map.riskmap.riskfactormap.RiskFactorMapService;
+import com.webgis.map.raster.dto.TileMeanAndXYdto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -17,14 +16,10 @@ import java.util.Optional;
 @RequestMapping("/tile")
 public class TileController {
 
-    private final TileRepository tileRepository;
     private final TileService tileService;
-    private final RiskFactorMapService riskFactorMapService;
 
-    public TileController(TileRepository tileRepository, TileService tileService, RiskFactorMapService riskFactorMapService){
-        this.tileRepository = tileRepository;
+    public TileController(TileService tileService){
         this.tileService = tileService;
-        this.riskFactorMapService = riskFactorMapService;
     }
 
     @GetMapping("/file/{mapId}/{z}/{x}/{y}.png")
@@ -36,7 +31,7 @@ public class TileController {
         if (tile.isPresent()){
             return ResponseEntity.status(200).contentType(MediaType.IMAGE_PNG).body(tile.get().getTileData());
         }else {
-            return ResponseEntity.status(500).body((("Tile for map :" + mapId + " doesn't exist")));
+            return ResponseEntity.status(500).body("Tile for map :" + mapId + " doesn't exist");
         }
     }
 

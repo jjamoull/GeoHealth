@@ -32,7 +32,8 @@ public class FinalMapController {
                         finalMap.getId(),
                         finalMap.getTitle(),
                         finalMap.getDescription(),
-                        finalMap.getFileGeoJson());
+                        finalMap.getFileGeoJson(),
+                        finalMap.getRasterMap().getId());
                 return ResponseEntity.status(200).body(finalMapDto);
             }
             return ResponseEntity.status(404).body(new MessageDto("Map not found"));

@@ -1,4 +1,4 @@
-package com.webgis.map.riskmap.dto;
+package com.webgis.map.raster.dto;
 
 public record TileMeanBlock(Float mean) {
 }

@@ -22,8 +22,8 @@ export const API_ENDPOINTS = {
         DELETE: '/admin/finalMaps',
         UPLOAD: '/admin/finalMaps/uploadShapeFile'
       },
-      RISKFACTORMAPS: {
-        UPLOAD: '/admin/riskFactorMaps/file'
+      RASTERMAPS: {
+        UPLOAD: '/admin/rasterMaps/file'
       }
     },
     EVALUATIONFORM:{
@@ -35,8 +35,9 @@ export const API_ENDPOINTS = {
     ALLMAPS: '/finalMaps/allMaps',
     GET: '/finalMaps'
   },
-  RISKFACTORMAPS: {
-    ALLMAPS: '/riskFactorMaps/allMaps'
+  RASTERMAPS: {
+    RASTERS: '/rasterMaps/rasters',
+    RISKFACTORS: '/rasterMaps/riskFactors'
   },
   EVALUATIONFORM:{
     SAVE:"/evaluationForm/saveForm",

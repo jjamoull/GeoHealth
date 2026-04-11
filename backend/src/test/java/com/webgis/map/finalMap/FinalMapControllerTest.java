@@ -5,6 +5,7 @@ import com.webgis.map.finalmap.FinalMapController;
 import com.webgis.map.finalmap.FinalMapService;
 import com.webgis.map.finalmap.dto.FinalMapDto;
 import com.webgis.map.finalmap.dto.FinalMapListDto;
+import com.webgis.map.raster.RasterMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class finalMapControllerTest {
+class FinalMapControllerTest {
 
     @Mock
     private FinalMapService finalMapService;
@@ -34,13 +35,15 @@ public class finalMapControllerTest {
     private FinalMap fm1;
     private FinalMap fm2;
     private long id;
-    private FinalMapDto finalMapDto;
 
     @BeforeEach
     void setUp() {
         byte[] byteaEmpty = new byte[0];
         fm1 = new FinalMap("test1", "testdescription", byteaEmpty, "fakefile");
         fm2 = new FinalMap("test2", "testdescription2", byteaEmpty, "fakefile2");
+        RasterMap rasterMap = new RasterMap("raster1", "raster description");
+        rasterMap.setFinalMap(fm1);
+        fm1.setRasterMap(rasterMap);
         id = 1;
     }
 
@@ -63,6 +66,7 @@ public class finalMapControllerTest {
         assertEquals(result.id(), fm1.getId());
         assertEquals(result.description(), fm1.getDescription());
         assertEquals(result.fileGeoJson(), fm1.getFileGeoJson());
+        assertEquals(result.rasterMapId(), fm1.getRasterMap().getId());
     }
 
     @Test

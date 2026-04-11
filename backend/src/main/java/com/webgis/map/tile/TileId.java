@@ -1,4 +1,4 @@
-package com.webgis.map.riskmap.tile;
+package com.webgis.map.tile;
 
 import jakarta.persistence.Embeddable;
 

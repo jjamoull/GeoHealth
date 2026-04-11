@@ -1,6 +1,9 @@
-package com.webgis.map.riskmap.riskfactormap;
+package com.webgis.map.riskmap.raster;
 
 
+import com.webgis.map.raster.RasterMap;
+import com.webgis.map.raster.RasterMapRepository;
+import com.webgis.map.raster.RasterMapService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,35 +17,35 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class RiskFactorMapServiceTest {
+class RasterMapServiceTest {
 
     @Mock
-    private RiskFactorMapRepository riskFactorMapRepository;
+    private RasterMapRepository riskFactorMapRepository;
 
     @Mock
     private MultipartFile multipartFile;
 
     @InjectMocks
-    private RiskFactorMapService riskFactorMapService;
+    private RasterMapService riskFactorMapService;
 
     private String description = "description";
     private String title = "title";
-    private RiskFactorMap riskFactorMap = new RiskFactorMap(title, description);
+    private RasterMap riskFactorMap = new RasterMap(title, description);
 
 
 
     @Test
     void saveRiskFactorMapTest(){
         // Arrange
-        when(riskFactorMapRepository.save(any(RiskFactorMap.class))).thenReturn(riskFactorMap);
+        when(riskFactorMapRepository.save(any(RasterMap.class))).thenReturn(riskFactorMap);
 
         // Act
-        RiskFactorMap result = riskFactorMapService.save(riskFactorMap);
+        RasterMap result = riskFactorMapService.save(riskFactorMap);
 
         // Assert
         assertNotNull(result);
         assertEquals(result, riskFactorMap);
-        verify(riskFactorMapRepository, times(1)).save(any(RiskFactorMap.class));
+        verify(riskFactorMapRepository, times(1)).save(any(RasterMap.class));
         verifyNoMoreInteractions(riskFactorMapRepository);
     }
 
@@ -51,15 +54,15 @@ class RiskFactorMapServiceTest {
     @Test
     void findAllRiskFactorMapIsOKTest(){
         // Arrange
-        RiskFactorMap riskFactorMap2 = new RiskFactorMap("Title 2", "description 2");
-        List<RiskFactorMap> expectedResult = List.of(new RiskFactorMap[]{
+        RasterMap riskFactorMap2 = new RasterMap("Title 2", "description 2");
+        List<RasterMap> expectedResult = List.of(new RasterMap[]{
                 riskFactorMap,
                 riskFactorMap2
         });
         when(riskFactorMapRepository.findAll()).thenReturn(expectedResult);
 
         // Act
-        List<RiskFactorMap> result = riskFactorMapService.findAll();
+        List<RasterMap> result = riskFactorMapService.findAll();
 
         //Assert
         assertNotNull(result);

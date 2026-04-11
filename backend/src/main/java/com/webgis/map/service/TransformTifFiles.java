@@ -1,79 +1,30 @@
-package com.webgis.map.riskmap.riskfactormap;
-
+package com.webgis.map.service;
 
 import com.converter.TiffFiles;
-import com.webgis.map.riskmap.tile.TileService;
+import com.webgis.map.tile.TileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
-public class RiskFactorMapService {
+public class TransformTifFiles {
+    static Logger logger = LoggerFactory.getLogger(TransformTifFiles.class);
 
-    static Logger logger = LoggerFactory.getLogger(RiskFactorMapService.class);
 
-    private final RiskFactorMapRepository riskFactorMapRepository;
     private final TileService tileService;
 
 
-    public RiskFactorMapService (RiskFactorMapRepository riskFactorMapRepository,
-                                 TileService tileService ){
-        this.riskFactorMapRepository = riskFactorMapRepository;
+    public TransformTifFiles (TileService tileService){
         this.tileService= tileService;
-    }
-
-
-    /**
-     * Search for a risk factor in db using its identifier
-     *
-     * @param id identifier of the risk factor you want to retrieve from the db
-     * @return risk factor which identifier equals to id, empty otherwise
-     */
-    public Optional<RiskFactorMap> findById(long id){
-        return riskFactorMapRepository.findById(id);
-    }
-
-
-
-    /**
-     * Save the geoJSON file and the files used to create it for a risk factor identified by its id
-     *
-     * @param riskFactorMap : the risk factor you want to add geoJsonFile from the db
-     * @return Saved map
-     *
-     */
-    public RiskFactorMap save(RiskFactorMap riskFactorMap){
-        return riskFactorMapRepository.save(riskFactorMap);
-    }
-
-
-    /**
-     * Update the type of param tifFile to be interpretable by the method that is called
-     *  after to transform tif into Tiles
-     *
-     * @param tifFile : the file to transform into Tiles
-     * @return the path of the file transformed
-     * @throws IOException : if there is an issue to execute method called in return
-     * */
-    public Path transformTifFile(MultipartFile tifFile)throws IOException{
-        try{
-            final byte[] byteTifFile = tifFile.getBytes();
-            final TiffFiles tifToTransform = new TiffFiles(byteTifFile);
-            return tifToTransform.executeTransformationCommand();
-        } catch (IOException e) {
-            throw new IOException(e);
-        }
     }
 
     /**
@@ -105,7 +56,7 @@ public class RiskFactorMapService {
                         logger.info("1) Issue with the uploading\n");
                     }
                 });
-               logger.info("Tile generation and mean computation successfully conducted");
+                logger.info("Tile generation and mean computation successfully conducted");
             }
         } catch (IOException e) {
             logger.info("2) Issue with the uploading\n");
@@ -123,22 +74,33 @@ public class RiskFactorMapService {
     }
 
 
-
     /**
-     * Gets all risk factor map instances
+     * Update the type of param tifFile to be interpretable by the method that is called
+     *  after to transform tif into Tiles
      *
-     * @return list of all the risk factor maps contained in database
+     * @param tifFile : the file to transform into Tiles
+     * @return the path of the file transformed
+     * @throws IOException : if there is an issue to execute method called in return
      * */
-    public List<RiskFactorMap> findAll(){
-        return this.riskFactorMapRepository.findAll();
+    public Path transformTifFile(MultipartFile tifFile)throws IOException{
+        try{
+            final byte[] byteTifFile = tifFile.getBytes();
+            final TiffFiles tifToTransform = new TiffFiles(byteTifFile);
+            return tifToTransform.executeTransformationCommand();
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
     }
+
 
     public void deleteDirectoryRecursively(Path path) throws IOException {
         if (Files.exists(path)) {
-            Files.walk(path)
-                    .sorted(Comparator.reverseOrder())
-                    .map(Path::toFile)
-                    .forEach(File::delete);
+            try (Stream<Path> stream = Files.walk(path)) {
+                stream.sorted(Comparator.reverseOrder()).forEach(p -> {
+                            try { Files.delete(p); }
+                            catch (IOException e) { throw new UncheckedIOException(e); }
+                        });
+            }
         }
     }
 }

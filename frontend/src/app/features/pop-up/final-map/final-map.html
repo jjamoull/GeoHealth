@@ -55,6 +55,22 @@
       </div>
     }
 
+    <label>Tif file here</label>
+    <input type="file"
+           class="file-input"
+           (change)="onTifFileSelected($event)"
+           #tifFileUpload>
+
+    <div class="file-upload">
+      <button type="button"
+              class="upload-btn"
+              (click)="tifFileUpload.click()"> Upload
+      </button>
+      <span>
+        {{selectedTifFile?.name || 'No file uploaded yet'}}
+      </span>
+    </div>
+
     <button type="submit" [disabled]="formGroup.invalid || isUploading">
       Create the new map
     </button>

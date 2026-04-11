@@ -1,15 +1,19 @@
-package com.webgis.map.riskmap.riskfactormap;
+package com.webgis.map.raster;
 
 
+import com.webgis.map.finalmap.FinalMap;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.FetchType;
 
 @Entity
-@Table(name = "riskFactorMap")
-public class RiskFactorMap {
+@Table(name = "rasterMap")
+public class RasterMap {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +21,13 @@ public class RiskFactorMap {
     private String title;
     private String description;
 
-    public RiskFactorMap(){}
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "final_map_id", nullable = true)
+    private FinalMap finalMap;
 
-    public RiskFactorMap(String title, String description){
+    public RasterMap(){}
+
+    public RasterMap(String title, String description){
         this.title = title;
         this.description = description;
     }
@@ -30,12 +38,18 @@ public class RiskFactorMap {
 
     public String getDescription() { return description;}
 
+    public FinalMap getFinalMap() { return finalMap; }
+
     public void setTitle(String title) {
         this.title = title;
     }
 
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public void setFinalMap(FinalMap finalMap) {
+        this.finalMap = finalMap;
     }
 }
 

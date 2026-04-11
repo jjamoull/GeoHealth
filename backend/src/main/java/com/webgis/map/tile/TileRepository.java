@@ -1,4 +1,4 @@
-package com.webgis.map.riskmap.tile;
+package com.webgis.map.tile;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
