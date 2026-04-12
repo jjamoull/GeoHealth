@@ -225,6 +225,7 @@
   width: 70px;
   height: 70px;
 }
+/* phone portrait */
 @media (max-width: 768px) and (orientation: portrait){
 
   .profile-page{
@@ -255,6 +256,7 @@
     display: none;
   }
 }
+/* phone portrait (small size) */
 @media (max-height: 840px) and (orientation: portrait){
 
   .profile-page{
@@ -268,6 +270,39 @@
   .profile-picture{
     z-index: 999;
   }
+  .profile-title{
+    display: none;
+  }
 
 
 }
+/* phone landscape */
+@media (max-width: 768px) and (orientation: landscape){
+  .profile-page{
+    background-color: #EBEFFF;
+    background-image: none;
+    background-size: cover;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 5rem;
+  }
+  .profile-picture{
+    z-index: 999;
+  }
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .card{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .profile-title{
+    display: none;
+  }
+}
+
