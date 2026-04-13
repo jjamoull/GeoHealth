@@ -1,6 +1,7 @@
 package com.webgis.map.finalmap;
 
 import com.converter.ZipFiles;
+import org.geotools.api.referencing.FactoryException;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -72,7 +73,7 @@ public class FinalMapService {
      * @param id : id of the map in the database
      * @throws IOException : if method findShpFile doesn't find a shp file
      */
-    public String zipToGeoJsonFile(long id) throws IOException{
+    public String zipToGeoJsonFile(long id) throws IOException, FactoryException {
         final FinalMap finalMap = finalMapRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("The map is not found for this id :"+id));
         final File tempFile = Files.createTempDirectory("shp_").toFile();
@@ -82,6 +83,9 @@ public class FinalMapService {
         // shp file that will be converted and used to detect others important files into zip file for geojson file
         final File shpFile = findShpFile(tempFile);
 
+        if (shpFile == null){
+            throw new IOException("shpFile is null");
+        }
         return transformShapeFileToGeoJsonFile(shpFile);
     }
 

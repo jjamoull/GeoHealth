@@ -2,9 +2,15 @@ package com.converter;
 
 
 import org.geotools.api.data.SimpleFeatureSource;
+
+import org.geotools.api.referencing.FactoryException;
+import org.geotools.api.referencing.crs.CoordinateReferenceSystem;
+
 import org.geotools.data.shapefile.ShapefileDataStore;
 import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.data.store.ReprojectingFeatureCollection;
 import org.geotools.geojson.feature.FeatureJSON;
+import org.geotools.referencing.CRS;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +40,7 @@ public class ShapeFileToGeoJsonFile {
      *
      *  This method used a lot of predefined methods from library : GeoTools
      * */
-    public static String transformShapeFileToGeoJsonFile(File shpFile) throws IOException {
+    public static String transformShapeFileToGeoJsonFile(File shpFile) throws IOException, FactoryException {
         final ShapefileDataStore dataStore = new ShapefileDataStore(shpFile.toURI().toURL());
         dataStore.setCharset(StandardCharsets.UTF_8);
 
@@ -44,10 +50,20 @@ public class ShapeFileToGeoJsonFile {
 
         final SimpleFeatureCollection collection = featureSource.getFeatures();
 
+        final CoordinateReferenceSystem sourceCRS = featureSource.getSchema().getCoordinateReferenceSystem();
+
+        if (sourceCRS == null) {
+            throw new IllegalArgumentException("Missing CRS in shapefile (.prj absent)");
+        }
+
+        final CoordinateReferenceSystem targetCRS = CRS.decode("EPSG:4326", true);
+
+        final SimpleFeatureCollection reprojected = new ReprojectingFeatureCollection(collection, targetCRS);
+
         final FeatureJSON featureJSON = new FeatureJSON();
         final StringWriter writer = new StringWriter();
 
-        featureJSON.writeFeatureCollection(collection, writer);
+        featureJSON.writeFeatureCollection(reprojected, writer);
 
         dataStore.dispose();
         return writer.toString();

@@ -69,6 +69,8 @@ export class MapLayerHelper {
         });
       }
     }).addTo(this.map);
+    console.log("skibidi");
+    console.log(this.geoJsonLayer.getBounds());
 
     this.map.fitBounds(this.geoJsonLayer.getBounds());
   }

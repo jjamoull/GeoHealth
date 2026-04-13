@@ -90,6 +90,8 @@ export class MapComponent implements AfterViewInit {
   private loadBaseMap(): void {
     this.mapService.getMap(this.mapId).subscribe({
       next: (mapData) => {
+        console.log("aaaaaaaaaaaa - 2");
+
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
         this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
@@ -104,7 +106,7 @@ export class MapComponent implements AfterViewInit {
           });
         }
         this.allDivisions.set(divisions);
-
+        console.log("aaaaaaaaaaaa");
         this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
           this.onDivisionClicked(event);
             });
