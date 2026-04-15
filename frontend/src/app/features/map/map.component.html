@@ -45,9 +45,10 @@
         <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
         <p>Region: {{selectedDivision().NAME_1}}</p>
         <p>Name: {{selectedDivision().NAME_2}}</p>
+        <p>Average risk index: {{selectedDivision().rsk_cmb.toFixed(2)}}</p>
         <p class="risk-row">
           Risk:
-          <span class="dot" [style.background]="getRiskColor(selectedDivision().Risk_categ)"></span>
+          <span class="dot" [style.background]="getRiskColor(selectedDivision().rsk_cls)"></span>
           {{selectedDivision().Risk_categ}}
         </p>
       } @else {

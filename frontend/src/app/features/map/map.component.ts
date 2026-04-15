@@ -102,11 +102,10 @@ export class MapComponent implements AfterViewInit {
         for (const feature of geoJson.features) {
           divisions.push({
             name: feature.properties.NAME_2,
-            risk: feature.properties.Risk_categ
+            risk: feature.properties.rsk_cls
           });
         }
         this.allDivisions.set(divisions);
-        console.log("aaaaaaaaaaaa");
         this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
           this.onDivisionClicked(event);
             });
