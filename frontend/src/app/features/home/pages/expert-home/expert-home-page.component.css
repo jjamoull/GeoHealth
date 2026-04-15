@@ -269,4 +269,11 @@
   }
 
 }
+/* phone landscape */
+@media (max-width: 768px) and (orientation: landscape){
+  .brands {
+    flex-wrap: nowrap;
+    padding-top: 4rem;
+  }
 
+}
