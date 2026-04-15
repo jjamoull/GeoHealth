@@ -4,13 +4,12 @@
 />
 
 
-<input type="checkbox" id="check">
+<input type="checkbox" id="check" [checked]="isOpen" (change)="isOpen = !isOpen">
 <div class="btnOne">
   <label for="check">
-    <i class="fas fa-bars"></i>
+    <img src="assets/icons/logoGeoHealth.png">
   </label>
 </div>
-
 <label class="exit-button" for="check"></label>
 <div class="sidebar">
   <div class="logo-container">

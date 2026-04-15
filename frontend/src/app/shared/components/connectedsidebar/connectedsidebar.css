@@ -30,7 +30,7 @@
     flex-direction: column;
     z-index: 1000;
   }
-  .btnOne label, .btnOne i {
+  .btnOne label, .btnOne img {
     z-index: 1100;
   }
   .exit-button{
@@ -111,25 +111,22 @@
     left: 16px;
     cursor: pointer;
   }
-  .btnOne i {
-    color: #fff;
-    font-size: 30px;
-    font-weight: 700;
+  .btnOne img {
+    width: 30px;
     position: absolute;
-    left: 16px;
     line-height: 1;
     cursor: pointer;
     opacity: 1;
     transition: all 0.3s linear;
   }
-  .btnOne i:hover {
+  .btnOne img:hover {
     font-size: 29px;
   }
 
   #check:checked~.sidebar {
     left: 0;
   }
-  #check:checked~.btnOne i {
+  #check:checked~.btnOne img {
     opacity: 0;
   }
   #check:checked ~ .btnOne {
