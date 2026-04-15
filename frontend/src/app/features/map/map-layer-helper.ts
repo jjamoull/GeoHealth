@@ -42,6 +42,13 @@ export class MapLayerHelper {
     this.leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
+
+    await import('@geoman-io/leaflet-geoman-free');
+    (this.map as any).pm.addControls({
+      position: 'topleft',
+      drawCircleMarker: false,
+      rotateMode: false,
+    });
   }
 
   /**
