@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RiskFactor } from './risk-factor';
+import { RiskFactorForm } from './risk-factor-form';
 
-describe('RiskFactor', () => {
-  let component: RiskFactor;
-  let fixture: ComponentFixture<RiskFactor>;
+describe('RiskFactorForm', () => {
+  let component: RiskFactorForm;
+  let fixture: ComponentFixture<RiskFactorForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RiskFactor]
+      imports: [RiskFactorForm]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RiskFactor);
+    fixture = TestBed.createComponent(RiskFactorForm);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

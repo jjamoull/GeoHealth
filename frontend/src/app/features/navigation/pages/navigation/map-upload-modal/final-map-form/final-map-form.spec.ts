@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FinalMap } from './final-map';
+import { FinalMapForm } from './final-map-form';
 
-describe('FinalMap', () => {
-  let component: FinalMap;
-  let fixture: ComponentFixture<FinalMap>;
+describe('FinalMapForm', () => {
+  let component: FinalMapForm;
+  let fixture: ComponentFixture<FinalMapForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FinalMap]
+      imports: [FinalMapForm]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FinalMap);
+    fixture = TestBed.createComponent(FinalMapForm);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

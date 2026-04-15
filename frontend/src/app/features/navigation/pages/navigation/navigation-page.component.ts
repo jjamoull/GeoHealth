@@ -1,5 +1,5 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {PopUpComponent} from '../../../pop-up/pop-up.component';
+import {MapUploadModalComponent} from './map-upload-modal/map-upload-modal';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
@@ -166,11 +166,9 @@ export class NavigationPageComponent implements OnInit{
    * Allow the user to open the pop-up on click event
    * */
   openPopUp(paramTypeOfPopUp:string): void {
-    const dialog =this.dialog.open(PopUpComponent, {
-      data:{
-        typeOfPopUp: paramTypeOfPopUp
-      }
-    });
+    const dialog = this.dialog.open(MapUploadModalComponent, {
+      data: { typeOfPopUp: paramTypeOfPopUp }
+     });
 
     dialog.afterClosed().subscribe(
       result=>{
