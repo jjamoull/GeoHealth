@@ -32,7 +32,7 @@
 
 .profile-picture{
   position: relative;
-  z-index: 999;
+  z-index: 10001;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -133,7 +133,7 @@
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 10002;
 }
 .menu-toggle {
   position: absolute;
@@ -224,4 +224,167 @@
   align-items: center;
   width: 70px;
   height: 70px;
+}
+/* phone portrait */
+@media (max-width: 768px) and (orientation: portrait){
+
+  .profile-page{
+    background-color: #EBEFFF;
+    background-image: none;
+    background-size: cover;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 5rem;
+  }
+  .profile-picture{
+    z-index: 999;
+  }
+
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .card{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .profile-title{
+    display: none;
+  }
+}
+/* phone portrait (small size) */
+@media (max-height: 840px) and (orientation: portrait){
+
+  .profile-page{
+    background-color: #EBEFFF;
+    background-image: none;
+    background-size: cover;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 7rem;
+  }
+  .profile-picture{
+    z-index: 999;
+  }
+  .profile-title{
+    display: none;
+  }
+
+
+}
+/* phone landscape */
+@media (max-width: 768px) and (orientation: landscape){
+  .profile-page{
+    background-color: #EBEFFF;
+    background-image: none;
+    background-size: cover;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 5rem;
+  }
+  .profile-picture{
+    z-index: 999;
+  }
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .card{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .profile-title{
+    display: none;
+  }
+}
+/* Tablet portrait */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+  .profile-page{
+    background-color: #EBEFFF;
+    background-image: none;
+    background-size: cover;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 5rem;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+  }
+  .card{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .profile-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: none;
+    flex-direction: column;
+  }
+  .text1{
+    color: #888;
+  }
+  .text2{
+    color: #888;
+  }
+}
+/* Tablet landscape */
+@media (min-width: 768px) and (max-width: 1366px) and (orientation: landscape){
+  .profile-page{
+    background-color: #EBEFFF;
+    background-image: none;
+    background-size: cover;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 5rem;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+  }
+  .card{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .profile-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: none;
+    flex-direction: column;
+  }
+  .text1{
+    color: #888;
+  }
+  .text2{
+    color: #888;
+  }
+
 }
