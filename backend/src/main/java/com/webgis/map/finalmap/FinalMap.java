@@ -27,7 +27,7 @@ public class FinalMap {
     @Column(columnDefinition="BYTEA")
     private byte[] zipFile;
 
-    @Column(name = "fileGeoJson", columnDefinition = "TEXT")
+    @Column(name = "file_geo_json", columnDefinition = "TEXT")
     private String fileGeoJson;
 
     @OneToOne(mappedBy = "finalMap", cascade = CascadeType.ALL)

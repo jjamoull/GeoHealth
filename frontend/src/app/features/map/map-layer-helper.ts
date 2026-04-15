@@ -58,7 +58,7 @@ export class MapLayerHelper {
       style: (feature: any) => ({
         color: '#414241',
         weight: 1,
-        fillColor: getRiskColor(feature?.properties?.Risk_categ),
+        fillColor: (getRiskColor(feature?.properties?.rsk_cls)),
         fillOpacity: 0.5,
       }),
       onEachFeature: (feature: any, layer: any) => {
@@ -69,7 +69,6 @@ export class MapLayerHelper {
         });
       }
     }).addTo(this.map);
-
     this.map.fitBounds(this.geoJsonLayer.getBounds());
   }
 

@@ -30,6 +30,8 @@ public class DetectFiles {
         }
 
         for (File file:fileInParam.listFiles()){
+            logger.info("Extracted: " + file.getAbsolutePath() + " | isDir: " + file.isDirectory());
+
             if (!file.isFile()){
                 continue;
             }

@@ -8,6 +8,9 @@ import com.webgis.map.finalmap.dto.FinalMapListDto;
 import com.webgis.map.raster.RasterMap;
 import com.webgis.map.raster.RasterMapService;
 import com.webgis.map.service.TransformTifFiles;
+import org.geotools.api.referencing.FactoryException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +30,8 @@ public class AdminFinalMapController {
     private final FinalMapService finalMapService;
     private final RasterMapService rasterMapService;
     private final TransformTifFiles transformTifFiles;
+
+    static Logger logger = LoggerFactory.getLogger(AdminFinalMapController.class);
 
     public AdminFinalMapController(
             FinalMapService finalMapService,
@@ -72,9 +77,13 @@ public class AdminFinalMapController {
                     throw new NotFound("There is no id for this map : " + finalMap.getTitle());
                 } else {
                     final String tempGeoJsonFile = finalMapService.zipToGeoJsonFile(finalMap.getId());
+                    logger.info(tempGeoJsonFile);
                     finalMap.setFileGeoJson(tempGeoJsonFile);
                 }
             }
+
+
+
             final FinalMap savedFinalMap = finalMapService.save(finalMap);
 
             final RasterMap rasterMap = new RasterMap(title, description);
@@ -90,6 +99,8 @@ public class AdminFinalMapController {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         } catch (IOException e) {
             return ResponseEntity.status(500).body(new MessageDto(e.getMessage()));
+        } catch (FactoryException e) {
+            throw new RuntimeException(e);
         }
     }
 }
