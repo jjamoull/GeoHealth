@@ -30,8 +30,17 @@
     flex-direction: column;
     z-index: 1000;
   }
-  .btnOne label, .btnTwo label, .btnOne i, .btnTwo i {
+  .btnOne label, .btnOne i {
     z-index: 1100;
+  }
+  .exit-button{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
   }
   .logo-container{
     display: flex;
@@ -102,12 +111,6 @@
     left: 16px;
     cursor: pointer;
   }
-  .btnTwo label{
-    position: absolute;
-    top: 5px;
-    left: 16px;
-    cursor: pointer;
-  }
   .btnOne i {
     color: #fff;
     font-size: 30px;
@@ -119,23 +122,8 @@
     opacity: 1;
     transition: all 0.3s linear;
   }
-  .btnTwo i {
-    font-size: 25px;
-    line-height: 60px;
-    position: absolute;
-    left: 240px;
-    cursor: pointer;
-    color: #fff;
-    opacity: 0;
-    transition: all 0.3s linear;
-
-  }
   .btnOne i:hover {
     font-size: 29px;
-  }
-
-  .btnTwo i:hover {
-    font-size: 24px;
   }
 
   #check:checked~.sidebar {
@@ -147,7 +135,7 @@
   #check:checked ~ .btnOne {
     pointer-events: none;
   }
-  #check:checked~.sidebar .btnTwo i {
-    opacity: 1;
+  #check:checked~ .exit-button  {
+    display: block;
   }
 }

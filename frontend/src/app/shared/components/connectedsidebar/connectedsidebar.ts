@@ -11,6 +11,7 @@ import {UsersServices} from '../../../core/service/UserService/users-services';
 })
 export class Connectedsidebar {
   public isAdmin:boolean=false;
+  public isOpen:boolean = true;
 
   constructor(private router: Router,
               public loginService:LoginService,
@@ -57,5 +58,6 @@ export class Connectedsidebar {
       }
     });
   }
+
 
 }
