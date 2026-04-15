@@ -189,7 +189,9 @@ export class NavigationPageComponent implements OnInit{
     this.router.navigate(['/maps', id]);
   }
 
-
+  /**
+   * Deletes the map once called
+   */
   deleteFinalMap(mapId: number): void {
     if (!confirm('Are you sure you want to delete this map?')) return;
 
