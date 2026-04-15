@@ -261,3 +261,12 @@
   }
 
 }
+/* tablet portrait */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+  .brands {
+    flex-wrap: nowrap;
+    padding-top: 4rem;
+  }
+
+}
+
