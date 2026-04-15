@@ -1,29 +1,23 @@
 package com.webgis.measure.measureservice;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webgis.evaluationform.EvaluationForm;
 import com.webgis.evaluationform.EvaluationFormRepository;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.measure.RiskLevel;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.github.rcaller.rstuff.RCaller;
+import com.github.rcaller.rstuff.RCallerOptions;
+import com.github.rcaller.rstuff.RCode;
+
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 
 @Service
 public class EvaluatorAgreementMeasureService {
 
     private final EvaluationFormRepository evaluationFormRepository;
-
-    @Value("${script.path}")
-    private String scriptPath;
 
     public EvaluatorAgreementMeasureService(EvaluationFormRepository evaluationFormRepository) {
         this.evaluationFormRepository = evaluationFormRepository;
@@ -126,6 +120,34 @@ public class EvaluatorAgreementMeasureService {
     }
 
     /**
+     * Compute Kippensdroff's Alpha metrics for a map
+     *
+     * @param finalMap the map you are interested in
+     *
+     * @return Krippensdroff's Alpha
+     */
+    public double computekrippendorffAlpha(FinalMap finalMap) throws IOException{
+        final List<EvaluationForm> evaluationForms = evaluationFormRepository.findByFinalMap(finalMap);
+
+        final double[][] krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
+        System.out.println(Arrays.deepToString(krippensdorffMatrix));
+
+        RCode code = RCode.create();
+
+        code.addDoubleMatrix("krippensdorff_matrix", krippensdorffMatrix);
+        code.addRCode("library(irr)");
+        code.addRCode("result <- kripp.alpha(krippensdorff_matrix,\"ordinal\")");
+        code.addRCode("alpha_value <- result$value");
+
+        RCallerOptions options = RCallerOptions.create();
+        RCaller caller = RCaller.create(code, RCallerOptions.create());
+        caller.runAndReturnResult("alpha_value");
+
+        System.out.println(caller.getParser().getAsDoubleArray("alpha_value")[0]);
+        return caller.getParser().getAsDoubleArray("alpha_value")[0];
+    }
+
+    /**
      * Build the matrix needed to compute Krippendorff's alpha measure
      *
      * @param evaluationForms all the evaluation forms of the map you are interested in
@@ -133,7 +155,7 @@ public class EvaluatorAgreementMeasureService {
      * @return the matrix required to compute the krippendorff measure
      *         (row: evaluator,column: evaluation for a division)
      */
-    private List<List<Integer>> buildKrippensdorffMatrix(List<EvaluationForm> evaluationForms){
+    private double[][] buildKrippensdorffMatrix(List<EvaluationForm> evaluationForms){
         final List<Long> usersIdList= evaluationForms.stream()
                 .map(form->form.getUser().getId())
                 .distinct()
@@ -146,17 +168,29 @@ public class EvaluatorAgreementMeasureService {
                 .sorted()
                 .toList();
 
-        final Map<Long, Map<String,Integer>> krippendorffHashMap = buildKrippendorffHashMap(evaluationForms);
+        final Map<Long,Map<String,Integer>> krippendorffHashMap = buildKrippendorffHashMap(evaluationForms);
 
-        final List<List<Integer>> krippensdroffMatrix= new ArrayList<>();
-        for(long id: usersIdList){
-            final List<Integer> krippensdorffMatrixRow= new ArrayList<>();
-            for(String division:evaluatedDivisionsList){
-                krippensdorffMatrixRow.add(krippendorffHashMap.get(id).get(division));
+        int rows = evaluatedDivisionsList.size();
+        int cols = usersIdList.size();
+
+        double[][] matrix = new double[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            String division = evaluatedDivisionsList.get(i);
+
+            for (int j = 0; j < cols; j++) {
+                long userId = usersIdList.get(j);
+
+                Integer value = null;
+                if (krippendorffHashMap.containsKey(userId)) {
+                    value = krippendorffHashMap.get(userId).get(division);
+                }
+
+                matrix[i][j] = (value == null) ? Double.NaN : value;
             }
-            krippensdroffMatrix.add(krippensdorffMatrixRow);
         }
-        return krippensdroffMatrix;
+
+        return matrix;
     }
 
     /**
@@ -181,34 +215,7 @@ public class EvaluatorAgreementMeasureService {
         return krippendorffHashMap;
     }
 
-    /**
-     * Compute Kippensdroff's Alpha metrics for a map
-     *
-     * @param finalMap the map you are interested in
-     *
-     * @throw IOException if python script not found or failed to open it
-     * @return Krippensdroff's Alpha
-     */
-    public double computekrippendorffAlpha(FinalMap finalMap) throws IOException {
-        final List<EvaluationForm> evaluationForms = evaluationFormRepository.findByFinalMap(finalMap);
-
-        final List<List<Integer>> krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
-
-        final ObjectMapper mapper = new ObjectMapper();
-        final String json = mapper.writeValueAsString(krippensdorffMatrix);
-
-        final String path= scriptPath+"krippendorff_Alpha.py";
-
-        final ProcessBuilder pb = new ProcessBuilder("python",path);
-        final Process p = pb.start();
-
-        final OutputStream os = p.getOutputStream();
-        os.write(json.getBytes());
-        os.flush();
-        os.close();
-
-        final String result = new String(p.getInputStream().readAllBytes());
-        return Double.parseDouble(result.trim());
-    }
-
 }
+
+
+
