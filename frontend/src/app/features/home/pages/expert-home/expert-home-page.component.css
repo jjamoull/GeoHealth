@@ -231,3 +231,33 @@
   }
 }
 
+/* phone portrait */
+@media (max-width: 768px) and (orientation: portrait){
+  .homepage {
+    flex-direction: column;
+  }
+  .brands {
+    flex-wrap: nowrap;
+    padding-top: 8rem;
+  }
+  .cards {
+    flex-direction: column;
+  }
+  .work {
+    height: auto;
+  }
+  .head span {
+    font-size:40px;
+    font-weight: 100;
+  }
+  .txt{
+    width: 100%;
+  }
+  .img-hand{
+    display: none;
+  }
+  .img-work{
+    display: none;
+  }
+
+}
