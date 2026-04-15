@@ -76,7 +76,7 @@
   }
   .sidebar .menu li {
     margin-top: 6px;
-    padding:20px 15px;
+    padding: 0;
   }
   .sidebar .menu i {
     color: black;
@@ -84,9 +84,13 @@
     padding-right: 8px;
   }
   .sidebar .menu a {
+    display: flex;
+    width: 100%;
+    padding: 20px 15px;
     color: black;
-    font-size: 20px;
-    text-decoration: none;
+    font-size: 25px;
+    cursor: pointer;
+    align-items: center;
   }
   .sidebar .menu li:hover {
     background-color: #90ee90;
@@ -104,7 +108,7 @@
     cursor: pointer;
   }
   .btnOne img {
-    width: 30px;
+    width: 40px;
     position: absolute;
     line-height: 1;
     cursor: pointer;
