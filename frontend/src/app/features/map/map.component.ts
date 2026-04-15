@@ -54,7 +54,7 @@ export class MapComponent implements AfterViewInit {
   globalConsensusIndex = signal<number | null>(null);
   krippendorff= signal<number | null>(null);
   // helper class managing the Leaflet map layers and interactions
-  private mapHelper = new MapLayerHelper();
+  public mapHelper = new MapLayerHelper();
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,

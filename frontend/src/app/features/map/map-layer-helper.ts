@@ -18,6 +18,8 @@ export class MapLayerHelper {
   // the red rectangle highlighting the clicked tile block
   private highlightLayer: any = null;
 
+  private geoManLayer: any;
+
   /**
    * Initializes the Leaflet map on the given HTML element
    * and adds the OpenStreetMap background tiles
@@ -28,11 +30,10 @@ export class MapLayerHelper {
    * @param minZoom - the minimum allowed zoom level
    * @param maxZoom - the maximum allowed zoom level
    */
-  async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number, enableGeoman:boolean): Promise<void> {
+  async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number): Promise<void> {
+    console.log("In init map");
     const L = await import('leaflet');
-    if (enableGeoman) {
-      await import('@geoman-io/leaflet-geoman-free');
-    }
+    await import('@geoman-io/leaflet-geoman-free');
 
     this.leaflet = L.default ?? L;
 
@@ -47,6 +48,8 @@ export class MapLayerHelper {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
 
+    this.geoManLayer = this.leaflet.featureGroup().addTo(this.map);
+
     if (enableGeoman) {
       (this.map as any).pm.addControls({
         position: 'topleft',
@@ -54,6 +57,9 @@ export class MapLayerHelper {
         rotateMode: false,
       });
     }
+
+    (this.map as any).pm.setGlobalOptions({ layerGroup: this.geoManLayer });
+
 
   }
 
@@ -75,6 +81,8 @@ export class MapLayerHelper {
         fillOpacity: 0.5,
       }),
       onEachFeature: (feature: any, layer: any) => {
+        layer.options.pmIgnore = true;
+
         layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
         layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
         layer.on('click', (e: any) => {
@@ -173,5 +181,9 @@ export class MapLayerHelper {
       this.tileLayer.remove();
       this.tileLayer = null;
     }
+  }
+
+  getAnnotations(): any {
+    console.log(this.geoManLayer.toGeoJSON());
   }
 }

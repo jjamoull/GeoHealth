@@ -104,6 +104,12 @@
         (click)="onDeleteEvaluation()">
       </app-button>
       }
+
+      <app-button
+        [text]="'Annotation'"
+        [variant]="'danger'"
+        (click)="mapHelper.getAnnotations()">
+      </app-button>
     </div>
 
   </div>
