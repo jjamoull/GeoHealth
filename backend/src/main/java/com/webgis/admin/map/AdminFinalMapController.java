@@ -44,7 +44,7 @@ public class AdminFinalMapController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<Object> deleteMap(@PathVariable long id) {
         try {
             finalMapService.deleteMap(id);
