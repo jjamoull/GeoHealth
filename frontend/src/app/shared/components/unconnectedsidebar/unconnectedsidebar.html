@@ -3,22 +3,17 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 />
 
-
-<input type="checkbox" id="check">
+<input type="checkbox" id="check" [checked]="isOpen" (change)="isOpen = !isOpen">
 <div class="btnOne">
   <label for="check">
-    <i class="fas fa-bars"></i>
+    <img src="assets/icons/logoGeoHealth.png">
   </label>
 </div>
+<label class="exit-button" for="check"></label>
 <div class="sidebar">
   <div class="logo-container">
     <div class="logo"></div>
     <a class="logo-text">GeoHealth</a>
-  </div>
-  <div class="btnTwo">
-    <label for="check">
-      <i class="fas fa-times"></i>
-    </label>
   </div>
   <div class="menu">
     <ul>
