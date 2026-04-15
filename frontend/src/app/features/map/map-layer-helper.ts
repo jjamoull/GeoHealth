@@ -58,7 +58,7 @@ export class MapLayerHelper {
       style: (feature: any) => ({
         color: '#414241',
         weight: 1,
-        fillColor: (console.log('riskColor:', feature?.properties), getRiskColor(feature?.properties?.rsk_cls)),
+        fillColor: (getRiskColor(feature?.properties?.rsk_cls)),
         fillOpacity: 0.5,
       }),
       onEachFeature: (feature: any, layer: any) => {
