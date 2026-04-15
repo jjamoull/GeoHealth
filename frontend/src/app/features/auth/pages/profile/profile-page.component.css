@@ -127,8 +127,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -255,6 +255,12 @@
   .profile-title{
     display: none;
   }
+  .avatar-list.active {
+    width: 360px;
+  }
+  .avatar-list ul {
+    gap: 20px;
+  }
 }
 /* phone portrait (small size) */
 @media (max-height: 840px) and (orientation: portrait){
@@ -273,7 +279,12 @@
   .profile-title{
     display: none;
   }
-
+  .avatar-list.active {
+    width: 360px;
+  }
+  .avatar-list ul {
+    gap: 20px;
+  }
 
 }
 /* phone landscape */
