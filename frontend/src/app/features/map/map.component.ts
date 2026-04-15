@@ -76,7 +76,7 @@ export class MapComponent implements AfterViewInit {
     this.loadAvailableMaps();
     this.mapId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadUserRole();
-    await this.mapHelper.initMap('map', CAMEROON_COORDINATES[0], CAMEROON_ZOOM, 6, 12);
+    await this.mapHelper.initMap('map', CAMEROON_COORDINATES[0], CAMEROON_ZOOM, 6, 12, true);
     this.loadBaseMap();
   }
 

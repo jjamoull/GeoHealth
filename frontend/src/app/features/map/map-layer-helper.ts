@@ -28,8 +28,12 @@ export class MapLayerHelper {
    * @param minZoom - the minimum allowed zoom level
    * @param maxZoom - the maximum allowed zoom level
    */
-  async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number): Promise<void> {
+  async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number, enableGeoman:boolean): Promise<void> {
     const L = await import('leaflet');
+    if (enableGeoman) {
+      await import('@geoman-io/leaflet-geoman-free');
+    }
+
     this.leaflet = L.default ?? L;
 
     this.map = this.leaflet.map(elementId).setView(center, zoom);
@@ -43,12 +47,14 @@ export class MapLayerHelper {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
 
-    await import('@geoman-io/leaflet-geoman-free');
-    (this.map as any).pm.addControls({
-      position: 'topleft',
-      drawCircleMarker: false,
-      rotateMode: false,
-    });
+    if (enableGeoman) {
+      (this.map as any).pm.addControls({
+        position: 'topleft',
+        drawCircleMarker: false,
+        rotateMode: false,
+      });
+    }
+
   }
 
   /**

@@ -58,7 +58,8 @@ export class MapPreviewComponent implements AfterViewInit {
       CAMEROON_COORDINATES[0],
       this.cameroonZoom,
       this.minZoom,
-      this.maxZoom
+      this.maxZoom,
+      false
     );
   }
 
