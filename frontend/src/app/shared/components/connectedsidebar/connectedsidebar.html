@@ -4,41 +4,45 @@
 />
 
 
-<input type="checkbox" id="check">
+<input type="checkbox" id="check" [checked]="isOpen" (change)="isOpen = !isOpen">
 <div class="btnOne">
   <label for="check">
-    <i class="fas fa-bars"></i>
+    <img src="assets/icons/logoGeoHealth.png">
   </label>
 </div>
+<label class="exit-button" for="check"></label>
 <div class="sidebar">
   <div class="logo-container">
     <div class="logo"></div>
     <a class="logo-text">GeoHealth</a>
   </div>
-  <div class="btnTwo">
-    <label for="check">
-      <i class="fas fa-times"></i>
-    </label>
-  </div>
   <div class="menu">
     <ul>
       <li>
-        <i class="fas fa-map"></i>
-        <a (click)="goToNavigation()">Navigation</a>
+        <a (click)="goToNavigation()">
+          <i class="fas fa-map"></i>
+          Navigation
+        </a>
       </li>
       <li>
-        <i class="fas fa-user"></i>
-        <a (click)="goToProfile()">Profile</a>
+        <a (click)="goToProfile()">
+          <i class="fas fa-user"></i>
+          Profile
+        </a>
       </li>
       @if(isAdmin){
       <li>
-        <i class="fas fa-user-shield"></i>
-        <a (click)="goToUsersList()">Admin Panel</a>
+        <a (click)="goToUsersList()">
+          <i class="fas fa-user-shield"></i>
+          Admin Panel
+        </a>
       </li>
       }
       <li>
-        <i class="fas fa-right-from-bracket"></i>
-        <a (click)="logout()">Logout</a>
+        <a (click)="logout()">
+          <i class="fas fa-right-from-bracket"></i>
+          Logout
+        </a>
       </li>
     </ul>
   </div>
