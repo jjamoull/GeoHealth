@@ -109,5 +109,11 @@
     "final-map" : "Final risk maps",
     "factor-map" : "Risk factor maps",
     "search-placeholder":  "Search..."
+  },
+  "evalcomment":{
+    "level": "Agreement Level",
+    "risk" : "Perceived Risk",
+    "level2": "Certainty Level",
+    "deletebutton": "Delete evaluation"
   }
 }

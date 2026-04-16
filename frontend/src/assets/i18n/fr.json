@@ -109,5 +109,11 @@
     "final-map" : "Cartes de risque finale",
     "factor-map" : "Cartes de facteurs de risque",
     "search-placeholder":  "Rechercher..."
+  },
+  "evalcomment": {
+    "level": "Niveau d'accord",
+    "risk": "Risque perçu",
+    "level2": "Niveau de certitude",
+    "deletebutton": "Supprimer l'évaluation"
   }
 }
