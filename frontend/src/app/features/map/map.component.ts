@@ -1,7 +1,6 @@
 import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, ChangeDetectorRef, computed} from '@angular/core';
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
-import {LatLngExpression} from 'leaflet';
 import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
 import { RasterMapService } from '../../core/service/MapService/RasterService/RasterMapService';
 import { RasterMapListDto } from '../../shared/models/MapModel/RasterMapModel/RasterMapListDto';
@@ -19,9 +18,16 @@ import { MapLayerHelper } from './map-layer-helper';
 import { RISK_LEVELS, getRiskColor } from './map-utils';
 import {CAMEROON_COORDINATES} from './map.constants';
 import {CAMEROON_ZOOM} from './map.constants';
-import{MeasureService} from '../../core/service/MeasureService/measureService';
 import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
 import {TooltipDescriptionComponent} from '../../shared/components/tooltip-description/tooltip-description';
+import {MapMetrics} from './map.metrics';
+import {
+  EvaluatorAgreementMeasureService
+} from '../../core/service/MeasureService/EvaluatorAgreementMeasureService/evaluatorAgreementMeasureService';
+import {MeanMeasureService} from '../../core/service/MeasureService/MeanMeasureService/meanMeasureService';
+import {
+  ModelEvaluationMeasureService
+} from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
 
 @Component({
   selector: 'app-map',
@@ -32,25 +38,31 @@ import {TooltipDescriptionComponent} from '../../shared/components/tooltip-descr
 })
 export class MapComponent implements AfterViewInit {
 
+  // risk levels used to display the map legend
   riskLevels = RISK_LEVELS;
-
+  // id of the current shapefile map loaded from the route
   mapId: number = -1;
   isAdmin:boolean=false;
   selectedDivision = signal<any>(null);
   mapTitle = signal<string>('');
   mapDescription = signal<string>('');
+  // the raster layer linked to this specific map, used in the dropdown
   rasterMap = signal<RasterMapListDto | null>(null);
+  // list of all standalone risk factor maps, used in the dropdown
   riskFactorMaps = signal<RasterMapListDto[]>([]);
   showEvaluationModal = signal<boolean>(false);
+  // the existing evaluation form for the selected division
   existingForm = signal<ResponseEvaluationFormDto | null>(null);
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
   allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
   allDivisions = signal<{ name: string, risk: string}[]>([]);
-  weightedEntropy = signal<number | null>(null);
-  globalConsensusIndex = signal<number | null>(null);
-  krippendorff= signal<number | null>(null);
 
+  // Help computing the metrics for the map
+  public mapMetrics!: MapMetrics;
+
+  // helper class managing the Leaflet map layers and interactions
   private mapHelper = new MapLayerHelper();
+
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -61,41 +73,90 @@ export class MapComponent implements AfterViewInit {
     private adminEvaluationFormService:AdminEvaluationFormService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private measureService: MeasureService,
-    ){}
+    private evaluatorAgreementMeasureService:EvaluatorAgreementMeasureService,
+    private meanMeasureService: MeanMeasureService,
+    private modelEvaluationMeasureService: ModelEvaluationMeasureService,
+  ){
+
+ this.mapMetrics= new MapMetrics(
+      this.evaluatorAgreementMeasureService,
+      this.meanMeasureService,
+      this.modelEvaluationMeasureService
+    )
+  }
+
 
   /**
-   * TODO
+   * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
    */
-  onOpenEvaluation(): void {
-    this.showEvaluationModal.set(true);
+  async ngAfterViewInit(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.loadAvailableMaps();
+    this.mapId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadUserRole();
+    await this.mapHelper.initMap('map', CAMEROON_COORDINATES[0], CAMEROON_ZOOM, 6, 12);
+    this.loadBaseMap();
+  }
+
+
+  // --- Map Loading ---
+
+  /**
+   * Fetches the shapefile map data from the backend, draws the divisions layer
+   * and loads the raster layer linked to this map into the dropdown
+   */
+  private loadBaseMap(): void {
+    this.mapService.getMap(this.mapId).subscribe({
+      next: (mapData) => {
+        this.mapTitle.set(mapData.title);
+        this.mapDescription.set(mapData.description);
+        this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
+
+        const geoJson = JSON.parse(mapData.fileGeoJson);
+        const divisions: { name: string, risk: string }[] = [];
+
+        for (const feature of geoJson.features) {
+          divisions.push({
+            name: feature.properties.NAME_2,
+            risk: feature.properties.rsk_cls
+          });
+        }
+        this.allDivisions.set(divisions);
+        this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
+          this.onDivisionClicked(event);
+        });
+      },
+      error: (err) => console.error('Failed to load map data', err)
+    });
   }
 
   /**
-   * TODO
+   * Fetches all standalone risk factor maps and populates the dropdown
    */
-  onCloseEvaluation(): void {
-    this.showEvaluationModal.set(false);
-    this.getAllForm(this.isAdmin,this.mapId);
-    this.cdr.detectChanges();
-  }
-
-  /**
-   * TODO
-   */
-  onDeleteEvaluation(): void {
-    if (!confirm('Are you sure you want to delete this evaluation?')) return;
-
-    this.evaluationFormService.deleteForm(this.existingForm()!.id).subscribe({
-      next: () => {
-        this.existingForm.set(null);
-        this.getAllForm(this.isAdmin, this.mapId);
-        },
+  private loadAvailableMaps(): void {
+    this.rasterMapService.getRiskFactors().subscribe({
+      next: (maps:RasterMapListDto[]) => {
+        this.riskFactorMaps.set(maps);
+      },
       error: (err) => {
-          console.error('Failed to delete evaluation form', err);
+        console.error('Failed to load risk factor maps', err);
       }
     });
   }
+
+  /**
+   * Checks if the connected user is an admin
+   * and loads the appropriate evaluation forms accordingly
+   */
+  private loadUserRole(): void {
+    this.usersServices.isAdmin().subscribe(
+      bool =>{
+        this.isAdmin=bool;
+        this.getAllForm(bool,this.mapId)
+      });
+  }
+
+  // --- Map Interaction ---
 
   /**
    * Method called when the user selects a risk factor map
@@ -120,33 +181,66 @@ export class MapComponent implements AfterViewInit {
 
     const raster = this.rasterMap();
     if (raster && (raster.title == value || raster.id == Number(value))) {
-      this.mapHelper.switchTo({ id: raster.id, kind: 'tile', title: '' });
+      this.mapHelper.switchTo({ id: raster.id, kind: 'raster', title: '' });
       return;
     }
 
     if (findWordForRiskFactor) { // findWordForRiskFactor is not empty
-      this.mapHelper.switchTo({ id: findWordForRiskFactor.id, kind: 'tile', title: '' });
+      this.mapHelper.switchTo({ id: findWordForRiskFactor.id, kind: 'raster', title: '' });
       return;
     } else {
       this.mapHelper.switchTo({ id: null, kind: 'divisions', title: 'Risk Overview - Divisions' });
       return;
     }
-
   }
-
 
   /**
-    * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
-  */
-  async ngAfterViewInit(): Promise<void> {
-    if (!isPlatformBrowser(this.platformId)) return;
-    this.loadAvailableMaps();
-    this.mapId = Number(this.route.snapshot.paramMap.get('id'));
-    this.loadUserRole();
-    await this.mapHelper.initMap('map', CAMEROON_COORDINATES[0], CAMEROON_ZOOM, 6, 12);
-    this.loadBaseMap();
+   * Handles a click on a division.
+   * If the division is already selected, deselects it and clears the marker.
+   * Otherwise, selects it, places a marker, loads the existing evaluation form
+   * and computes the risk measurements for that division.
+   *
+   * @param event - the click event containing:
+   *   - properties: the GeoJSON properties of the clicked division (name, risk category, etc.)
+   *   - latlng: the coordinates of the click on the map
+   */
+  private onDivisionClicked(event: { properties: any, latlng: any }): void {
+    if (this.selectedDivision() === event.properties) {
+      this.selectedDivision.set(null);
+      this.existingForm.set(null);
+      this.mapMetrics.resetAllMetrics()
+      this.mapHelper.clearMarker();
+      return;
+    }
+    this.selectedDivision.set(event.properties);
+    this.mapHelper.placeMarker(event.latlng);
+    this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({
+      next: (form) => this.existingForm.set(form),
+      error: () => this.existingForm.set(null)
+    });
+
+    this.loadMeasurements(event.properties.NAME_2, event.properties.rsk_cls);
   }
 
+  /**
+   * Loads all risk measurements for the selected division
+   *
+   * @param divisionName - the name of the selected division (NAME_2 in GeoJSON)
+   * @param riskCategory - the risk category of the selected division (Risk_categ in GeoJSON)
+   */
+  private loadMeasurements(divisionName: string, riskCategory: string): void {
+
+    const divisionRiskDto: DivisionRiskDto = {
+      divisionRiskLevel: Object.fromEntries(
+        this.allDivisions().map(d => [d.name, d.risk])
+      )
+    };
+
+    this.mapMetrics.computeAllMetrics(this.mapId,divisionName,riskCategory,divisionRiskDto);
+
+  }
+
+  // --- Evaluation ---
 
   /**
    * Get the evaluation form for a specific map
@@ -178,115 +272,45 @@ export class MapComponent implements AfterViewInit {
   }
 
   /**
-   * TODO
+   * Opens the evaluation modal for the selected division
    */
-  private loadAvailableMaps(): void {
-    this.rasterMapService.getRiskFactors().subscribe({
-          next: (maps:RasterMapListDto[]) => {
-            this.riskFactorMaps.set(maps);
-          },
-          error: (err) => {
-            console.error('Failed to load risk factor maps', err);
-          }
-    });
-  }
-
-
-  /**
-   * TODO
-   */
-  private loadUserRole(): void {
-    this.usersServices.isAdmin().subscribe(
-    bool =>{
-      this.isAdmin=bool;
-      this.getAllForm(bool,this.mapId)
-    });
+  onOpenEvaluation(): void {
+    this.showEvaluationModal.set(true);
   }
 
   /**
-   * TODO
+   * Closes the evaluation modal and reloads the evaluation forms
    */
-  private loadBaseMap(): void {
-    this.mapService.getMap(this.mapId).subscribe({
-      next: (mapData) => {
-        this.mapTitle.set(mapData.title);
-        this.mapDescription.set(mapData.description);
-        this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
-
-        const geoJson = JSON.parse(mapData.fileGeoJson);
-        const divisions: { name: string, risk: string }[] = [];
-
-        for (const feature of geoJson.features) {
-          divisions.push({
-            name: feature.properties.NAME_2,
-            risk: feature.properties.Risk_categ
-          });
-        }
-        this.allDivisions.set(divisions);
-
-        this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
-          this.onDivisionClicked(event);
-            });
-          },
-      error: (err) => console.error('Failed to load map data', err)
-    });
+  onCloseEvaluation(): void {
+    this.showEvaluationModal.set(false);
+    this.getAllForm(this.isAdmin,this.mapId);
+    this.cdr.detectChanges();
   }
 
   /**
-   * TODO and PLEASE : It's better to have several methods than one big one… Not easy to discover this method and understand it
+   * Deletes the current evaluation form after user confirmation
    */
-  private onDivisionClicked(event: { properties: any, latlng: any }): void {
-    if (this.selectedDivision() === event.properties) {
-      this.selectedDivision.set(null);
-      this.existingForm.set(null);
-      this.weightedEntropy.set(null);
-      this.globalConsensusIndex.set(null);
-      this.mapHelper.clearMarker();
-      return;
-    }
-    this.selectedDivision.set(event.properties);
-    this.mapHelper.placeMarker(event.latlng);
-    this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({
-      next: (form) => this.existingForm.set(form),
-      error: () => this.existingForm.set(null)
-    });
+  onDeleteEvaluation(): void {
+    if (!confirm('Are you sure you want to delete this evaluation?')) return;
 
-    this.measureService.getWeightedEntropy(this.mapId, this.selectedDivision().NAME_2, this.selectedDivision().Risk_categ).subscribe({
-        next: (weightedEntropy: number) => {
-          this.weightedEntropy.set(weightedEntropy);
-          },
-        error: (err) => {
-          console.log('Failed to load weightedEntropy', err);
-          }
-        })
-
-    const divisionRiskDto: DivisionRiskDto = {
-      divisionRiskLevel: Object.fromEntries(
-        this.allDivisions().map(d => [d.name, d.risk])
-      )
-    };
-
-    this.measureService.getGlobalConsensusIndex(this.mapId, divisionRiskDto).subscribe({
-      next:(globalConcensusIndex: number) => {
-        this.globalConsensusIndex.set(globalConcensusIndex)
-        },
-      error: (err) => {
-        console.log('Failed to load globalConsensusIndex', err);
-        }
-      });
-
-    this.measureService.getKrippendorff(this.mapId).subscribe({
-      next:(krippendorff: number) => {
-        this.krippendorff.set(krippendorff)
+    this.evaluationFormService.deleteForm(this.existingForm()!.id).subscribe({
+      next: () => {
+        this.existingForm.set(null);
+        this.getAllForm(this.isAdmin, this.mapId);
       },
       error: (err) => {
-        console.log('Failed to load krippendorff', err);
+        console.error('Failed to delete evaluation form', err);
       }
     });
   }
 
+  // --- Utilities ---
+
   /**
-   * TODO
+   * gives the color associated with the risk category
+   *
+   * @param riskClass - the risk category string (e.g. 'High', 'Low')
+   * @returns the color string associated with the risk class
    */
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);

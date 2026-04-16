@@ -24,7 +24,7 @@
         <option value="Division only">Division only</option>
 
         @if(rasterMap()) {
-        <option [value]="rasterMap()!.title">{{ rasterMap()!.title }}</option>
+          <option [value]="rasterMap()!.title">{{ rasterMap()!.title }}</option>
         }
 
         @for (map of riskFactorMaps(); track map.id) {
@@ -70,109 +70,110 @@
       <p>{{mapDescription() }}</p>
     </div>
     @if(selectedDivision()) {
-    <div class="metrics">
-      <div class="metrics-header">Metrics</div>
-      <div class="metrics-body">
-        <p>
-          Divisional Consensus Score
-          <app-tooltip-description description="Description of value" />
-        </p>
-        <strong>
-          {{ mapMetrics.divisionalConsensusScore() !== null
-          ? (mapMetrics.divisionalConsensusScore() | number:'1.2-2')
-          : '/' }}
-        </strong>
+      <div class="metrics">
+        <div class="metrics-header">Metrics</div>
+        <div class="metrics-body">
+          <p>
+            Divisional Consensus Score
+            <app-tooltip-description description="Description of value" />
+          </p>
+          <strong>
+            {{ mapMetrics.divisionalConsensusScore() !== null
+            ? (mapMetrics.divisionalConsensusScore() | number:'1.2-2')
+            : '/' }}
+          </strong>
 
-        <p>
-          National Consensus Score
-          <app-tooltip-description description="Description of value" />
-        </p>
-        <strong>
-          {{ mapMetrics.nationalConsensusScore() !== null
-          ? (mapMetrics.nationalConsensusScore() | number:'1.2-2')
-          : '/' }}
-        </strong>
+          <p>
+            National Consensus Score
+            <app-tooltip-description description="Description of value" />
+          </p>
+          <strong>
+            {{ mapMetrics.nationalConsensusScore() !== null
+            ? (mapMetrics.nationalConsensusScore() | number:'1.2-2')
+            : '/' }}
+          </strong>
 
-        <p>
-          Krippendorff Alpha
-          <app-tooltip-description description="Description of value" />
-        </p>
-        <strong>
-          {{ mapMetrics.krippendorffAlpha() !== null
-          ? (mapMetrics.krippendorffAlpha() | number:'1.2-2')
-          : '/' }}
-        </strong>
+          <p>
+            Krippendorff Alpha
+            <app-tooltip-description description="Description of value" />
+          </p>
+          <strong>
+            {{ mapMetrics.krippendorffAlpha() !== null
+            ? (mapMetrics.krippendorffAlpha() | number:'1.2-2')
+            : '/' }}
+          </strong>
 
-        <p>
-          Mean Divisional Agreement Score
-          <app-tooltip-description description="Description of value" />
-        </p>
-        <strong>
-          {{ mapMetrics.meanDivisionalAgreementScore() !== null
-          ? (mapMetrics.meanDivisionalAgreementScore() | number:'1.2-2')
-          : '/' }}
-        </strong>
+          <p>
+            Mean Divisional Agreement Score
+            <app-tooltip-description description="Description of value" />
+          </p>
+          <strong>
+            {{ mapMetrics.meanDivisionalAgreementScore() !== null
+            ? (mapMetrics.meanDivisionalAgreementScore() | number:'1.2-2')
+            : '/' }}
+          </strong>
 
-        <p>
-          Mean Certainty
-          <app-tooltip-description description="Description of value" />
-        </p>
-        <strong>
-          {{ mapMetrics.meanCertaintyForMapForDivision() !== null
-          ? (mapMetrics.meanCertaintyForMapForDivision() | number:'1.2-2')
-          : '/' }}
-        </strong>
+          <p>
+            Mean Certainty
+            <app-tooltip-description description="Description of value" />
+          </p>
+          <strong>
+            {{ mapMetrics.meanCertaintyForMapForDivision() !== null
+            ? (mapMetrics.meanCertaintyForMapForDivision() | number:'1.2-2')
+            : '/' }}
+          </strong>
 
-        <p>
-          Dominant Perceived Risk
-          <app-tooltip-description description="Description of value" />
-        </p>
-        <strong>
-          {{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}
-        </strong>
+          <p>
+            Dominant Perceived Risk
+            <app-tooltip-description description="Description of value" />
+          </p>
+          <strong>
+            {{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}
+          </strong>
 
-        <p>
-          Weighted Divisional Level Agreement
-          <app-tooltip-description description="Description of value" />
-        </p>
-        <strong>
-          {{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null
-          ? (mapMetrics.weightedDivisionalLevelAgreementScore() | number:'1.2-2')
-          : '/' }}
-        </strong>
+          <p>
+            Weighted Divisional Level Agreement
+            <app-tooltip-description description="Description of value" />
+          </p>
+          <strong>
+            {{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null
+            ? (mapMetrics.weightedDivisionalLevelAgreementScore() | number:'1.2-2')
+            : '/' }}
+          </strong>
 
-        <p>
-          National Model Field Agreement
-          <app-tooltip-description description="Description of value" />
-        </p>
-        <strong>
-          {{ mapMetrics.nationalModelFieldAgreementScore() !== null
-          ? (mapMetrics.nationalModelFieldAgreementScore() | number:'1.2-2')
-          : '/' }}
-        </strong>
+          <p>
+            National Model Field Agreement
+            <app-tooltip-description description="Description of value" />
+          </p>
+          <strong>
+            {{ mapMetrics.nationalModelFieldAgreementScore() !== null
+            ? (mapMetrics.nationalModelFieldAgreementScore() | number:'1.2-2')
+            : '/' }}
+          </strong>
+
+        </div>
 
       </div>
-    </div>
     }
 
 
     <!--
-    TODO
+    Evaluation forms management
     -->
     <div class="side-footer">
       @if(selectedDivision() && !showEvaluationModal()){
-      <app-button
-        [text]="existingForm() ? 'Edit Evaluation' : 'Add Evaluation'"
-        [variant]="'success'"
-        (click)="onOpenEvaluation()">
-      </app-button>
+        <app-button
+          [text]="existingForm() ? 'Edit Evaluation' : 'Add Evaluation'"
+          [variant]="'success'"
+          (click)="onOpenEvaluation()">
+        </app-button>
       }
       @if(existingForm()) {
-      <app-button
-        [text]="'Delete Evaluation'"
-        [variant]="'danger'"
-        (click)="onDeleteEvaluation()">
-      </app-button>
+        <app-button
+          [text]="'Delete Evaluation'"
+          [variant]="'danger'"
+          (click)="onDeleteEvaluation()">
+        </app-button>
       }
     </div>
 
@@ -181,56 +182,56 @@
 
 
 <!--
-    TODO
+    Show evaluation form
     -->
 @if(showEvaluationModal()) {
-<app-evaluation-modal
-  [division]="selectedDivision()"
-  [mapId]="mapId"
-  [existingForm]="existingForm()"
-  (close)="onCloseEvaluation()">
-</app-evaluation-modal>
+  <app-evaluation-modal
+    [division]="selectedDivision()"
+    [mapId]="mapId"
+    [existingForm]="existingForm()"
+    (close)="onCloseEvaluation()">
+  </app-evaluation-modal>
 }
 
 <!--
-    TODO
+    Show evaluations forms made by other evaluators
     -->
 <div class="evaluation-section">
   <h2>Evaluations</h2>
   <div class="evaluation-list">
-  @if(isAdmin){
-    @for(form of allEvaluationFormsAdmin(); track form){
-      @if(form.division==selectedDivision().NAME_2 && form.isPublic){
-        <app-evaluation-comment
-          [username]= "form.username"
-          [firstName]="form.firstName"
-          [lastName]="form.lastName"
-          [division]="form.division"
-          [agreementLevel]="form.agreementLevel"
-          [perceivedRisk]="form.perceivedRisk"
-          [certaintyLevel]="form.certaintyLevel"
-          [comment]="form.comment"
-          [formId]="form.id"
-          [isAdmin]="true">
-        </app-evaluation-comment>
+    @if(isAdmin){
+      @for(form of allEvaluationFormsAdmin(); track form){
+        @if(form.division==selectedDivision().NAME_2 && form.isPublic){
+          <app-evaluation-comment
+            [username]= "form.username"
+            [firstName]="form.firstName"
+            [lastName]="form.lastName"
+            [division]="form.division"
+            [agreementLevel]="form.agreementLevel"
+            [perceivedRisk]="form.perceivedRisk"
+            [certaintyLevel]="form.certaintyLevel"
+            [comment]="form.comment"
+            [formId]="form.id"
+            [isAdmin]="true">
+          </app-evaluation-comment>
+        }
       }
     }
-  }
-  @else {
-    @for(form of allEvaluationFormsUser(); track form){
-      @if(form.division==selectedDivision().NAME_2 && form.isPublic){
-        <app-evaluation-comment
-          [username]= "form.username"
-          [division]="form.division"
-          [agreementLevel]="form.agreementLevel"
-          [perceivedRisk]="form.perceivedRisk"
-          [certaintyLevel]="form.certaintyLevel"
-          [comment]="form.comment"
-          [formId]="form.id"
-          [isAdmin]="false">
-        </app-evaluation-comment>
+    @else {
+      @for(form of allEvaluationFormsUser(); track form){
+        @if(form.division==selectedDivision().NAME_2 && form.isPublic){
+          <app-evaluation-comment
+            [username]= "form.username"
+            [division]="form.division"
+            [agreementLevel]="form.agreementLevel"
+            [perceivedRisk]="form.perceivedRisk"
+            [certaintyLevel]="form.certaintyLevel"
+            [comment]="form.comment"
+            [formId]="form.id"
+            [isAdmin]="false">
+          </app-evaluation-comment>
+        }
       }
     }
-  }
   </div>
 </div>
