@@ -8,10 +8,11 @@ import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/
 import {UsersServices} from '../../../../core/service/UserService/users-services';
 import {MapPreviewComponent} from '../../../map-preview-component/map-preview-component';
 import { FormsModule } from '@angular/forms';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatDialogModule, Checkbox, MapPreviewComponent, FormsModule],
+  imports: [MatDialogModule, Checkbox, MapPreviewComponent, FormsModule, TranslocoPipe],
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })

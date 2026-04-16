@@ -96,5 +96,18 @@
     "login-error": "Username or password is invalid",
     "register-error" : "Account already exists",
     "changepassword-success": "Changing password successful!"
+  },
+  "navigation":{
+    "add-map": "Add a new map :",
+    "final-risk" : "Final risk",
+    "risk-factor": "Risk factor",
+    "search": "Search for a map :",
+    "search-results": "Search results",
+    "nomap": "No map found",
+    "try-another": "Try another title or clear the search.",
+    "backto": "Back to all maps",
+    "final-map" : "Final risk maps",
+    "factor-map" : "Risk factor maps",
+    "search-placeholder":  "Search..."
   }
 }

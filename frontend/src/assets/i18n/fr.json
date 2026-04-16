@@ -96,5 +96,18 @@
     "login-error": "Pseudo ou mot de passe invalide",
     "register-error" : "Ce compte existe déjà",
     "changepassword-success": "Le mot de passe a été modifié avec succès !"
+  },
+  "navigation":{
+    "add-map": "Ajouter une nouvelle carte :",
+    "final-risk" : "Risque final",
+    "risk-factor": "facteur de risque",
+    "search": "Rechercher une carte :",
+    "search-results": "Résultats de recherche",
+    "nomap": "Aucune carte trouvée",
+    "try-another": "Essayez un autre titre ou effacez la recherche.",
+    "backto": "Retour à toutes les cartes",
+    "final-map" : "Cartes de risque finale",
+    "factor-map" : "Cartes de facteurs de risque",
+    "search-placeholder":  "Rechercher..."
   }
 }
