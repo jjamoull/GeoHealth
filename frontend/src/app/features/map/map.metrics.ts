@@ -5,7 +5,8 @@ import { MeanMeasureService } from '../../core/service/MeasureService/MeanMeasur
 import { ModelEvaluationMeasureService } from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
 
 export class MapMetrics {
-
+  
+  // All the metrics computed
   divisionalConsensusScore = signal<number | null>(null);
   nationalConsensusScore = signal<number | null>(null);
   krippendorffAlpha = signal<number | null>(null);
@@ -17,18 +18,33 @@ export class MapMetrics {
   weightedDivisionalLevelAgreementScore = signal<number | null>(null);
   nationalModelFieldAgreementScore = signal<number | null>(null);
 
+
   constructor(
     private evaluatorAgreementMeasureService: EvaluatorAgreementMeasureService,
     private meanMeasureService: MeanMeasureService,
     private modelEvaluationMeasureService: ModelEvaluationMeasureService
   ) {}
 
+  /**
+   * Set the value for all the metrics of the class
+   *
+   * @param mapId the map for which you want the metrics
+   * @param division the division on which the user is clicking
+   * @param divisionRisk the risk level for the division on which the user is clicking
+   * @param divisionRiskDto a map containing the risk level for all divisions
+   */
   computeAllMetrics(mapId: number, division: string, divisionRisk: string, divisionRiskDto: DivisionRiskDto) {
     this.computeEvaluatorAgreement(mapId, division);
     this.computeMeanMeasures(mapId, division);
     this.computeModelEvaluation(mapId,division,divisionRisk, divisionRiskDto);
   }
 
+  /**
+   * Compute all the metrics linked to agreement between evaluators
+   *
+   * @param mapId the map for which you want the metrics
+   * @param division the division on which the user is clicking
+   */
   private computeEvaluatorAgreement(mapId: number, division: string) {
 
     this.evaluatorAgreementMeasureService
@@ -53,6 +69,12 @@ export class MapMetrics {
       });
   }
 
+  /**
+   * Compute all the metrics linked to making the mean of evaluation forms fields values
+   *
+   * @param mapId the map for which you want the metrics
+   * @param division the division on which the user is clicking
+   */
   private computeMeanMeasures(mapId: number, division: string) {
 
     this.meanMeasureService
@@ -77,6 +99,14 @@ export class MapMetrics {
       });
   }
 
+  /**
+   * Compute the metrics linked to the assessment of the model by the evaluators
+   *
+   * @param mapId the map for which you want the metrics
+   * @param division the division on which the user is clicking
+   * @param divisionRisk the risk level for the division on which the user is clicking
+   * @param divisionRiskDto a map containing the risk level for all divisions
+   */
   private computeModelEvaluation(mapId: number, division: string, divisionRisk:string,divisionRiskDto: DivisionRiskDto) {
 
     this.modelEvaluationMeasureService
@@ -95,6 +125,9 @@ export class MapMetrics {
 
   }
 
+  /**
+   * Reset all the computed value to null
+   */
   resetAllMetrics() {
     this.divisionalConsensusScore.set(null);
     this.nationalConsensusScore.set(null);

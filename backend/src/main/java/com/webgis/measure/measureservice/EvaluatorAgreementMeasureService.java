@@ -11,7 +11,11 @@ import com.github.rcaller.rstuff.RCallerOptions;
 import com.github.rcaller.rstuff.RCode;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 
 @Service
@@ -132,15 +136,14 @@ public class EvaluatorAgreementMeasureService {
         final double[][] krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
         System.out.println(Arrays.deepToString(krippensdorffMatrix));
 
-        RCode code = RCode.create();
+        final RCode code = RCode.create();
 
         code.addDoubleMatrix("krippensdorff_matrix", krippensdorffMatrix);
         code.addRCode("library(irr)");
         code.addRCode("result <- kripp.alpha(krippensdorff_matrix,\"ordinal\")");
         code.addRCode("alpha_value <- result$value");
 
-        RCallerOptions options = RCallerOptions.create();
-        RCaller caller = RCaller.create(code, RCallerOptions.create());
+        final RCaller caller = RCaller.create(code, RCallerOptions.create());
         caller.runAndReturnResult("alpha_value");
 
         System.out.println(caller.getParser().getAsDoubleArray("alpha_value")[0]);
@@ -170,16 +173,16 @@ public class EvaluatorAgreementMeasureService {
 
         final Map<Long,Map<String,Integer>> krippendorffHashMap = buildKrippendorffHashMap(evaluationForms);
 
-        int rows = evaluatedDivisionsList.size();
-        int cols = usersIdList.size();
+        final int rows = evaluatedDivisionsList.size();
+        final int cols = usersIdList.size();
 
-        double[][] matrix = new double[rows][cols];
+        final double[][] matrix = new double[rows][cols];
 
         for (int i = 0; i < rows; i++) {
-            String division = evaluatedDivisionsList.get(i);
+            final String division = evaluatedDivisionsList.get(i);
 
             for (int j = 0; j < cols; j++) {
-                long userId = usersIdList.get(j);
+                final long userId = usersIdList.get(j);
 
                 Integer value = null;
                 if (krippendorffHashMap.containsKey(userId)) {

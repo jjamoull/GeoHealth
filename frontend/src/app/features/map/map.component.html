@@ -77,49 +77,79 @@
           Divisional Consensus Score
           <app-tooltip-description description="Description of value" />
         </p>
-        <strong>{{ mapMetrics.divisionalConsensusScore() ?? '/' }}</strong>
+        <strong>
+          {{ mapMetrics.divisionalConsensusScore() !== null
+          ? (mapMetrics.divisionalConsensusScore() | number:'1.2-2')
+          : '/' }}
+        </strong>
 
         <p>
           National Consensus Score
           <app-tooltip-description description="Description of value" />
         </p>
-        <strong>{{ mapMetrics.nationalConsensusScore() ?? '/' }}</strong>
+        <strong>
+          {{ mapMetrics.nationalConsensusScore() !== null
+          ? (mapMetrics.nationalConsensusScore() | number:'1.2-2')
+          : '/' }}
+        </strong>
 
         <p>
           Krippendorff Alpha
           <app-tooltip-description description="Description of value" />
         </p>
-        <strong>{{ mapMetrics.krippendorffAlpha() ?? '/' }}</strong>
+        <strong>
+          {{ mapMetrics.krippendorffAlpha() !== null
+          ? (mapMetrics.krippendorffAlpha() | number:'1.2-2')
+          : '/' }}
+        </strong>
 
         <p>
           Mean Divisional Agreement Score
           <app-tooltip-description description="Description of value" />
         </p>
-        <strong>{{ mapMetrics.meanDivisionalAgreementScore() ?? '/' }}</strong>
+        <strong>
+          {{ mapMetrics.meanDivisionalAgreementScore() !== null
+          ? (mapMetrics.meanDivisionalAgreementScore() | number:'1.2-2')
+          : '/' }}
+        </strong>
 
         <p>
           Mean Certainty
           <app-tooltip-description description="Description of value" />
         </p>
-        <strong>{{ mapMetrics.meanCertaintyForMapForDivision() ?? '/' }}</strong>
+        <strong>
+          {{ mapMetrics.meanCertaintyForMapForDivision() !== null
+          ? (mapMetrics.meanCertaintyForMapForDivision() | number:'1.2-2')
+          : '/' }}
+        </strong>
 
         <p>
           Dominant Perceived Risk
           <app-tooltip-description description="Description of value" />
         </p>
-        <strong>{{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}</strong>
+        <strong>
+          {{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}
+        </strong>
 
         <p>
           Weighted Divisional Level Agreement
           <app-tooltip-description description="Description of value" />
         </p>
-        <strong>{{ mapMetrics.weightedDivisionalLevelAgreementScore() ?? '/' }}</strong>
+        <strong>
+          {{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null
+          ? (mapMetrics.weightedDivisionalLevelAgreementScore() | number:'1.2-2')
+          : '/' }}
+        </strong>
 
         <p>
           National Model Field Agreement
           <app-tooltip-description description="Description of value" />
         </p>
-        <strong>{{ mapMetrics.nationalModelFieldAgreementScore() ?? '/' }}</strong>
+        <strong>
+          {{ mapMetrics.nationalModelFieldAgreementScore() !== null
+          ? (mapMetrics.nationalModelFieldAgreementScore() | number:'1.2-2')
+          : '/' }}
+        </strong>
 
       </div>
     </div>
