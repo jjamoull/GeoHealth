@@ -31,6 +31,10 @@ export const API_ENDPOINTS = {
       DELETEFORM:"/admin/evaluationForm/deleteForm"
     }
   },
+  ANNOTATIONS:{
+    GET : "/annotation",
+    POST : "/annotation/save"
+  },
   FINALMAPS: {
     ALLMAPS: '/finalMaps/allMaps',
     GET: '/finalMaps'

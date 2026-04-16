@@ -56,7 +56,7 @@ public class AdminFinalMapController {
 
 
     @PostMapping(value = "/uploadShapeFile", consumes = "multipart/form-data" )
-    public ResponseEntity<Object> postGeoJsonFile(
+    public ResponseEntity<Object> postShapeFile(
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("zipFile") MultipartFile zipFile,
