@@ -77,7 +77,6 @@ public class AdminFinalMapController {
                     throw new NotFound("There is no id for this map : " + finalMap.getTitle());
                 } else {
                     final String tempGeoJsonFile = finalMapService.zipToGeoJsonFile(finalMap.getId());
-                    logger.info(tempGeoJsonFile);
                     finalMap.setFileGeoJson(tempGeoJsonFile);
                 }
             }
