@@ -130,11 +130,10 @@ public class EvaluatorAgreementMeasureService {
      *
      * @return Krippensdroff's Alpha
      */
-    public double computekrippendorffAlpha(FinalMap finalMap) throws IOException{
+    public double computekrippendorffAlpha(FinalMap finalMap){
         final List<EvaluationForm> evaluationForms = evaluationFormRepository.findByFinalMap(finalMap);
 
         final double[][] krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
-        System.out.println(Arrays.deepToString(krippensdorffMatrix));
 
         final RCode code = RCode.create();
 
@@ -146,7 +145,6 @@ public class EvaluatorAgreementMeasureService {
         final RCaller caller = RCaller.create(code, RCallerOptions.create());
         caller.runAndReturnResult("alpha_value");
 
-        System.out.println(caller.getParser().getAsDoubleArray("alpha_value")[0]);
         return caller.getParser().getAsDoubleArray("alpha_value")[0];
     }
 
