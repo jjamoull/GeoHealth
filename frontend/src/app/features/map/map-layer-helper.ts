@@ -66,6 +66,50 @@ export class MapLayerHelper {
   }
 
   /**
+   * Make transparent annotations on the layer on OSM
+   *    if active is True,
+   *    else make usable annotations otherwise
+   *
+   * @param active : boolean variable that influence annotations display
+   *    True : transparent annotations (of Geoman library, not geojson from shapefile)
+   *    False : usable annotations
+   * */
+  toggleInspectMode(active: boolean): void {
+    this.inspectModeActive = active;
+    if (!this.geoManLayer) {
+      return;
+    }
+
+    this.geoManLayer.eachLayer((layer: any) => {
+      let element = null;
+
+      // find markers
+      if (layer.getElement) {
+        element = layer.getElement();
+      }
+
+      // find polygons and lines
+      if (!element && layer._path) {
+        element = layer._path;
+      }
+
+      // find canvas
+      if (!element && layer._renderer) {
+        element = layer._renderer._container;
+      }
+
+      if (element){
+        if (active){
+          element.style.pointerEvents = 'none';
+        } else {
+          element.style.pointerEvents = 'auto';
+        }
+      }
+    });
+  }
+
+
+  /**
    * Draws the GeoJSON divisions layer on the map
    * and colors each division based on its risk category
    *

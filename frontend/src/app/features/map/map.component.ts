@@ -56,6 +56,9 @@ export class MapComponent implements AfterViewInit {
   // helper class managing the Leaflet map layers and interactions
   public mapHelper = new MapLayerHelper();
 
+  inspectModeActive : boolean = false;
+
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private mapService: FinalMapService,
@@ -320,5 +323,12 @@ export class MapComponent implements AfterViewInit {
    */
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);
+  }
+
+
+
+  toggleInspectMode(): void {
+    this.inspectModeActive = !this.inspectModeActive;
+    this.mapHelper.toggleInspectMode(this.inspectModeActive);
   }
 }
