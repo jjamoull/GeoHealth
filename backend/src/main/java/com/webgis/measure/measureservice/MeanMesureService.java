@@ -92,6 +92,10 @@ public class MeanMesureService {
                         finalMap,
                         division);
 
+        if(evaluationForms.isEmpty()){
+            return RiskLevel.UNDEFINED;
+        }
+
         final EnumMap<RiskLevel, Double> weightForRiskLevel = new EnumMap<>(RiskLevel.class);
 
         for (EvaluationForm evaluationForm : evaluationForms) {

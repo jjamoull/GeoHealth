@@ -1,7 +1,6 @@
 import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, ChangeDetectorRef, computed} from '@angular/core';
 import {isPlatformBrowser, CommonModule} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
-import {LatLngExpression} from 'leaflet';
 import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
 import { RasterMapService } from '../../core/service/MapService/RasterService/RasterMapService';
 import { RasterMapListDto } from '../../shared/models/MapModel/RasterMapModel/RasterMapListDto';
@@ -19,9 +18,16 @@ import { MapLayerHelper } from './map-layer-helper';
 import { RISK_LEVELS, getRiskColor } from './map-utils';
 import {CAMEROON_COORDINATES} from './map.constants';
 import {CAMEROON_ZOOM} from './map.constants';
-import{MeasureService} from '../../core/service/MeasureService/measureService';
 import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
 import {TooltipDescriptionComponent} from '../../shared/components/tooltip-description/tooltip-description';
+import {MapMetrics} from './map.metrics';
+import {
+  EvaluatorAgreementMeasureService
+} from '../../core/service/MeasureService/EvaluatorAgreementMeasureService/evaluatorAgreementMeasureService';
+import {MeanMeasureService} from '../../core/service/MeasureService/MeanMeasureService/meanMeasureService';
+import {
+  ModelEvaluationMeasureService
+} from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
 
 @Component({
   selector: 'app-map',
@@ -50,11 +56,13 @@ export class MapComponent implements AfterViewInit {
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
   allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
   allDivisions = signal<{ name: string, risk: string}[]>([]);
-  weightedEntropy = signal<number | null>(null);
-  globalConsensusIndex = signal<number | null>(null);
-  krippendorff= signal<number | null>(null);
+
+  // Help computing the metrics for the map
+  public mapMetrics!: MapMetrics;
+
   // helper class managing the Leaflet map layers and interactions
   private mapHelper = new MapLayerHelper();
+
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -65,12 +73,22 @@ export class MapComponent implements AfterViewInit {
     private adminEvaluationFormService:AdminEvaluationFormService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private measureService: MeasureService,
-    ){}
+    private evaluatorAgreementMeasureService:EvaluatorAgreementMeasureService,
+    private meanMeasureService: MeanMeasureService,
+    private modelEvaluationMeasureService: ModelEvaluationMeasureService,
+  ){
+
+ this.mapMetrics= new MapMetrics(
+      this.evaluatorAgreementMeasureService,
+      this.meanMeasureService,
+      this.modelEvaluationMeasureService
+    )
+  }
+
 
   /**
-    * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
-  */
+   * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
+   */
   async ngAfterViewInit(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
     this.loadAvailableMaps();
@@ -106,8 +124,8 @@ export class MapComponent implements AfterViewInit {
         this.allDivisions.set(divisions);
         this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
           this.onDivisionClicked(event);
-            });
-          },
+        });
+      },
       error: (err) => console.error('Failed to load map data', err)
     });
   }
@@ -117,12 +135,12 @@ export class MapComponent implements AfterViewInit {
    */
   private loadAvailableMaps(): void {
     this.rasterMapService.getRiskFactors().subscribe({
-          next: (maps:RasterMapListDto[]) => {
-            this.riskFactorMaps.set(maps);
-          },
-          error: (err) => {
-            console.error('Failed to load risk factor maps', err);
-          }
+      next: (maps:RasterMapListDto[]) => {
+        this.riskFactorMaps.set(maps);
+      },
+      error: (err) => {
+        console.error('Failed to load risk factor maps', err);
+      }
     });
   }
 
@@ -132,10 +150,10 @@ export class MapComponent implements AfterViewInit {
    */
   private loadUserRole(): void {
     this.usersServices.isAdmin().subscribe(
-    bool =>{
-      this.isAdmin=bool;
-      this.getAllForm(bool,this.mapId)
-    });
+      bool =>{
+        this.isAdmin=bool;
+        this.getAllForm(bool,this.mapId)
+      });
   }
 
   // --- Map Interaction ---
@@ -190,8 +208,7 @@ export class MapComponent implements AfterViewInit {
     if (this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
       this.existingForm.set(null);
-      this.weightedEntropy.set(null);
-      this.globalConsensusIndex.set(null);
+      this.mapMetrics.resetAllMetrics()
       this.mapHelper.clearMarker();
       return;
     }
@@ -202,7 +219,7 @@ export class MapComponent implements AfterViewInit {
       error: () => this.existingForm.set(null)
     });
 
-  this.loadMeasurements(event.properties.NAME_2, event.properties.Risk_categ);
+    this.loadMeasurements(event.properties.NAME_2, event.properties.rsk_cls);
   }
 
   /**
@@ -212,14 +229,6 @@ export class MapComponent implements AfterViewInit {
    * @param riskCategory - the risk category of the selected division (Risk_categ in GeoJSON)
    */
   private loadMeasurements(divisionName: string, riskCategory: string): void {
-    this.measureService.getWeightedEntropy(this.mapId, divisionName, riskCategory).subscribe({
-      next: (weightedEntropy: number) => {
-        this.weightedEntropy.set(weightedEntropy);
-        },
-      error: (err) => {
-        console.log('Failed to load weightedEntropy', err);
-        }
-      });
 
     const divisionRiskDto: DivisionRiskDto = {
       divisionRiskLevel: Object.fromEntries(
@@ -227,23 +236,8 @@ export class MapComponent implements AfterViewInit {
       )
     };
 
-    this.measureService.getGlobalConsensusIndex(this.mapId, divisionRiskDto).subscribe({
-      next:(globalConcensusIndex: number) => {
-        this.globalConsensusIndex.set(globalConcensusIndex)
-        },
-      error: (err) => {
-        console.log('Failed to load globalConsensusIndex', err);
-        }
-      });
+    this.mapMetrics.computeAllMetrics(this.mapId,divisionName,riskCategory,divisionRiskDto);
 
-    this.measureService.getKrippendorff(this.mapId).subscribe({
-      next:(krippendorff: number) => {
-        this.krippendorff.set(krippendorff)
-      },
-      error: (err) => {
-        console.log('Failed to load krippendorff', err);
-      }
-    });
   }
 
   // --- Evaluation ---
@@ -303,9 +297,9 @@ export class MapComponent implements AfterViewInit {
       next: () => {
         this.existingForm.set(null);
         this.getAllForm(this.isAdmin, this.mapId);
-        },
+      },
       error: (err) => {
-          console.error('Failed to delete evaluation form', err);
+        console.error('Failed to delete evaluation form', err);
       }
     });
   }

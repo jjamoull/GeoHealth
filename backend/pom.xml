@@ -113,6 +113,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Rcaller-->
+		<dependency>
+			<groupId>com.github.jbytecode</groupId>
+			<artifactId>RCaller</artifactId>
+			<version>3.0</version>
+		</dependency>
 
 		<!-- JWT-->
 		<dependency>

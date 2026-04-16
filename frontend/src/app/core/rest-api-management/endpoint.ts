@@ -47,8 +47,19 @@ export const API_ENDPOINTS = {
     DELETEFORM:"/evaluationForm/deleteForm"
   },
   MEASURE: {
-    GLOBALCONSENSUSINDEX: "/measure/globalConsensusIndex",
-    WEIGHTEDENTROPY: "/measure/weightedEntropy",
-    KRIPPENDORFF:"/measure/krippendorffAlpha"
+    EVAlUATORAGREEMENT: {
+      DIVISIONALCONSENSUSSCORE:"/evaluatorAgreementMeasure/divisionalConsensusScore",
+      NATIONALCONSENSUSSCORE:"/evaluatorAgreementMeasure/nationalConsensusScore",
+      KRIPPENDORFFALPHA:"/evaluatorAgreementMeasure/krippendorffAlpha"
+    },
+    MEAN: {
+      DIVISIONALAGREEMENTSCORE:"/meanMeasure/meanDivisionalAgreementScore",
+      CERTAINTY: "/meanMeasure/meanCertainty",
+      DOMINANTPERCEIVEDRISKLEVEL:"/meanMeasure/dominantPerceivedRiskLevel"
+    },
+    MODELEVALUATION:{
+      WEIGHTEDDIVISIONALLEVELAGREEMENTSCORE:"/modelEvaluationMeasure/weightedDivisionalLevelAgreementScore",
+      NATIONALMODELFIELDAGREEMENTSCORE:"/modelEvaluationMeasure/nationalModelFieldAgreementScore"
     }
+  }
 } as const;
