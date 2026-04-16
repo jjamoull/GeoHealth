@@ -20,6 +20,8 @@ export class MapLayerHelper {
 
   private geoManLayer: any;
 
+  private inspectModeActive: boolean = false;
+
   /**
    * Initializes the Leaflet map on the given HTML element
    * and adds the OpenStreetMap background tiles
@@ -30,10 +32,12 @@ export class MapLayerHelper {
    * @param minZoom - the minimum allowed zoom level
    * @param maxZoom - the maximum allowed zoom level
    */
-  async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number): Promise<void> {
+  async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number, enableGeoman: boolean): Promise<void> {
     console.log("In init map");
     const L = await import('leaflet');
-    await import('@geoman-io/leaflet-geoman-free');
+    if (enableGeoman) {
+      await import('@geoman-io/leaflet-geoman-free');
+    }
 
     this.leaflet = L.default ?? L;
 
@@ -59,8 +63,6 @@ export class MapLayerHelper {
     }
 
     (this.map as any).pm.setGlobalOptions({ layerGroup: this.geoManLayer });
-
-
   }
 
   /**
