@@ -1,37 +1,51 @@
 <div class="map-section">
   <div class="map-container">
 
-    <!--
-    The division or risk factor map to select
-    -->
-    <div class="map-selector">
+      <!--
+      The division or risk factor map to select
+      -->
+      <div class="map-selector">
 
-      <!--  search bar -->
-      <div class="search-wrapper">
-        <input
-          type="text"
-          list="risk-factor-list"
-          placeholder="Look for a risk factor…"
-          (change)="onMapSelected($event)"
-          (keydown.enter)="onMapSelected($event)"
-        />
-        <span class="dropdown-arrow">▼</span>
+        <!--  search bar -->
+        <div class="search-wrapper">
+          <input
+            type="text"
+            list="risk-factor-list"
+            placeholder="Look for a risk factor…"
+            (change)="onMapSelected($event)"
+            (keydown.enter)="onMapSelected($event)"
+          />
+          <span class="dropdown-arrow">▼</span>
 
+        </div>
+
+        <!--  dropdown -->
+        <datalist id="risk-factor-list">
+          <option value="Division only">Division only</option>
+
+          @if(rasterMap()) {
+          <option [value]="rasterMap()!.title">{{ rasterMap()!.title }}</option>
+          }
+
+          @for (map of riskFactorMaps(); track map.id) {
+            <option [value]="map.title" class="optionInDropbar">{{ map.title }} </option>
+          }
+        </datalist>
+
+
+        <button
+          (click)="toggleInspectMode()"
+          [class.active]="inspectModeActive"
+          class="inspect-mode-btn"
+          title="Cliquer sur les départements"
+        >
+          <span *ngIf="inspectModeActive">View the division</span>
+          <span *ngIf="!inspectModeActive">Drawing mode</span>
+        </button>
       </div>
 
-      <!--  dropdown -->
-      <datalist id="risk-factor-list">
-        <option value="Division only">Division only</option>
 
-        @if(rasterMap()) {
-        <option [value]="rasterMap()!.title">{{ rasterMap()!.title }}</option>
-        }
 
-        @for (map of riskFactorMaps(); track map.id) {
-          <option [value]="map.title" class="optionInDropbar">{{ map.title }} </option>
-        }
-      </datalist>
-    </div>
 
     <div id="map"></div>
 
@@ -114,6 +128,7 @@
 
   </div>
 </div>
+
 
 
 <!--
