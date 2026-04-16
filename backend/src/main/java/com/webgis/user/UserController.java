@@ -3,10 +3,7 @@ package com.webgis.user;
 import com.webgis.MessageDto;
 import com.webgis.security.CookieService;
 import com.webgis.security.JwtService;
-import com.webgis.user.dto.DeleteAccountDto;
-import com.webgis.user.dto.UpdatePasswordDto;
-import com.webgis.user.dto.UserResponseDto;
-import com.webgis.user.dto.UserUpdateDto;
+import com.webgis.user.dto.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
@@ -49,6 +46,22 @@ public class UserController {
         if(user.isPresent()){
             final UserResponseDto userResponseDto= new UserResponseDto(user.get());
             return ResponseEntity.status(200).body(userResponseDto);
+        }
+        return ResponseEntity.status(404).build();
+    }
+
+    @GetMapping("/profile/annotation")
+    public ResponseEntity<UserAnnotationDto> getUserForAnnotation(HttpServletRequest request){
+        final String token = cookieService.getJwtFromCookie(request);
+        final String username = jwtService.extractUsername(token);
+        final Optional<User> user= userService.findByUsername(username);
+
+        if(user.isPresent()){
+            final UserAnnotationDto userAnnotationDto= new UserAnnotationDto(
+                    user.get().getId(),
+                    user.get().getUsername()
+            );
+            return ResponseEntity.status(200).body(userAnnotationDto);
         }
         return ResponseEntity.status(404).build();
     }

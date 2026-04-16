@@ -8,6 +8,7 @@ import {UpdatePasswordDto} from '../../../shared/models/UserModel/UpdatePassword
 import {environment} from '../../rest-api-management/environment';
 import {API_ENDPOINTS} from '../../rest-api-management/endpoint';
 import {DeleteAccountDto} from '../../../shared/models/UserModel/DeleteAccountDto';
+import {UserAnnotationDto} from '../../../shared/models/UserModel/UserAnnotationDto';
 
 
 @Injectable({
@@ -30,6 +31,12 @@ export class UsersServices {
     return this.httpClient.get<UserResponseDto>(`${this.baseUrl}${API_ENDPOINTS.USER.PROFILE}`, { withCredentials: true })
   }
 
+  /**
+   * @return the currently connected user with his ID and username for annotations
+   */
+  public getUserForAnnotation(): Observable<UserAnnotationDto> {
+    return this.httpClient.get<UserAnnotationDto>(`${this.baseUrl}${API_ENDPOINTS.USER.ANNOTATIONS}`, { withCredentials: true })
+  }
   /**
    * Update the currently connected user information
    *

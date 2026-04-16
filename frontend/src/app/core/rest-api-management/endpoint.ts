@@ -4,7 +4,8 @@ export const API_ENDPOINTS = {
     PROFILE: '/user/profile',
     CHANGEPASSWORD: '/user/changePassword',
     DELETE: '/user/delete',
-    ISADMIN: '/user/isAdmin'
+    ISADMIN: '/user/isAdmin',
+    ANNOTATIONS: '/user/profile/annotation'
   },
   AUTH: {
     LOGIN: '/auth/login',
