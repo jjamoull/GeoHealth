@@ -153,7 +153,7 @@ public class EvaluatorAgreementMeasureService {
      * @param evaluationForms all the evaluation forms of the map you are interested in
      *
      * @return the matrix required to compute the krippendorff measure
-     *         (row: evaluator,column: evaluation for a division)
+     *         (row: evaluation for a division,column: evaluator)
      */
     private double[][] buildKrippensdorffMatrix(List<EvaluationForm> evaluationForms){
         final List<Long> usersIdList= evaluationForms.stream()
@@ -198,7 +198,7 @@ public class EvaluatorAgreementMeasureService {
      *
      * @param evaluationForms all the evaluation forms of the map you are interested in
      *
-     * @return a Map containing for each user (id) the divisions the user evaluated and the risk perceived for these divisions
+     * @return a Map containing for each user (id) the divisions the user evaluated and the agreement score for these divisions
      */
     private Map<Long,Map<String,Integer>> buildKrippendorffHashMap(List<EvaluationForm> evaluationForms){
         final Map<Long,Map<String,Integer>> krippendorffHashMap= new HashMap<>();
@@ -209,7 +209,7 @@ public class EvaluatorAgreementMeasureService {
             }
             krippendorffHashMap
                     .get(form.getUser().getId())
-                    .put(form.getDivision(), RiskLevel.fromString(form.getPerceivedRisk()).getScore());
+                    .put(form.getDivision(), form.getAgreementLevel());
 
         }
         return krippendorffHashMap;
