@@ -17,7 +17,7 @@ export class MapLayerHelper {
   private marker: any = null;
   // the red rectangle highlighting the clicked tile block
   private highlightLayer: any = null;
-
+  // all annotation on the map
   private geoManLayer: any;
 
   private inspectModeActive: boolean = false;
@@ -105,6 +105,51 @@ export class MapLayerHelper {
           element.style.pointerEvents = 'auto';
         }
       }
+    });
+  }
+
+  /**
+   * Get annotations and transform it into string to allow the data to be sent to backend
+   *
+   * @return :
+   *    GeoJSON data (String) : if the geoman data can be translated and ready to send
+   *    null : otherwise
+   * */
+  getGeomanGeojson(): String | null {
+    if (this.geoManLayer == null){
+      return null;
+    }
+
+    try {
+      const geomanInGeojson = this.geoManLayer.toGeoJSON();
+
+      if (geomanInGeojson.feature.length === 0){
+        return null;
+      }else {
+        return JSON.stringify(geomanInGeojson);
+      }
+    } catch (e) {
+        console.log("Issue during transformation of annotations")
+        return null;
+    }
+  }
+
+  /**
+   * Take geojson data in string format into GeoJSON applicable on the
+   * layer and add it on the map
+   *
+   * @param geoJsonString : GeoJSON data in String format
+   * */
+  loadAnnotationsFromGeoJson(geoJsonString: string): void {
+    if (!this.leaflet || !this.geoManLayer) {
+      return;
+    }
+
+    this.geoManLayer.clearLayers();
+    const geoJsonData = JSON.parse(geoJsonString);
+
+    this.leaflet.geoJSON(geoJsonData).eachLayer((layer: any) => {
+      this.geoManLayer.addLayer(layer);
     });
   }
 
