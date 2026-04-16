@@ -1,20 +1,20 @@
 <div cdkDrag class="evaluation-modal">
   <div class="modal-header" cdkDragHandle>
-    <h2>Evaluation for a division</h2>
+    <h2>{{ 'evalmodal.title' | transloco }}</h2>
     <button class="close-btn" (click)="onClose()">×</button>
   </div>
 
   <div class="modal-content">
     <form id="evaluation-form">
       <div class="item">
-        <label>Division</label>
+        <label>{{ 'evalmodal.division' | transloco }}</label>
         <input type="text" [value]="division?.NAME_2" readonly>
       </div>
 
       <div class="item">
         <label>
-          Risk assessment (1-4)
-          <app-tooltip-description [description]="'Indiquez votre degré d\'accord entre l\'indice de risque moyen modélisé et le risque réel tel que vous le percevez sur le terrain.\n\nVeuillez répondre sur une échelle de 1 à 4 :\n1 = pas du tout d\'accord\n2 = plutôt pas d\'accord\n3 = plutôt d\'accord\n4 = tout à fait d\'accord'"/>
+          {{ 'evalmodal.firstcriteria' | transloco }}
+          <app-tooltip-description [description]="'evalmodal.firstdescription' | transloco"/>
         </label>
         <app-rating-scaler
           name="agreementLevel"
@@ -26,8 +26,8 @@
 
       <div class="item">
         <label>
-          Certainty (1-4)
-          <app-tooltip-description [description]="'Indiquez votre niveau de certitude concernant votre propre évaluation. Autrement dit, à quel point êtes-vous sûr(e) de votre réponse ?\n\n Veuillez répondre sur une échelle de 1 à 4 :\n1 = très incertain(e)\n2 = plutôt incertain(e)\n3 = plutôt certain(e)\n4 = très certain(e)'"/>
+          {{ 'evalmodal.secondcriteria' | transloco }}
+          <app-tooltip-description [description]="'evalmodal.seconddescription' | transloco"/>
         </label>
         <app-rating-scaler
           name="certaintyLevel"
@@ -39,8 +39,8 @@
 
       <div class="item">
         <label>
-          Perceived risk (low-high)
-          <app-tooltip-description [description]="'Veuillez indiquer la catégorie de risque que vous attribuez à ce département sur la base de votre perception du terrain, de votre expertise et des informations dont vous disposez.\n\nChoix possibles : faible, moyen, élevé.'"/>
+          {{ 'evalmodal.thirdcriteria' | transloco }}
+          <app-tooltip-description [description]="'evalmodal.thirddescription' | transloco"/>
         </label>
         <app-rating-scaler
           name="perceivedRisk"
@@ -52,8 +52,8 @@
 
       <div class="item">
         <label>
-          Visibility
-          <app-tooltip-description [description]="'Cliquez pour rendre votre évaluation visible par les autres utilisateurs, et inversement.'"/>
+          {{ 'evalmodal.fourthcriteria' | transloco }}
+          <app-tooltip-description [description]="'evalmodal.fourthdescription' | transloco"/>
         </label>
         <app-rating-scaler
           name="isPublic"
@@ -65,8 +65,8 @@
 
       <div class="item">
         <label>
-          Comment
-          <app-tooltip-description [description]="'Vous pouvez ajouter un commentaire libre afin de justifier votre évaluation ou d’apporter des précisions contextuelles.\n\n Par exemple : données manquantes, événements récents, connaissance locale, biais perçus, évolution inhabituelle de la situation, etc.'"/>
+          {{ 'evalmodal.comment' | transloco }}
+          <app-tooltip-description [description]="'evalmodal.commentdescription' | transloco"/>
         </label>
         <textarea placeholder="Enter your comment..." [(ngModel)]="comment" name="comment"></textarea>
       </div>
@@ -75,7 +75,7 @@
 
   <div class="footer">
     <app-button
-      [text]="existingForm !== null ? 'Save changes' : 'Save'"
+      [text]="existingForm !== null ? ('evalmodal.savechangesbutton' | transloco) : ('evalmodal.savebutton' | transloco)"
       [variant]="'success'"
       (click)="onSave(isPublic)">
     </app-button>
