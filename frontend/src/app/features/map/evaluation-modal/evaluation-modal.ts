@@ -10,12 +10,13 @@ import { RatingScalerComponent } from '../rating-scaler/rating-scaler';
 import {ResponseEvaluationFormDto} from '../../../shared/models/EvaluationFormModel/ResponseEvaluationFormDto';
 import { UpdateEvaluationFormDto } from '../../../shared/models/EvaluationFormModel/UpdateEvaluationFormDto';
 import {TooltipDescriptionComponent } from '../../../shared/components/tooltip-description/tooltip-description';
+import {TranslocoPipe} from "@jsverse/transloco";
 
 
 @Component({
   selector: 'app-evaluation-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent,TooltipDescriptionComponent],
+    imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent, TooltipDescriptionComponent, TranslocoPipe],
   templateUrl: './evaluation-modal.html',
   styleUrl: './evaluation-modal.css',
 })

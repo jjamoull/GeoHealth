@@ -11,7 +11,7 @@
         <input
           type="text"
           list="risk-factor-list"
-          placeholder="Look for a risk factor…"
+          [placeholder]="'map.placeholder' | transloco"
           (change)="onMapSelected($event)"
           (keydown.enter)="onMapSelected($event)"
         />
@@ -21,10 +21,10 @@
 
       <!--  dropdown -->
       <datalist id="risk-factor-list">
-        <option value="Division only">Division only</option>
+        <option [value]="'map.dropdown' | transloco">{{ 'map.dropdown' | transloco }}</option>
 
         @if(rasterMap()) {
-          <option [value]="rasterMap()!.title">{{ rasterMap()!.title }}</option>
+          <option [value]="'map.dropdown2' | transloco">{{ 'map.dropdown2' | transloco }}</option>
         }
 
         @for (map of riskFactorMaps(); track map.id) {
@@ -43,16 +43,16 @@
     <div class="info-card">
       @if(selectedDivision()) {
         <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
-        <p>Region: {{selectedDivision().NAME_1}}</p>
-        <p>Name: {{selectedDivision().NAME_2}}</p>
-        <p>Average risk index: {{selectedDivision().rsk_cmb.toFixed(2)}}</p>
+        <p>{{ 'map.info2' | transloco }} {{selectedDivision().NAME_1}}</p>
+        <p>{{ 'map.info3' | transloco }} {{selectedDivision().NAME_2}}</p>
+        <p>{{ 'map.info4' | transloco }}  {{selectedDivision().rsk_cmb.toFixed(2)}}</p>
         <p class="risk-row">
-          Risk:
+          {{ 'map.info5' | transloco }}
           <span class="dot" [style.background]="getRiskColor(selectedDivision().rsk_cls)"></span>
           {{selectedDivision().Risk_categ}}
         </p>
       } @else {
-        <p class="card-label">Click a Division</p>
+        <p class="card-label">{{ 'map.label' | transloco }} </p>
       }
     </div>
 
@@ -71,11 +71,11 @@
     </div>
     @if(selectedDivision()) {
       <div class="metrics">
-        <div class="metrics-header">Metrics</div>
+        <div class="metrics-header">{{ 'map.metric' | transloco }} </div>
         <div class="metrics-body">
           <p>
-            Divisional Consensus Score
-            <app-tooltip-description description="Description of value" />
+            {{ 'map.metric1' | transloco }}
+            <app-tooltip-description [description]="'map.metric1description' | transloco" />
           </p>
           <strong>
             {{ mapMetrics.divisionalConsensusScore() !== null
@@ -84,8 +84,8 @@
           </strong>
 
           <p>
-            National Consensus Score
-            <app-tooltip-description description="Description of value" />
+            {{ 'map.metric2' | transloco }}
+            <app-tooltip-description [description]="'map.metric2description' | transloco" />
           </p>
           <strong>
             {{ mapMetrics.nationalConsensusScore() !== null
@@ -94,8 +94,8 @@
           </strong>
 
           <p>
-            Krippendorff Alpha
-            <app-tooltip-description description="Description of value" />
+            {{ 'map.metric3' | transloco }}
+            <app-tooltip-description [description]="'map.metric3description' | transloco" />
           </p>
           <strong>
             {{ mapMetrics.krippendorffAlpha() !== null
@@ -104,8 +104,8 @@
           </strong>
 
           <p>
-            Mean Divisional Agreement Score
-            <app-tooltip-description description="Description of value" />
+            {{ 'map.metric4' | transloco }}
+            <app-tooltip-description [description]="'map.metric4description' | transloco" />
           </p>
           <strong>
             {{ mapMetrics.meanDivisionalAgreementScore() !== null
@@ -114,8 +114,8 @@
           </strong>
 
           <p>
-            Mean Certainty
-            <app-tooltip-description description="Description of value" />
+            {{ 'map.metric5' | transloco }}
+            <app-tooltip-description [description]="'map.metric5description' | transloco" />
           </p>
           <strong>
             {{ mapMetrics.meanCertaintyForMapForDivision() !== null
@@ -124,16 +124,16 @@
           </strong>
 
           <p>
-            Dominant Perceived Risk
-            <app-tooltip-description description="Description of value" />
+            {{ 'map.metric6' | transloco }}
+            <app-tooltip-description [description]="'map.metric6description' | transloco" />
           </p>
           <strong>
             {{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}
           </strong>
 
           <p>
-            Weighted Divisional Level Agreement
-            <app-tooltip-description description="Description of value" />
+            {{ 'map.metric7' | transloco }}
+            <app-tooltip-description [description]="'map.metric7description' | transloco" />
           </p>
           <strong>
             {{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null
@@ -142,8 +142,8 @@
           </strong>
 
           <p>
-            National Model Field Agreement
-            <app-tooltip-description description="Description of value" />
+            {{ 'map.metric8' | transloco }}
+            <app-tooltip-description [description]="'map.metric8description' | transloco" />
           </p>
           <strong>
             {{ mapMetrics.nationalModelFieldAgreementScore() !== null
@@ -163,14 +163,14 @@
     <div class="side-footer">
       @if(selectedDivision() && !showEvaluationModal()){
         <app-button
-          [text]="existingForm() ? 'Edit Evaluation' : 'Add Evaluation'"
+          [text]="existingForm() ? ('map.editbutton' | transloco) : ('map.addbutton' | transloco)"
           [variant]="'success'"
           (click)="onOpenEvaluation()">
         </app-button>
       }
       @if(existingForm()) {
         <app-button
-          [text]="'Delete Evaluation'"
+          [text]="'map.deletebutton' | transloco"
           [variant]="'danger'"
           (click)="onDeleteEvaluation()">
         </app-button>

@@ -28,10 +28,11 @@ import {MeanMeasureService} from '../../core/service/MeasureService/MeanMeasureS
 import {
   ModelEvaluationMeasureService
 } from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent, TooltipDescriptionComponent],
+    imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent, TooltipDescriptionComponent, TranslocoPipe],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
