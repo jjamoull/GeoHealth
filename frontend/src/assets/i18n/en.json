@@ -131,6 +131,7 @@
     "savechangesbutton": "Save changes",
     "savebutton": "Save",
     "commentdescription": "You can add a free comment to justify your evaluation or provide contextual details. For example: missing data, recent events, local knowledge, perceived biases, unusual changes in the situation, etc.",
+    "placeholder" : "Enter your comment...",
     "firstoption": "high",
     "secondoption": "medium",
     "thirdoption": "low",

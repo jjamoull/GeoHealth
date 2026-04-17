@@ -131,6 +131,7 @@
     "savechangesbutton": "Sauvegarder les modifications",
     "savebutton": "Sauvegarder",
     "commentdescription" : "Vous pouvez ajouter un commentaire libre afin de justifier votre évaluation ou d’apporter des précisions contextuelles. Par exemple : données manquantes, événements récents, connaissance locale, biais perçus, évolution inhabituelle de la situation, etc.",
+    "placeholder" : "Saisissez votre commentaire...",
     "firstoption": "élevé",
     "secondoption": "moyen",
     "thirdoption": "faible",

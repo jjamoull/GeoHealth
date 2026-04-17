@@ -68,7 +68,7 @@
           {{ 'evalmodal.comment' | transloco }}
           <app-tooltip-description [description]="'evalmodal.commentdescription' | transloco"/>
         </label>
-        <textarea placeholder="Enter your comment..." [(ngModel)]="comment" name="comment"></textarea>
+        <textarea [placeholder]="'evalmodal.placeholder' | transloco" [(ngModel)]="comment" name="comment"></textarea>
       </div>
     </form>
   </div>
