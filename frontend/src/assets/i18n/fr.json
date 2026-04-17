@@ -141,6 +141,7 @@
   "map": {
     "placeholder": "Rechercher un facteur de risque…",
     "dropdown": "Département uniquement",
+    "dropdown2" : "Couche raster",
     "info2": "Région :",
     "info3": "Nom :",
     "info4": "Indice de risque moyen :",
@@ -155,7 +156,7 @@
     "metric3description": "Description de la valeur",
     "metric4": "Score d'accord moyen par département",
     "metric4description": "Description de la valeur",
-    "metric5": "Certitude moyenne",
+    "metric5": "Certitude moyenne départementale",
     "metric5description": "Description de la valeur",
     "metric6": "Risque perçu dominant",
     "metric6description": "Description de la valeur",

@@ -24,7 +24,7 @@
         <option [value]="'map.dropdown' | transloco">{{ 'map.dropdown' | transloco }}</option>
 
         @if(rasterMap()) {
-          <option [value]="rasterMap()!.title">{{ rasterMap()!.title }}</option>
+          <option [value]="'map.dropdown2' | transloco">{{ 'map.dropdown2' | transloco }}</option>
         }
 
         @for (map of riskFactorMaps(); track map.id) {

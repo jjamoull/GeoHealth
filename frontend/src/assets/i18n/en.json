@@ -141,6 +141,7 @@
   "map":{
     "placeholder": "Look for a risk factor…",
     "dropdown" : "Division only",
+    "dropdown2" : "Raster layer",
     "info2": "Region:",
     "info3": "Name:",
     "info4": "Average risk index:",
