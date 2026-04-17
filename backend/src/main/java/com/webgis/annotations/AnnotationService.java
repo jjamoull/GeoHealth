@@ -6,11 +6,9 @@ import java.util.Optional;
 
 @Service
 public class AnnotationService {
-    private AnnotationRepository annotationRepository;
+    private final AnnotationRepository annotationRepository;
 
     public AnnotationService(AnnotationRepository annotationRepository){this.annotationRepository = annotationRepository;}
-
-    public AnnotationService(){}
 
     /**
      * Search for annotations db using their identifier

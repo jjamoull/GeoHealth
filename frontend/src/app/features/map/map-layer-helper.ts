@@ -123,7 +123,7 @@ export class MapLayerHelper {
     try {
       const geomanInGeojson = this.geoManLayer.toGeoJSON();
 
-      if (geomanInGeojson.feature.length === 0){
+      if (geomanInGeojson.features.length === 0){
         return null;
       }else {
         return JSON.stringify(geomanInGeojson);
@@ -276,5 +276,12 @@ export class MapLayerHelper {
 
   getAnnotations(): any {
     console.log(this.geoManLayer.toGeoJSON());
+  }
+
+  clearGeomanLayers(): void {
+    if (!this.geoManLayer) {
+      return;
+    }
+    this.geoManLayer.clearLayers();
   }
 }

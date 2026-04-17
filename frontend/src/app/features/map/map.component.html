@@ -6,6 +6,36 @@
       -->
       <div class="map-selector">
 
+        <!--
+        Button to save annotation
+        -->
+        <button
+          (click)="saveAnnotation()"
+          [disabled]="isSaving"
+          class="save-btn">
+          {{ isSaving ? 'Is Saving...' : 'Save ?' }}
+          <!-- Message de retour -->
+          @if (saveMessage) {
+            <span class="save-message">{{ saveMessage }}</span>
+          }
+        </button>
+
+
+
+        <!--
+        Button to allow users to touch Geoman annotations or divisions
+        -->
+        <button
+          (click)="toggleInspectMode()"
+          [class.active]="inspectModeActive"
+          class="inspect-mode-btn"
+          title="Click on division"
+        >
+          <span *ngIf="inspectModeActive">View the division</span>
+          <span *ngIf="!inspectModeActive">Drawing mode</span>
+        </button>
+
+
         <!--  search bar -->
         <div class="search-wrapper">
           <input
@@ -33,15 +63,7 @@
         </datalist>
 
 
-        <button
-          (click)="toggleInspectMode()"
-          [class.active]="inspectModeActive"
-          class="inspect-mode-btn"
-          title="Click on division"
-        >
-          <span *ngIf="inspectModeActive">View the division</span>
-          <span *ngIf="!inspectModeActive">Drawing mode</span>
-        </button>
+
       </div>
 
 

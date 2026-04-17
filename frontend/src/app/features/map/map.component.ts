@@ -22,6 +22,10 @@ import {CAMEROON_ZOOM} from './map.constants';
 import{MeasureService} from '../../core/service/MeasureService/measureService';
 import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
 import {TooltipDescriptionComponent} from '../../shared/components/tooltip-description/tooltip-description';
+import {AnnotationService} from '../../core/service/MapService/AnnotationService/AnnotationService';
+import {Observable} from 'rxjs';
+import {UserAnnotationDto} from '../../shared/models/UserModel/UserAnnotationDto';
+import {AnnotationDTO} from '../../shared/models/MapModel/AnnotationModel/AnnotationDTO';
 
 @Component({
   selector: 'app-map',
@@ -58,6 +62,15 @@ export class MapComponent implements AfterViewInit {
 
   inspectModeActive : boolean = false;
 
+  // about annotations
+  currentMapId = -1;
+  currentUserId = -1;
+  currentDivision = this.selectedDivision;
+  saveMessage = '';
+  isSaving = false;
+  private lastDivisionName: string | null = null;
+
+
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -69,6 +82,7 @@ export class MapComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
     private measureService: MeasureService,
+    private annotationService: AnnotationService
     ){}
 
   /**
@@ -190,6 +204,7 @@ export class MapComponent implements AfterViewInit {
    *   - latlng: the coordinates of the click on the map
    */
   private onDivisionClicked(event: { properties: any, latlng: any }): void {
+
     if (this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
       this.existingForm.set(null);
@@ -198,11 +213,28 @@ export class MapComponent implements AfterViewInit {
       this.mapHelper.clearMarker();
       return;
     }
+
+    // delete annotation if the division selected is not the same that the previous
+    if (this.lastDivisionName !== event.properties.NAME_2) {
+      this.mapHelper.clearGeomanLayers();
+      this.lastDivisionName = event.properties.NAME_2;
+    }
+
     this.selectedDivision.set(event.properties);
     this.mapHelper.placeMarker(event.latlng);
     this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({
       next: (form) => this.existingForm.set(form),
       error: () => this.existingForm.set(null)
+    });
+
+    this.annotationService.getAnnotations(this.mapId, this.currentUserId, event.properties.NAME_2).subscribe({
+      next: (data) => {
+        if (data?.geoJson) {
+          this.mapHelper.loadAnnotationsFromGeoJson(data.geoJson.toString());
+        }
+      },
+      error: () => {
+      }
     });
 
   this.loadMeasurements(event.properties.NAME_2, event.properties.Risk_categ);
@@ -331,4 +363,62 @@ export class MapComponent implements AfterViewInit {
     this.inspectModeActive = !this.inspectModeActive;
     this.mapHelper.toggleInspectMode(this.inspectModeActive);
   }
+
+
+  // ------- about annotations -------
+  public saveAnnotation() {
+    const geojsonData = this.mapHelper.getGeomanGeojson();
+
+    if (geojsonData == null) {
+      this.saveMessage = 'No annotations here';
+      return;
+    }
+    if (this.selectedDivision == null) {
+      this.saveMessage = 'No divisions selected';
+      return;
+    }
+
+    this.isSaving = true;
+
+    this.usersServices.getUserForAnnotation().subscribe({
+      next: userInfo => {
+
+        console.log("selectedDivision contenu :", this.selectedDivision())
+
+        const dto: AnnotationDTO = {
+          mapId: this.mapId,
+          userId: userInfo.id,
+          division: this.selectedDivision().dvsn_nm,
+          geoJson: geojsonData
+        };
+        console.log("-- DTO envoyé au backend --")
+        console.log(dto)
+        console.log("---------------------------")
+
+
+        this.annotationService.postAnnotations(dto).subscribe({
+          next: () => {
+            this.saveMessage = 'Annotations saved';
+            this.isSaving = false;
+            // Allow angular to update the state displayed of teh saveMessage
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            this.saveMessage = 'Annotations cant be saved';
+            this.isSaving = false;
+            console.error(err);
+            this.cdr.detectChanges();
+          }
+        });
+
+      },
+      error: (err) => {
+        this.saveMessage = 'User not detected';
+        this.isSaving = false;
+        console.error(err);
+      }
+    });
+  }
+
+
 }

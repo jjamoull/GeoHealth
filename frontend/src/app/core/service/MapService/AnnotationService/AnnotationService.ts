@@ -22,8 +22,8 @@ export class AnnotationService {
     );
   }
 
-  public postAnnotations(dto:AnnotationDTO): Observable<AnnotationDTO> {
-    return this.HttpClient.post<AnnotationDTO>(`${this.baseUrl}${API_ENDPOINTS.ANNOTATIONS.POST}`,
+  public postAnnotations(dto:AnnotationDTO): Observable<any> {
+    return this.HttpClient.post<any>(`${this.baseUrl}${API_ENDPOINTS.ANNOTATIONS.POST}`,
       dto,
       {withCredentials: true}
     );

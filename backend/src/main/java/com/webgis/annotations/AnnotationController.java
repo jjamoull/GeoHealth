@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/annotation")
-
 public class AnnotationController {
     final private AnnotationService annotationService;
 
