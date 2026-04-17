@@ -44,7 +44,7 @@
         </label>
         <app-rating-scaler
           name="perceivedRisk"
-          [options]="['high', 'medium', 'low']"
+          [options]="[('evalmodal.firstoption' | transloco), ('evalmodal.secondoption' | transloco), ('evalmodal.thirdoption' | transloco)]"
           [value]="perceivedRisk?.toString() || ''"
           (valueChange)="perceivedRisk = $event">
         </app-rating-scaler>
@@ -57,7 +57,7 @@
         </label>
         <app-rating-scaler
           name="isPublic"
-          [options]="[isPublic ? 'Public' : 'Private']"
+          [options]="[isPublic ? ('evalmodal.public' | transloco) : ('evalmodal.private' | transloco)]"
           [value]="isPublic ? (isPublic ? 'Public' : 'Private') : ''"
           (valueChange)="isPublic = !isPublic">
         </app-rating-scaler>
