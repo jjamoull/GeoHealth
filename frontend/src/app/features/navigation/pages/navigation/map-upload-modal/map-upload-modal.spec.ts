@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopUpComponent } from './pop-up.component';
+import { MapUploadModal } from './map-upload-modal';
 
-describe('PopUp', () => {
-  let component: PopUpComponent;
-  let fixture: ComponentFixture<PopUpComponent>;
+describe('MapUploadModal', () => {
+  let component: MapUploadModal;
+  let fixture: ComponentFixture<MapUploadModal>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PopUpComponent]
+      imports: [MapUploadModal]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PopUpComponent);
+    fixture = TestBed.createComponent(MapUploadModal);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

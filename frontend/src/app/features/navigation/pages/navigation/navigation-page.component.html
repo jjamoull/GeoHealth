@@ -41,10 +41,10 @@
               (clicked) = "openPopUp('addRiskFactor')">
             </app-button>-->
             <div class="new-map-title">
-              Add a new map :
+            {{ 'navigation.add-map' | transloco }}
             </div>
-            <button class="new-map-button" id="final-risk" (click)="openPopUp('addMap')">Final risk<i class="fas fa-plus" id="plus-icon" aria-hidden="true"></i></button>
-            <button class="new-map-button" id="risk-factor" (click)="openPopUp('addRiskFactor')">Risk factor<i class="fas fa-plus" id="plus-icon"></i></button>
+            <button class="new-map-button" id="final-risk" (click)="openPopUp('addMap')">{{ 'navigation.final-risk' | transloco }}<i class="fas fa-plus" id="plus-icon" aria-hidden="true"></i></button>
+            <button class="new-map-button" id="risk-factor" (click)="openPopUp('addRiskFactor')">{{ 'navigation.risk-factor' | transloco }}<i class="fas fa-plus" id="plus-icon"></i></button>
           }
 
         </div>
@@ -52,14 +52,14 @@
           <span class ="fas fa-times" id="times"> </span>
           <span class ="fas fa-bars" id="bars"> </span>
         </label>
-        <div class="search-map-title">Search for a map :</div>
+        <div class="search-map-title">{{ 'navigation.search' | transloco }}</div>
         <div class="search-bar-container">
           <div class="search-bar">
             <input id="map-search"
                    name="map-search"
                    type="search"
                    class="search-field"
-                   placeholder="Rechercher…"
+                   placeholder="{{ 'navigation.search-placeholder' | transloco }}"
                    autocomplete="off"
                    [(ngModel)]="searchText"
                    (input)="searchMaps()">
@@ -158,7 +158,7 @@
     @if (!isSearching) {
       <div class="final-risk-maps">
         <div class="rounded-card">
-          <h3 (click)="toggleDropdown('finalRisks')" class="title">Final risk maps</h3>
+          <h3 (click)="toggleDropdown('finalRisks')" class="title">{{ 'navigation.final-map' | transloco }}</h3>
           @if (finalRisksOpen) {
             <svg (click)="toggleDropdown('finalRisks')" class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg"
                  fill="currentColor" viewBox="0 0 24 24" >
@@ -196,7 +196,7 @@
     @if (!isSearching) {
       <div class="risk-factor-maps">
         <div class="rounded-card">
-          <h3 (click)="toggleDropdown('riskFactors')" class="title">Risk factor maps</h3>
+          <h3 (click)="toggleDropdown('riskFactors')" class="title">{{ 'navigation.factor-map' | transloco }}</h3>
           @if (riskFactorsOpen) {
             <svg (click)="toggleDropdown('riskFactors')" id="up" class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg"
                  fill="currentColor" viewBox="0 0 24 24" >
@@ -235,7 +235,7 @@
     @if (isSearching && !noResults) {
       <div class="all-available-maps">
         <div class="rounded-card">
-          <h3 class="title">Search results</h3>
+          <h3 class="title">{{ 'navigation.search-results' | transloco }}</h3>
         </div>
 
         <div class="all-the-maps">
@@ -256,10 +256,10 @@
     @if (noResults) {
       <div class="no-results">
         <i class="fas fa-search"></i>
-        <h3>No map found</h3>
-        <p>Try another title or clear the search.</p>
+        <h3>{{ 'navigation.nomap' | transloco }}</h3>
+        <p>{{ 'navigation.try-another' | transloco }}</p>
         <button class="clear-search-button" (click)="clearSearch()">
-          Back to all maps
+          {{ 'navigation.backto' | transloco }}
         </button>
       </div>
     }
