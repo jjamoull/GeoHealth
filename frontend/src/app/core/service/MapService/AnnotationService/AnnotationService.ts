@@ -17,7 +17,7 @@ export class AnnotationService {
   public getAnnotations(mapId:number,
                         userId:number,
                         division:String): Observable<AnnotationDTO> {
-    return this.HttpClient.get<AnnotationDTO>(`${this.baseUrl}${API_ENDPOINTS.ANNOTATIONS.GET}/${mapId}/${userId}/${division}\``,
+    return this.HttpClient.get<AnnotationDTO>(`${this.baseUrl}${API_ENDPOINTS.ANNOTATIONS.GET}/${mapId}/${userId}/${division}`,
       { withCredentials: true}
     );
   }

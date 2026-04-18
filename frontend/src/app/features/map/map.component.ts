@@ -227,15 +227,25 @@ export class MapComponent implements AfterViewInit {
       error: () => this.existingForm.set(null)
     });
 
-    this.annotationService.getAnnotations(this.mapId, this.currentUserId, event.properties.NAME_2).subscribe({
-      next: (data) => {
-        if (data?.geoJson) {
-          this.mapHelper.loadAnnotationsFromGeoJson(data.geoJson.toString());
-        }
-      },
-      error: () => {
+    this.usersServices.getUserForAnnotation().subscribe({
+      next: userInfo => {
+        this.currentUserId = userInfo.id
+
+        this.annotationService.getAnnotations(this.mapId,this.currentUserId, event.properties.dvsn_nm).subscribe({
+          next: (data) => {
+            if (data?.geoJson) {
+              this.mapHelper.loadAnnotationsFromGeoJson(data.geoJson.toString());
+              this.cdr.detectChanges();
+            }
+          },
+          error: (err) => {
+            console.log("Errors with annotation :", err);
+          }
+        });
       }
     });
+
+
 
   this.loadMeasurements(event.properties.NAME_2, event.properties.Risk_categ);
   }
