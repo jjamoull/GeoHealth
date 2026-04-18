@@ -1,16 +1,11 @@
 import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, ChangeDetectorRef, computed} from '@angular/core';
-import {isPlatformBrowser, CommonModule} from '@angular/common';
+import {CommonModule, isPlatformBrowser} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
 import { RasterMapService } from '../../core/service/MapService/RasterService/RasterMapService';
 import { RasterMapListDto } from '../../shared/models/MapModel/RasterMapModel/RasterMapListDto';
-import {ButtonComponent} from '../../shared/components/button.component/button.component';
-import {EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
-
-import { MapLegendComponent } from './map-legend/map-legend';
 import {ResponseEvaluationFormDto} from '../../shared/models/EvaluationFormModel/ResponseEvaluationFormDto';
 import {EvaluationFormService} from '../../core/service/EvaluationFormService/EvaluationFormService';
-import {EvaluationCommentComponent} from './evaluation-comment/evaluation-comment';
 import {UsersServices} from '../../core/service/UserService/users-services';
 import {AdminEvaluationFormService} from '../../core/service/AdminService/AdminEvaluationFormService/AdminEvaluationFormService';
 import {AdminResponseEvaluationFormDto} from '../../shared/models/AdminModel/EvaluationFormModel/AdminResponseEvaluationFormDto';
@@ -18,25 +13,23 @@ import { MapLayerHelper } from './map-layer-helper';
 import { RISK_LEVELS, getRiskColor } from './map-utils';
 import {CAMEROON_COORDINATES} from './map.constants';
 import {CAMEROON_ZOOM} from './map.constants';
-import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
-import {TooltipDescriptionComponent} from '../../shared/components/tooltip-description/tooltip-description';
 import {AnnotationService} from '../../core/service/MapService/AnnotationService/AnnotationService';
-import {Observable} from 'rxjs';
-import {UserAnnotationDto} from '../../shared/models/UserModel/UserAnnotationDto';
 import {AnnotationDTO} from '../../shared/models/MapModel/AnnotationModel/AnnotationDTO';
 import {MapMetrics} from './map.metrics';
-import {
-  EvaluatorAgreementMeasureService
-} from '../../core/service/MeasureService/EvaluatorAgreementMeasureService/evaluatorAgreementMeasureService';
+import {EvaluatorAgreementMeasureService} from '../../core/service/MeasureService/EvaluatorAgreementMeasureService/evaluatorAgreementMeasureService';
 import {MeanMeasureService} from '../../core/service/MeasureService/MeanMeasureService/meanMeasureService';
-import {
-  ModelEvaluationMeasureService
-} from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
-import {TranslocoPipe} from "@jsverse/transloco";
+import {ModelEvaluationMeasureService}from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
+import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
+import {TranslocoPipe} from '@jsverse/transloco';
+import {MapLegendComponent} from './map-legend/map-legend';
+import {TooltipDescriptionComponent} from '../../shared/components/tooltip-description/tooltip-description';
+import {ButtonComponent} from '../../shared/components/button.component/button.component';
+import {EvaluationModalComponent} from './evaluation-modal/evaluation-modal';
+import {EvaluationCommentComponent} from './evaluation-comment/evaluation-comment';
 
 @Component({
   selector: 'app-map',
-    imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent, TooltipDescriptionComponent, TranslocoPipe],
+  imports: [RouterModule, CommonModule, TranslocoPipe, MapLegendComponent, TooltipDescriptionComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
@@ -90,19 +83,15 @@ export class MapComponent implements AfterViewInit {
     private adminEvaluationFormService:AdminEvaluationFormService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private measureService: MeasureService,
-    private annotationService: AnnotationService
-    ){}
+    private annotationService: AnnotationService,
     private evaluatorAgreementMeasureService:EvaluatorAgreementMeasureService,
     private meanMeasureService: MeanMeasureService,
     private modelEvaluationMeasureService: ModelEvaluationMeasureService,
-  ){
-
- this.mapMetrics= new MapMetrics(
-      this.evaluatorAgreementMeasureService,
-      this.meanMeasureService,
-      this.modelEvaluationMeasureService
-    )
+    ){
+   this.mapMetrics= new MapMetrics(
+        this.evaluatorAgreementMeasureService,
+        this.meanMeasureService,
+        this.modelEvaluationMeasureService)
   }
 
 
@@ -225,6 +214,11 @@ export class MapComponent implements AfterViewInit {
    *   - latlng: the coordinates of the click on the map
    */
   private onDivisionClicked(event: { properties: any, latlng: any }): void {
+
+
+    if (!event.properties || !event.properties.NAME_2) {
+      return;
+    }
 
     if (this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);

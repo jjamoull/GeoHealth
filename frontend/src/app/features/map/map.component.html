@@ -1,78 +1,31 @@
 <div class="map-section">
   <div class="map-container">
 
-      <!--
-      The division or risk factor map to select
-      -->
-      <div class="map-selector">
-
-        <!--
-        Button to save annotation
-        -->
-        <button
-          (click)="saveAnnotation()"
-          [disabled]="isSaving"
-          class="save-btn">
-          {{ isSaving ? 'Is Saving...' : 'Save ?' }}
-          <!-- Message de retour -->
-          @if (saveMessage) {
-            <span class="save-message">{{ saveMessage }}</span>
-          }
-        </button>
-
-
-
-        <!--
-        Button to allow users to touch Geoman annotations or divisions
-        -->
-        <button
-          (click)="toggleInspectMode()"
-          [class.active]="inspectModeActive"
-          class="inspect-mode-btn"
-          title="Click on division"
-        >
-          <span *ngIf="inspectModeActive">View the division</span>
-          <span *ngIf="!inspectModeActive">Drawing mode</span>
-        </button>
-
-
-        <!--  search bar -->
-        <div class="search-wrapper">
-          <input
-            type="text"
-            list="risk-factor-list"
-            placeholder="Look for a risk factor…"
-            (change)="onMapSelected($event)"
-            (keydown.enter)="onMapSelected($event)"
-          />
-          <span class="dropdown-arrow">▼</span>
-
-        </div>
-
-        <!--  dropdown -->
-        <datalist id="risk-factor-list">
-          <option value="Division only">Division only</option>
-
-          @if(rasterMap()) {
-          <option [value]="rasterMap()!.title">{{ rasterMap()!.title }}</option>
-          }
-
-          @for (map of riskFactorMaps(); track map.id) {
-            <option [value]="map.title" class="optionInDropbar">{{ map.title }} </option>
-          }
-        </datalist>
-
-
-
-      </div>
-
-
-    <!--
-    The division or risk factor map to select
-    -->
+    <!-- Sélecteur + boutons -->
     <div class="map-selector">
 
-      <!--  search bar -->
+      <!-- Bouton save annotation -->
+      <button
+        (click)="saveAnnotation()"
+        [disabled]="isSaving"
+        class="save-btn">
+        {{ isSaving ? 'Is Saving...' : 'Save ?' }}
+        @if (saveMessage) {
+          <span class="save-message">{{ saveMessage }}</span>
+        }
+      </button>
+
+      <!-- Bouton inspect/dessin -->
+      <button
+        (click)="toggleInspectMode()"
+        [class.active]="inspectModeActive"
+        class="inspect-mode-btn"
+        title="Click on division">
+        <span *ngIf="inspectModeActive">View the division</span>
+        <span *ngIf="!inspectModeActive">Drawing mode</span>
+      </button>
+
+      <!-- Search bar -->
       <div class="search-wrapper">
         <input
           type="text"
@@ -82,145 +35,101 @@
           (keydown.enter)="onMapSelected($event)"
         />
         <span class="dropdown-arrow">▼</span>
-
       </div>
 
-      <!--  dropdown -->
+      <!-- Dropdown -->
       <datalist id="risk-factor-list">
         <option [value]="'map.dropdown' | transloco">{{ 'map.dropdown' | transloco }}</option>
-
         @if(rasterMap()) {
           <option [value]="'map.dropdown2' | transloco">{{ 'map.dropdown2' | transloco }}</option>
         }
+      </datalist>
 
+    </div> <!-- fin map-selector -->
 
+    <!-- La carte Leaflet -->
     <div id="map"></div>
 
-    <!--
-    Little square on the left of the map which display :
-      - Click a Division : if a division is not selected
-      - All information about a division  : otherwise
-    -->
+    <!-- Info card division -->
     <div class="info-card">
       @if(selectedDivision()) {
         <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
         <p>{{ 'map.info2' | transloco }} {{selectedDivision().NAME_1}}</p>
         <p>{{ 'map.info3' | transloco }} {{selectedDivision().NAME_2}}</p>
-        <p>{{ 'map.info4' | transloco }}  {{selectedDivision().rsk_cmb.toFixed(2)}}</p>
+        <p>{{ 'map.info4' | transloco }} {{selectedDivision().rsk_cmb.toFixed(2)}}</p>
         <p class="risk-row">
           {{ 'map.info5' | transloco }}
           <span class="dot" [style.background]="getRiskColor(selectedDivision().rsk_cls)"></span>
           {{selectedDivision().Risk_categ}}
         </p>
       } @else {
-        <p class="card-label">{{ 'map.label' | transloco }} </p>
+        <p class="card-label">{{ 'map.label' | transloco }}</p>
       }
     </div>
 
     <map-legend [riskLevels]="riskLevels"/>
 
-    <!--
-      All information about the map on the right of the page
-    -->
-  </div>
+  </div> <!-- fin map-container -->
+
+  <!-- Panel latéral -->
   <div class="side">
     <div class="title">
       <p>{{mapTitle()}}</p>
     </div>
     <div class="description">
-      <p>{{mapDescription() }}</p>
+      <p>{{mapDescription()}}</p>
     </div>
+
     @if(selectedDivision()) {
       <div class="metrics">
-        <div class="metrics-header">{{ 'map.metric' | transloco }} </div>
+        <div class="metrics-header">{{ 'map.metric' | transloco }}</div>
         <div class="metrics-body">
-          <p>
-            {{ 'map.metric1' | transloco }}
+
+          <p>{{ 'map.metric1' | transloco }}
             <app-tooltip-description [description]="'map.metric1description' | transloco" />
           </p>
-          <strong>
-            {{ mapMetrics.divisionalConsensusScore() !== null
-            ? (mapMetrics.divisionalConsensusScore() | number:'1.2-2')
-            : '/' }}
-          </strong>
+          <strong>{{ mapMetrics.divisionalConsensusScore() !== null ? (mapMetrics.divisionalConsensusScore() | number:'1.2-2') : '/' }}</strong>
 
-          <p>
-            {{ 'map.metric2' | transloco }}
+          <p>{{ 'map.metric2' | transloco }}
             <app-tooltip-description [description]="'map.metric2description' | transloco" />
           </p>
-          <strong>
-            {{ mapMetrics.nationalConsensusScore() !== null
-            ? (mapMetrics.nationalConsensusScore() | number:'1.2-2')
-            : '/' }}
-          </strong>
+          <strong>{{ mapMetrics.nationalConsensusScore() !== null ? (mapMetrics.nationalConsensusScore() | number:'1.2-2') : '/' }}</strong>
 
-          <p>
-            {{ 'map.metric3' | transloco }}
+          <p>{{ 'map.metric3' | transloco }}
             <app-tooltip-description [description]="'map.metric3description' | transloco" />
           </p>
-          <strong>
-            {{ mapMetrics.krippendorffAlpha() !== null
-            ? (mapMetrics.krippendorffAlpha() | number:'1.2-2')
-            : '/' }}
-          </strong>
+          <strong>{{ mapMetrics.krippendorffAlpha() !== null ? (mapMetrics.krippendorffAlpha() | number:'1.2-2') : '/' }}</strong>
 
-          <p>
-            {{ 'map.metric4' | transloco }}
+          <p>{{ 'map.metric4' | transloco }}
             <app-tooltip-description [description]="'map.metric4description' | transloco" />
           </p>
-          <strong>
-            {{ mapMetrics.meanDivisionalAgreementScore() !== null
-            ? (mapMetrics.meanDivisionalAgreementScore() | number:'1.2-2')
-            : '/' }}
-          </strong>
+          <strong>{{ mapMetrics.meanDivisionalAgreementScore() !== null ? (mapMetrics.meanDivisionalAgreementScore() | number:'1.2-2') : '/' }}</strong>
 
-          <p>
-            {{ 'map.metric5' | transloco }}
+          <p>{{ 'map.metric5' | transloco }}
             <app-tooltip-description [description]="'map.metric5description' | transloco" />
           </p>
-          <strong>
-            {{ mapMetrics.meanCertaintyForMapForDivision() !== null
-            ? (mapMetrics.meanCertaintyForMapForDivision() | number:'1.2-2')
-            : '/' }}
-          </strong>
+          <strong>{{ mapMetrics.meanCertaintyForMapForDivision() !== null ? (mapMetrics.meanCertaintyForMapForDivision() | number:'1.2-2') : '/' }}</strong>
 
-          <p>
-            {{ 'map.metric6' | transloco }}
+          <p>{{ 'map.metric6' | transloco }}
             <app-tooltip-description [description]="'map.metric6description' | transloco" />
           </p>
-          <strong>
-            {{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}
-          </strong>
+          <strong>{{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}</strong>
 
-          <p>
-            {{ 'map.metric7' | transloco }}
+          <p>{{ 'map.metric7' | transloco }}
             <app-tooltip-description [description]="'map.metric7description' | transloco" />
           </p>
-          <strong>
-            {{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null
-            ? (mapMetrics.weightedDivisionalLevelAgreementScore() | number:'1.2-2')
-            : '/' }}
-          </strong>
+          <strong>{{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null ? (mapMetrics.weightedDivisionalLevelAgreementScore() | number:'1.2-2') : '/' }}</strong>
 
-          <p>
-            {{ 'map.metric8' | transloco }}
+          <p>{{ 'map.metric8' | transloco }}
             <app-tooltip-description [description]="'map.metric8description' | transloco" />
           </p>
-          <strong>
-            {{ mapMetrics.nationalModelFieldAgreementScore() !== null
-            ? (mapMetrics.nationalModelFieldAgreementScore() | number:'1.2-2')
-            : '/' }}
-          </strong>
+          <strong>{{ mapMetrics.nationalModelFieldAgreementScore() !== null ? (mapMetrics.nationalModelFieldAgreementScore() | number:'1.2-2') : '/' }}</strong>
 
         </div>
-
       </div>
     }
 
-
-    <!--
-    Evaluation forms management
-    -->
+    <!-- Boutons formulaire évaluation -->
     <div class="side-footer">
       @if(selectedDivision() && !showEvaluationModal()){
         <app-button
@@ -236,7 +145,6 @@
           (click)="onDeleteEvaluation()">
         </app-button>
       }
-
       <app-button
         [text]="'Annotation'"
         [variant]="'danger'"
@@ -244,14 +152,11 @@
       </app-button>
     </div>
 
-  </div>
-</div>
+  </div> <!-- fin side -->
 
+</div> <!-- fin map-section -->
 
-
-<!--
-    Show evaluation form
-    -->
+<!-- Modal évaluation -->
 @if(showEvaluationModal()) {
   <app-evaluation-modal
     [division]="selectedDivision()"
@@ -261,17 +166,15 @@
   </app-evaluation-modal>
 }
 
-<!--
-    Show evaluations forms made by other evaluators
-    -->
+<!-- Liste des évaluations -->
 <div class="evaluation-section">
   <h2>Evaluations</h2>
   <div class="evaluation-list">
     @if(isAdmin){
       @for(form of allEvaluationFormsAdmin(); track form){
-        @if(form.division==selectedDivision().NAME_2 && form.isPublic){
+        @if(form.division == selectedDivision().NAME_2 && form.isPublic){
           <app-evaluation-comment
-            [username]= "form.username"
+            [username]="form.username"
             [firstName]="form.firstName"
             [lastName]="form.lastName"
             [division]="form.division"
@@ -284,12 +187,11 @@
           </app-evaluation-comment>
         }
       }
-    }
-    @else {
+    } @else {
       @for(form of allEvaluationFormsUser(); track form){
-        @if(form.division==selectedDivision().NAME_2 && form.isPublic){
+        @if(form.division == selectedDivision().NAME_2 && form.isPublic){
           <app-evaluation-comment
-            [username]= "form.username"
+            [username]="form.username"
             [division]="form.division"
             [agreementLevel]="form.agreementLevel"
             [perceivedRisk]="form.perceivedRisk"
