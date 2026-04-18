@@ -213,6 +213,9 @@ export class MapComponent implements AfterViewInit {
       this.mapHelper.clearMarker();
       return;
     }
+    this.saveMessage= '';
+    this.cdr.detectChanges();
+
 
     // delete annotation if the division selected is not the same that the previous
     if (this.lastDivisionName !== event.properties.NAME_2) {
@@ -239,7 +242,7 @@ export class MapComponent implements AfterViewInit {
             }
           },
           error: (err) => {
-            console.log("Errors with annotation :", err);
+            console.log("No annotation to display here");
           }
         });
       }
@@ -383,7 +386,7 @@ export class MapComponent implements AfterViewInit {
       this.saveMessage = 'No annotations here';
       return;
     }
-    if (this.selectedDivision == null) {
+    if (this.selectedDivision() == null) {
       this.saveMessage = 'No divisions selected';
       return;
     }

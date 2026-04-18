@@ -26,7 +26,7 @@ public class AnnotationController {
 
             return ResponseEntity.status(200).body(new AnnotationDTO( annotation.get().getGeoJson()));
         }else {
-            return ResponseEntity.status(500).body("Geojson for annotations not found");
+            return ResponseEntity.status(400).body("Geojson for annotations not found");
         }
     }
 
