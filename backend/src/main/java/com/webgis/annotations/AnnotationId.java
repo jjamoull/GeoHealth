@@ -1,6 +1,5 @@
 package com.webgis.annotations;
 
-import com.webgis.map.tile.TileId;
 import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;

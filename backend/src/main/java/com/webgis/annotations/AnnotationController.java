@@ -3,10 +3,13 @@ package com.webgis.annotations;
 import com.webgis.MessageDto;
 import com.webgis.annotations.dto.AnnotationDTO;
 import com.webgis.annotations.dto.AnnotationPostDTO;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Optional;
 
 @RestController
@@ -33,14 +36,14 @@ public class AnnotationController {
     @PostMapping("/save")
     public ResponseEntity<Object> postAnnotation(@RequestBody AnnotationPostDTO dto) {
         try {
-            Long mapId = dto.mapId();
-            Long userId = dto.userId();
-            String division = dto.division();
-            String geoJson = dto.geoJson();
+            final Long mapId = dto.mapId();
+            final Long userId = dto.userId();
+            final String division = dto.division();
+            final String geoJson = dto.geoJson();
 
-            AnnotationId id = new AnnotationId(userId, mapId, division);
+            final AnnotationId id = new AnnotationId(userId, mapId, division);
 
-            Annotation annotation = new Annotation(id, geoJson);
+            final Annotation annotation = new Annotation(id, geoJson);
 
             return ResponseEntity.status(200).body(annotationService.save(annotation));
         } catch (Exception e) {
