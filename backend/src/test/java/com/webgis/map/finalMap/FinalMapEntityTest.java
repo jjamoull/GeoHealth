@@ -3,6 +3,9 @@ package com.webgis.map.finalMap;
 import com.webgis.map.finalmap.FinalMap;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FinalMapEntityTest {
@@ -12,10 +15,11 @@ class FinalMapEntityTest {
         //Arrange
         byte[] dataZip ={66};
         byte[] newDataZip ="newDataZip".getBytes();
-
+        List<String> list = new ArrayList<>(List.of("dry"));
 
         FinalMap finalMap = new FinalMap("title",
                 "risk map",
+                list,
                 dataZip,
                 "file");
 

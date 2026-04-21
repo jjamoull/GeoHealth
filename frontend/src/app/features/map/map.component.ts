@@ -242,6 +242,8 @@ export class MapComponent implements AfterViewInit {
       this.lastDivisionName = event.properties.NAME_2;
     }
 
+    console.log("tralalalalala")
+    console.log(event.properties)
     this.selectedDivision.set(event.properties);
     this.mapHelper.placeMarker(event.latlng);
     this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({

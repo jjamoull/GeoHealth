@@ -32,6 +32,7 @@ public class FinalMapController {
                         finalMap.getId(),
                         finalMap.getTitle(),
                         finalMap.getDescription(),
+                        finalMap.getTags(),
                         finalMap.getFileGeoJson(),
                         finalMap.getRasterMap().getId());
                 return ResponseEntity.status(200).body(finalMapDto);
@@ -48,7 +49,7 @@ public class FinalMapController {
             final List<FinalMap> allFinalMaps = finalMapService.findAll();
             final List<FinalMapListDto> finalMapListDtoList = new ArrayList<>();
             for(FinalMap finalMap : allFinalMaps){
-                finalMapListDtoList.add(new FinalMapListDto(finalMap.getId(), finalMap.getTitle(), finalMap.getDescription()));
+                finalMapListDtoList.add(new FinalMapListDto(finalMap.getId(), finalMap.getTitle(), finalMap.getDescription(), finalMap.getTags()));
             }
             return ResponseEntity.status(200).body(finalMapListDtoList);
         } catch (IllegalArgumentException e) {
