@@ -29,10 +29,11 @@ import {
   ModelEvaluationMeasureService
 } from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
 import {TranslocoPipe} from "@jsverse/transloco";
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-map',
-    imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent, TooltipDescriptionComponent, TranslocoPipe],
+  imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent, TooltipDescriptionComponent, TranslocoPipe, FormsModule],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
@@ -57,6 +58,7 @@ export class MapComponent implements AfterViewInit {
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
   allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
   allDivisions = signal<{ name: string, risk: string}[]>([]);
+  searchValue: string = '';
 
   // Help computing the metrics for the map
   public mapMetrics!: MapMetrics;
@@ -315,5 +317,9 @@ export class MapComponent implements AfterViewInit {
    */
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);
+  }
+
+  clearSearch(): void {
+    this.searchValue = '';
   }
 }

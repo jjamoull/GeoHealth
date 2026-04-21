@@ -12,10 +12,17 @@
           type="text"
           list="risk-factor-list"
           [placeholder]="'map.placeholder' | transloco"
+          [(ngModel)]="searchValue"
           (change)="onMapSelected($event)"
           (keydown.enter)="onMapSelected($event)"
         />
-        <span class="dropdown-arrow">▼</span>
+        <span
+          class="input-icon"
+          [class.clickable]="searchValue"
+          (click)="searchValue ? clearSearch() : null"
+        >
+          {{ searchValue ? '✕' : '▼' }}
+        </span>
 
       </div>
 
