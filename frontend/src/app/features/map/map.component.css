@@ -199,6 +199,35 @@
 }
 
 
+.clear-btn {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #999;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.clear-btn:hover {
+  color: #333;
+}
+
+
+.input-icon {
+  position: absolute;
+  right: 10px;
+  color: #999;
+  font-size: 14px;
+  user-select: none;
+}
+
+.input-icon.clickable {
+  cursor: pointer;
+}
+
+.input-icon.clickable:hover {
+  color: #333;
+}
 
 .inspect-mode-btn {
   z-index: 1000;

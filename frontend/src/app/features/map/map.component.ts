@@ -18,7 +18,6 @@ import {AnnotationDTO} from '../../shared/models/MapModel/AnnotationModel/Annota
 import {MapMetrics} from './map.metrics';
 import {EvaluatorAgreementMeasureService} from '../../core/service/MeasureService/EvaluatorAgreementMeasureService/evaluatorAgreementMeasureService';
 import {MeanMeasureService} from '../../core/service/MeasureService/MeanMeasureService/meanMeasureService';
-import {ModelEvaluationMeasureService}from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
 import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
 import {TranslocoPipe} from '@jsverse/transloco';
 import {MapLegendComponent} from './map-legend/map-legend';
@@ -26,10 +25,15 @@ import {TooltipDescriptionComponent} from '../../shared/components/tooltip-descr
 import {ButtonComponent} from '../../shared/components/button.component/button.component';
 import {EvaluationModalComponent} from './evaluation-modal/evaluation-modal';
 import {EvaluationCommentComponent} from './evaluation-comment/evaluation-comment';
+import {
+  ModelEvaluationMeasureService
+} from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
+import {FormsModule} from '@angular/forms';
+
 
 @Component({
   selector: 'app-map',
-  imports: [RouterModule, CommonModule, TranslocoPipe, MapLegendComponent, TooltipDescriptionComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent],
+  imports: [RouterModule, CommonModule, TranslocoPipe, MapLegendComponent, TooltipDescriptionComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent, FormsModule],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
@@ -54,6 +58,7 @@ export class MapComponent implements AfterViewInit {
   allEvaluationFormsUser= signal<ResponseEvaluationFormDto[]>([]);
   allEvaluationFormsAdmin= signal<AdminResponseEvaluationFormDto[]>([]);
   allDivisions = signal<{ name: string, risk: string}[]>([]);
+  searchValue: string = '';
 
   // Help computing the metrics for the map
   public mapMetrics!: MapMetrics;
@@ -362,6 +367,9 @@ export class MapComponent implements AfterViewInit {
     return getRiskColor(riskClass);
   }
 
+  clearSearch(): void {
+    this.searchValue = '';
+  }
 
 
   toggleInspectMode(): void {

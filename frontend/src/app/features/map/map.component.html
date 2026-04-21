@@ -31,6 +31,7 @@
           type="text"
           list="risk-factor-list"
           [placeholder]="'map.placeholder' | transloco"
+          [(ngModel)]="searchValue"
           (change)="onMapSelected($event)"
           (keydown.enter)="onMapSelected($event)"
         />
