@@ -97,7 +97,7 @@
   }
   .sidebar .menu li:last-of-type {
     position: absolute;
-    bottom: 70px;
+    bottom: 20px;
     width: 100%;
   }
   .menu li .logout a:hover {
