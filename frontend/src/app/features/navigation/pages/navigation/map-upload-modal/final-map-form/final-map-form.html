@@ -49,27 +49,33 @@
 
   <div class="checkbox">
     <div>
-      <input type="radio" id="tagsDisease" name="tagsDisease" value="ebola">
-      <label for="tagsDisease">  Ebola</label>
+      <input type="radio" id="tagDisease1" value="EBOLA" formControlName="tagDisease" >
+      <label for="tagDisease1">  Ebola</label>
     </div>
 
     <div>
-      <input type="radio" id="tagsDisease" name="tagsDisease" value="rift_valley_fever">
-      <label for="tagsDisease" >  Rift valley fever</label>
+      <input type="radio" id="tagDisease2" value="RIFT_VALLEY_FEVER" formControlName="tagDisease" >
+      <label for="tagDisease2" >  Rift valley fever</label>
     </div>
+    @if(isFieldValid('tagDisease')) {
+      <span class="error">Please select a choice</span>
+    }
   </div>
 
 
   <div class="checkbox">
     <div>
-      <input type="radio" id="tagsSeason" name="tagsSeason" value="dry">
-      <label for="tagsSeason">  Dry </label>
+      <input type="radio" id="tagSeason1" value="DRY" formControlName="tagSeason">
+      <label for="tagSeason1">  Dry </label>
     </div>
 
     <div>
-      <input type="radio" id="tagsSeason" name="tagsSeason" value="wet">
-      <label for="tagsSeason" >  Wet </label>
+      <input type="radio" id="tagSeason2" value="WET" formControlName="tagSeason">
+      <label for="tagSeason2" >  Wet </label>
     </div>
+    @if(isFieldValid('tagSeason')) {
+      <span class="error">Please select a choice</span>
+    }
   </div>
 
 

@@ -53,11 +53,9 @@ public class FinalMap {
     }
 
     public List<MapTag> transformStringIntoMaptag(List<String> tags){
-        List<MapTag> mapTagList = new ArrayList<>();
-        for(String tag : tags){
-            mapTagList.add(MapTag.fromValue(tags.toString()));
-        }
-        return mapTagList;
+        return tags.stream()
+                .map(MapTag::fromValue)
+                .toList();
     }
 
 
