@@ -11,20 +11,30 @@ export function getRiskColor(riskClass: string): string {
   return level ? level.color : '#aaaaaa';
 }
 
-export function getColorFromCmbnd(value : number, isDry: boolean){
-  // allow to manage the value between 0 and 1 if value is out of range
-  const finalValue = Math.min(1, Math.max(0, value));
+/**
+ * Display layers on a color adapted of the value of the boolean isDry
+ *
+ * @param value - value of the average risk index that serve for a range of value concerning the color
+ * @param isDry - true if the tag is dry, false otherwise
+ * @return a String with the rgb value for the color to display
+ * */
+export function getColorFromCmbnd(value: number, isDry: boolean): string {
+  const MIN = 0.20;
+  const MAX = 0.80;
 
-  if (isDry){
-    const r = Math.round(255 - (finalValue * (255 - 139)));
-    const g = Math.round(204 - (finalValue * 204));
-    const b = Math.round(204 - (finalValue * 204));
+  // allow to manage the value between MIN and MAX if value is out of range
+  const normalized = Math.min(1, Math.max(0, (value - MIN) / (MAX - MIN)));
+  const curved = Math.pow(normalized, 1.5);
+
+  if (isDry) {
+    const r = Math.round(255 - (curved * (255 - 139)));
+    const g = Math.round(230 - (curved * 230));
+    const b = Math.round(230 - (curved * 230));
     return `rgb(${r}, ${g}, ${b})`;
   } else {
-    const r = Math.round(204 - (finalValue * 204));
-    const g = Math.round(204 - (finalValue * 204));
-    const b = Math.round(255 - (finalValue * (255 - 139)));
+    const r = Math.round(230 - (curved * 230));
+    const g = Math.round(230 - (curved * 230));
+    const b = Math.round(255 - (curved * (255 - 139)));
     return `rgb(${r}, ${g}, ${b})`;
   }
-
 }

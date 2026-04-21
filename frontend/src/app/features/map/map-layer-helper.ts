@@ -185,7 +185,16 @@ export class MapLayerHelper {
           fillOpacity: 0.5,
         };
       },
+      onEachFeature: (feature: any, layer: any) => {
+        layer.options.pmIgnore = true;
+        layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
+        layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
+        layer.on('click', (e: any) => {
+          onDivisionClick({ properties: feature.properties, latlng: e.latlng });
+        });
+      }
     }).addTo(this.map);
+
     this.map.fitBounds(this.geoJsonLayer.getBounds());
   }
 
