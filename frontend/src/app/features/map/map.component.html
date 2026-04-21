@@ -57,7 +57,8 @@
         <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
         <p>{{ 'map.info2' | transloco }} {{selectedDivision().NAME_1}}</p>
         <p>{{ 'map.info3' | transloco }} {{selectedDivision().NAME_2}}</p>
-        <p>{{ 'map.info4' | transloco }} {{selectedDivision().rsk_cmb.toFixed(2)}}</p>
+        <p>{{ 'map.info4' | transloco }} {{ (selectedDivision().rsk_cmb ?? selectedDivision().cmbnd__).toFixed(2) }}</p>
+
         <p class="risk-row">
           {{ 'map.info5' | transloco }}
           <span class="dot" [style.background]="getRiskColor(selectedDivision().rsk_cls)"></span>
