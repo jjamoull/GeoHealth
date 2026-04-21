@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AdminFinalMapService } from '../../../../../../core/service/AdminService/AdminMapService/AdminFinalMapService';
 import { InputboxComponents } from '../../../../../../shared/components/inputbox.components/inputbox.components';
 import { MatDialogRef } from '@angular/material/dialog';
+import {disabled} from '@angular/forms/signals';
 
 @Component({
   selector: 'app-final-map-form',
@@ -74,4 +75,6 @@ export class FinalMapFormComponent implements OnInit {
       }
     });
   }
+
+  protected readonly disabled = disabled;
 }

@@ -45,10 +45,42 @@
     <input type="file" class="file-input" accept=".tif,.tiff" (change)="onTifFileSelected($event)" #tifUpload>
   </div>
 
+
+
+  <div class="checkbox">
+    <div>
+      <input type="radio" id="tagsDisease" name="tagsDisease" value="ebola">
+      <label for="tagsDisease">  Ebola</label>
+    </div>
+
+    <div>
+      <input type="radio" id="tagsDisease" name="tagsDisease" value="rift_valley_fever">
+      <label for="tagsDisease" >  Rift valley fever</label>
+    </div>
+  </div>
+
+
+  <div class="checkbox">
+    <div>
+      <input type="radio" id="tagsSeason" name="tagsSeason" value="dry">
+      <label for="tagsSeason">  Dry </label>
+    </div>
+
+    <div>
+      <input type="radio" id="tagsSeason" name="tagsSeason" value="wet">
+      <label for="tagsSeason" >  Wet </label>
+    </div>
+  </div>
+
+
+
   <div class="footer">
     <button type="submit" class="submit-btn" [disabled]="formGroup.invalid || isUploading">
       Create map
     </button>
   </div>
+
+
+
 
 </form>
