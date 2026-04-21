@@ -56,7 +56,7 @@ public class AdminFinalMapController {
 
 
     @PostMapping(value = "/uploadShapeFile", consumes = "multipart/form-data" )
-    public ResponseEntity<Object> postGeoJsonFile(
+    public ResponseEntity<Object> postShapeFile(
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("zipFile") MultipartFile zipFile,
@@ -77,7 +77,6 @@ public class AdminFinalMapController {
                     throw new NotFound("There is no id for this map : " + finalMap.getTitle());
                 } else {
                     final String tempGeoJsonFile = finalMapService.zipToGeoJsonFile(finalMap.getId());
-                    logger.info(tempGeoJsonFile);
                     finalMap.setFileGeoJson(tempGeoJsonFile);
                 }
             }

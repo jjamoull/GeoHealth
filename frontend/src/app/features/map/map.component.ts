@@ -1,16 +1,11 @@
 import {Component, AfterViewInit, Inject, PLATFORM_ID, signal, ChangeDetectorRef, computed} from '@angular/core';
-import {isPlatformBrowser, CommonModule} from '@angular/common';
+import {CommonModule, isPlatformBrowser} from '@angular/common';
 import {RouterModule, ActivatedRoute} from '@angular/router';
 import { FinalMapService } from '../../core/service/MapService/FinalMapService/finalMapService';
 import { RasterMapService } from '../../core/service/MapService/RasterService/RasterMapService';
 import { RasterMapListDto } from '../../shared/models/MapModel/RasterMapModel/RasterMapListDto';
-import {ButtonComponent} from '../../shared/components/button.component/button.component';
-import {EvaluationModalComponent } from './evaluation-modal/evaluation-modal';
-
-import { MapLegendComponent } from './map-legend/map-legend';
 import {ResponseEvaluationFormDto} from '../../shared/models/EvaluationFormModel/ResponseEvaluationFormDto';
 import {EvaluationFormService} from '../../core/service/EvaluationFormService/EvaluationFormService';
-import {EvaluationCommentComponent} from './evaluation-comment/evaluation-comment';
 import {UsersServices} from '../../core/service/UserService/users-services';
 import {AdminEvaluationFormService} from '../../core/service/AdminService/AdminEvaluationFormService/AdminEvaluationFormService';
 import {AdminResponseEvaluationFormDto} from '../../shared/models/AdminModel/EvaluationFormModel/AdminResponseEvaluationFormDto';
@@ -18,21 +13,23 @@ import { MapLayerHelper } from './map-layer-helper';
 import { RISK_LEVELS, getRiskColor } from './map-utils';
 import {CAMEROON_COORDINATES} from './map.constants';
 import {CAMEROON_ZOOM} from './map.constants';
-import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
-import {TooltipDescriptionComponent} from '../../shared/components/tooltip-description/tooltip-description';
+import {AnnotationService} from '../../core/service/MapService/AnnotationService/AnnotationService';
+import {AnnotationDTO} from '../../shared/models/MapModel/AnnotationModel/AnnotationDTO';
 import {MapMetrics} from './map.metrics';
-import {
-  EvaluatorAgreementMeasureService
-} from '../../core/service/MeasureService/EvaluatorAgreementMeasureService/evaluatorAgreementMeasureService';
+import {EvaluatorAgreementMeasureService} from '../../core/service/MeasureService/EvaluatorAgreementMeasureService/evaluatorAgreementMeasureService';
 import {MeanMeasureService} from '../../core/service/MeasureService/MeanMeasureService/meanMeasureService';
-import {
-  ModelEvaluationMeasureService
-} from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
-import {TranslocoPipe} from "@jsverse/transloco";
+import {ModelEvaluationMeasureService}from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
+import {DivisionRiskDto} from '../../shared/models/MeasureModel/DivisionRiskDto';
+import {TranslocoPipe} from '@jsverse/transloco';
+import {MapLegendComponent} from './map-legend/map-legend';
+import {TooltipDescriptionComponent} from '../../shared/components/tooltip-description/tooltip-description';
+import {ButtonComponent} from '../../shared/components/button.component/button.component';
+import {EvaluationModalComponent} from './evaluation-modal/evaluation-modal';
+import {EvaluationCommentComponent} from './evaluation-comment/evaluation-comment';
 
 @Component({
   selector: 'app-map',
-    imports: [RouterModule, CommonModule, MapLegendComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent, TooltipDescriptionComponent, TranslocoPipe],
+  imports: [RouterModule, CommonModule, TranslocoPipe, MapLegendComponent, TooltipDescriptionComponent, ButtonComponent, EvaluationModalComponent, EvaluationCommentComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
   standalone: true,
@@ -62,7 +59,19 @@ export class MapComponent implements AfterViewInit {
   public mapMetrics!: MapMetrics;
 
   // helper class managing the Leaflet map layers and interactions
-  private mapHelper = new MapLayerHelper();
+  public mapHelper = new MapLayerHelper();
+
+  inspectModeActive : boolean = false;
+
+  // about annotations
+  currentMapId = -1;
+  currentUserId = -1;
+  currentDivision = this.selectedDivision;
+  saveMessage = '';
+  isSaving = false;
+  private lastDivisionName: string | null = null;
+
+
 
 
   constructor(
@@ -74,16 +83,15 @@ export class MapComponent implements AfterViewInit {
     private adminEvaluationFormService:AdminEvaluationFormService,
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
+    private annotationService: AnnotationService,
     private evaluatorAgreementMeasureService:EvaluatorAgreementMeasureService,
     private meanMeasureService: MeanMeasureService,
     private modelEvaluationMeasureService: ModelEvaluationMeasureService,
-  ){
-
- this.mapMetrics= new MapMetrics(
-      this.evaluatorAgreementMeasureService,
-      this.meanMeasureService,
-      this.modelEvaluationMeasureService
-    )
+    ){
+   this.mapMetrics= new MapMetrics(
+        this.evaluatorAgreementMeasureService,
+        this.meanMeasureService,
+        this.modelEvaluationMeasureService)
   }
 
 
@@ -95,7 +103,7 @@ export class MapComponent implements AfterViewInit {
     this.loadAvailableMaps();
     this.mapId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadUserRole();
-    await this.mapHelper.initMap('map', CAMEROON_COORDINATES[0], CAMEROON_ZOOM, 6, 12);
+    await this.mapHelper.initMap('map', CAMEROON_COORDINATES[0], CAMEROON_ZOOM, 6, 12, true);
     this.loadBaseMap();
   }
 
@@ -206,6 +214,12 @@ export class MapComponent implements AfterViewInit {
    *   - latlng: the coordinates of the click on the map
    */
   private onDivisionClicked(event: { properties: any, latlng: any }): void {
+
+
+    if (!event.properties || !event.properties.NAME_2) {
+      return;
+    }
+
     if (this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
       this.existingForm.set(null);
@@ -213,6 +227,16 @@ export class MapComponent implements AfterViewInit {
       this.mapHelper.clearMarker();
       return;
     }
+    this.saveMessage= '';
+    this.cdr.detectChanges();
+
+
+    // delete annotation if the division selected is not the same that the previous
+    if (this.lastDivisionName !== event.properties.NAME_2) {
+      this.mapHelper.clearGeomanLayers();
+      this.lastDivisionName = event.properties.NAME_2;
+    }
+
     this.selectedDivision.set(event.properties);
     this.mapHelper.placeMarker(event.latlng);
     this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({
@@ -220,6 +244,27 @@ export class MapComponent implements AfterViewInit {
       error: () => this.existingForm.set(null)
     });
 
+    this.usersServices.getUserForAnnotation().subscribe({
+      next: userInfo => {
+        this.currentUserId = userInfo.id
+
+        this.annotationService.getAnnotations(this.mapId,this.currentUserId, event.properties.dvsn_nm).subscribe({
+          next: (data) => {
+            if (data?.geoJson) {
+              this.mapHelper.loadAnnotationsFromGeoJson(data.geoJson.toString());
+              this.cdr.detectChanges();
+            }
+          },
+          error: (err) => {
+            console.log("No annotation to display here");
+          }
+        });
+      }
+    });
+
+
+
+  this.loadMeasurements(event.properties.NAME_2, event.properties.Risk_categ);
     this.loadMeasurements(event.properties.NAME_2, event.properties.rsk_cls);
   }
 
@@ -316,4 +361,69 @@ export class MapComponent implements AfterViewInit {
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);
   }
+
+
+
+  toggleInspectMode(): void {
+    this.inspectModeActive = !this.inspectModeActive;
+    this.mapHelper.toggleInspectMode(this.inspectModeActive);
+  }
+
+
+  // ------- about annotations -------
+  public saveAnnotation() {
+    const geojsonData = this.mapHelper.getGeomanGeojson();
+
+    if (geojsonData == null) {
+      this.saveMessage = 'No annotations here';
+      return;
+    }
+    if (this.selectedDivision() == null) {
+      this.saveMessage = 'No divisions selected';
+      return;
+    }
+
+    this.isSaving = true;
+
+    this.usersServices.getUserForAnnotation().subscribe({
+      next: userInfo => {
+
+        console.log("selectedDivision contenu :", this.selectedDivision())
+
+        const dto: AnnotationDTO = {
+          mapId: this.mapId,
+          userId: userInfo.id,
+          division: this.selectedDivision().dvsn_nm,
+          geoJson: geojsonData
+        };
+        console.log("-- DTO envoyé au backend --")
+        console.log(dto)
+        console.log("---------------------------")
+
+
+        this.annotationService.postAnnotations(dto).subscribe({
+          next: () => {
+            this.saveMessage = 'Annotations saved';
+            this.isSaving = false;
+            // Allow angular to update the state displayed of teh saveMessage
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            this.saveMessage = 'Annotations cant be saved';
+            this.isSaving = false;
+            console.error(err);
+            this.cdr.detectChanges();
+          }
+        });
+
+      },
+      error: (err) => {
+        this.saveMessage = 'User not detected';
+        this.isSaving = false;
+        console.error(err);
+      }
+    });
+  }
+
+
 }

@@ -4,7 +4,8 @@ export const API_ENDPOINTS = {
     PROFILE: '/user/profile',
     CHANGEPASSWORD: '/user/changePassword',
     DELETE: '/user/delete',
-    ISADMIN: '/user/isAdmin'
+    ISADMIN: '/user/isAdmin',
+    ANNOTATIONS: '/user/profile/annotation'
   },
   AUTH: {
     LOGIN: '/auth/login',
@@ -30,6 +31,10 @@ export const API_ENDPOINTS = {
       GETALLFORMFORAMAP:"/admin/evaluationForm/allFormForFinalMap",
       DELETEFORM:"/admin/evaluationForm/deleteForm"
     }
+  },
+  ANNOTATIONS:{
+    GET : "/annotation",
+    POST : "/annotation/save"
   },
   FINALMAPS: {
     ALLMAPS: '/finalMaps/allMaps',
