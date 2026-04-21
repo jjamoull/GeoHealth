@@ -73,7 +73,8 @@ export class MapPreviewComponent implements AfterViewInit {
       next: (mapData) => {
         this.mapHelper.applyDivisionsLayer(
           mapData.fileGeoJson,
-          () => {}
+          () => {},
+          mapData.tags.at(0)
         );
       }
     });

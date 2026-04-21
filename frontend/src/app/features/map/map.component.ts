@@ -47,6 +47,7 @@ export class MapComponent implements AfterViewInit {
   isAdmin:boolean=false;
   selectedDivision = signal<any>(null);
   mapTitle = signal<string>('');
+  mapTag = signal<string>('');
   mapDescription = signal<string>('');
   // the raster layer linked to this specific map, used in the dropdown
   rasterMap = signal<RasterMapListDto | null>(null);
@@ -125,6 +126,7 @@ export class MapComponent implements AfterViewInit {
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
         this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
+        this.mapTag.set(mapData.tags);
 
         const geoJson = JSON.parse(mapData.fileGeoJson);
         const divisions: { name: string, risk: string }[] = [];
@@ -136,9 +138,12 @@ export class MapComponent implements AfterViewInit {
           });
         }
         this.allDivisions.set(divisions);
-        this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
-          this.onDivisionClicked(event);
-        });
+        this.mapHelper.applyDivisionsLayer(
+          mapData.fileGeoJson,
+          (event) => {
+              this.onDivisionClicked(event);
+              },
+          this.mapTag().at(0));
       },
       error: (err) => console.error('Failed to load map data', err)
     });
