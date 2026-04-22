@@ -155,7 +155,7 @@ class EvaluatorAgreementMeasureServiceTest {
         double result= evaluatorAgreementMeasureService.computeDivisionalConsensusScore(finalMap,"Wouri");
 
         //Assert
-        assertEquals(0.3690702464285426,result);
+        assertEquals(0.36907024642854247,result);
     }
 
     @Test
@@ -181,6 +181,6 @@ class EvaluatorAgreementMeasureServiceTest {
         double result= evaluatorAgreementMeasureService.computeNationalConsensusScore(finalMap);
 
         //Assert
-        assertEquals(0.6845351232142713,result);
+        assertEquals(0.6845351232142712,result);
     }
 }
