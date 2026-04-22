@@ -1,7 +1,5 @@
 .navigation-page{
-  /*
   background-color: #EBEFFF;
-  */
 }
 /* SIDEBAR */
 * {
@@ -303,15 +301,15 @@ span {
 }
 
 .rounded-card {
-  width: 45%;
+  width: 40%;
   padding: 1.2rem ;
   border-radius: 1.2rem;
-  margin: 20px auto;
+  margin: 70px auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
+  background-color : #90ee90;
 }
 
 .dropdown-arrow {
@@ -455,4 +453,20 @@ span {
 .new-case:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+/* phone portrait */
+@media (max-width: 768px) and (orientation: portrait){
+
+  .side-navbar{
+    display: none;
+  }
+  .title{
+    text-align: center;
+    font-size: 1.5rem;
+    width: 100%;
+  }
+  .rounded-card {
+    width: 100%;
+  }
+
 }
