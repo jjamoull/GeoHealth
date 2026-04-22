@@ -53,6 +53,9 @@ public class DetectFiles {
      *         false : otherwise
      * */
     public static boolean detectShpFile(byte[] byteOfFile) {
+        if (byteOfFile.length < 4) {
+            return false;
+        }
         return byteOfFile[0] == (byte) 0x00 &&
                 byteOfFile[1] == (byte) 0x00 &&
                 byteOfFile[2] == (byte) 0x27 &&
