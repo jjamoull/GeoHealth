@@ -59,7 +59,7 @@ public class TiffFiles {
                     "gdal2tiles.py", // the command
                     "--xyz", // format to be used by leaflet on OSM
                     "-z",
-                    "0-8", // represent zoom from 0 to 12 on Z (<-> "-z")
+                    "0-12", // represent zoom from 0 to 12 on Z (<-> "-z")
                     temp8bit.toAbsolutePath().toString(), // file in 8 bit from
                     outputDir.toAbsolutePath().toString() // Destination of the file
             };
