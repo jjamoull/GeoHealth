@@ -30,6 +30,7 @@ export class NavigationPageComponent implements OnInit{
 
   searchText: string = '';
   filteredMaps: FinalMapListDto[] = [];
+  isMobile: boolean = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   isSearching: boolean = false;
   noResults: boolean = false;
