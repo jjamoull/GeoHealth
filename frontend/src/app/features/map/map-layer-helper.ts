@@ -62,7 +62,9 @@ export class MapLayerHelper {
       });
     }
 
-    (this.map as any).pm.setGlobalOptions({ layerGroup: this.geoManLayer });
+    if (enableGeoman) {
+      (this.map as any).pm.setGlobalOptions({ layerGroup: this.geoManLayer });
+    }
   }
 
   /**
@@ -297,5 +299,9 @@ export class MapLayerHelper {
       return;
     }
     this.geoManLayer.clearLayers();
+  }
+
+  getMap(): any {
+    return this.map;
   }
 }
