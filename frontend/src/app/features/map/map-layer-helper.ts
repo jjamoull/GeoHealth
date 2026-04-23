@@ -1,4 +1,4 @@
-import { getRiskColor } from './map-utils';
+import {getColorFromCmbnd, getRiskColor} from './map-utils';
 import { MapOption } from './map-types';
 import { TileMeanAndXYdto } from '../../shared/models/MapModel/RasterMapModel/TileMeanAndXYdto';
 import { getTileMean, tileToPolygon } from './tile-utils';
@@ -160,20 +160,33 @@ export class MapLayerHelper {
    *
    * @param geoJsonString - the GeoJSON string representing the divisions
    * @param onDivisionClick - callback fired when a division is clicked
+   * @param tag - adapt the color display for Ebola map
    */
-  applyDivisionsLayer(geoJsonString: string, onDivisionClick: (event: any) => void): void {
+  applyDivisionsLayer(geoJsonString: string, onDivisionClick: (event: any) => void, tag?: string): void {
     const geoJson = JSON.parse(geoJsonString);
+    const isDry = tag?.toLowerCase() === 'dry';
 
     this.geoJsonLayer = this.leaflet.geoJSON(geoJson, {
-      style: (feature: any) => ({
-        color: '#414241',
-        weight: 1,
-        fillColor: (getRiskColor(feature?.properties?.rsk_cls)),
-        fillOpacity: 0.5,
-      }),
+      style: (feature: any) => {
+        const props = feature?.properties;
+        let fillColor: string;
+
+        if (props?.rsk_cls) {
+          fillColor = getRiskColor(props.rsk_cls);
+        } else {
+          const riskValue = props?.rsk_cmb ?? props?.cmbnd__ ?? 0;
+          fillColor = getColorFromCmbnd(riskValue, isDry);
+        }
+
+        return {
+          color: '#414241',
+          weight: 1,
+          fillColor,
+          fillOpacity: 0.5,
+        };
+      },
       onEachFeature: (feature: any, layer: any) => {
         layer.options.pmIgnore = true;
-
         layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
         layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
         layer.on('click', (e: any) => {
@@ -181,6 +194,7 @@ export class MapLayerHelper {
         });
       }
     }).addTo(this.map);
+
     this.map.fitBounds(this.geoJsonLayer.getBounds());
   }
 

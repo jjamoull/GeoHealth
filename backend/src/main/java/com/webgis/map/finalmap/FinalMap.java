@@ -12,6 +12,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.CascadeType;
 
+import java.util.List;
+
 @Entity
 @Table(name = "maps")
 public class FinalMap {
@@ -22,6 +24,8 @@ public class FinalMap {
     private String title;
 
     private String description;
+
+    private List<MapTag> tags;
 
     @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition="BYTEA")
@@ -37,13 +41,22 @@ public class FinalMap {
 
     public FinalMap(String title,
                     String description,
+                    List<String> tags,
                     byte[] zipFile,
                     String fileGeoJson){
         this.title=title;
         this.description =description;
+        this.tags = transformStringIntoMaptag(tags);
         this.zipFile = zipFile;
         this.fileGeoJson = fileGeoJson;
     }
+
+    public List<MapTag> transformStringIntoMaptag(List<String> tags){
+        return tags.stream()
+                .map(MapTag::fromValue)
+                .toList();
+    }
+
 
     public Long getId() {
         return id;
@@ -55,6 +68,10 @@ public class FinalMap {
 
     public String getDescription() {
         return description;
+    }
+
+    public List<MapTag> getTags() {
+        return tags;
     }
 
     public byte[] getZipFile(){return zipFile;}
@@ -79,6 +96,9 @@ public class FinalMap {
         this.zipFile = zipFile;
     }
 
+    public void setTags(List<MapTag> tags) {
+        this.tags = tags;
+    }
 
     public void setFileGeoJson(String fileGeoJson) {
         this.fileGeoJson = fileGeoJson;

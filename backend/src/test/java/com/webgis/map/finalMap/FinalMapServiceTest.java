@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,11 +37,11 @@ class finalFinalMapServiceTest {
 
     @BeforeEach
     void init(){
-
+        List<String> list = new ArrayList<>(List.of("dry"));
         byte[] bytea = new byte[0];
-        fm1 = new FinalMap("test1", "testdescription", bytea, "fakefile");
-        fm2 = new FinalMap("test2", "testdescription", bytea, "fakefile");
-        fm3 = new FinalMap("test3", "testdescription", bytea, "fakefile");
+        fm1 = new FinalMap("test1", "testdescription", list,bytea, "fakefile");
+        fm2 = new FinalMap("test2", "testdescription",list,  bytea, "fakefile");
+        fm3 = new FinalMap("test3", "testdescription", list, bytea, "fakefile");
         id = 1;
     }
 

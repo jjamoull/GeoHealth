@@ -6,4 +6,8 @@ package com.webgis;
  */
 public record MessageDto (
         String message
-) {}
+) {
+    public String getMessage() {
+        return message;
+    }
+}
