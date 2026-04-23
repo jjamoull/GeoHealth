@@ -1,0 +1,21 @@
+.title{
+  text-align: center;
+}
+.bottom-sheet{
+  width: 100%;
+  height:auto;
+  border-radius: 30px;
+  border: 3px solid #90ee90;
+  background-color: white;
+}
+
+.filter-title {
+  background: transparent;
+  padding: 0.5rem;
+  border: 0.2rem solid #90ee90;
+  border-radius: 1.2rem;
+  max-width: 200px;
+  margin: 2rem auto 2rem auto;
+  text-align: center;
+  color: black;
+}

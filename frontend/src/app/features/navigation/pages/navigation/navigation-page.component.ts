@@ -3,12 +3,14 @@ import {MapUploadModalComponent} from './map-upload-modal/map-upload-modal';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
+import {Bottomsheet} from '../../../../shared/components/bottomsheet/bottomsheet';
 import {FinalMapService} from '../../../../core/service/MapService/FinalMapService/finalMapService';
 import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/FinalMapListDto';
 import {UsersServices} from '../../../../core/service/UserService/users-services';
 import {MapPreviewComponent} from '../../../map-preview-component/map-preview-component';
 import { FormsModule } from '@angular/forms';
 import {TranslocoPipe} from '@jsverse/transloco';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-navigation',
@@ -23,7 +25,8 @@ export class NavigationPageComponent implements OnInit{
     private router: Router,
     private finalMapService: FinalMapService,
     private cdr: ChangeDetectorRef,
-    private usersServices: UsersServices
+    private usersServices: UsersServices,
+    private BottomSheet: MatBottomSheet
   ){}
 
   isAdmin:boolean =false;
@@ -40,6 +43,12 @@ export class NavigationPageComponent implements OnInit{
 
   finalRisksOpen = true;
   riskFactorsOpen = false;
+
+  openMenu(){
+    const bottomSheetRef = this.BottomSheet.open(Bottomsheet, {
+      ariaLabel: 'Share on social media'
+    });
+  }
 
   toggleDropdown(section: string) {
     switch(section) {
