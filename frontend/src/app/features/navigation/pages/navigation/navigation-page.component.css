@@ -7,9 +7,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-.navigation-page {
-  display: flex;
-}
 .side-navbar {
   height: 92%;
   width: 250px;
@@ -215,15 +212,11 @@ span {
   flex: 1;
   transition: margin-left 0.5s ease;
   margin-left: 0;
-  grid-column: span 4;
-  grid-row: span 5;
   grid-gap: 12px;
   width: 100%;
   padding: 0 60px;
   margin-right: 2px;
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-rows: repeat(5, 1fr);
   gap: 8px;
   overflow-y: auto;
 }
