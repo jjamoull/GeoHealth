@@ -131,7 +131,7 @@ public class ReportService {
      */
     private int addRow(Sheet sheet, int rowIndex, String name, Object... values) {
 
-        Row row = sheet.createRow(rowIndex++);
+        final Row row = sheet.createRow(rowIndex++);
         row.createCell(0).setCellValue(name);
 
         int cellIndex = 1;
