@@ -29,6 +29,8 @@ import {
   ModelEvaluationMeasureService
 } from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
 import {FormsModule} from '@angular/forms';
+import {ReportService} from '../../core/service/ReportService/reportService';
+import {map} from 'rxjs';
 
 
 @Component({
@@ -92,6 +94,7 @@ export class MapComponent implements AfterViewInit {
     private evaluatorAgreementMeasureService:EvaluatorAgreementMeasureService,
     private meanMeasureService: MeanMeasureService,
     private modelEvaluationMeasureService: ModelEvaluationMeasureService,
+    private reportService: ReportService
     ){
    this.mapMetrics= new MapMetrics(
         this.evaluatorAgreementMeasureService,
@@ -122,6 +125,7 @@ export class MapComponent implements AfterViewInit {
   private loadBaseMap(): void {
     this.mapService.getMap(this.mapId).subscribe({
       next: (mapData) => {
+        console.log(mapData);
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
         this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
@@ -233,8 +237,6 @@ export class MapComponent implements AfterViewInit {
       return;
     }
     this.saveMessage= '';
-    this.cdr.detectChanges();
-
 
     // delete annotation if the division selected is not the same that the previous
     if (this.lastDivisionName !== event.properties.NAME_2) {
@@ -353,6 +355,37 @@ export class MapComponent implements AfterViewInit {
         console.error('Failed to delete evaluation form', err);
       }
     });
+  }
+
+  // --- Report ---
+
+  onReportButtonClicked(): void {
+
+    const divisionRiskDto: DivisionRiskDto = {
+      divisionRiskLevel: Object.fromEntries(
+        this.allDivisions().map(d => [d.name, d.risk])
+      )
+    };
+
+    this.reportService.getReport(this.mapId,divisionRiskDto).subscribe({
+      next: (blob: Blob) => {
+        console.log('Report successfully downloaded');
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          console.log('Report successfully downloaded');
+          a.href = url;
+          a.download = 'report.xlsx';
+          a.click();
+
+          window.URL.revokeObjectURL(url);
+
+          console.log('Report successfully downloaded');
+      },
+      error: (err) => {
+        console.error('Failed to delete evaluation form', err);
+      }
+    });
+
   }
 
   // --- Utilities ---

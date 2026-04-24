@@ -122,12 +122,34 @@
 }
 
 .metrics-header {
+  display: flex;
   padding: 10px 14px;
   background: linear-gradient(135deg, #f0f4ed 0%, #f8faf6 100%);
   border-bottom: 1px solid #e2e6ea;
+  align-items: center;
   font-weight: 600;
   color: #2d5016;
 }
+
+.report-btn{
+  padding: 6px 10px;
+  color: black;
+  background: #90ee90;
+  border: 2px solid #7ee87e;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.report-btn:hover{
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  transform: scale(1.01);
+}
+.report-btn:active{
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  transform: scale(.99);
+}
+
 
 .metrics-body {
   padding: 12px 14px;

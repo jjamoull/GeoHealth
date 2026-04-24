@@ -33,10 +33,14 @@ public class EvaluatorAgreementMeasureService {
      *
      * @return divisional weighted entropy for a specific division of a map
      */
-    private double computeDivisionalWeightedEntropy(FinalMap finalMap, String division) {
+    public Double computeDivisionalWeightedEntropy(FinalMap finalMap, String division) {
         final List<EvaluationForm> forms = evaluationFormRepository
                 .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
                         finalMap, division);
+
+        if(forms.isEmpty()){
+            return null;
+        }
 
         //Compute weight
 
@@ -75,9 +79,11 @@ public class EvaluatorAgreementMeasureService {
      *
      * @return divisional consensus score
      */
-    public double computeDivisionalConsensusScore(FinalMap finalMap, String division) {
-        final double divisionalWeightedEntropy = computeDivisionalWeightedEntropy(finalMap, division);
-
+    public Double computeDivisionalConsensusScore(FinalMap finalMap, String division) {
+        final Double divisionalWeightedEntropy = computeDivisionalWeightedEntropy(finalMap, division);
+        if(divisionalWeightedEntropy==null){
+            return null;
+        }
         return 1 - (divisionalWeightedEntropy / Math.log(3));
     }
 
@@ -89,11 +95,11 @@ public class EvaluatorAgreementMeasureService {
      *
      * @return mean of divisional weighted Entropy for a map
      */
-    private double computeNationalAverageEntropy(FinalMap finalMap){
+    public Double computeNationalAverageEntropy(FinalMap finalMap){
         final List<String> divisions = evaluationFormRepository.findDivisionsWithValidPublicEvaluationForms(finalMap);
 
         if(divisions.isEmpty()){
-            return 0.0;
+            return null;
         }
 
         double sum = 0.0;
@@ -114,10 +120,12 @@ public class EvaluatorAgreementMeasureService {
      *
      * @return national consensus score
      */
-    public double computeNationalConsensusScore(FinalMap finalMap) {
+    public Double computeNationalConsensusScore(FinalMap finalMap) {
 
-        final double nationalAverageEntropy = computeNationalAverageEntropy(finalMap);
-
+        final Double nationalAverageEntropy = computeNationalAverageEntropy(finalMap);
+        if(nationalAverageEntropy==null){
+            return null;
+        }
         return 1 - (nationalAverageEntropy / Math.log(3));
     }
 
@@ -128,10 +136,14 @@ public class EvaluatorAgreementMeasureService {
      *
      * @return Krippensdroff's Alpha
      */
-    public double computekrippendorffAlpha(FinalMap finalMap){
+    public Double computekrippendorffAlpha(FinalMap finalMap){
         final List<EvaluationForm> evaluationForms = evaluationFormRepository.findByFinalMap(finalMap);
 
         final double[][] krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
+
+        if(krippensdorffMatrix.length<2){
+            return null;
+        }
 
         final RCode code = RCode.create();
 

@@ -29,7 +29,7 @@ public class MeanMesureService {
      *
      * @return mean divisional agreement score
      */
-    public double computeMeanDivisionalAgreementScore(FinalMap finalMap, String division) {
+    public Double computeMeanDivisionalAgreementScore(FinalMap finalMap, String division) {
         final List<Double> agreementLevels = evaluationFormRepository
                 .findByFinalMapAndDivisionAndAgreementLevelIsNotNullAndIsPublicTrue(finalMap, division)
                 .stream()
@@ -48,7 +48,7 @@ public class MeanMesureService {
      *
      * @return mean certainty for a specific division of a map
      */
-    public double computeMeanCertaintyForMapForDivision(FinalMap finalMap, String division) {
+    public Double computeMeanCertaintyForMapForDivision(FinalMap finalMap, String division) {
         final List<Double> certaintyLevels = evaluationFormRepository
                 .findByFinalMapAndDivisionAndCertaintyLevelIsNotNullAndIsPublicTrue(finalMap, division)
                 .stream()
@@ -65,8 +65,8 @@ public class MeanMesureService {
      *
      * @return the mean of values
      */
-    private double computeMeanFromValues(List<Double> values) {
-        if (values.isEmpty()) return 0;
+    private Double computeMeanFromValues(List<Double> values) {
+        if (values.isEmpty()) return null;
 
         double sum = 0;
         for (double v : values) {

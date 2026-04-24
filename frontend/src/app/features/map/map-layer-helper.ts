@@ -65,6 +65,8 @@ export class MapLayerHelper {
     (this.map as any).pm.setGlobalOptions({ layerGroup: this.geoManLayer });
   }
 
+
+
   /**
    * Make transparent annotations on the layer on OSM
    *    if active is True,

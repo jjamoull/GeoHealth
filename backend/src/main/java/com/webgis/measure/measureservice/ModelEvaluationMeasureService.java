@@ -26,7 +26,7 @@ public class ModelEvaluationMeasureService {
      * @param divisionRisk the risk level in the division as evaluated in the original map
      * @return weighted degree of consensus among experts
      */
-    public double computeWeightedDivisionalLevelAgreementScore(FinalMap finalMap, String division, String divisionRisk){
+    public Double computeWeightedDivisionalLevelAgreementScore(FinalMap finalMap, String division, String divisionRisk){
 
         final List<EvaluationForm> evaluationForms = evaluationFormRepository
                 .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
@@ -34,7 +34,7 @@ public class ModelEvaluationMeasureService {
                         division);
 
         if (evaluationForms.isEmpty()) {
-            return 0;
+            return null;
         }
 
         double sum =0;
@@ -52,7 +52,7 @@ public class ModelEvaluationMeasureService {
      *
      * @return agreement score (0,0.5,1)
      */
-    private double computeAgreementScore(String divisionRisk, String perceivedRisk) {
+    private Double computeAgreementScore(String divisionRisk, String perceivedRisk) {
         final RiskLevel divisionRiskLevel = RiskLevel.fromString(divisionRisk);
         final RiskLevel perceivedRiskLevel = RiskLevel.fromString(perceivedRisk);
 
@@ -76,12 +76,12 @@ public class ModelEvaluationMeasureService {
      *
      * @return mean of WeightedEntropy
      */
-    public double computeNationalModelFieldAgreementScore(FinalMap finalMap, Map<String,String> riskForDivision){
+    public Double computeNationalModelFieldAgreementScore(FinalMap finalMap, Map<String,String> riskForDivision){
 
         final List<String> divisions= evaluationFormRepository.findDivisionsWithValidPublicEvaluationForms(finalMap);
 
         if(divisions.isEmpty()){
-            return 0.0;
+            return null;
         }
         double sum =0;
         for(String division:divisions){

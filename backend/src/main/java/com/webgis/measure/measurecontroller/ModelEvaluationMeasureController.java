@@ -54,7 +54,7 @@ public class ModelEvaluationMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double weightedDivisionalLevelAgreementScore=modelEvaluationMeasureService
+        final Double weightedDivisionalLevelAgreementScore=modelEvaluationMeasureService
                 .computeWeightedDivisionalLevelAgreementScore(finalMap,division,divisionRisk);
 
         return ResponseEntity.status(200).body(weightedDivisionalLevelAgreementScore);
@@ -82,7 +82,7 @@ public class ModelEvaluationMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double nationalModelFieldAgreementScore=modelEvaluationMeasureService
+        final Double nationalModelFieldAgreementScore=modelEvaluationMeasureService
                 .computeNationalModelFieldAgreementScore(finalMap,divisionRiskDto.divisionRiskLevel());
 
         return ResponseEntity.status(200).body(nationalModelFieldAgreementScore);
