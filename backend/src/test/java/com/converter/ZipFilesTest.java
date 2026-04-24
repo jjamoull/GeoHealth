@@ -90,7 +90,7 @@ class ZipFilesTest {
         FinalMap map = Mockito.mock(FinalMap.class);
         when(map.getZipFile()).thenReturn(new byte[]{});
 
-        File invalidDir = new File("/root/forbidden"); // souvent interdit
+        File invalidDir = new File("/root/forbidden"); 
 
         ZipFiles zipFiles = new ZipFiles();
 
