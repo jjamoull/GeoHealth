@@ -63,7 +63,7 @@ public class MeanMesureService {
      *
      * @param values the list of value from which you want the mean to be computed
      *
-     * @return the mean of values
+     * @return the mean of values if values is not empty, null otherwise
      */
     private Double computeMeanFromValues(List<Double> values) {
         if (values.isEmpty()) return null;

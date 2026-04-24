@@ -24,7 +24,9 @@ public class ModelEvaluationMeasureService {
      * @param finalMap the map you are interested in
      * @param division the division you are interested in
      * @param divisionRisk the risk level in the division as evaluated in the original map
-     * @return weighted degree of consensus among experts
+     *
+     * @return weighted degree of consensus among experts if there is at least one valid evaluation for this
+     * division of the map, null otherwise
      */
     public Double computeWeightedDivisionalLevelAgreementScore(FinalMap finalMap, String division, String divisionRisk){
 
@@ -33,6 +35,7 @@ public class ModelEvaluationMeasureService {
                         finalMap,
                         division);
 
+        // No evaluation
         if (evaluationForms.isEmpty()) {
             return null;
         }
@@ -74,12 +77,14 @@ public class ModelEvaluationMeasureService {
      *
      * @param finalMap the map you are interested in
      *
-     * @return mean of WeightedEntropy
+     * @return mean of WeightedEntropy if there is at least one valid evaluation for this
+     * map, null otherwise
      */
     public Double computeNationalModelFieldAgreementScore(FinalMap finalMap, Map<String,String> riskForDivision){
 
         final List<String> divisions= evaluationFormRepository.findDivisionsWithValidPublicEvaluationForms(finalMap);
 
+        // No evaluation
         if(divisions.isEmpty()){
             return null;
         }

@@ -33,7 +33,7 @@ public class ReportService {
     }
 
     /**
-     * Create an .xlsx report containing all the metrics for a map
+     * Create an .xlsx report containing all the metrics for a map (as a byte array)
      *
      * @param finalMap the map you are interested in
      * @param riskForDivision a map containing the risk evaluated in the model(original map)  for each division
@@ -58,7 +58,7 @@ public class ReportService {
         final Workbook workbook = new XSSFWorkbook();
         final Sheet sheet = workbook.createSheet(finalMap.getTitle());
 
-        int rowIndex= 0;
+        int rowIndex= 0; //Track the current row of the sheet
 
         // Creating Global Metrics Section
         final Row titleRow = sheet.createRow(rowIndex++);
@@ -123,9 +123,9 @@ public class ReportService {
      * Create a new row in a sheet and increase the row index by one
      *
      * @param sheet the sheet in which you want to add the row
-     * @param rowIndex the index of the row you want to create
+     * @param rowIndex the index of the row you want to add
      * @param name name that would be written in the first cell of the row
-     * @param values values that you want to write in the next cells
+     * @param values values that you want to write in all the cells following the first one
      *
      * @return the new row index and add a row to the sheet
      */

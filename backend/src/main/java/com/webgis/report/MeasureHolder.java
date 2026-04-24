@@ -45,7 +45,7 @@ public class MeasureHolder {
      * Compute all the metrics for a specific map
      *
      * @param finalMap the map you are interested in
-     * @param riskForDivision a map containing the risk evaluated in the model (map) for each division
+     * @param riskForDivision a map containing the risk evaluated in the model(original map) for each division
      */
     public void computeAllMeasure(FinalMap finalMap,Map<String, String> riskForDivision){
         computeEvaluatorAgreement(finalMap,riskForDivision);

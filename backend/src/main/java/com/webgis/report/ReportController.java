@@ -29,7 +29,7 @@ public class ReportController {
     }
 
     /**
-     * Get the report for a specific map if the map exists, not found otherwise
+     * Get a report containing all the metrics for a specific map if the map exists, not found otherwise
      *
      * @param mapId the map you are interested in
      * @param divisionRiskDto A dto containing the risk evaluated in the model(original map) for each division
@@ -41,7 +41,6 @@ public class ReportController {
             @PathVariable long mapId,
             @RequestBody DivisionRiskDto divisionRiskDto){
 
-        System.out.println("In Get Report");
         final Optional<FinalMap> optionalFinalMap= finalMapService.findById(mapId);
 
         if(optionalFinalMap.isEmpty()){
