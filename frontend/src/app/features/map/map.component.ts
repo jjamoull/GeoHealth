@@ -249,7 +249,6 @@ export class MapComponent implements AfterViewInit {
       this.lastDivisionName = event.properties.NAME_2;
     }
 
-    console.log("tralalalalala")
     console.log(event.properties)
     this.selectedDivision.set(event.properties);
     this.mapHelper.placeMarker(event.latlng);
@@ -366,26 +365,27 @@ export class MapComponent implements AfterViewInit {
 
   // --- Report ---
 
+  /**
+   *  Make a get request to download the xlsx report for the current map
+   */
   onReportButtonClicked(): void {
 
+    //Map of all division and their risks
     const divisionRiskDto: DivisionRiskDto = {
       divisionRiskLevel: Object.fromEntries(
         this.allDivisions().map(d => [d.name, d.risk])
       )
     };
 
+    // Get the report and download it
     this.reportService.getReport(this.mapId,divisionRiskDto).subscribe({
       next: (blob: Blob) => {
-        console.log('Report successfully downloaded');
           const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          console.log('Report successfully downloaded');
-          a.href = url;
-          a.download = 'report.xlsx';
-          a.click();
-
+          const urlProxy = document.createElement('a');;
+          urlProxy.href = url;
+          urlProxy.download = 'report.xlsx';
+          urlProxy.click();
           window.URL.revokeObjectURL(url);
-
           console.log('Report successfully downloaded');
       },
       error: (err) => {
@@ -406,11 +406,6 @@ export class MapComponent implements AfterViewInit {
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);
   }
-
-  clearSearch(): void {
-    this.searchValue = '';
-  }
-
 
   toggleInspectMode(): void {
     this.inspectModeActive = !this.inspectModeActive;

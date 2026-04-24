@@ -16,6 +16,14 @@ export class ReportService{
 
   constructor(private httpClient: HttpClient) {}
 
+  /**
+   * Get a report containing all the metrics for a specific map if the map exists, not found otherwise
+   *
+   * @param mapId the map you are interested in
+   * @param divisionRiskDto A dto containing the risk evaluated in the model(original map) for each division
+   *
+   * @return the .xlsx report for a map in a byte array format if the map exists, not found otherwise
+   */
   public getReport(mapId: number, divisionRiskDto: DivisionRiskDto): Observable<any> {
     return this.httpClient.post(
       `${this.baseUrl}${API_ENDPOINTS.REPORT.GET}/${mapId}` ,
