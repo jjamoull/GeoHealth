@@ -1,4 +1,5 @@
 .title{
+  padding-top: 20px;
   text-align: center;
 }
 .bottom-sheet{
@@ -8,7 +9,6 @@
   border: 3px solid #90ee90;
   background-color: white;
 }
-
 .filter-title {
   background: transparent;
   padding: 0.5rem;
@@ -18,4 +18,16 @@
   margin: 2rem auto 2rem auto;
   text-align: center;
   color: black;
+}
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 0.5rem 0.5rem;
+}
+.container img{
+  width: 40px;
+  height: 40px;
+  animation: float 3s ease-in-out infinite 0.3s;
 }
