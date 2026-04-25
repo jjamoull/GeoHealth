@@ -11,6 +11,8 @@ import {MapPreviewComponent} from '../../../map-preview-component/map-preview-co
 import { FormsModule } from '@angular/forms';
 import {TranslocoPipe} from '@jsverse/transloco';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
@@ -33,7 +35,7 @@ export class NavigationPageComponent implements OnInit{
 
   searchText: string = '';
   filteredMaps: FinalMapListDto[] = [];
-  isMobile: boolean = typeof window !== 'undefined' && window.innerWidth <= 768;
+
 
   isSearching: boolean = false;
   noResults: boolean = false;
@@ -46,7 +48,7 @@ export class NavigationPageComponent implements OnInit{
 
   openMenu(){
     const bottomSheetRef = this.BottomSheet.open(Bottomsheet, {
-      ariaLabel: 'Share on social media'
+      ariaLabel: ''
     });
   }
 

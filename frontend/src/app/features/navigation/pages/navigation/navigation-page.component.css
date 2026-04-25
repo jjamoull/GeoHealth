@@ -79,7 +79,6 @@ span {
   color: #fff;
   padding: 3px 8px;
   cursor: pointer;
-  background: red;
 }
 #bars{
   background: #90ee90;
@@ -447,6 +446,9 @@ span {
   transform: translateY(-3px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
+.arrow{
+  display: none;
+}
 /* phone portrait */
 @media (max-width: 768px) and (orientation: portrait){
 
@@ -470,6 +472,8 @@ span {
     background-color : transparent;
   }
   .arrow{
+    display: block;
+    position: relative;
     width: 40px;
     height: 40px;
     margin: 0px 0 0 -20px;
