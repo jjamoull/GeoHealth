@@ -446,7 +446,7 @@ span {
   display: none;
 }
 /* phone portrait */
-@media (max-width: 768px) and (orientation: portrait){
+@media (max-width: 768px){
 
   .side-navbar{
     display: none;
