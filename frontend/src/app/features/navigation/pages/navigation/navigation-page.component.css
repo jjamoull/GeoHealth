@@ -463,13 +463,13 @@ span {
   .arrow,
   .arrow:before{
     position:absolute;
-    bottom: -10px;
+    bottom: 10px;
     left:50%;
     background-color : transparent;
   }
   .arrow{
     display: block;
-    position: relative;
+    position: fixed;
     width: 40px;
     height: 40px;
     margin: 0px 0 0 -20px;

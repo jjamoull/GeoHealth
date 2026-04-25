@@ -43,82 +43,6 @@
             }
           </div>
         </div>
-        <div class ="filter-title">
-          <div class="text">Diseases</div>
-        </div>
-        <ol>
-          <app-checkbox
-            [id]="'Ebola'"
-            [label]="'Ebola'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Covid'"
-            [label]="'Covid'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-        </ol>
-        <div class ="filter-title">
-          <div class="text">Annotations</div>
-        </div>
-        <ol>
-          <app-checkbox
-            [id]="'Annotated'"
-            [label]="'Annotated'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Unannotated'"
-            [label]="'Unannotated'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-        </ol>
-
-        <div class ="filter-title">
-          <div class="text">Risk factors</div>
-        </div>
-        <ol>
-          <app-checkbox
-            [id]="'Cattle'"
-            [label]="'Cattle'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Rivers'"
-            [label]="'Rivers'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-        </ol>
       </div>
     </div>
   </div>
@@ -232,8 +156,8 @@
         </button>
       </div>
     }
-    @if(isAdmin){
-      <button (click) = "openMenu()" class = "arrow" ></button>
-    }
   </div>
+  @if(isAdmin){
+    <button (click) = "openMenu()" class = "arrow" ></button>
+  }
 </div>
