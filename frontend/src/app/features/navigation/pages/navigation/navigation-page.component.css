@@ -1,5 +1,6 @@
 .navigation-page{
   background-color: #EBEFFF;
+  overflow-x : hidden;
 }
 /* SIDEBAR */
 * {
@@ -296,7 +297,7 @@ span {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color : #90ee90;
+  background-color : #98FB98;
 }
 
 .dropdown-arrow {
@@ -355,7 +356,7 @@ span {
   transform: translateY(1px);
 }
 
-#plus-icon {
+#plus-icon, #plus-icon2 {
   position: absolute;
   top: 6px;
   right: 6px;
@@ -456,7 +457,7 @@ span {
     width: 100%;
   }
   .rounded-card {
-    width: 100%;
+    width: 85%;
   }
   /* ARROW BUTTON */
   .arrow,
@@ -506,6 +507,10 @@ span {
   .new-case{
     width: 35vw;
     height : 15vh;
+  }
+  .all-maps {
+    padding: 0 12px;
+    overflow-x: hidden;
   }
 
 }

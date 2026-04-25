@@ -1,82 +1,12 @@
 <div class = "bottom-sheet">
-  <div class = "container">
-    <img src="assets/icons/filter.png">
-    <h1 class = "title">Filters</h1>
+  <div class="navigation-button-container">
+    @if(data.isAdmin){
+      <div class="new-map-title">
+        {{ 'navigation.add-map' | transloco }}
+      </div>
+      <button class="new-map-button" id="final-risk" (click)="data.openPopUp('addMap')">{{ 'navigation.final-risk' | transloco }}<i class="fas fa-plus" id="plus-icon" aria-hidden="true"></i></button>
+      <button class="new-map-button" id="risk-factor" (click)="data.openPopUp('addRiskFactor')">{{ 'navigation.risk-factor' | transloco }}<i class="fas fa-plus" id="plus-icon2"></i></button>
+    }
   </div>
-    <div class ="filter-title">
-      <div class="text">Diseases</div>
-    </div>
-    <ol>
-      <app-checkbox
-        [id]="'Ebola'"
-        [label]="'Ebola'"
-        [name]="'souscription'">
-      </app-checkbox>
-      <app-checkbox
-        [id]="'Covid'"
-        [label]="'Covid'"
-        [name]="'souscription'">
-      </app-checkbox>
-      <app-checkbox
-        [id]="'Other'"
-        [label]="'Other'"
-        [name]="'souscription'">
-      </app-checkbox>
-      <app-checkbox
-        [id]="'Other'"
-        [label]="'Other'"
-        [name]="'souscription'">
-      </app-checkbox>
-    </ol>
-    <div class ="filter-title">
-      <div class="text">Annotations</div>
-    </div>
-    <ol>
-      <app-checkbox
-        [id]="'Annotated'"
-        [label]="'Annotated'"
-        [name]="'souscription'">
-      </app-checkbox>
-      <app-checkbox
-        [id]="'Unannotated'"
-        [label]="'Unannotated'"
-        [name]="'souscription'">
-      </app-checkbox>
-      <app-checkbox
-        [id]="'Other'"
-        [label]="'Other'"
-        [name]="'souscription'">
-      </app-checkbox>
-      <app-checkbox
-        [id]="'Other'"
-        [label]="'Other'"
-        [name]="'souscription'">
-      </app-checkbox>
-    </ol>
 
-    <div class ="filter-title">
-      <div class="text">Risk factors</div>
-    </div>
-    <ol>
-      <app-checkbox
-        [id]="'Cattle'"
-        [label]="'Cattle'"
-        [name]="'souscription'">
-      </app-checkbox>
-      <app-checkbox
-        [id]="'Rivers'"
-        [label]="'Rivers'"
-        [name]="'souscription'">
-      </app-checkbox>
-      <app-checkbox
-        [id]="'Other'"
-        [label]="'Other'"
-        [name]="'souscription'">
-      </app-checkbox>
-      <app-checkbox
-        [id]="'Other'"
-        [label]="'Other'"
-        [name]="'souscription'">
-      </app-checkbox>
-    </ol>
 </div>

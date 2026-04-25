@@ -9,41 +9,11 @@
       <div class="scrollbox-inner">
         <div class="navigation-button-container">
           @if(isAdmin){
-            <!--<app-button
-              [text]="'Add a new map'"
-              variant="success"
-              (clicked) ="openPopUp('addMap')">
-            </app-button>
-<input type="checkbox" name="" id="check-nav">
-<div class ="side-navbar">
-  <div class="scrollbox">
-    <div class="scrollbox-inner">
-      <div class="navigation-button-container">
-        @if(isAdmin){
-          <app-button
-            [text]="'Add a new map'"
-            variant="success"
-            (clicked) ="openPopUp('addMap')">
-          </app-button>
-
-
-          <app-button
-            [text]="'Add a new risk factor'"
-            variant="success"
-            (clicked) = "openPopUp('addRiskFactor')">
-          </app-button>
-        }
-
-            <app-button
-              [text]="'Add a new risk factor'"
-              variant="success"
-              (clicked) = "openPopUp('addRiskFactor')">
-            </app-button>-->
             <div class="new-map-title">
             {{ 'navigation.add-map' | transloco }}
             </div>
             <button class="new-map-button" id="final-risk" (click)="openPopUp('addMap')">{{ 'navigation.final-risk' | transloco }}<i class="fas fa-plus" id="plus-icon" aria-hidden="true"></i></button>
-            <button class="new-map-button" id="risk-factor" (click)="openPopUp('addRiskFactor')">{{ 'navigation.risk-factor' | transloco }}<i class="fas fa-plus" id="plus-icon"></i></button>
+            <button class="new-map-button" id="risk-factor" (click)="openPopUp('addRiskFactor')">{{ 'navigation.risk-factor' | transloco }}<i class="fas fa-plus" id="plus-icon2"></i></button>
           }
 
         </div>
@@ -262,6 +232,8 @@
         </button>
       </div>
     }
-    <button (click) = "openMenu()" class = "arrow" ></button>
+    @if(isAdmin){
+      <button (click) = "openMenu()" class = "arrow" ></button>
+    }
   </div>
 </div>

@@ -47,8 +47,11 @@ export class NavigationPageComponent implements OnInit{
   riskFactorsOpen = false;
 
   openMenu(){
-    const bottomSheetRef = this.BottomSheet.open(Bottomsheet, {
-      ariaLabel: ''
+    this.BottomSheet.open(Bottomsheet, {
+      data: {
+        openPopUp: (type: string) => this.openPopUp(type),
+        isAdmin: this.isAdmin
+      }
     });
   }
 
