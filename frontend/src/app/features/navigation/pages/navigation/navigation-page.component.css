@@ -232,15 +232,6 @@ span {
   border-bottom: solid 2px var(--light-grey);
 }
 
-.new-case{
-  background: none;
-  border: 3px solid var(--light-green);
-  border-radius: 12px;
-  width: 25%;
-  height: 25%;
-  box-shadow: var(--glass-shadow);
-}
-
 .preview-meta-data {
   max-height: 100px;
   margin-top: 12px;
@@ -280,6 +271,10 @@ span {
   width: 20vw;
   height: 18vw;
   margin-bottom: 48px;
+  background: none;
+  border: 3px solid var(--light-green);
+  border-radius: 12px;
+  box-shadow: var(--glass-shadow);
 }
 
 .new-case:hover {
@@ -508,5 +503,9 @@ span {
 
   }
   /* ARROW BUTTON */
+  .new-case{
+    width: 35vw;
+    height : 15vh;
+  }
 
 }
