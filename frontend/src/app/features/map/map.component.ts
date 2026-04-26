@@ -29,6 +29,8 @@ import {
   ModelEvaluationMeasureService
 } from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
 import {FormsModule} from '@angular/forms';
+import {ReportService} from '../../core/service/ReportService/reportService';
+import {map} from 'rxjs';
 
 
 @Component({
@@ -93,6 +95,7 @@ export class MapComponent implements AfterViewInit {
     private evaluatorAgreementMeasureService:EvaluatorAgreementMeasureService,
     private meanMeasureService: MeanMeasureService,
     private modelEvaluationMeasureService: ModelEvaluationMeasureService,
+    private reportService: ReportService
     ){
    this.mapMetrics= new MapMetrics(
         this.evaluatorAgreementMeasureService,
@@ -123,6 +126,7 @@ export class MapComponent implements AfterViewInit {
   private loadBaseMap(): void {
     this.mapService.getMap(this.mapId).subscribe({
       next: (mapData) => {
+        console.log(mapData);
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
         this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
@@ -238,8 +242,6 @@ export class MapComponent implements AfterViewInit {
       return;
     }
     this.saveMessage= '';
-    this.cdr.detectChanges();
-
 
     // delete annotation if the division selected is not the same that the previous
     if (this.lastDivisionName !== event.properties.NAME_2) {
@@ -247,7 +249,6 @@ export class MapComponent implements AfterViewInit {
       this.lastDivisionName = event.properties.NAME_2;
     }
 
-    console.log("tralalalalala")
     console.log(event.properties)
     this.selectedDivision.set(event.properties);
     this.mapHelper.placeMarker(event.latlng);
@@ -362,6 +363,38 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  // --- Report ---
+
+  /**
+   *  Make a get request to download the xlsx report for the current map
+   */
+  onReportButtonClicked(): void {
+
+    //Map of all division and their risks
+    const divisionRiskDto: DivisionRiskDto = {
+      divisionRiskLevel: Object.fromEntries(
+        this.allDivisions().map(d => [d.name, d.risk])
+      )
+    };
+
+    // Get the report and download it
+    this.reportService.getReport(this.mapId,divisionRiskDto).subscribe({
+      next: (blob: Blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const urlProxy = document.createElement('a');;
+          urlProxy.href = url;
+          urlProxy.download = 'report.xlsx';
+          urlProxy.click();
+          window.URL.revokeObjectURL(url);
+          console.log('Report successfully downloaded');
+      },
+      error: (err) => {
+        console.error('Failed to delete evaluation form', err);
+      }
+    });
+
+  }
+
   // --- Utilities ---
 
   /**
@@ -373,11 +406,6 @@ export class MapComponent implements AfterViewInit {
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);
   }
-
-  clearSearch(): void {
-    this.searchValue = '';
-  }
-
 
   toggleInspectMode(): void {
     this.inspectModeActive = !this.inspectModeActive;

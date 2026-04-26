@@ -84,7 +84,17 @@
 
     @if(selectedDivision()) {
       <div class="metrics">
-        <div class="metrics-header">{{ 'map.metric' | transloco }}</div>
+
+        <div class="metrics-header">
+          {{ 'map.metric' | transloco }}
+
+          <button
+            class="report-btn"
+            (click)="onReportButtonClicked()">
+            create report
+          </button>
+        </div>
+
         <div class="metrics-body">
 
           <p>{{ 'map.metric1' | transloco }}
@@ -131,6 +141,7 @@
       </div>
     }
 
+
     <!-- Boutons formulaire évaluation -->
     <div class="side-footer">
       @if(selectedDivision() && !showEvaluationModal()){
@@ -147,11 +158,6 @@
           (click)="onDeleteEvaluation()">
         </app-button>
       }
-      <app-button
-        [text]="'Annotation'"
-        [variant]="'danger'"
-        (click)="mapHelper.getAnnotations()">
-      </app-button>
     </div>
 
   </div> <!-- fin side -->

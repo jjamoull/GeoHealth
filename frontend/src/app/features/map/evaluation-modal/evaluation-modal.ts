@@ -26,6 +26,15 @@ export class EvaluationModalComponent implements OnChanges {
   @Input() existingForm: ResponseEvaluationFormDto | null = null;
   @Output() close = new EventEmitter<void>();
 
+
+  riskOptions = [
+    { value: 'low', label: 'evalmodal.firstoption' },
+    { value: 'medium', label: 'evalmodal.secondoption' },
+    { value: 'high', label: 'evalmodal.thirdoption' }
+  ];
+
+
+
   agreementLevel: number | null = null;
   certaintyLevel: number | null = null;
   perceivedRisk: string | null = null;

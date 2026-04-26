@@ -46,7 +46,7 @@ public class MeanMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double meanDivisionalAgreementScore =meanMesureService
+        final Double meanDivisionalAgreementScore =meanMesureService
                 .computeMeanDivisionalAgreementScore(finalMap,division);
 
         return ResponseEntity.status(200).body(meanDivisionalAgreementScore);
@@ -73,7 +73,7 @@ public class MeanMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double meanCertainty=meanMesureService
+        final Double meanCertainty=meanMesureService
                 .computeMeanCertaintyForMapForDivision(finalMap,division);
 
         return ResponseEntity.status(200).body(meanCertainty);

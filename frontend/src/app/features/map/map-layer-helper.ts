@@ -67,6 +67,8 @@ export class MapLayerHelper {
     }
   }
 
+
+
   /**
    * Make transparent annotations on the layer on OSM
    *    if active is True,

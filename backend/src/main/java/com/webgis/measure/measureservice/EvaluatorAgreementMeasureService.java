@@ -31,15 +31,20 @@ public class EvaluatorAgreementMeasureService {
      * @param finalMap the map you are interested in
      * @param division the division you are interested in
      *
-     * @return divisional weighted entropy for a specific division of a map
+     * @return divisional weighted entropy for a specific division of a map if there is at least one public evaluation for this division
+     * of this map, null otherwise
      */
-    private double computeDivisionalWeightedEntropy(FinalMap finalMap, String division) {
+    public Double computeDivisionalWeightedEntropy(FinalMap finalMap, String division) {
         final List<EvaluationForm> forms = evaluationFormRepository
                 .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
                         finalMap, division);
 
-        //Compute weight
+        // No evaluation return null
+        if(forms.isEmpty()){
+            return null;
+        }
 
+        //Compute weight
         final EnumMap<RiskLevel, Double> weightForRiskLevel = new EnumMap<>(RiskLevel.class);
         double totalWeight = 0.0;
 
@@ -52,7 +57,6 @@ public class EvaluatorAgreementMeasureService {
         }
 
         //Compute entropy
-
         double divisionalWeightedEntropy = 0.0;
 
         for (double weightSum : weightForRiskLevel.values()) {
@@ -73,11 +77,16 @@ public class EvaluatorAgreementMeasureService {
      * @param finalMap the map you are interested in
      * @param division the division you are interested in
      *
-     * @return divisional consensus score
+     * @return divisional consensus score  if there is at least one public evaluation for the division
+     *  concerned, null otherwise
      */
-    public double computeDivisionalConsensusScore(FinalMap finalMap, String division) {
-        final double divisionalWeightedEntropy = computeDivisionalWeightedEntropy(finalMap, division);
+    public Double computeDivisionalConsensusScore(FinalMap finalMap, String division) {
+        final Double divisionalWeightedEntropy = computeDivisionalWeightedEntropy(finalMap, division);
 
+        // No evaluation return null
+        if(divisionalWeightedEntropy==null){
+            return null;
+        }
         return 1 - (divisionalWeightedEntropy / Math.log(3));
     }
 
@@ -87,13 +96,15 @@ public class EvaluatorAgreementMeasureService {
      *
      * @param finalMap the map you are interested in
      *
-     * @return mean of divisional weighted Entropy for a map
+     * @return mean of divisional weighted Entropy for a map if there is at least one public evaluation for the map,
+     * null otherwise
      */
-    private double computeNationalAverageEntropy(FinalMap finalMap){
+    public Double computeNationalAverageEntropy(FinalMap finalMap){
         final List<String> divisions = evaluationFormRepository.findDivisionsWithValidPublicEvaluationForms(finalMap);
 
+        //No division evaluated return null
         if(divisions.isEmpty()){
-            return 0.0;
+            return null;
         }
 
         double sum = 0.0;
@@ -112,11 +123,18 @@ public class EvaluatorAgreementMeasureService {
      *
      * @param finalMap the map you are interested in
      *
-     * @return national consensus score
+     * @return national consensus score if there is at least one public evaluation for the map,
+     * null otherwise
+     *
      */
-    public double computeNationalConsensusScore(FinalMap finalMap) {
+    public Double computeNationalConsensusScore(FinalMap finalMap) {
 
-        final double nationalAverageEntropy = computeNationalAverageEntropy(finalMap);
+        final Double nationalAverageEntropy = computeNationalAverageEntropy(finalMap);
+
+        //No division evaluated return null
+        if(nationalAverageEntropy==null){
+            return null;
+        }
 
         return 1 - (nationalAverageEntropy / Math.log(3));
     }
@@ -126,12 +144,18 @@ public class EvaluatorAgreementMeasureService {
      *
      * @param finalMap the map you are interested in
      *
-     * @return Krippensdroff's Alpha
+     * @return Krippensdroff's Alpha if there is at least two valid evaluations for the map,
+     * null otherwise
      */
-    public double computekrippendorffAlpha(FinalMap finalMap){
+    public Double computekrippendorffAlpha(FinalMap finalMap){
         final List<EvaluationForm> evaluationForms = evaluationFormRepository.findByFinalMap(finalMap);
 
         final double[][] krippensdorffMatrix = buildKrippensdorffMatrix(evaluationForms);
+
+        // too few evaluations return null
+        if(krippensdorffMatrix.length<2){
+            return null;
+        }
 
         final RCode code = RCode.create();
 
