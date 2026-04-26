@@ -88,11 +88,14 @@
         <div class="metrics-header">
           {{ 'map.metric' | transloco }}
 
-          <button
-            class="report-btn"
-            (click)="onReportButtonClicked()">
-            create report
-          </button>
+
+          @if(isAdmin){
+            <button
+              class="report-btn"
+              (click)="onReportButtonClicked()">
+              create report
+            </button>
+          }
         </div>
 
         <div class="metrics-body">
