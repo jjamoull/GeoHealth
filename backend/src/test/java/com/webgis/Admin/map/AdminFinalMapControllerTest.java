@@ -53,12 +53,6 @@ class AdminFinalMapControllerTest {
     }
 
 
-    private RasterMap stubRasterMap(Long id) {
-        RasterMap rm = new RasterMap("Title", "Desc");
-        rm.setId(id);
-        return rm;
-    }
-
     @SuppressWarnings("unchecked")
     private static <E extends Throwable> void sneakyThrow(Throwable e) throws E {
         throw (E) e;
