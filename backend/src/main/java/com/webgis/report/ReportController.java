@@ -59,7 +59,6 @@ public class ReportController {
                     .body(excel);
         }
         catch (IOException e){
-            System.out.println(e.getMessage());
             return ResponseEntity.status(500).body(new MessageDto("Fail to create report "));
         }
     }
