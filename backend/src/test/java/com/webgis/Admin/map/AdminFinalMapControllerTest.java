@@ -1,11 +1,9 @@
-package com.webgis.Admin.map;
+package com.webgis.admin.map;
 
 import com.webgis.MessageDto;
-import com.webgis.admin.map.AdminFinalMapController;
 import com.webgis.exception.NotFound;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapService;
-import com.webgis.map.raster.RasterMap;
 import com.webgis.map.raster.RasterMapService;
 import com.webgis.map.service.TransformTifFiles;
 import org.junit.jupiter.api.Test;
@@ -13,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,64 +53,70 @@ class AdminFinalMapControllerTest {
     }
 
 
-    private RasterMap stubRasterMap(Long id) {
-        RasterMap rm = new RasterMap("Title", "Desc");
-        rm.setId(id);
-        return rm;
-    }
-
     @SuppressWarnings("unchecked")
     private static <E extends Throwable> void sneakyThrow(Throwable e) throws E {
         throw (E) e;
     }
 
+    //deleteMap Test
     @Test
-    void deleteMap_success_returns200() {
+    void deleteMapShouldReturnOkTest() {
+        //Act
         doNothing().when(finalMapService).deleteMap(1L);
 
+        //Arrange
         ResponseEntity<Object> response = controller.deleteMap(1L);
 
-        assertEquals(200, response.getStatusCodeValue());
+        //Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertInstanceOf(MessageDto.class, response.getBody());
         assertEquals("Map deleted successfully", ((MessageDto) response.getBody()).getMessage());
         verify(finalMapService).deleteMap(1L);
     }
 
     @Test
-    void deleteMap_notFound_returns404() {
+    void deleteMapShouldReturnNotFoundTest() {
+
+        //Arrange
         doThrow(new IllegalArgumentException("Map not found"))
                 .when(finalMapService).deleteMap(99L);
 
+        //Act
         ResponseEntity<Object> response = controller.deleteMap(99L);
 
-        assertEquals(404, response.getStatusCodeValue());
+        //Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertInstanceOf(MessageDto.class, response.getBody());
         assertEquals("Map not found", ((MessageDto) response.getBody()).getMessage());
     }
 
-
+    //postShapeFile test
     @Test
-    void postShapeFile_nullId_afterFirstSave_returns400() throws Exception {
+    void postShapeFileNullIdAfterFirstSaveShouldReturnBadRequestTest(){
         when(finalMapService.save(any(FinalMap.class))).thenReturn(stubFinalMap(null));
 
         ResponseEntity<Object> response = controller.postShapeFile(
                 "Title", "Desc", List.of("dry"), makeZip(), makeTif(), null);
 
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertInstanceOf(MessageDto.class, response.getBody());
         assertTrue(((MessageDto) response.getBody()).getMessage().contains("There is no id"));
     }
 
 
     @Test
-    void postShapeFile_ioException_returns500() throws Exception {
+    void postShapeFileIoExceptionShouldReturnsInternalServerErrorTest() throws Exception {
+
+        //Arrange
         MultipartFile badZip = mock(MultipartFile.class);
         when(badZip.getBytes()).thenThrow(new IOException("disk error"));
 
+        //Act
         ResponseEntity<Object> response = controller.postShapeFile(
                 "Title", "Desc", List.of("dry"), badZip, makeTif(), null);
 
-        assertEquals(500, response.getStatusCodeValue());
+        //Assert
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertInstanceOf(MessageDto.class, response.getBody());
         assertEquals("disk error", ((MessageDto) response.getBody()).getMessage());
     }
@@ -119,22 +124,27 @@ class AdminFinalMapControllerTest {
 
 
     @Test
-    void postShapeFile_ioExceptionOnGeoJson_returns500() throws Exception {
+    void postShapeFileIoExceptionOnGeoJsonShouldReturnsInternalServerError() throws Exception {
+        //Arrange
         MultipartFile badGeoJson = mock(MultipartFile.class);
         when(badGeoJson.getBytes()).thenThrow(new IOException("geojson read error"));
 
         when(finalMapService.save(any(FinalMap.class))).thenReturn(stubFinalMap(1L));
 
+        //Act
         ResponseEntity<Object> response = controller.postShapeFile(
                 "Title", "Desc", List.of("dry"), makeZip(), makeTif(), badGeoJson);
 
-        assertEquals(500, response.getStatusCodeValue());
+        //Assert
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals("geojson read error", ((MessageDto) response.getBody()).getMessage());
     }
 
 
     @Test
-    void postShapeFile_notFoundFromZipConversion_returns400() throws Exception {
+    void postShapeFileNotFoundFromZipConversionShouldReturnsBadRequestTest() throws Exception {
+
+        //Arrange
         doAnswer(invocation -> {
             FinalMap fm = invocation.getArgument(0);
             fm.setId(5L);
@@ -146,12 +156,14 @@ class AdminFinalMapControllerTest {
             return null;
         }).when(finalMapService).zipToGeoJsonFile(5L);
 
+        //Act
         ResponseEntity<Object> response = controller.postShapeFile(
                 "Title", "Desc", List.of("dry"), makeZip(), makeTif(), null);
 
-        assertEquals(400, response.getStatusCodeValue());
+        //Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
         assertEquals("Conversion failed", ((MessageDto) response.getBody()).getMessage());
     }
-
 
 }
