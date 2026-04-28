@@ -92,7 +92,7 @@ class AdminFinalMapControllerTest {
 
     //postShapeFile test
     @Test
-    void postShapeFileNullIdAfterFirstSaveShouldReturnBadRequestTest() throws Exception {
+    void postShapeFileNullIdAfterFirstSaveShouldReturnBadRequestTest(){
         when(finalMapService.save(any(FinalMap.class))).thenReturn(stubFinalMap(null));
 
         ResponseEntity<Object> response = controller.postShapeFile(
