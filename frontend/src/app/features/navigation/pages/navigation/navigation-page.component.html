@@ -3,7 +3,6 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 />
 <div class="navigation-page">
-
   <input type="checkbox" name="" id="check-nav">
   <div class ="side-navbar">
     <div class="scrollbox">
@@ -14,13 +13,13 @@
             {{ 'navigation.add-map' | transloco }}
             </div>
             <button class="new-map-button" id="final-risk" (click)="openPopUp('addMap')">{{ 'navigation.final-risk' | transloco }}<i class="fas fa-plus" id="plus-icon" aria-hidden="true"></i></button>
-            <button class="new-map-button" id="risk-factor" (click)="openPopUp('addRiskFactor')">{{ 'navigation.risk-factor' | transloco }}<i class="fas fa-plus" id="plus-icon"></i></button>
+            <button class="new-map-button" id="risk-factor" (click)="openPopUp('addRiskFactor')">{{ 'navigation.risk-factor' | transloco }}<i class="fas fa-plus" id="plus-icon2"></i></button>
           }
 
         </div>
         <label for="check-nav">
           <span class ="fas fa-times" id="times"> </span>
-          <span class ="fas fa-bars" id="bars"> </span>
+          <span class ="fas fa-filter" id="bars"> </span>
         </label>
         <div class="search-map-title">{{ 'navigation.search' | transloco }}</div>
         <div class="search-bar-container">
@@ -44,82 +43,6 @@
             }
           </div>
         </div>
-        <div class ="filter-title">
-          <div class="text">Diseases</div>
-        </div>
-        <ol>
-          <app-checkbox
-            [id]="'Ebola'"
-            [label]="'Ebola'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Covid'"
-            [label]="'Covid'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-        </ol>
-        <div class ="filter-title">
-          <div class="text">Annotations</div>
-        </div>
-        <ol>
-          <app-checkbox
-            [id]="'Annotated'"
-            [label]="'Annotated'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Unannotated'"
-            [label]="'Unannotated'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-        </ol>
-
-        <div class ="filter-title">
-          <div class="text">Risk factors</div>
-        </div>
-        <ol>
-          <app-checkbox
-            [id]="'Cattle'"
-            [label]="'Cattle'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Rivers'"
-            [label]="'Rivers'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-          <app-checkbox
-            [id]="'Other'"
-            [label]="'Other'"
-            [name]="'souscription'">
-          </app-checkbox>
-        </ol>
       </div>
     </div>
   </div>
@@ -195,4 +118,7 @@
       </div>
     }
   </div>
+  @if(isAdmin){
+    <button (click) = "openMenu()" class = "arrow" ></button>
+  }
 </div>
