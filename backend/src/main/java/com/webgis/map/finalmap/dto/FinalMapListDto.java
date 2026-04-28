@@ -6,5 +6,13 @@ package com.webgis.map.finalmap.dto;
 public record FinalMapListDto(
     Long id,
     String title,
-    String description
-){}
+    String description,
+    java.util.List<com.webgis.map.finalmap.MapTag> tags){
+    public long getId() {
+        return  id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+}

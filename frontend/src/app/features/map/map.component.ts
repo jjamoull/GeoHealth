@@ -29,6 +29,8 @@ import {
   ModelEvaluationMeasureService
 } from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
 import {FormsModule} from '@angular/forms';
+import {ReportService} from '../../core/service/ReportService/reportService';
+import {map} from 'rxjs';
 
 
 @Component({
@@ -47,6 +49,7 @@ export class MapComponent implements AfterViewInit {
   isAdmin:boolean=false;
   selectedDivision = signal<any>(null);
   mapTitle = signal<string>('');
+  mapTag = signal<string>('');
   mapDescription = signal<string>('');
   // the raster layer linked to this specific map, used in the dropdown
   rasterMap = signal<RasterMapListDto | null>(null);
@@ -92,6 +95,7 @@ export class MapComponent implements AfterViewInit {
     private evaluatorAgreementMeasureService:EvaluatorAgreementMeasureService,
     private meanMeasureService: MeanMeasureService,
     private modelEvaluationMeasureService: ModelEvaluationMeasureService,
+    private reportService: ReportService
     ){
    this.mapMetrics= new MapMetrics(
         this.evaluatorAgreementMeasureService,
@@ -122,9 +126,11 @@ export class MapComponent implements AfterViewInit {
   private loadBaseMap(): void {
     this.mapService.getMap(this.mapId).subscribe({
       next: (mapData) => {
+        console.log(mapData);
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
         this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
+        this.mapTag.set(mapData.tags);
 
         const geoJson = JSON.parse(mapData.fileGeoJson);
         const divisions: { name: string, risk: string }[] = [];
@@ -136,9 +142,12 @@ export class MapComponent implements AfterViewInit {
           });
         }
         this.allDivisions.set(divisions);
-        this.mapHelper.applyDivisionsLayer(mapData.fileGeoJson, (event) => {
-          this.onDivisionClicked(event);
-        });
+        this.mapHelper.applyDivisionsLayer(
+          mapData.fileGeoJson,
+          (event) => {
+              this.onDivisionClicked(event);
+              },
+          this.mapTag().at(0));
       },
       error: (err) => console.error('Failed to load map data', err)
     });
@@ -233,8 +242,6 @@ export class MapComponent implements AfterViewInit {
       return;
     }
     this.saveMessage= '';
-    this.cdr.detectChanges();
-
 
     // delete annotation if the division selected is not the same that the previous
     if (this.lastDivisionName !== event.properties.NAME_2) {
@@ -242,6 +249,7 @@ export class MapComponent implements AfterViewInit {
       this.lastDivisionName = event.properties.NAME_2;
     }
 
+    console.log(event.properties)
     this.selectedDivision.set(event.properties);
     this.mapHelper.placeMarker(event.latlng);
     this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({
@@ -355,6 +363,38 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  // --- Report ---
+
+  /**
+   *  Make a get request to download the xlsx report for the current map
+   */
+  onReportButtonClicked(): void {
+
+    //Map of all division and their risks
+    const divisionRiskDto: DivisionRiskDto = {
+      divisionRiskLevel: Object.fromEntries(
+        this.allDivisions().map(d => [d.name, d.risk])
+      )
+    };
+
+    // Get the report and download it
+    this.reportService.getReport(this.mapId,divisionRiskDto).subscribe({
+      next: (blob: Blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const urlProxy = document.createElement('a');;
+          urlProxy.href = url;
+          urlProxy.download = 'report.xlsx';
+          urlProxy.click();
+          window.URL.revokeObjectURL(url);
+          console.log('Report successfully downloaded');
+      },
+      error: (err) => {
+        console.error('Failed to delete evaluation form', err);
+      }
+    });
+
+  }
+
   // --- Utilities ---
 
   /**
@@ -366,11 +406,6 @@ export class MapComponent implements AfterViewInit {
   getRiskColor(riskClass: string): string {
     return getRiskColor(riskClass);
   }
-
-  clearSearch(): void {
-    this.searchValue = '';
-  }
-
 
   toggleInspectMode(): void {
     this.inspectModeActive = !this.inspectModeActive;

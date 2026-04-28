@@ -57,7 +57,8 @@
         <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
         <p>{{ 'map.info2' | transloco }} {{selectedDivision().NAME_1}}</p>
         <p>{{ 'map.info3' | transloco }} {{selectedDivision().NAME_2}}</p>
-        <p>{{ 'map.info4' | transloco }} {{selectedDivision().rsk_cmb.toFixed(2)}}</p>
+        <p>{{ 'map.info4' | transloco }} {{ (selectedDivision().rsk_cmb ?? selectedDivision().cmbnd__).toFixed(2) }}</p>
+
         <p class="risk-row">
           {{ 'map.info5' | transloco }}
           <span class="dot" [style.background]="getRiskColor(selectedDivision().rsk_cls)"></span>
@@ -83,7 +84,20 @@
 
     @if(selectedDivision()) {
       <div class="metrics">
-        <div class="metrics-header">{{ 'map.metric' | transloco }}</div>
+
+        <div class="metrics-header">
+          {{ 'map.metric' | transloco }}
+
+
+          @if(isAdmin){
+            <button
+              class="report-btn"
+              (click)="onReportButtonClicked()">
+              create report
+            </button>
+          }
+        </div>
+
         <div class="metrics-body">
 
           <p>{{ 'map.metric1' | transloco }}
@@ -130,6 +144,7 @@
       </div>
     }
 
+
     <!-- Boutons formulaire évaluation -->
     <div class="side-footer">
       @if(selectedDivision() && !showEvaluationModal()){
@@ -146,11 +161,6 @@
           (click)="onDeleteEvaluation()">
         </app-button>
       }
-      <app-button
-        [text]="'Annotation'"
-        [variant]="'danger'"
-        (click)="mapHelper.getAnnotations()">
-      </app-button>
     </div>
 
   </div> <!-- fin side -->

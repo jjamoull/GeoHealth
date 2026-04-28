@@ -36,16 +36,12 @@ export class MapPreviewComponent implements AfterViewInit {
 
 
   async ngAfterViewInit() {
-    // avoid to init the map before the DOM did his job
     setTimeout(async () => {
       await this.initMapHelper();
       this.disableInteractions();
+      this.mapHelper.getMap().invalidateSize();
       this.getTheMap();
-    });
-
-    await this.initMapHelper();
-    this.disableInteractions();
-    this.getTheMap();
+    }, 150);
   }
 
 
@@ -68,12 +64,13 @@ export class MapPreviewComponent implements AfterViewInit {
    * accompanied by the GeoJSON file to distinguish
    * all maps
    * */
-  private getTheMap():void{
+  private getTheMap(): void {
     this.mapService.getMap(this.mapId).subscribe({
       next: (mapData) => {
         this.mapHelper.applyDivisionsLayer(
           mapData.fileGeoJson,
-          () => {}
+          () => {},
+          mapData.tags.at(0)
         );
       }
     });

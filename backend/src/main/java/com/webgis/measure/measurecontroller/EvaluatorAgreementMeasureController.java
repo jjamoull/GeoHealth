@@ -49,7 +49,7 @@ public class EvaluatorAgreementMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double divisionalConsensusScore =evaluatorAgreementMeasureService
+        final Double divisionalConsensusScore =evaluatorAgreementMeasureService
                 .computeDivisionalConsensusScore(finalMap,division);
 
         return ResponseEntity.status(200).body(divisionalConsensusScore);
@@ -74,7 +74,7 @@ public class EvaluatorAgreementMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double NationalConsensusScore =evaluatorAgreementMeasureService
+        final Double NationalConsensusScore =evaluatorAgreementMeasureService
                 .computeNationalConsensusScore(finalMap);
 
         return ResponseEntity.status(200).body(NationalConsensusScore);
