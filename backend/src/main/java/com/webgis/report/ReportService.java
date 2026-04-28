@@ -1,6 +1,7 @@
 package com.webgis.report;
 
 import com.webgis.map.finalmap.FinalMap;
+import com.webgis.map.finalmap.MapTag;
 import com.webgis.measure.RiskLevel;
 import com.webgis.measure.measureservice.EvaluatorAgreementMeasureService;
 import com.webgis.measure.measureservice.MeanMesureService;
@@ -73,7 +74,10 @@ public class ReportService {
         rowIndex = addRow(sheet, rowIndex, "Krippendorff", measureHolder.getKrippendorff());
         rowIndex = addRow(sheet, rowIndex, "National Average Entropy", measureHolder.getNationalAverageEntropy());
         rowIndex = addRow(sheet, rowIndex, "National Consensus Score", measureHolder.getNationalConsensusScore());
-        rowIndex = addRow(sheet, rowIndex, "National Model-Field Agreement Score", measureHolder.getNationalModelFieldAgreementScore());
+
+        if(!finalMap.getTags().contains(MapTag.EBOLA)){
+            rowIndex = addRow(sheet, rowIndex, "National Model-Field Agreement Score", measureHolder.getNationalModelFieldAgreementScore());
+        }
 
         rowIndex++; //space row between section
 
@@ -88,9 +92,13 @@ public class ReportService {
                 "Divisional Consensus Score",
                 "Mean Agreement",
                 "Mean Certainty",
-                "Dominant Perceived Risk",
-                "Weighted Divisional-Level Agreement Score"
+                "Dominant Perceived Risk"
         );
+
+        if(!finalMap.getTags().contains(MapTag.EBOLA)){
+           final Row row = sheet.getRow(rowIndex-1);
+           row.createCell(6).setCellValue("Weighted Divisional-Level Agreement Score");
+        }
 
         // For each division compute the metrics
         for (String division : riskForDivision.keySet()) {
@@ -101,9 +109,19 @@ public class ReportService {
                     measureHolder.getDivisionalConsensusScore().get(division),
                     measureHolder.getMeanAgreementScoreForDivison().get(division),
                     measureHolder.getMeanCertaintyForForDivision().get(division),
-                    measureHolder.getDominantPerceivedRiskLevelForDivison().get(division),
-                    measureHolder.getWeightedDivisionalLevelAgreementScore().get(division)
+                    measureHolder.getDominantPerceivedRiskLevelForDivison().get(division)
             );
+
+            if(!finalMap.getTags().contains(MapTag.EBOLA)){
+                final Row row = sheet.getRow(rowIndex-1);
+                Double value=  measureHolder.getWeightedDivisionalLevelAgreementScore().get(division);
+                if (value == null) {
+                    row.createCell(6).setBlank();
+                }
+                else{
+                    row.createCell(6).setCellValue(value);
+                }
+            }
         }
 
         // Auto-size

@@ -1,10 +1,10 @@
 <div class="map-section">
   <div class="map-container">
 
-    <!-- Sélecteur + boutons -->
+    <!-- Selector + buttons -->
     <div class="map-selector">
 
-      <!-- Bouton save annotation -->
+      <!-- Button save annotation -->
       <button
         (click)="saveAnnotation()"
         [disabled]="isSaving"
@@ -15,7 +15,7 @@
         }
       </button>
 
-      <!-- Bouton inspect/dessin -->
+      <!-- Button inspect/draw -->
       <button
         (click)="toggleInspectMode()"
         [class.active]="inspectModeActive"
@@ -46,34 +46,36 @@
         }
       </datalist>
 
-    </div> <!-- fin map-selector -->
+    </div> <!-- end map-selector -->
 
-    <!-- La carte Leaflet -->
+    <!-- Leaflet map-->
     <div id="map"></div>
 
     <!-- Info card division -->
     <div class="info-card">
       @if(selectedDivision()) {
-        <p>Type: {{selectedDivision().ENGTYPE_2}}</p>
         <p>{{ 'map.info2' | transloco }} {{selectedDivision().NAME_1}}</p>
         <p>{{ 'map.info3' | transloco }} {{selectedDivision().NAME_2}}</p>
         <p>{{ 'map.info4' | transloco }} {{ (selectedDivision().rsk_cmb ?? selectedDivision().cmbnd__).toFixed(2) }}</p>
-
-        <p class="risk-row">
-          {{ 'map.info5' | transloco }}
-          <span class="dot" [style.background]="getRiskColor(selectedDivision().rsk_cls)"></span>
-          {{selectedDivision().Risk_categ}}
-        </p>
+        @if(mapTag().at(1) !="EBOLA"){
+          <p class="risk-row">
+            {{ 'map.info5' | transloco }}
+            <span class="dot" [style.background]="getRiskColor(selectedDivision().rsk_cls)"></span>
+            {{selectedDivision().Risk_categ}}
+          </p>
+        }
       } @else {
         <p class="card-label">{{ 'map.label' | transloco }}</p>
       }
     </div>
 
-    <map-legend [riskLevels]="riskLevels"/>
+    @if(mapTag().at(1) !="EBOLA"){
+     <map-legend [riskLevels]="riskLevels"/>
+    }
 
-  </div> <!-- fin map-container -->
+  </div> <!-- end map-container -->
 
-  <!-- Panel latéral -->
+  <!--side Panel -->
   <div class="side">
     <div class="title">
       <p>{{mapTitle()}}</p>
@@ -129,23 +131,24 @@
             <app-tooltip-description [description]="'map.metric6description' | transloco" />
           </p>
           <strong>{{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}</strong>
+          @if(mapTag().at(1) !="EBOLA"){
 
-          <p>{{ 'map.metric7' | transloco }}
-            <app-tooltip-description [description]="'map.metric7description' | transloco" />
-          </p>
-          <strong>{{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null ? (mapMetrics.weightedDivisionalLevelAgreementScore() | number:'1.2-2') : '/' }}</strong>
+            <p>{{ 'map.metric7' | transloco }}
+              <app-tooltip-description [description]="'map.metric7description' | transloco" />
+            </p>
+            <strong>{{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null ? (mapMetrics.weightedDivisionalLevelAgreementScore() | number:'1.2-2') : '/' }}</strong>
 
-          <p>{{ 'map.metric8' | transloco }}
-            <app-tooltip-description [description]="'map.metric8description' | transloco" />
-          </p>
-          <strong>{{ mapMetrics.nationalModelFieldAgreementScore() !== null ? (mapMetrics.nationalModelFieldAgreementScore() | number:'1.2-2') : '/' }}</strong>
-
+            <p>{{ 'map.metric8' | transloco }}
+              <app-tooltip-description [description]="'map.metric8description' | transloco" />
+            </p>
+            <strong>{{ mapMetrics.nationalModelFieldAgreementScore() !== null ? (mapMetrics.nationalModelFieldAgreementScore() | number:'1.2-2') : '/' }}</strong>
+          }
         </div>
       </div>
     }
 
 
-    <!-- Boutons formulaire évaluation -->
+    <!-- Buttons evaluation from -->
     <div class="side-footer">
       @if(selectedDivision() && !showEvaluationModal()){
         <app-button
@@ -163,11 +166,11 @@
       }
     </div>
 
-  </div> <!-- fin side -->
+  </div> <!-- end side -->
 
-</div> <!-- fin map-section -->
+</div> <!-- end map-section -->
 
-<!-- Modal évaluation -->
+<!-- Modal evaluation -->
 @if(showEvaluationModal()) {
   <app-evaluation-modal
     [division]="selectedDivision()"
@@ -177,7 +180,7 @@
   </app-evaluation-modal>
 }
 
-<!-- Liste des évaluations -->
+<!-- List of evaluations -->
 <div class="evaluation-section">
   <h2>Evaluations</h2>
   <div class="evaluation-list">

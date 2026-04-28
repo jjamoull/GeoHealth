@@ -58,7 +58,8 @@ public class ReportController {
                     .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                     .body(excel);
         }
-        catch (RuntimeException | IOException e){
+        catch (IOException e){
+            System.out.println(e.getMessage());
             return ResponseEntity.status(500).body(new MessageDto("Fail to create report "));
         }
     }

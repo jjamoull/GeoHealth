@@ -33,7 +33,6 @@ export class MapLayerHelper {
    * @param maxZoom - the maximum allowed zoom level
    */
   async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number, enableGeoman: boolean): Promise<void> {
-    console.log("In init map");
     const L = await import('leaflet');
     if (enableGeoman) {
       await import('@geoman-io/leaflet-geoman-free');
