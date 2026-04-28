@@ -16,7 +16,7 @@ import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatDialogModule, Checkbox, MapPreviewComponent, FormsModule, TranslocoPipe],
+  imports: [MatDialogModule, MapPreviewComponent, FormsModule, TranslocoPipe],
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })

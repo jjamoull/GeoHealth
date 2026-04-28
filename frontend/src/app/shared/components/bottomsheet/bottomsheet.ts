@@ -7,7 +7,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 @Component({
   selector: 'app-bottomsheet',
   imports: [
-    Checkbox,
     TranslocoPipe,
     ReactiveFormsModule,
     FormsModule
