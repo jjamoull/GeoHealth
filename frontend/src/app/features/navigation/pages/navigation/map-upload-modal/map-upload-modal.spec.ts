@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MapUploadModal } from './map-upload-modal';
+import { MapUploadModalComponent } from './map-upload-modal';
 
 describe('MapUploadModal', () => {
-  let component: MapUploadModal;
-  let fixture: ComponentFixture<MapUploadModal>;
+  let component: MapUploadModalComponent;
+  let fixture: ComponentFixture<MapUploadModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MapUploadModal]
+      imports: [MapUploadModalComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MapUploadModal);
+    fixture = TestBed.createComponent(MapUploadModalComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
