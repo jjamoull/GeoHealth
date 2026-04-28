@@ -114,7 +114,7 @@ public class ReportService {
 
             if(!finalMap.getTags().contains(MapTag.EBOLA)){
                 final Row row = sheet.getRow(rowIndex-1);
-                Double value=  measureHolder.getWeightedDivisionalLevelAgreementScore().get(division);
+                final Double value=  measureHolder.getWeightedDivisionalLevelAgreementScore().get(division);
                 if (value == null) {
                     row.createCell(6).setBlank();
                 }
