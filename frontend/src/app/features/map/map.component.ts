@@ -126,7 +126,6 @@ export class MapComponent implements AfterViewInit {
   private loadBaseMap(): void {
     this.mapService.getMap(this.mapId).subscribe({
       next: (mapData) => {
-        console.log(mapData);
         this.mapTitle.set(mapData.title);
         this.mapDescription.set(mapData.description);
         this.rasterMap.set({ id: mapData.rasterMapId, title: 'Raster layer' });
@@ -249,7 +248,6 @@ export class MapComponent implements AfterViewInit {
       this.lastDivisionName = event.properties.NAME_2;
     }
 
-    console.log(event.properties)
     this.selectedDivision.set(event.properties);
     this.mapHelper.placeMarker(event.latlng);
     this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({
@@ -377,7 +375,6 @@ export class MapComponent implements AfterViewInit {
       )
     };
 
-    console.log(divisionRiskDto.divisionRiskLevel);
     // Get the report and download it
     this.reportService.getReport(this.mapId,divisionRiskDto).subscribe({
       next: (blob: Blob) => {
@@ -432,18 +429,12 @@ export class MapComponent implements AfterViewInit {
     this.usersServices.getUserForAnnotation().subscribe({
       next: userInfo => {
 
-        console.log("selectedDivision contenu :", this.selectedDivision())
-
         const dto: AnnotationDTO = {
           mapId: this.mapId,
           userId: userInfo.id,
           division: this.selectedDivision().dvsn_nm,
           geoJson: geojsonData
         };
-        console.log("-- DTO envoyé au backend --")
-        console.log(dto)
-        console.log("---------------------------")
-
 
         this.annotationService.postAnnotations(dto).subscribe({
           next: () => {
