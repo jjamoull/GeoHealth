@@ -86,45 +86,6 @@
       </div>
     }
 
-    @if (!isSearching) {
-      <div class="risk-factor-maps">
-        <div class="rounded-card">
-          <h3 (click)="toggleDropdown('riskFactors')" class="title">{{ 'navigation.factor-map' | transloco }}</h3>
-          @if (riskFactorsOpen) {
-            <svg (click)="toggleDropdown('riskFactors')" id="up" class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg"
-                 fill="currentColor" viewBox="0 0 24 24" >
-              <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-              <path d="m12 15.41 5.71-5.7-1.42-1.42-4.29 4.3-4.29-4.3-1.42 1.42z"></path>
-            </svg>
-          } @else {
-            <svg (click)="toggleDropdown('riskFactors')" id="down" class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                  fill="currentColor" viewBox="0 0 24 24" >
-              <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-              <path d="m7.71 15.71 4.29-4.3 4.29 4.3 1.42-1.42L12 8.59l-5.71 5.7z"></path>
-            </svg>
-          }
-        </div>
-        <div class="dropdown-content"
-             [class.open]="riskFactorsOpen">
-          <div class="all-the-maps">
-            @for (map of listOfAllMaps; track map.id){
-              <div class="new-case" (click)="goToMap(map.id)">
-
-                <app-map-preview [mapId]="map.id"></app-map-preview>
-
-                <div class="preview-meta-data">
-                  <h4 class="map-title">{{map.title}}</h4>
-                  <h6 class="map-description">{{map.description}}</h6>
-                </div>
-
-              </div>
-            }
-          </div>
-        </div>
-      </div>
-    }
-
-
     @if (isSearching && !noResults) {
       <div class="all-available-maps">
         <div class="rounded-card">

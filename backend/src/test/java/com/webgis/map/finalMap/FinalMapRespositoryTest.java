@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,9 +27,10 @@ class FinalMapRespositoryTest {
     void init(){
         //Arrange
         byte[] dataZip = new byte[]{66};
-
+        List<String> list = new ArrayList<>(List.of("dry"));
         finalMap = new FinalMap("title",
                 "risk map",
+                list,
                 dataZip,
                 "file");
     }

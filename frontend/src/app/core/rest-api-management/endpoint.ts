@@ -66,5 +66,8 @@ export const API_ENDPOINTS = {
       WEIGHTEDDIVISIONALLEVELAGREEMENTSCORE:"/modelEvaluationMeasure/weightedDivisionalLevelAgreementScore",
       NATIONALMODELFIELDAGREEMENTSCORE:"/modelEvaluationMeasure/nationalModelFieldAgreementScore"
     }
+  },
+  REPORT: {
+    GET:"/report/getReport"
   }
 } as const;

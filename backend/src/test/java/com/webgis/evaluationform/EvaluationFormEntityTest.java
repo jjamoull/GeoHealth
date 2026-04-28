@@ -4,6 +4,9 @@ import com.webgis.map.finalmap.FinalMap;
 import com.webgis.user.User;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class EvaluationFormEntityTest {
@@ -17,11 +20,12 @@ class EvaluationFormEntityTest {
                 "julien.jamal@outlook.be",
                 "password",
                 "Admin");
-
+        List<String> list = new ArrayList<>(List.of("dry"));
         byte[] dataZip ={66};
         FinalMap finalMap = new FinalMap(
                 "title",
                 "risk map",
+                list,
                 dataZip,
                 "file");
 
@@ -68,11 +72,12 @@ class EvaluationFormEntityTest {
                 "password2",
                 "User"
         );
-
+        List<String> list = new ArrayList<>(List.of("dry"));
         byte[] dataZip1 ={66};
         FinalMap finalMap1 = new FinalMap(
                 "title",
                 "risk map",
+                list,
                 dataZip1,
                 "file");
 
@@ -80,6 +85,7 @@ class EvaluationFormEntityTest {
         FinalMap finalMap2 = new FinalMap(
                 "title",
                 "risk map",
+                list,
                 dataZip2,
                 "file");
 

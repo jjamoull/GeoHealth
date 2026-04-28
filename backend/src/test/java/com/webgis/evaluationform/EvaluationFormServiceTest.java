@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,11 +36,12 @@ class EvaluationFormServiceTest {
                 "password",
                 "Admin"
         );
-
+        List<String> list = new ArrayList<>(List.of("dry"));
         byte[] dataZip ={66};
         FinalMap finalMap = new FinalMap(
                 "title",
                 "risk map",
+                list,
                 dataZip,
                 "file");
 
