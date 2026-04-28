@@ -1,6 +1,7 @@
 package com.webgis.report;
 
 import com.webgis.map.finalmap.FinalMap;
+import com.webgis.map.finalmap.MapTag;
 import com.webgis.measure.RiskLevel;
 import com.webgis.measure.measureservice.EvaluatorAgreementMeasureService;
 import com.webgis.measure.measureservice.MeanMesureService;
@@ -50,7 +51,9 @@ public class MeasureHolder {
     public void computeAllMeasure(FinalMap finalMap,Map<String, String> riskForDivision){
         computeEvaluatorAgreement(finalMap,riskForDivision);
         computeMeanMeasures(finalMap,riskForDivision);
-        computeModelEvaluation(finalMap,riskForDivision);
+        if(!finalMap.getTags().contains(MapTag.EBOLA)){
+            computeModelEvaluation(finalMap,riskForDivision);
+        }
     }
 
     /**

@@ -373,15 +373,16 @@ export class MapComponent implements AfterViewInit {
     //Map of all division and their risks
     const divisionRiskDto: DivisionRiskDto = {
       divisionRiskLevel: Object.fromEntries(
-        this.allDivisions().map(d => [d.name, d.risk])
+        this.allDivisions().map(d => [d.name, d.risk ?? ""])
       )
     };
 
+    console.log(divisionRiskDto.divisionRiskLevel);
     // Get the report and download it
     this.reportService.getReport(this.mapId,divisionRiskDto).subscribe({
       next: (blob: Blob) => {
           const url = window.URL.createObjectURL(blob);
-          const urlProxy = document.createElement('a');;
+          const urlProxy = document.createElement('a');
           urlProxy.href = url;
           urlProxy.download = 'report.xlsx';
           urlProxy.click();
@@ -389,7 +390,7 @@ export class MapComponent implements AfterViewInit {
           console.log('Report successfully downloaded');
       },
       error: (err) => {
-        console.error('Failed to delete evaluation form', err);
+        console.error('Failed to generate report', err);
       }
     });
 
