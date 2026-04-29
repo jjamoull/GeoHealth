@@ -37,6 +37,14 @@ export class MapLayerHelper {
     if (enableGeoman) {
       await import('@geoman-io/leaflet-geoman-free');
     }
+    
+    // setting leaflet geoman css to have it in local
+    delete (L.Icon.Default.prototype as any)._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconUrl:       'assets/leaflet-images/marker-icon.png',
+      iconRetinaUrl: 'assets/leaflet-images/marker-icon-2x.png',
+      shadowUrl:     'assets/leaflet-images/marker-shadow.png',
+    });
 
     this.leaflet = L.default ?? L;
 
