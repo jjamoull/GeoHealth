@@ -1,0 +1,92 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+  <div class="item">
+    <app-inputbox
+      [type]="'text'"
+      [placeholder]="'My title'"
+      formControlName="title"
+      [label]="'Title'">
+    </app-inputbox>
+    @if(isFieldValid('title')) {
+    <span class="error">Title is required</span>
+    }
+  </div>
+
+  <div class="item">
+    <app-inputbox
+      [type]="'text'"
+      [placeholder]="'About the map…'"
+      formControlName="description"
+      [label]="'Description'">
+    </app-inputbox>
+    @if(isFieldValid('description')) {
+    <span class="error">Description is required</span>
+    }
+  </div>
+
+  <div class="item">
+    <label>Zip file</label>
+    <div class="file-upload">
+      <button type="button" class="upload-btn" (click)="zipUpload.click()">Upload</button>
+      <span class="file-name">{{ selectedZipFile?.name || 'No file uploaded yet' }}</span>
+    </div>
+    <input type="file" class="file-input" accept=".zip" (change)="onZipFileSelected($event)" #zipUpload>
+    @if(isFieldValid('zipFile')) {
+    <span class="error">Zip file is required</span>
+    }
+  </div>
+
+  <div class="item">
+    <label>TIF file</label>
+    <div class="file-upload">
+      <button type="button" class="upload-btn" (click)="tifUpload.click()">Upload</button>
+      <span class="file-name">{{ selectedTifFile?.name || 'No file uploaded yet' }}</span>
+    </div>
+    <input type="file" class="file-input" accept=".tif,.tiff" (change)="onTifFileSelected($event)" #tifUpload>
+  </div>
+
+
+
+  <div class="checkbox">
+    <div>
+      <input type="radio" id="tagDisease1" value="EBOLA" formControlName="tagDisease" >
+      <label for="tagDisease1">  Ebola</label>
+    </div>
+
+    <div>
+      <input type="radio" id="tagDisease2" value="RIFT_VALLEY_FEVER" formControlName="tagDisease" >
+      <label for="tagDisease2" >  Rift valley fever</label>
+    </div>
+    @if(isFieldValid('tagDisease')) {
+      <span class="error">Please select a choice</span>
+    }
+  </div>
+
+
+  <div class="checkbox">
+    <div>
+      <input type="radio" id="tagSeason1" value="DRY" formControlName="tagSeason">
+      <label for="tagSeason1">  Dry </label>
+    </div>
+
+    <div>
+      <input type="radio" id="tagSeason2" value="WET" formControlName="tagSeason">
+      <label for="tagSeason2" >  Wet </label>
+    </div>
+    @if(isFieldValid('tagSeason')) {
+      <span class="error">Please select a choice</span>
+    }
+  </div>
+
+
+
+  <div class="footer">
+    <button type="submit" class="submit-btn" [disabled]="formGroup.invalid || isUploading">
+      Create map
+    </button>
+  </div>
+
+
+
+
+</form>

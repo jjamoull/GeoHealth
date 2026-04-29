@@ -29,7 +29,7 @@ public class MeanMesureService {
      *
      * @return mean divisional agreement score
      */
-    public double computeMeanDivisionalAgreementScore(FinalMap finalMap, String division) {
+    public Double computeMeanDivisionalAgreementScore(FinalMap finalMap, String division) {
         final List<Double> agreementLevels = evaluationFormRepository
                 .findByFinalMapAndDivisionAndAgreementLevelIsNotNullAndIsPublicTrue(finalMap, division)
                 .stream()
@@ -48,7 +48,7 @@ public class MeanMesureService {
      *
      * @return mean certainty for a specific division of a map
      */
-    public double computeMeanCertaintyForMapForDivision(FinalMap finalMap, String division) {
+    public Double computeMeanCertaintyForMapForDivision(FinalMap finalMap, String division) {
         final List<Double> certaintyLevels = evaluationFormRepository
                 .findByFinalMapAndDivisionAndCertaintyLevelIsNotNullAndIsPublicTrue(finalMap, division)
                 .stream()
@@ -63,10 +63,10 @@ public class MeanMesureService {
      *
      * @param values the list of value from which you want the mean to be computed
      *
-     * @return the mean of values
+     * @return the mean of values if values is not empty, null otherwise
      */
-    private double computeMeanFromValues(List<Double> values) {
-        if (values.isEmpty()) return 0;
+    private Double computeMeanFromValues(List<Double> values) {
+        if (values.isEmpty()) return null;
 
         double sum = 0;
         for (double v : values) {
@@ -91,6 +91,10 @@ public class MeanMesureService {
                 .findByFinalMapAndDivisionAndPerceivedRiskIsNotNullAndCertaintyLevelIsNotNullAndIsPublicTrue(
                         finalMap,
                         division);
+
+        if(evaluationForms.isEmpty()){
+            return RiskLevel.UNDEFINED;
+        }
 
         final EnumMap<RiskLevel, Double> weightForRiskLevel = new EnumMap<>(RiskLevel.class);
 

@@ -46,7 +46,7 @@ public class MeanMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double meanDivisionalAgreementScore =meanMesureService
+        final Double meanDivisionalAgreementScore =meanMesureService
                 .computeMeanDivisionalAgreementScore(finalMap,division);
 
         return ResponseEntity.status(200).body(meanDivisionalAgreementScore);
@@ -60,7 +60,7 @@ public class MeanMeasureController {
      *
      * @return mean of certainty score for a specific division of a map if the map exists, not found otherwise
      */
-    @GetMapping("/MeanCertainty/{mapId}/{division}")
+    @GetMapping("/meanCertainty/{mapId}/{division}")
     public ResponseEntity<Object> getMeanCertaintyForMapForDivision(
             @PathVariable long mapId,
             @PathVariable String division){
@@ -73,7 +73,7 @@ public class MeanMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double meanCertainty=meanMesureService
+        final Double meanCertainty=meanMesureService
                 .computeMeanCertaintyForMapForDivision(finalMap,division);
 
         return ResponseEntity.status(200).body(meanCertainty);
@@ -88,7 +88,7 @@ public class MeanMeasureController {
      * @return the dominant perceived riskLevel for a specific division of a map if the map exists, not found otherwise
      */
     @GetMapping("/dominantPerceivedRiskLevel/{mapId}/{division}")
-    public ResponseEntity<Object> dominantPerceivedRiskLevelForMapForDivision(
+    public ResponseEntity<Object> getDominantPerceivedRiskLevelForMapForDivision(
             @PathVariable long mapId,
             @PathVariable String division){
 

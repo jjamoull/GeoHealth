@@ -4,6 +4,9 @@ import com.webgis.exception.NotFound;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +27,6 @@ public class TiffFilesTest {
     };
 
     private String logPrefix = "process";
-
 
     @Test
      void commandDoesntExist(){
@@ -61,6 +63,22 @@ public class TiffFilesTest {
     }
 
 
+    @Test
+    void shouldCreateTilesDirectory() throws IOException {
+        byte[] fakeTif = new byte[]{1,2,3};
+
+        TiffFiles tiffFiles = new TiffFiles(fakeTif);
+
+        assertNotNull(tiffFiles);
+    }
+
+
+    @Test
+    void constructorShouldNotCrashWithDummyData() {
+        byte[] fakeTif = new byte[]{1, 2, 3};
+
+        assertDoesNotThrow(() -> new TiffFiles(fakeTif));
+    }
 
 
 

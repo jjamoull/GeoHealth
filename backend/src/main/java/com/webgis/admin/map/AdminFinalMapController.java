@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/finalMaps")
@@ -56,9 +57,10 @@ public class AdminFinalMapController {
 
 
     @PostMapping(value = "/uploadShapeFile", consumes = "multipart/form-data" )
-    public ResponseEntity<Object> postGeoJsonFile(
+    public ResponseEntity<Object> postShapeFile(
             @RequestParam("title") String title,
             @RequestParam("description") String description,
+            @RequestParam("tags") List<String> tags,
             @RequestParam("zipFile") MultipartFile zipFile,
             @RequestParam("tifFile") MultipartFile tifFile,
             @RequestParam(value = "geoJsonFile", required = false) MultipartFile geoJsonFile){
@@ -66,8 +68,11 @@ public class AdminFinalMapController {
         try {
             final FinalMap finalMap = new FinalMap(title,
                     description,
+                    tags,
                     zipFile.getBytes(),
                     null);
+
+
             finalMapService.save(finalMap);
 
             if (geoJsonFile != null){
@@ -77,7 +82,6 @@ public class AdminFinalMapController {
                     throw new NotFound("There is no id for this map : " + finalMap.getTitle());
                 } else {
                     final String tempGeoJsonFile = finalMapService.zipToGeoJsonFile(finalMap.getId());
-                    logger.info(tempGeoJsonFile);
                     finalMap.setFileGeoJson(tempGeoJsonFile);
                 }
             }
@@ -94,7 +98,7 @@ public class AdminFinalMapController {
             return ResponseEntity.status(200).body(
                     new FinalMapListDto(savedFinalMap.getId(),
                             savedFinalMap.getTitle(),
-                            savedFinalMap.getDescription()));
+                            savedFinalMap.getDescription(), finalMap.getTags()));
         } catch (NotFound e) {
             return ResponseEntity.status(400).body(new MessageDto(e.getMessage()));
         } catch (IOException e) {

@@ -1,4 +1,4 @@
-import { getRiskColor } from './map-utils';
+import {getColorFromCmbnd, getRiskColor} from './map-utils';
 import { MapOption } from './map-types';
 import { TileMeanAndXYdto } from '../../shared/models/MapModel/RasterMapModel/TileMeanAndXYdto';
 import { getTileMean, tileToPolygon } from './tile-utils';
@@ -17,6 +17,10 @@ export class MapLayerHelper {
   private marker: any = null;
   // the red rectangle highlighting the clicked tile block
   private highlightLayer: any = null;
+  // all annotation on the map
+  private geoManLayer: any;
+
+  private inspectModeActive: boolean = false;
 
   /**
    * Initializes the Leaflet map on the given HTML element
@@ -28,8 +32,12 @@ export class MapLayerHelper {
    * @param minZoom - the minimum allowed zoom level
    * @param maxZoom - the maximum allowed zoom level
    */
-  async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number): Promise<void> {
+  async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number, enableGeoman: boolean): Promise<void> {
     const L = await import('leaflet');
+    if (enableGeoman) {
+      await import('@geoman-io/leaflet-geoman-free');
+    }
+
     this.leaflet = L.default ?? L;
 
     this.map = this.leaflet.map(elementId).setView(center, zoom);
@@ -42,7 +50,112 @@ export class MapLayerHelper {
     this.leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
+
+    this.geoManLayer = this.leaflet.featureGroup().addTo(this.map);
+
+    if (enableGeoman) {
+      (this.map as any).pm.addControls({
+        position: 'topleft',
+        drawCircleMarker: false,
+        rotateMode: false,
+      });
+    }
+
+    if (enableGeoman) {
+      (this.map as any).pm.setGlobalOptions({ layerGroup: this.geoManLayer });
+    }
   }
+
+
+
+  /**
+   * Make transparent annotations on the layer on OSM
+   *    if active is True,
+   *    else make usable annotations otherwise
+   *
+   * @param active : boolean variable that influence annotations display
+   *    True : transparent annotations (of Geoman library, not geojson from shapefile)
+   *    False : usable annotations
+   * */
+  toggleInspectMode(active: boolean): void {
+    this.inspectModeActive = active;
+    if (!this.geoManLayer) {
+      return;
+    }
+
+    this.geoManLayer.eachLayer((layer: any) => {
+      let element = null;
+
+      // find markers
+      if (layer.getElement) {
+        element = layer.getElement();
+      }
+
+      // find polygons and lines
+      if (!element && layer._path) {
+        element = layer._path;
+      }
+
+      // find canvas
+      if (!element && layer._renderer) {
+        element = layer._renderer._container;
+      }
+
+      if (element){
+        if (active){
+          element.style.pointerEvents = 'none';
+        } else {
+          element.style.pointerEvents = 'auto';
+        }
+      }
+    });
+  }
+
+  /**
+   * Get annotations and transform it into string to allow the data to be sent to backend
+   *
+   * @return :
+   *    GeoJSON data (String) : if the geoman data can be translated and ready to send
+   *    null : otherwise
+   * */
+  getGeomanGeojson(): String | null {
+    if (this.geoManLayer == null){
+      return null;
+    }
+
+    try {
+      const geomanInGeojson = this.geoManLayer.toGeoJSON();
+
+      if (geomanInGeojson.features.length === 0){
+        return null;
+      }else {
+        return JSON.stringify(geomanInGeojson);
+      }
+    } catch (e) {
+        console.log("Issue during transformation of annotations")
+        return null;
+    }
+  }
+
+  /**
+   * Take geojson data in string format into GeoJSON applicable on the
+   * layer and add it on the map
+   *
+   * @param geoJsonString : GeoJSON data in String format
+   * */
+  loadAnnotationsFromGeoJson(geoJsonString: string): void {
+    if (!this.leaflet || !this.geoManLayer) {
+      return;
+    }
+
+    this.geoManLayer.clearLayers();
+    const geoJsonData = JSON.parse(geoJsonString);
+
+    this.leaflet.geoJSON(geoJsonData).eachLayer((layer: any) => {
+      this.geoManLayer.addLayer(layer);
+    });
+  }
+
 
   /**
    * Draws the GeoJSON divisions layer on the map
@@ -50,18 +163,33 @@ export class MapLayerHelper {
    *
    * @param geoJsonString - the GeoJSON string representing the divisions
    * @param onDivisionClick - callback fired when a division is clicked
+   * @param tag - adapt the color display for Ebola map
    */
-  applyDivisionsLayer(geoJsonString: string, onDivisionClick: (event: any) => void): void {
+  applyDivisionsLayer(geoJsonString: string, onDivisionClick: (event: any) => void, tag?: string): void {
     const geoJson = JSON.parse(geoJsonString);
+    const isDry = tag?.toLowerCase() === 'dry';
 
     this.geoJsonLayer = this.leaflet.geoJSON(geoJson, {
-      style: (feature: any) => ({
-        color: '#414241',
-        weight: 1,
-        fillColor: (getRiskColor(feature?.properties?.rsk_cls)),
-        fillOpacity: 0.5,
-      }),
+      style: (feature: any) => {
+        const props = feature?.properties;
+        let fillColor: string;
+
+        if (props?.rsk_cls) {
+          fillColor = getRiskColor(props.rsk_cls);
+        } else {
+          const riskValue = props?.rsk_cmb ?? props?.cmbnd__ ?? 0;
+          fillColor = getColorFromCmbnd(riskValue, isDry);
+        }
+
+        return {
+          color: '#414241',
+          weight: 1,
+          fillColor,
+          fillOpacity: 0.5,
+        };
+      },
       onEachFeature: (feature: any, layer: any) => {
+        layer.options.pmIgnore = true;
         layer.on('mouseover', () => layer.setStyle({ weight: 2 }));
         layer.on('mouseout', () => layer.setStyle({ weight: 1 }));
         layer.on('click', (e: any) => {
@@ -69,6 +197,7 @@ export class MapLayerHelper {
         });
       }
     }).addTo(this.map);
+
     this.map.fitBounds(this.geoJsonLayer.getBounds());
   }
 
@@ -160,5 +289,20 @@ export class MapLayerHelper {
       this.tileLayer.remove();
       this.tileLayer = null;
     }
+  }
+
+  getAnnotations(): any {
+    console.log(this.geoManLayer.toGeoJSON());
+  }
+
+  clearGeomanLayers(): void {
+    if (!this.geoManLayer) {
+      return;
+    }
+    this.geoManLayer.clearLayers();
+  }
+
+  getMap(): any {
+    return this.map;
   }
 }

@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -39,8 +40,9 @@ class FinalMapControllerTest {
     @BeforeEach
     void setUp() {
         byte[] byteaEmpty = new byte[0];
-        fm1 = new FinalMap("test1", "testdescription", byteaEmpty, "fakefile");
-        fm2 = new FinalMap("test2", "testdescription2", byteaEmpty, "fakefile2");
+        List<String> list = new ArrayList<>(List.of("dry"));
+        fm1 = new FinalMap("test1", "testdescription",list, byteaEmpty, "fakefile");
+        fm2 = new FinalMap("test2", "testdescription2", list, byteaEmpty, "fakefile2");
         RasterMap rasterMap = new RasterMap("raster1", "raster description");
         rasterMap.setFinalMap(fm1);
         fm1.setRasterMap(rasterMap);

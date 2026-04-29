@@ -2,14 +2,16 @@ import {Component, Input} from '@angular/core';
 import {MatExpansionPanel, MatExpansionPanelHeader} from '@angular/material/expansion';
 import {AdminEvaluationFormService} from '../../../core/service/AdminService/AdminEvaluationFormService/AdminEvaluationFormService';
 import {ButtonComponent} from '../../../shared/components/button.component/button.component';
+import {TranslocoPipe} from "@jsverse/transloco";
 
 @Component({
   selector: 'app-evaluation-comment',
-  imports: [
-    MatExpansionPanelHeader,
-    MatExpansionPanel,
-    ButtonComponent
-  ],
+    imports: [
+        MatExpansionPanelHeader,
+        MatExpansionPanel,
+        ButtonComponent,
+        TranslocoPipe
+    ],
   templateUrl: './evaluation-comment.html',
   styleUrl: './evaluation-comment.css',
 })

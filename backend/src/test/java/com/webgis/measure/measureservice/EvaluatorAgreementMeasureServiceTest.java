@@ -3,6 +3,7 @@ package com.webgis.measure.measureservice;
 import com.webgis.evaluationform.EvaluationForm;
 import com.webgis.evaluationform.EvaluationFormRepository;
 import com.webgis.map.finalmap.FinalMap;
+import com.webgis.map.finalmap.MapTag;
 import com.webgis.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static com.webgis.map.finalmap.MapTag.EBOLA;
+import static com.webgis.map.finalmap.MapTag.DRY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -70,9 +74,12 @@ class EvaluatorAgreementMeasureServiceTest {
 
         byte[] dataZip = {66};
 
+        List<String> list = new ArrayList<>(List.of("dry"));
+
         finalMap = new FinalMap(
                 "title",
                 "risk map",
+                list,
                 dataZip,
                 "file"
         );

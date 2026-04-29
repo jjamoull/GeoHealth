@@ -19,17 +19,17 @@
 
     <div class="info-grid">
       <div class="info-item">
-        <span class="label">Agreement Level</span>
+        <span class="label">{{ 'evalcomment.level' | transloco }}</span>
         <span class="value">{{ agreementLevel }}</span>
       </div>
 
       <div class="info-item">
-        <span class="label">Perceived Risk</span>
+        <span class="label">{{ 'evalcomment.risk' | transloco }}</span>
         <span class="value">{{ perceivedRisk }}</span>
       </div>
 
       <div class="info-item">
-        <span class="label">Certainty Level</span>
+        <span class="label">{{ 'evalcomment.level2' | transloco }}</span>
         <span class="value">{{ certaintyLevel }}</span>
       </div>
     </div>
@@ -40,7 +40,7 @@
 
     @if (isAdmin) {
     <app-button
-      [text]="'Delete evaluation'"
+      [text]="'evalcomment.deletebutton' | transloco"
       [variant]="'danger'"
       (click)="onDeleteEvaluation()">
     </app-button>

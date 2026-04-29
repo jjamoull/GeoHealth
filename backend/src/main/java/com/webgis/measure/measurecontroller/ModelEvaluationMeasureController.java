@@ -3,6 +3,7 @@ package com.webgis.measure.measurecontroller;
 import com.webgis.MessageDto;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapService;
+import com.webgis.map.finalmap.MapTag;
 import com.webgis.measure.dto.DivisionRiskDto;
 import com.webgis.measure.measureservice.ModelEvaluationMeasureService;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,11 @@ public class ModelEvaluationMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double weightedDivisionalLevelAgreementScore=modelEvaluationMeasureService
+        if(finalMap.getTags().contains(MapTag.EBOLA)){
+            return ResponseEntity.status(403).body(new MessageDto("This metric cannot be computed for this type of map"));
+        }
+
+        final Double weightedDivisionalLevelAgreementScore=modelEvaluationMeasureService
                 .computeWeightedDivisionalLevelAgreementScore(finalMap,division,divisionRisk);
 
         return ResponseEntity.status(200).body(weightedDivisionalLevelAgreementScore);
@@ -82,7 +87,11 @@ public class ModelEvaluationMeasureController {
 
         final FinalMap finalMap= optionalFinalMap.get();
 
-        final double nationalModelFieldAgreementScore=modelEvaluationMeasureService
+        if(finalMap.getTags().contains(MapTag.EBOLA)){
+            return ResponseEntity.status(403).body(new MessageDto("This metric cannot be computed for this type of map"));
+        }
+
+        final Double nationalModelFieldAgreementScore=modelEvaluationMeasureService
                 .computeNationalModelFieldAgreementScore(finalMap,divisionRiskDto.divisionRiskLevel());
 
         return ResponseEntity.status(200).body(nationalModelFieldAgreementScore);

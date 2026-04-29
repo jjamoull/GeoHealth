@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,10 +70,11 @@ class ModelEvaluationMeasureServiceTest {
         user3.setId(3L);
 
         byte[] dataZip = {66};
-
+        List<String> list = new ArrayList<>(List.of("dry"));
         finalMap = new FinalMap(
                 "title",
                 "risk map",
+                list,
                 dataZip,
                 "file"
         );

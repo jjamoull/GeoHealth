@@ -29,6 +29,8 @@
   background: white;
   font-size: 14px;
   cursor: pointer;
+  flex-direction: column;
+
 }
 
 .search-wrapper {
@@ -61,7 +63,7 @@
 .info-card {
   position: absolute;
   bottom: 20px;
-  left: 16px;
+  left: 50px;
   z-index: 1000;
   background: white;
   padding: 12px 16px;
@@ -120,15 +122,40 @@
 }
 
 .metrics-header {
+  display: flex;
   padding: 10px 14px;
   background: linear-gradient(135deg, #f0f4ed 0%, #f8faf6 100%);
   border-bottom: 1px solid #e2e6ea;
+  align-items: center;
   font-weight: 600;
   color: #2d5016;
 }
 
+.report-btn{
+  padding: 6px 10px;
+  color: black;
+  background: #90ee90;
+  border: 2px solid #7ee87e;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.report-btn:hover{
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  transform: scale(1.01);
+}
+.report-btn:active{
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  transform: scale(.99);
+}
+
+
 .metrics-body {
   padding: 12px 14px;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .metrics-body p {
@@ -192,3 +219,85 @@
   }
 
 }
+
+
+.clear-btn {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #999;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.clear-btn:hover {
+  color: #333;
+}
+
+
+.input-icon {
+  position: absolute;
+  right: 10px;
+  color: #999;
+  font-size: 14px;
+  user-select: none;
+}
+
+.input-icon.clickable {
+  cursor: pointer;
+}
+
+.input-icon.clickable:hover {
+  color: #333;
+}
+
+.inspect-mode-btn {
+  z-index: 1000;
+  padding: 6px 10px;
+  background: white;
+  margin-right: 2px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: all 0.2s;
+
+  &.active {
+    background: green;
+    color: white;
+    border-color: green;
+  }
+
+  &:hover {
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  }
+}
+
+
+.save-btn {
+  padding: 6px 10px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s;
+
+  &:hover {
+    background: #388E3C;
+  }
+
+  &:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
+}
+
+.save-message {
+  display: block;
+  color: #b80b0b;
+}
+
+

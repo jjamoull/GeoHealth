@@ -30,8 +30,17 @@
     flex-direction: column;
     z-index: 1000;
   }
-  .btnOne label, .btnTwo label, .btnOne i, .btnTwo i {
+  .btnOne label, .btnOne img {
     z-index: 1100;
+  }
+  .exit-button{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
   }
   .logo-container{
     display: flex;
@@ -67,7 +76,7 @@
   }
   .sidebar .menu li {
     margin-top: 6px;
-    padding:20px 15px;
+    padding:0;
   }
   .sidebar .menu i {
     color: black;
@@ -75,9 +84,13 @@
     padding-right: 8px;
   }
   .sidebar .menu a {
+    display: flex;
+    width: 100%;
+    padding: 20px 15px;
     color: black;
-    font-size: 20px;
-    text-decoration: none;
+    font-size: 25px;
+    cursor: pointer;
+    align-items: center;
   }
   .sidebar .menu li:hover {
     background-color: #90ee90;
@@ -102,52 +115,28 @@
     left: 16px;
     cursor: pointer;
   }
-  .btnTwo label{
+  .btnOne img {
+    width: 40px;
     position: absolute;
-    top: 5px;
-    left: 16px;
-    cursor: pointer;
-  }
-  .btnOne i {
-    color: #fff;
-    font-size: 30px;
-    font-weight: 700;
-    position: absolute;
-    left: 16px;
     line-height: 1;
     cursor: pointer;
     opacity: 1;
     transition: all 0.3s linear;
   }
-  .btnTwo i {
-    font-size: 25px;
-    line-height: 60px;
-    position: absolute;
-    left: 240px;
-    cursor: pointer;
-    color: #fff;
-    opacity: 0;
-    transition: all 0.3s linear;
-
-  }
-  .btnOne i:hover {
+  .btnOne img:hover {
     font-size: 29px;
-  }
-
-  .btnTwo i:hover {
-    font-size: 24px;
   }
 
   #check:checked~.sidebar {
     left: 0;
   }
-  #check:checked~.btnOne i {
+  #check:checked~.btnOne img {
     opacity: 0;
   }
   #check:checked ~ .btnOne {
     pointer-events: none;
   }
-  #check:checked~.sidebar .btnTwo i {
-    opacity: 1;
+  #check:checked~ .exit-button  {
+    display: block;
   }
 }

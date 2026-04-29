@@ -10,12 +10,13 @@ import { RatingScalerComponent } from '../rating-scaler/rating-scaler';
 import {ResponseEvaluationFormDto} from '../../../shared/models/EvaluationFormModel/ResponseEvaluationFormDto';
 import { UpdateEvaluationFormDto } from '../../../shared/models/EvaluationFormModel/UpdateEvaluationFormDto';
 import {TooltipDescriptionComponent } from '../../../shared/components/tooltip-description/tooltip-description';
+import {TranslocoPipe} from "@jsverse/transloco";
 
 
 @Component({
   selector: 'app-evaluation-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent,TooltipDescriptionComponent],
+    imports: [CommonModule, FormsModule, CdkDrag, CdkDragHandle, ButtonComponent, RatingScalerComponent, TooltipDescriptionComponent, TranslocoPipe],
   templateUrl: './evaluation-modal.html',
   styleUrl: './evaluation-modal.css',
 })
@@ -24,6 +25,15 @@ export class EvaluationModalComponent implements OnChanges {
   @Input() mapId: number= -1;
   @Input() existingForm: ResponseEvaluationFormDto | null = null;
   @Output() close = new EventEmitter<void>();
+
+
+  riskOptions = [
+    { value: 'low', label: 'evalmodal.firstoption' },
+    { value: 'medium', label: 'evalmodal.secondoption' },
+    { value: 'high', label: 'evalmodal.thirdoption' }
+  ];
+
+
 
   agreementLevel: number | null = null;
   certaintyLevel: number | null = null;

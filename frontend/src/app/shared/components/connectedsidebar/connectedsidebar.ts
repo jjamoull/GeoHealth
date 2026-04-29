@@ -11,6 +11,7 @@ import {UsersServices} from '../../../core/service/UserService/users-services';
 })
 export class Connectedsidebar {
   public isAdmin:boolean=false;
+  public isOpen:boolean = false;
 
   constructor(private router: Router,
               public loginService:LoginService,
@@ -27,20 +28,19 @@ export class Connectedsidebar {
     );
 
   }
-
-  goToHome() {
-    this.router.navigate(['home'])
-  }
   goToNavigation(){
     this.router.navigate(['navigation'])
+    this.isOpen = false;
   }
 
   goToProfile(){
     this.router.navigate(['profile'])
+    this.isOpen = false;
   }
 
   goToUsersList(){
     this.router.navigate(['users-list'])
+    this.isOpen = false;
   }
 
   logout():void {
@@ -56,6 +56,8 @@ export class Connectedsidebar {
         this.cdr.detectChanges();
       }
     });
+    this.isOpen = false;
   }
+
 
 }

@@ -1,18 +1,23 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {PopUpComponent} from '../../../pop-up/pop-up.component';
+import {MapUploadModalComponent} from './map-upload-modal/map-upload-modal';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {Checkbox} from '../../../../shared/components/checkbox/checkbox';
+import {Bottomsheet} from '../../../../shared/components/bottomsheet/bottomsheet';
 import {FinalMapService} from '../../../../core/service/MapService/FinalMapService/finalMapService';
 import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/FinalMapListDto';
 import {UsersServices} from '../../../../core/service/UserService/users-services';
 import {MapPreviewComponent} from '../../../map-preview-component/map-preview-component';
 import { FormsModule } from '@angular/forms';
 import { AdminFinalMapService } from '../../../../core/service/AdminService/AdminMapService/AdminFinalMapService'
+import {TranslocoPipe} from '@jsverse/transloco';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatDialogModule, Checkbox, MapPreviewComponent, FormsModule],
+  imports: [MatDialogModule, MapPreviewComponent, FormsModule, TranslocoPipe],
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })
@@ -24,13 +29,15 @@ export class NavigationPageComponent implements OnInit{
     private finalMapService: FinalMapService,
     private cdr: ChangeDetectorRef,
     private usersServices: UsersServices,
-    private adminFinalService: AdminFinalMapService
+    private adminFinalService: AdminFinalMapService,
+    private BottomSheet: MatBottomSheet
   ){}
 
   isAdmin:boolean =false;
 
   searchText: string = '';
   filteredMaps: FinalMapListDto[] = [];
+
 
   isSearching: boolean = false;
   noResults: boolean = false;
@@ -40,6 +47,15 @@ export class NavigationPageComponent implements OnInit{
 
   finalRisksOpen = true;
   riskFactorsOpen = false;
+
+  openMenu(){
+    this.BottomSheet.open(Bottomsheet, {
+      data: {
+        openPopUp: (type: string) => this.openPopUp(type),
+        isAdmin: this.isAdmin
+      }
+    });
+  }
 
   toggleDropdown(section: string) {
     switch(section) {
@@ -168,11 +184,9 @@ export class NavigationPageComponent implements OnInit{
    * Allow the user to open the pop-up on click event
    * */
   openPopUp(paramTypeOfPopUp:string): void {
-    const dialog =this.dialog.open(PopUpComponent, {
-      data:{
-        typeOfPopUp: paramTypeOfPopUp
-      }
-    });
+    const dialog = this.dialog.open(MapUploadModalComponent, {
+      data: { typeOfPopUp: paramTypeOfPopUp }
+     });
 
     dialog.afterClosed().subscribe(
       result=>{

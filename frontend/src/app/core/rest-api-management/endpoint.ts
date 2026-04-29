@@ -4,7 +4,8 @@ export const API_ENDPOINTS = {
     PROFILE: '/user/profile',
     CHANGEPASSWORD: '/user/changePassword',
     DELETE: '/user/delete',
-    ISADMIN: '/user/isAdmin'
+    ISADMIN: '/user/isAdmin',
+    ANNOTATIONS: '/user/profile/annotation'
   },
   AUTH: {
     LOGIN: '/auth/login',
@@ -31,6 +32,10 @@ export const API_ENDPOINTS = {
       DELETEFORM:"/admin/evaluationForm/deleteForm"
     }
   },
+  ANNOTATIONS:{
+    GET : "/annotation",
+    POST : "/annotation/save"
+  },
   FINALMAPS: {
     ALLMAPS: '/finalMaps/allMaps',
     GET: '/finalMaps'
@@ -47,8 +52,22 @@ export const API_ENDPOINTS = {
     DELETEFORM:"/evaluationForm/deleteForm"
   },
   MEASURE: {
-    GLOBALCONSENSUSINDEX: "/measure/globalConsensusIndex",
-    WEIGHTEDENTROPY: "/measure/weightedEntropy",
-    KRIPPENDORFF:"/measure/krippendorffAlpha"
+    EVAlUATORAGREEMENT: {
+      DIVISIONALCONSENSUSSCORE:"/evaluatorAgreementMeasure/divisionalConsensusScore",
+      NATIONALCONSENSUSSCORE:"/evaluatorAgreementMeasure/nationalConsensusScore",
+      KRIPPENDORFFALPHA:"/evaluatorAgreementMeasure/krippendorffAlpha"
+    },
+    MEAN: {
+      DIVISIONALAGREEMENTSCORE:"/meanMeasure/meanDivisionalAgreementScore",
+      CERTAINTY: "/meanMeasure/meanCertainty",
+      DOMINANTPERCEIVEDRISKLEVEL:"/meanMeasure/dominantPerceivedRiskLevel"
+    },
+    MODELEVALUATION:{
+      WEIGHTEDDIVISIONALLEVELAGREEMENTSCORE:"/modelEvaluationMeasure/weightedDivisionalLevelAgreementScore",
+      NATIONALMODELFIELDAGREEMENTSCORE:"/modelEvaluationMeasure/nationalModelFieldAgreementScore"
     }
+  },
+  REPORT: {
+    GET:"/report/getReport"
+  }
 } as const;

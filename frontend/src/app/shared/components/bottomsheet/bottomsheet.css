@@ -1,0 +1,53 @@
+.bottom-sheet{
+  width: 100%;
+  height:auto;
+  border-radius: 30px;
+  border: 3px solid #90ee90;
+  background-color: white;
+}
+.navigation-button-container{
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+.new-map-title {
+  font-size: 1.2em;
+  margin-bottom: 12px;
+}
+
+.new-map-button {
+  position: relative;
+  width: 60%;
+  height: 48px;
+
+  background-color: var(--super-light-grey);
+  border: solid 1px var(--dark-grey);
+  border-radius: 12px;
+  padding: 10px 12px 8px 12px;
+
+  margin: 6px;
+
+  font-size: 14px;
+
+  box-shadow: 0 2px 4px 1px rgba(0,0,0, .1);
+
+  transition: all ease-in-out .2s;
+}
+
+.new-map-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px 1px rgba(0,0,0, .1);
+}
+
+.new-map-button:active {
+  transform: translateY(1px);
+}
+
+#plus-icon, #plus-icon2 {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  color: var(--dark-grey);
+}
