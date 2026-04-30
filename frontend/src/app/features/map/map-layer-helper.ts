@@ -33,20 +33,20 @@ export class MapLayerHelper {
    * @param maxZoom - the maximum allowed zoom level
    */
   async initMap(elementId: string, center: any, zoom: number, minZoom : number, maxZoom : number, enableGeoman: boolean): Promise<void> {
-    const L = await import('leaflet');
+    const leafletModule = await import('leaflet');
     if (enableGeoman) {
       await import('@geoman-io/leaflet-geoman-free');
     }
     
-    // setting leaflet geoman css to have it in local
+    const L = (leafletModule as any).default ?? leafletModule;
+    this.leaflet = L;
+
     delete (L.Icon.Default.prototype as any)._getIconUrl;
     L.Icon.Default.mergeOptions({
       iconUrl:       'assets/leaflet-images/marker-icon.png',
       iconRetinaUrl: 'assets/leaflet-images/marker-icon-2x.png',
       shadowUrl:     'assets/leaflet-images/marker-shadow.png',
     });
-
-    this.leaflet = L.default ?? L;
 
     this.map = this.leaflet.map(elementId).setView(center, zoom);
 
