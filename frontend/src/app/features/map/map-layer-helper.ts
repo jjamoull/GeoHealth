@@ -37,11 +37,9 @@ export class MapLayerHelper {
     if (enableGeoman) {
       await import('@geoman-io/leaflet-geoman-free');
     }
-
-
+    
     const L = (leafletModule as any).default ?? leafletModule;
     this.leaflet = L;
-
 
     delete (L.Icon.Default.prototype as any)._getIconUrl;
     L.Icon.Default.mergeOptions({
@@ -49,9 +47,6 @@ export class MapLayerHelper {
       iconRetinaUrl: 'assets/leaflet-images/marker-icon-2x.png',
       shadowUrl:     'assets/leaflet-images/marker-shadow.png',
     });
-
-
-    this.leaflet = L.default ?? L;
 
     this.map = this.leaflet.map(elementId).setView(center, zoom);
 
