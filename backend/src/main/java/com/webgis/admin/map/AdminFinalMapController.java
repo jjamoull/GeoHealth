@@ -44,7 +44,14 @@ public class AdminFinalMapController {
         this.transformTifFiles = transformTifFiles;
     }
 
-
+    /**
+     * Delete the final map with the specified id
+     * (It will also delete all the map related element(raster map, evaluations forms)
+     *
+     * @param id the id of the map you want to delete
+     *
+     * @return Ok if the map is successfully deleted, not found otherwise
+     */
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Object> deleteMap(@PathVariable long id) {
         try {

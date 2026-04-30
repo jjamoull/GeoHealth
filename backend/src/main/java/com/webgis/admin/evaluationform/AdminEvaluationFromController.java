@@ -60,6 +60,11 @@ public class AdminEvaluationFromController {
         return ResponseEntity.status(200).body(responseEvaluationForms);
     }
 
+    /**
+     * Delete the form with the specified id
+     *
+     * @param id the id of the form you want to delete
+     */
     @DeleteMapping("/deleteForm/{id}")
     public ResponseEntity<MessageDto> deleteForm(@PathVariable long id){
         try {
