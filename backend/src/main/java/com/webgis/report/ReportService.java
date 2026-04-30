@@ -1,5 +1,6 @@
 package com.webgis.report;
 
+import com.webgis.evaluationform.EvaluationFormService;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.MapTag;
 import com.webgis.measure.RiskLevel;
@@ -22,15 +23,18 @@ public class ReportService {
     private final EvaluatorAgreementMeasureService evaluatorAgreementMeasureService;
     private final  MeanMesureService meanMesureService;
     private final ModelEvaluationMeasureService modelEvaluationMeasureService;
+    private final EvaluationFormService evaluationFormService;
 
     public ReportService(
             EvaluatorAgreementMeasureService evaluatorAgreementMeasureService,
             MeanMesureService meanMesureService,
-            ModelEvaluationMeasureService modelEvaluationMeasureService){
+            ModelEvaluationMeasureService modelEvaluationMeasureService,
+            EvaluationFormService evaluationFormService){
 
         this.evaluatorAgreementMeasureService=evaluatorAgreementMeasureService;
         this.meanMesureService=meanMesureService;
         this.modelEvaluationMeasureService= modelEvaluationMeasureService;
+        this.evaluationFormService= evaluationFormService;
     }
 
     /**
@@ -78,6 +82,8 @@ public class ReportService {
         if(!finalMap.getTags().contains(MapTag.EBOLA)){
             rowIndex = addRow(sheet, rowIndex, "National Model-Field Agreement Score", measureHolder.getNationalModelFieldAgreementScore());
         }
+        final long totalNumberOfFormForMap =evaluationFormService.getNumberOfPublicFormForAMap(finalMap);
+        rowIndex = addRow(sheet, rowIndex, "Total Number Of Evaluators",totalNumberOfFormForMap);
 
         rowIndex++; //space row between section
 
@@ -100,9 +106,12 @@ public class ReportService {
            row.createCell(6).setCellValue("Weighted Divisional-Level Agreement Score");
         }
 
+        Row row = sheet.getRow(rowIndex-1);
+        row.createCell(7).setCellValue("Number of evaluators");
+
         // For each division compute the metrics
         for (String division : riskForDivision.keySet()) {
-
+            //Adding all the metrics
             rowIndex = addRow(sheet, rowIndex,
                     division,
                     measureHolder.getDivisionalWeightedEntropy().get(division),
@@ -112,8 +121,9 @@ public class ReportService {
                     measureHolder.getDominantPerceivedRiskLevelForDivison().get(division)
             );
 
+            //If map is Ebola map some metrics are not computed
             if(!finalMap.getTags().contains(MapTag.EBOLA)){
-                final Row row = sheet.getRow(rowIndex-1);
+                row = sheet.getRow(rowIndex-1);
                 final Double value=  measureHolder.getWeightedDivisionalLevelAgreementScore().get(division);
                 if (value == null) {
                     row.createCell(6).setBlank();
@@ -122,7 +132,14 @@ public class ReportService {
                     row.createCell(6).setCellValue(value);
                 }
             }
+
+            //Adding the number of evaluator for this division
+            row = sheet.getRow(rowIndex-1);
+            final long totalNumberOfFormForDivision=evaluationFormService
+                    .getNumberOfPublicFormForADivisionOfAMap(division,finalMap);
+            row.createCell(7).setCellValue(totalNumberOfFormForDivision);
         }
+
 
         // Auto-size
         for (int i = 0; i < 7; i++) {
@@ -159,6 +176,8 @@ public class ReportService {
                 row.createCell(cellIndex).setBlank();
             } else if (value instanceof Double) {
                 row.createCell(cellIndex).setCellValue((Double) value);
+            } else if (value instanceof Long) {
+                row.createCell(cellIndex).setCellValue((Long) value);
             } else if (value instanceof RiskLevel) {
 
                 if(value == RiskLevel.UNDEFINED){

@@ -161,10 +161,33 @@ public class EvaluationFormService {
             throw new IllegalArgumentException("Form does not exist");
         }
         final EvaluationForm form = optionalForm.get();
-        if (form.getUser().getId() != user.getId()) {
+        if (form.getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException("User does not have permission to delete this form");
         }
         evaluationFormRepository.delete(form);
+    }
+
+    /**
+     * Get the number of public evaluation forms for a map
+     *
+     * @param finalMap the map you are interested in
+     *
+     * @return the number of public evaluation forms for the map given in parameter
+     */
+    public Long getNumberOfPublicFormForAMap(FinalMap finalMap) {
+        return evaluationFormRepository.countByFinalMapAndIsPublicTrue(finalMap);
+    }
+
+    /**
+     * Get the number of public evaluation forms for a specific division of a map
+     *
+     * @param division the division you are interested in
+     * @param finalMap the map you are interested in
+     *
+     * @return the number of public evaluation forms for a specific division of a map
+     */
+    public Long getNumberOfPublicFormForADivisionOfAMap(String division, FinalMap finalMap) {
+        return evaluationFormRepository.countByFinalMapAndDivisionAndIsPublicTrue(finalMap, division);
     }
 
 }

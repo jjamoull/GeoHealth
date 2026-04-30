@@ -34,6 +34,10 @@ public interface EvaluationFormRepository extends JpaRepository<EvaluationForm,I
 
     boolean existsByUserAndDivisionAndFinalMap(User user, String division, FinalMap finalMap);
 
+    long countByFinalMapAndIsPublicTrue(FinalMap finalMap);
+
+    long countByFinalMapAndDivisionAndIsPublicTrue(FinalMap finalMap, String division);
+
     //Manual Query has it is not possible directly with jpa function
     @Query("""
     SELECT DISTINCT e.division
