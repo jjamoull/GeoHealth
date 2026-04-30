@@ -36,7 +36,9 @@ export class FinalMapFormComponent implements OnInit {
       tagSeason : new FormControl('', [Validators.required]),
       tagDisease : new FormControl('', [Validators.required])
     });
+
   }
+
 
   onZipFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
