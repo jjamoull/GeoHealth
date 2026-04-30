@@ -161,7 +161,7 @@ public class EvaluationFormService {
             throw new IllegalArgumentException("Form does not exist");
         }
         final EvaluationForm form = optionalForm.get();
-        if (form.getUser().getId().equals(user.getId())) {
+        if (!form.getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException("User does not have permission to delete this form");
         }
         evaluationFormRepository.delete(form);
