@@ -48,17 +48,12 @@ public class ReportService {
      * @throws IOException if error while writing byte into the byte array
      */
     public byte[] createReportForMap(FinalMap finalMap, Map<String, String> riskForDivision) throws IOException {
-
-
         // Computing all the measure
         final MeasureHolder measureHolder =new MeasureHolder(
                 evaluatorAgreementMeasureService,
                 meanMesureService,
                 modelEvaluationMeasureService);
-
         measureHolder.computeAllMeasure(finalMap,riskForDivision);
-
-
         //Creating xlsx report
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         try (final Workbook workbook = new XSSFWorkbook()) {
@@ -81,7 +76,9 @@ public class ReportService {
             rowIndex = addRow(sheet, rowIndex, "National Consensus Score", measureHolder.getNationalConsensusScore());
 
             if(!finalMap.getTags().contains(MapTag.EBOLA)){
-                rowIndex = addRow(sheet, rowIndex, "National Model-Field Agreement Score", measureHolder.getNationalModelFieldAgreementScore());
+                rowIndex = addRow(sheet, rowIndex,
+                        "National Model-Field Agreement Score",
+                        measureHolder.getNationalModelFieldAgreementScore());
             }
             final long totalNumberOfFormForMap =evaluationFormService.getNumberOfPublicFormForAMap(finalMap);
             rowIndex = addRow(sheet, rowIndex, "Total Number Of Evaluators",totalNumberOfFormForMap);
