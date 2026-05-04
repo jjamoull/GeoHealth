@@ -60,96 +60,96 @@ public class ReportService {
 
 
         //Creating xlsx report
-        final Workbook workbook = new XSSFWorkbook();
-        final Sheet sheet = workbook.createSheet(finalMap.getTitle());
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (final Workbook workbook = new XSSFWorkbook()) {
+            final Sheet sheet = workbook.createSheet(finalMap.getTitle());
 
-        int rowIndex= 0; //Track the current row of the sheet
+            int rowIndex= 0; //Track the current row of the sheet
 
-        // Creating Global Metrics Section
-        final Row titleRow = sheet.createRow(rowIndex++);
-        titleRow.createCell(0).setCellValue("Global Metrics");
+            // Creating Global Metrics Section
+            final Row titleRow = sheet.createRow(rowIndex++);
+            titleRow.createCell(0).setCellValue("Global Metrics");
 
-        //Creating global header row
-        rowIndex = addRow(sheet, rowIndex,
-                "Metric",
-                "Value"
-        );
-
-        rowIndex = addRow(sheet, rowIndex, "Krippendorff", measureHolder.getKrippendorff());
-        rowIndex = addRow(sheet, rowIndex, "National Average Entropy", measureHolder.getNationalAverageEntropy());
-        rowIndex = addRow(sheet, rowIndex, "National Consensus Score", measureHolder.getNationalConsensusScore());
-
-        if(!finalMap.getTags().contains(MapTag.EBOLA)){
-            rowIndex = addRow(sheet, rowIndex, "National Model-Field Agreement Score", measureHolder.getNationalModelFieldAgreementScore());
-        }
-        final long totalNumberOfFormForMap =evaluationFormService.getNumberOfPublicFormForAMap(finalMap);
-        rowIndex = addRow(sheet, rowIndex, "Total Number Of Evaluators",totalNumberOfFormForMap);
-
-        rowIndex++; //space row between section
-
-        // Creating Divisional Metrics section
-        final Row divisionTitleRow = sheet.createRow(rowIndex++);
-        divisionTitleRow.createCell(0).setCellValue("Divisional Metrics");
-
-        //Creating division header row
-        rowIndex = addRow(sheet, rowIndex,
-                "Division",
-                "Divisional Weighted Entropy",
-                "Divisional Consensus Score",
-                "Mean Agreement",
-                "Mean Certainty",
-                "Dominant Perceived Risk"
-        );
-
-        if(!finalMap.getTags().contains(MapTag.EBOLA)){
-           final Row row = sheet.getRow(rowIndex-1);
-           row.createCell(6).setCellValue("Weighted Divisional-Level Agreement Score");
-        }
-
-        Row row = sheet.getRow(rowIndex-1);
-        row.createCell(7).setCellValue("Number of evaluators");
-
-        // For each division compute the metrics
-        for (String division : riskForDivision.keySet()) {
-            //Adding all the metrics
+            //Creating global header row
             rowIndex = addRow(sheet, rowIndex,
-                    division,
-                    measureHolder.getDivisionalWeightedEntropy().get(division),
-                    measureHolder.getDivisionalConsensusScore().get(division),
-                    measureHolder.getMeanAgreementScoreForDivison().get(division),
-                    measureHolder.getMeanCertaintyForForDivision().get(division),
-                    measureHolder.getDominantPerceivedRiskLevelForDivison().get(division)
+                    "Metric",
+                    "Value"
             );
 
-            //If map is Ebola map some metrics are not computed
+            rowIndex = addRow(sheet, rowIndex, "Krippendorff", measureHolder.getKrippendorff());
+            rowIndex = addRow(sheet, rowIndex, "National Average Entropy", measureHolder.getNationalAverageEntropy());
+            rowIndex = addRow(sheet, rowIndex, "National Consensus Score", measureHolder.getNationalConsensusScore());
+
             if(!finalMap.getTags().contains(MapTag.EBOLA)){
-                row = sheet.getRow(rowIndex-1);
-                final Double value=  measureHolder.getWeightedDivisionalLevelAgreementScore().get(division);
-                if (value == null) {
-                    row.createCell(6).setBlank();
-                }
-                else{
-                    row.createCell(6).setCellValue(value);
-                }
+                rowIndex = addRow(sheet, rowIndex, "National Model-Field Agreement Score", measureHolder.getNationalModelFieldAgreementScore());
+            }
+            final long totalNumberOfFormForMap =evaluationFormService.getNumberOfPublicFormForAMap(finalMap);
+            rowIndex = addRow(sheet, rowIndex, "Total Number Of Evaluators",totalNumberOfFormForMap);
+
+            rowIndex++; //space row between section
+
+            // Creating Divisional Metrics section
+            final Row divisionTitleRow = sheet.createRow(rowIndex++);
+            divisionTitleRow.createCell(0).setCellValue("Divisional Metrics");
+
+            //Creating division header row
+            rowIndex = addRow(sheet, rowIndex,
+                    "Division",
+                    "Divisional Weighted Entropy",
+                    "Divisional Consensus Score",
+                    "Mean Agreement",
+                    "Mean Certainty",
+                    "Dominant Perceived Risk"
+            );
+
+            if(!finalMap.getTags().contains(MapTag.EBOLA)){
+                final Row row = sheet.getRow(rowIndex-1);
+                row.createCell(6).setCellValue("Weighted Divisional-Level Agreement Score");
             }
 
-            //Adding the number of evaluator for this division
-            row = sheet.getRow(rowIndex-1);
-            final long totalNumberOfFormForDivision=evaluationFormService
-                    .getNumberOfPublicFormForADivisionOfAMap(division,finalMap);
-            row.createCell(7).setCellValue(totalNumberOfFormForDivision);
+            Row row = sheet.getRow(rowIndex-1);
+            row.createCell(7).setCellValue("Number of evaluators");
+
+            // For each division compute the metrics
+            for (String division : riskForDivision.keySet()) {
+                //Adding all the metrics
+                rowIndex = addRow(sheet, rowIndex,
+                        division,
+                        measureHolder.getDivisionalWeightedEntropy().get(division),
+                        measureHolder.getDivisionalConsensusScore().get(division),
+                        measureHolder.getMeanAgreementScoreForDivison().get(division),
+                        measureHolder.getMeanCertaintyForForDivision().get(division),
+                        measureHolder.getDominantPerceivedRiskLevelForDivison().get(division)
+                );
+
+                //If map is Ebola map some metrics are not computed
+                if(!finalMap.getTags().contains(MapTag.EBOLA)){
+                    row = sheet.getRow(rowIndex-1);
+                    final Double value=  measureHolder.getWeightedDivisionalLevelAgreementScore().get(division);
+                    if (value == null) {
+                        row.createCell(6).setBlank();
+                    }
+                    else{
+                        row.createCell(6).setCellValue(value);
+                    }
+                }
+
+                //Adding the number of evaluator for this division
+                row = sheet.getRow(rowIndex-1);
+                final long totalNumberOfFormForDivision=evaluationFormService
+                        .getNumberOfPublicFormForADivisionOfAMap(division,finalMap);
+                row.createCell(7).setCellValue(totalNumberOfFormForDivision);
+            }
+
+
+            // Auto-size
+            for (int i = 0; i < 7; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            //Writting workbook content into a byte array
+            workbook.write(out);
         }
-
-
-        // Auto-size
-        for (int i = 0; i < 7; i++) {
-            sheet.autoSizeColumn(i);
-        }
-
-        //Writting workbook content into a byte array
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        workbook.write(out);
-        workbook.close();
 
         return out.toByteArray();
     }
