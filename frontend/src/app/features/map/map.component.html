@@ -191,6 +191,7 @@
 <!-- List of evaluations -->
 <div class="evaluation-section">
   <h2>Evaluations</h2>
+  @if(selectedDivision()) {
   <div class="evaluation-list">
     @if(isAdmin){
       @for(form of allEvaluationFormsAdmin(); track form){
@@ -226,4 +227,5 @@
       }
     }
   </div>
+  }
 </div>
