@@ -1,3 +1,9 @@
+:host {
+  display: block;
+  background-color: white;
+  min-height: 100vh;
+}
+
 .map-section {
   display: flex;
   height: 70vh;
@@ -153,7 +159,6 @@
 
 .metrics-body {
   padding: 12px 14px;
-  max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
 }
