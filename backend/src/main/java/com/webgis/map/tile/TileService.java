@@ -215,7 +215,7 @@ public class TileService {
      * @param tileId the id of the tile you want to delete
      */
     public void deleteTile(TileId tileId){
-        Optional<Tile> tileTodelete= findById(tileId);
+        final Optional<Tile> tileTodelete= findById(tileId);
         tileTodelete.ifPresent(tileRepository::delete);
     }
 
@@ -226,7 +226,7 @@ public class TileService {
      *
      * @return A list of all the tile linked to the rasterMap
      */
-    public List<Tile> AllTileForAspecificRasterMap(RasterMap rasterMap){
+    public List<Tile> allTileForAspecificRasterMap(RasterMap rasterMap){
         return tileRepository.findTileByRasterMap(rasterMap);
     }
 }

@@ -79,13 +79,13 @@ public class FinalMapService {
         final RasterMap rasterMap= map.get().getRasterMap();
 
         //Delete all the tile link to the raster map
-        final List<Tile> tiles= tileService.AllTileForAspecificRasterMap(rasterMap);
+        final List<Tile> tiles= tileService.allTileForAspecificRasterMap(rasterMap);
         for(Tile tile:tiles){
             tileService.deleteTile(tile.getTileId());
         }
 
         //Delete forms linked to the map
-        List<EvaluationForm> evaluationForms = evaluationFormService.getAllFormForFinalMap(finalMapDel);
+        final List<EvaluationForm> evaluationForms = evaluationFormService.getAllFormForFinalMap(finalMapDel);
         for(EvaluationForm evaluationForm:evaluationForms){
             evaluationFormService.deleteForm(evaluationForm.getId(),evaluationForm.getUser());
         }
