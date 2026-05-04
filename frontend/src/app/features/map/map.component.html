@@ -84,7 +84,6 @@
       <p>{{mapDescription()}}</p>
     </div>
 
-    @if(selectedDivision()) {
       <div class="metrics">
 
         <div class="metrics-header">
@@ -102,50 +101,59 @@
 
         <div class="metrics-body">
 
-          <p>{{ 'map.metric1' | transloco }}
-            <app-tooltip-description [description]="'map.metric1description' | transloco" />
-          </p>
-          <strong>{{ mapMetrics.divisionalConsensusScore() !== null ? (mapMetrics.divisionalConsensusScore() | number:'1.2-2') : '/' }}</strong>
+          <div class="metric-row">
+            <span class="metric-label">{{ 'map.metric3' | transloco }}<app-tooltip-description [description]="'map.metric3description' | transloco" /></span>
+            <strong class="metric-value">{{ mapMetrics.krippendorffAlpha() !== null ? (mapMetrics.krippendorffAlpha() | number:'1.2-2') : '—' }}</strong>
+          </div>
 
-          <p>{{ 'map.metric2' | transloco }}
-            <app-tooltip-description [description]="'map.metric2description' | transloco" />
-          </p>
-          <strong>{{ mapMetrics.nationalConsensusScore() !== null ? (mapMetrics.nationalConsensusScore() | number:'1.2-2') : '/' }}</strong>
+          <div class="metric-row">
+            <span class="metric-label">{{ 'map.metric2' | transloco }}<app-tooltip-description [description]="'map.metric2description' | transloco" /></span>
+            <strong class="metric-value">{{ mapMetrics.nationalConsensusScore() !== null ? (mapMetrics.nationalConsensusScore() | number:'1.2-2') : '—' }}</strong>
+          </div>
 
-          <p>{{ 'map.metric3' | transloco }}
-            <app-tooltip-description [description]="'map.metric3description' | transloco" />
-          </p>
-          <strong>{{ mapMetrics.krippendorffAlpha() !== null ? (mapMetrics.krippendorffAlpha() | number:'1.2-2') : '/' }}</strong>
-
-          <p>{{ 'map.metric4' | transloco }}
-            <app-tooltip-description [description]="'map.metric4description' | transloco" />
-          </p>
-          <strong>{{ mapMetrics.meanDivisionalAgreementScore() !== null ? (mapMetrics.meanDivisionalAgreementScore() | number:'1.2-2') : '/' }}</strong>
-
-          <p>{{ 'map.metric5' | transloco }}
-            <app-tooltip-description [description]="'map.metric5description' | transloco" />
-          </p>
-          <strong>{{ mapMetrics.meanCertaintyForMapForDivision() !== null ? (mapMetrics.meanCertaintyForMapForDivision() | number:'1.2-2') : '/' }}</strong>
-
-          <p>{{ 'map.metric6' | transloco }}
-            <app-tooltip-description [description]="'map.metric6description' | transloco" />
-          </p>
-          <strong>{{ mapMetrics.dominantPerceivedRiskLevel() ?? '/' }}</strong>
           @if(mapTag().at(1) !="EBOLA"){
-
-            <p>{{ 'map.metric7' | transloco }}
-              <app-tooltip-description [description]="'map.metric7description' | transloco" />
-            </p>
-            <strong>{{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null ? (mapMetrics.weightedDivisionalLevelAgreementScore() | number:'1.2-2') : '/' }}</strong>
-
-            <p>{{ 'map.metric8' | transloco }}
-              <app-tooltip-description [description]="'map.metric8description' | transloco" />
-            </p>
-            <strong>{{ mapMetrics.nationalModelFieldAgreementScore() !== null ? (mapMetrics.nationalModelFieldAgreementScore() | number:'1.2-2') : '/' }}</strong>
+            <div class="metric-row">
+              <span class="metric-label">{{ 'map.metric8' | transloco }}<app-tooltip-description [description]="'map.metric8description' | transloco" /></span>
+              <strong class="metric-value">{{ mapMetrics.nationalModelFieldAgreementScore() !== null ? (mapMetrics.nationalModelFieldAgreementScore() | number:'1.2-2') : '—' }}</strong>
+            </div>
           }
+
+          @if(!selectedDivision()) {
+            <p class="division-hint">Click on a division to see its metrics</p>
+          }
+
+          @if(selectedDivision()) {
+            <div class="metric-row">
+              <span class="metric-label">{{ 'map.metric4' | transloco }}<app-tooltip-description [description]="'map.metric4description' | transloco" /></span>
+              <strong class="metric-value">{{ mapMetrics.meanDivisionalAgreementScore() !== null ? (mapMetrics.meanDivisionalAgreementScore() | number:'1.2-2') : '—' }}</strong>
+            </div>
+
+            <div class="metric-row">
+              <span class="metric-label">{{ 'map.metric5' | transloco }}<app-tooltip-description [description]="'map.metric5description' | transloco" /></span>
+              <strong class="metric-value">{{ mapMetrics.meanCertaintyForMapForDivision() !== null ? (mapMetrics.meanCertaintyForMapForDivision() | number:'1.2-2') : '—' }}</strong>
+            </div>
+
+            <div class="metric-row">
+              <span class="metric-label">{{ 'map.metric6' | transloco }}<app-tooltip-description [description]="'map.metric6description' | transloco" /></span>
+              <strong class="metric-value">{{ mapMetrics.dominantPerceivedRiskLevel() ?? '—' }}</strong>
+            </div>
+
+          <div class="metric-row">
+            <span class="metric-label">{{ 'map.metric1' | transloco }}<app-tooltip-description [description]="'map.metric1description' | transloco" /></span>
+            <strong class="metric-value">{{ mapMetrics.divisionalConsensusScore() !== null ? (mapMetrics.divisionalConsensusScore() | number:'1.2-2') : '—' }}</strong>
+          </div>
+
+            @if(mapTag().at(1) !="EBOLA"){
+              <div class="metric-row">
+                <span class="metric-label">{{ 'map.metric7' | transloco }}<app-tooltip-description [description]="'map.metric7description' | transloco" /></span>
+                <strong class="metric-value">{{ mapMetrics.weightedDivisionalLevelAgreementScore() !== null ? (mapMetrics.weightedDivisionalLevelAgreementScore() | number:'1.2-2') : '—' }}</strong>
+              </div>
+            }
+          }
+
         </div>
       </div>
-    }
+
 
 
     <!-- Buttons evaluation from -->
