@@ -1,9 +1,11 @@
 package com.webgis.map.finalMap;
 
 
+import com.webgis.evaluationform.EvaluationFormService;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapRepository;
 import com.webgis.map.finalmap.FinalMapService;
+import com.webgis.map.tile.TileService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -26,6 +29,12 @@ class FinalMapServiceTest {
 
     @Mock
     FinalMapRepository finalMapRepository;
+
+    @Mock
+    TileService tileService;
+
+    @Mock
+    EvaluationFormService evaluationFormService;
 
     @InjectMocks
     FinalMapService finalMapService;
@@ -57,13 +66,15 @@ class FinalMapServiceTest {
 
     @Test
     void deleteMapValid(){
-        //Arrange
-        when(finalMapService.findById(id)).thenReturn(Optional.of(fm1));
+        // Arrange
+        when(finalMapRepository.findById(id)).thenReturn(Optional.of(fm1));
+        when(tileService.allTileForAspecificRasterMap(any())).thenReturn(List.of());
+        when(evaluationFormService.getAllFormForFinalMap(fm1)).thenReturn(List.of());
 
-        //Act
+        // Act
         finalMapService.deleteMap(id);
 
-        //Assert
+        // Assert
         verify(finalMapRepository).delete(fm1);
     }
 
