@@ -1,6 +1,8 @@
 package com.webgis.report;
 
+import com.webgis.evaluationform.EvaluationFormService;
 import com.webgis.map.finalmap.FinalMap;
+import com.webgis.map.finalmap.MapTag;
 import com.webgis.measure.RiskLevel;
 import com.webgis.measure.measureservice.EvaluatorAgreementMeasureService;
 import com.webgis.measure.measureservice.MeanMesureService;
@@ -17,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
@@ -25,6 +28,9 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ReportServiceTest {
+
+    @Mock
+    private  EvaluationFormService evaluationFormService;
 
     @Mock
     private EvaluatorAgreementMeasureService evaluatorAgreementMeasureService;
@@ -46,6 +52,8 @@ class ReportServiceTest {
        // Mock final Map
         finalMap = mock(FinalMap.class);
         when(finalMap.getTitle()).thenReturn("TestMap");
+        when(finalMap.getTags()).thenReturn(List.of(MapTag.RIFT_VALLEY_FEVER));
+
 
         // Risk for each division
         riskForDivision = new HashMap<>();
@@ -53,6 +61,16 @@ class ReportServiceTest {
         riskForDivision.put("Haut Nyong", "LOW");
 
         // Mock for each metrics computation
+
+        //Mock user count function
+        when(evaluationFormService.getNumberOfPublicFormForAMap(finalMap))
+                .thenReturn(10L);
+
+        when(evaluationFormService.getNumberOfPublicFormForADivisionOfAMap("Djerem",finalMap))
+                .thenReturn(4L);
+        when(evaluationFormService.getNumberOfPublicFormForADivisionOfAMap("Haut Nyong",finalMap))
+                .thenReturn(6L);
+
 
         //Mock Evaluator Agreement Measure Service
         when(evaluatorAgreementMeasureService.computekrippendorffAlpha(any()))
@@ -139,8 +157,10 @@ class ReportServiceTest {
             assertRowContains(sheet, 3, "National Average Entropy", 1.45);
             assertRowContains(sheet, 4, "National Consensus Score", 0.67);
             assertRowContains(sheet, 5, "National Model-Field Agreement Score", 0.78);
+            assertRowContains(sheet, 6, "Total Number Of Evaluators", 10);
         }
     }
+
 
     @Test
     void createReportForMapShouldWriteCorrectDivisionalMetricsTest() throws IOException {
@@ -161,6 +181,7 @@ class ReportServiceTest {
             assertThat(divisionDjerem.getCell(4).getNumericCellValue()).isEqualTo(0.55); // mean certainty
             assertThat(divisionDjerem.getCell(5).getStringCellValue()).isEqualTo("HIGH"); // dominant risk
             assertThat(divisionDjerem.getCell(6).getNumericCellValue()).isEqualTo(0.60); //weighted agreement score
+            assertThat(divisionDjerem.getCell(7).getNumericCellValue()).isEqualTo(4); //number of eval
 
 
             Row divisionHautNyong = findRowByFirstCell(sheet, "Haut Nyong");
@@ -171,6 +192,8 @@ class ReportServiceTest {
             assertThat(divisionHautNyong.getCell(4).getNumericCellValue()).isEqualTo(0.80); // mean certainty
             assertThat(divisionHautNyong.getCell(5).getStringCellValue()).isEqualTo("LOW"); // dominant risk
             assertThat(divisionHautNyong.getCell(6).getNumericCellValue()).isEqualTo(0.95); //weighted agreement score
+            assertThat(divisionHautNyong.getCell(7).getNumericCellValue()).isEqualTo(6); //number of eval
+
 
         }
     }
