@@ -67,4 +67,18 @@ class DetectFilesTest {
 
         assertNull(result);
     }
+
+    @Test
+    void detectShpFileShouldReturnFalseWhenArrayTooShort() {
+        byte[] shortArray = new byte[]{0x00, 0x01};
+        boolean result = DetectFiles.detectShpFile(shortArray);
+        assertFalse(result);
+    }
+
+    @Test
+    void detectShpFileWithEmptyArray() {
+        byte[] shortArray = new byte[]{};
+        boolean result = DetectFiles.detectShpFile(shortArray);
+        assertFalse(result);
+    }
 }
