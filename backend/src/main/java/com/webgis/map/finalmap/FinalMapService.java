@@ -1,6 +1,11 @@
 package com.webgis.map.finalmap;
 
 import com.converter.ZipFiles;
+import com.webgis.evaluationform.EvaluationForm;
+import com.webgis.evaluationform.EvaluationFormService;
+import com.webgis.map.raster.RasterMap;
+import com.webgis.map.tile.Tile;
+import com.webgis.map.tile.TileService;
 import org.geotools.api.referencing.FactoryException;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +21,16 @@ import static com.converter.ShapeFileToGeoJsonFile.transformShapeFileToGeoJsonFi
 @Service
 public class FinalMapService {
 
+    private final EvaluationFormService evaluationFormService;
+    private final TileService tileService;
     private final FinalMapRepository finalMapRepository;
     private final ZipFiles unzipper;
 
-    public FinalMapService(FinalMapRepository finalMapRepository){
+    public FinalMapService(EvaluationFormService evaluationFormService,
+                           TileService tileService,
+                           FinalMapRepository finalMapRepository){
+        this.evaluationFormService= evaluationFormService;
+        this.tileService=tileService;
         this.finalMapRepository = finalMapRepository;
         this.unzipper = new ZipFiles();
     }
@@ -55,6 +66,7 @@ public class FinalMapService {
 
     /**
      * Delete the map which identifier equals id
+     * (All the element linked to the map (raster map, evaluation form) will also be deleted)
      *
      * @param id The id of the map you want to delete
      */
@@ -64,7 +76,21 @@ public class FinalMapService {
             throw new IllegalArgumentException("Map does not exist");
         }
         final FinalMap finalMapDel = map.get();
-        finalMapRepository.delete(finalMapDel);
+        final RasterMap rasterMap= map.get().getRasterMap();
+
+        //Delete all the tile link to the raster map
+        final List<Tile> tiles= tileService.allTileForAspecificRasterMap(rasterMap);
+        for(Tile tile:tiles){
+            tileService.deleteTile(tile.getTileId());
+        }
+
+        //Delete forms linked to the map
+        final List<EvaluationForm> evaluationForms = evaluationFormService.getAllFormForFinalMap(finalMapDel);
+        for(EvaluationForm evaluationForm:evaluationForms){
+            evaluationFormService.deleteForm(evaluationForm.getId(),evaluationForm.getUser());
+        }
+
+        finalMapRepository.delete(finalMapDel);// The raster map is delete in cascade with the map no explicit deletion
     }
 
     /**

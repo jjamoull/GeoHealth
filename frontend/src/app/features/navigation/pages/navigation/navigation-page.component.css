@@ -240,6 +240,30 @@ span {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  position: relative;
+}
+
+.delete-map-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.delete-map-button:hover {
+  background: buttonface;
+}
+
+.new-case:hover .delete-map-button {
+  opacity: 1;
+  pointer-events: all;
 }
 
 .map-title {
@@ -255,6 +279,12 @@ span {
   max-height: 100px;
   overflow-y: auto;
   scroll-behavior: smooth;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.new-case:hover .map-description {
+  opacity: 1;
 }
 
 .all-the-maps {

@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.awt.Graphics;
 
@@ -206,5 +207,26 @@ public class TileService {
         }
 
         throw new CanDecompress("The PNG file could not be decompressed");
+    }
+
+    /**
+     * Delete a tile based on its id
+     *
+     * @param tileId the id of the tile you want to delete
+     */
+    public void deleteTile(TileId tileId){
+        final Optional<Tile> tileTodelete= findById(tileId);
+        tileTodelete.ifPresent(tileRepository::delete);
+    }
+
+    /**
+     * Get all the tile for a final map
+     *
+     * @param rasterMap the rasterMap for which you want to get the tile
+     *
+     * @return A list of all the tile linked to the rasterMap
+     */
+    public List<Tile> allTileForAspecificRasterMap(RasterMap rasterMap){
+        return tileRepository.findTileByRasterMap(rasterMap);
     }
 }

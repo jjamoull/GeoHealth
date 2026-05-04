@@ -38,4 +38,14 @@ export class AdminFinalMapService{
       );
     }
 
+  /**
+   * Deletes an existing final map (only for admin)
+   *
+   * @param finalMapId the id of the map wanting to be deleted
+   */
+    deleteFinalMap(finalMapId: number): Observable<any> {
+      return this.HttpClient.delete(`${this.baseUrl}${API_ENDPOINTS.ADMIN.MAPS.FINALMAPS.DELETE}/${finalMapId}`,
+        { withCredentials: true }
+      );
+    }
 }

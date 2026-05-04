@@ -9,6 +9,7 @@ import {FinalMapListDto} from '../../../../shared/models/MapModel/FinalMapModel/
 import {UsersServices} from '../../../../core/service/UserService/users-services';
 import {MapPreviewComponent} from '../../../map-preview-component/map-preview-component';
 import { FormsModule } from '@angular/forms';
+import { AdminFinalMapService } from '../../../../core/service/AdminService/AdminMapService/AdminFinalMapService'
 import {TranslocoPipe} from '@jsverse/transloco';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import { isPlatformBrowser } from '@angular/common';
@@ -28,6 +29,7 @@ export class NavigationPageComponent implements OnInit{
     private finalMapService: FinalMapService,
     private cdr: ChangeDetectorRef,
     private usersServices: UsersServices,
+    private adminFinalService: AdminFinalMapService,
     private BottomSheet: MatBottomSheet
   ){}
 
@@ -202,5 +204,21 @@ export class NavigationPageComponent implements OnInit{
     this.router.navigate(['/maps', id]);
   }
 
+  /**
+   * Deletes the map once called
+   */
+  deleteFinalMap(mapId: number): void {
+    if (!confirm('Are you sure you want to delete this map?')) return;
+
+    this.adminFinalService.deleteFinalMap(mapId).subscribe({
+      next: () => {
+        this.listOfAllMaps = this.listOfAllMaps.filter(m => m.id !== mapId);
+        window.location.reload();
+      },
+      error: (err: any) => {
+        console.error('Failed to delete map', err);
+      }
+    });
+  }
 
 }

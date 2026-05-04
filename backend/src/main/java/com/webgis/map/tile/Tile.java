@@ -44,7 +44,7 @@ public class Tile {
         return tileData;
     }
 
-    public RasterMap getRiskFactorMap() { return rasterMap; }
+    public RasterMap getRasterMap() { return rasterMap; }
 
     public void setTileData(byte[] tileData) {
         this.tileData = tileData;
