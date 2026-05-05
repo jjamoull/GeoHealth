@@ -28,7 +28,7 @@
     transition: all 0.3s linear;
     display: flex;
     flex-direction: column;
-    z-index: 1000;
+    z-index: 10000;
   }
   .btnOne label, .btnOne img {
     z-index: 1100;
