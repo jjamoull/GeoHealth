@@ -79,9 +79,6 @@ export class MapComponent implements AfterViewInit {
   isSaving = false;
   private lastDivisionName: string | null = null;
 
-
-
-
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private mapService: FinalMapService,
@@ -141,6 +138,7 @@ export class MapComponent implements AfterViewInit {
           });
         }
         this.allDivisions.set(divisions);
+        this.loadMeasurements('', '');
         this.mapHelper.applyDivisionsLayer(
           mapData.fileGeoJson,
           (event) => {
@@ -228,7 +226,6 @@ export class MapComponent implements AfterViewInit {
    */
   private onDivisionClicked(event: { properties: any, latlng: any }): void {
 
-
     if (!event.properties || !event.properties.NAME_2) {
       return;
     }
@@ -236,7 +233,7 @@ export class MapComponent implements AfterViewInit {
     if (this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
       this.existingForm.set(null);
-      this.mapMetrics.resetAllMetrics()
+      this.loadMeasurements('', '');
       this.mapHelper.clearMarker();
       return;
     }
@@ -272,8 +269,6 @@ export class MapComponent implements AfterViewInit {
         });
       }
     });
-
-
 
   this.loadMeasurements(event.properties.NAME_2, event.properties.Risk_categ);
     this.loadMeasurements(event.properties.NAME_2, event.properties.rsk_cls);
@@ -341,6 +336,7 @@ export class MapComponent implements AfterViewInit {
   onCloseEvaluation(): void {
     this.showEvaluationModal.set(false);
     this.getAllForm(this.isAdmin,this.mapId);
+    this.loadMeasurements(this.selectedDivision().NAME_2, this.selectedDivision().rsk_cls);
     this.cdr.detectChanges();
   }
 
