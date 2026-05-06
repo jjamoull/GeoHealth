@@ -324,4 +324,7 @@
   .inspect-mode-btn {
     width: 50%;
   }
+  .info-card p {
+    font-size: 13px;
+  }
 }
