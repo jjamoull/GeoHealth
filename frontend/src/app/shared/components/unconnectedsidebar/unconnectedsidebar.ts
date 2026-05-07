@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
+import {Language} from "../language/language";
 
 @Component({
   selector: 'app-unconnectedsidebar',
-  imports: [],
+    imports: [
+        Language
+    ],
   templateUrl: './unconnectedsidebar.html',
   styleUrl: './unconnectedsidebar.css',
 })

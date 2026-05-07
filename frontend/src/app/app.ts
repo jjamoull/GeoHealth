@@ -19,6 +19,8 @@ import {Language} from './shared/components/language/language';
 export class App implements OnInit{
   protected readonly title = signal('GeoHealth_Angular');
 
+  isDesktop = typeof window !== 'undefined' && window.innerWidth > 768;
+
   constructor(private authService:AuthService,
               private loginService:LoginService,
               private cdr:ChangeDetectorRef) {

@@ -88,3 +88,7 @@ input:checked + label:before {
   height: 20px;
   object-fit: cover;
 }
+/* phone portrait */
+@media (max-width: 768px){
+
+}
