@@ -21,6 +21,8 @@ export class MapLayerHelper {
   private geoManLayer: any;
   // the id of the currently selected tile block, used for toggling the red square on reclicking the same block
   private selectedTileBlockId: string | null = null;
+  // the click handler for the raster tile layer, stored to allow its removal when switching back to divisions
+  private tileClickHandler: ((e: any) => void) | null = null;
 
   private inspectModeActive: boolean = false;
 
@@ -237,18 +239,15 @@ export class MapLayerHelper {
    * @param mapId - the id of the raster map currently displayed
    */
   onTileSelected(mapId:number):void{
-      this.map.on('click', async (e:any)=>{
+      this.tileClickHandler = async (e: any) => {
         console.log("\n [onTileSelected] : " + e.latlng)
         const coordinates : any = e.latlng
         const z : number = this.map.getZoom();
 
-        console.log(mapId);
-        console.log(coordinates.lat, coordinates.lng);
         const blockData : TileMeanAndXYdto | null = await getTileMean(mapId, z, coordinates.lat, coordinates.lng);
 
         if (blockData){
           console.log(blockData.mean);
-
           const blockId = `${blockData.tileX}-${blockData.tileY}-${blockData.blockX}-${blockData.blockY}`;
           if (this.selectedTileBlockId === blockId) {
               this.map.removeLayer(this.highlightLayer);
@@ -256,8 +255,8 @@ export class MapLayerHelper {
               this.selectedTileBlockId = null;
               return;
           }
-          this.selectedTileBlockId = blockId;
 
+          this.selectedTileBlockId = blockId;
           const bounds = tileToPolygon(blockData.tileX, blockData.tileY, z, blockData.blockX, blockData.blockY);
 
           if (this.highlightLayer) {
@@ -269,8 +268,9 @@ export class MapLayerHelper {
             weight: 2,
             fillOpacity: 0.1
           }).addTo(this.map);
-      }
-      });
+        }
+      };
+      this.map.on('click', this.tileClickHandler);
     }
 
   /**
@@ -307,6 +307,11 @@ export class MapLayerHelper {
       this.tileLayer.remove();
       this.tileLayer = null;
     }
+    this.map.removeLayer(this.highlightLayer);
+    this.highlightLayer = null;
+    this.map.off('click', this.tileClickHandler);
+    this.tileClickHandler = null;
+    this.selectedTileBlockId = null;
   }
 
   getAnnotations(): any {
