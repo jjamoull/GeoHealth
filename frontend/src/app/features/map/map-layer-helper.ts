@@ -19,6 +19,8 @@ export class MapLayerHelper {
   private highlightLayer: any = null;
   // all annotation on the map
   private geoManLayer: any;
+  // the id of the currently selected tile block, used for toggling the red square on reclicking the same block
+  private selectedTileBlockId: string | null = null;
 
   private inspectModeActive: boolean = false;
 
@@ -240,14 +242,22 @@ export class MapLayerHelper {
         const coordinates : any = e.latlng
         const z : number = this.map.getZoom();
 
-
         console.log(mapId);
         console.log(coordinates.lat, coordinates.lng);
         const blockData : TileMeanAndXYdto | null = await getTileMean(mapId, z, coordinates.lat, coordinates.lng);
 
-
         if (blockData){
           console.log(blockData.mean);
+
+          const blockId = `${blockData.tileX}-${blockData.tileY}-${blockData.blockX}-${blockData.blockY}`;
+          if (this.selectedTileBlockId === blockId) {
+              this.map.removeLayer(this.highlightLayer);
+              this.highlightLayer = null;
+              this.selectedTileBlockId = null;
+              return;
+          }
+          this.selectedTileBlockId = blockId;
+
           const bounds = tileToPolygon(blockData.tileX, blockData.tileY, z, blockData.blockX, blockData.blockY);
 
           if (this.highlightLayer) {
