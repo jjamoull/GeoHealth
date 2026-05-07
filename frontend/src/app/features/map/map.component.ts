@@ -246,7 +246,9 @@ export class MapComponent implements AfterViewInit {
     }
 
     this.selectedDivision.set(event.properties);
-    this.mapHelper.placeMarker(event.latlng);
+    if (!this.mapHelper.isRasterActive()) {
+        this.mapHelper.placeMarker(event.latlng);
+    }
     this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({
       next: (form) => this.existingForm.set(form),
       error: () => this.existingForm.set(null)

@@ -37,7 +37,7 @@ export class MapLayerHelper {
     if (enableGeoman) {
       await import('@geoman-io/leaflet-geoman-free');
     }
-    
+
     const L = (leafletModule as any).default ?? leafletModule;
     this.leaflet = L;
 
@@ -312,5 +312,14 @@ export class MapLayerHelper {
 
   getMap(): any {
     return this.map;
+  }
+
+  /**
+   * Checks if a raster tile layer is currently active
+   *
+   * @return true if a raster tile layer is active, false otherwise
+   */
+  isRasterActive(): boolean {
+      return this.tileLayer !== null;
   }
 }
