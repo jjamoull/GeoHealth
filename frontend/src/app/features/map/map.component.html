@@ -59,7 +59,7 @@
 
         @if(mapHelper.isRasterActive()) {
           @if(mapHelper.lastBlockMean !== null) {
-            <p>Pixel value: {{ mapHelper.lastBlockMean.toFixed(4) }}</p>
+      <p>Pixel value: {{ mapHelper.lastBlockMean()?.toFixed(4) }}</p>
           } @else {
             <p>Click a zone to inspect its value</p>
           }

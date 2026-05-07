@@ -2,6 +2,7 @@ import {getColorFromCmbnd, getRiskColor} from './map-utils';
 import { MapOption } from './map-types';
 import { TileMeanAndXYdto } from '../../shared/models/MapModel/RasterMapModel/TileMeanAndXYdto';
 import { getTileMean, tileToPolygon } from './tile-utils';
+import { signal } from '@angular/core';
 
 export class MapLayerHelper {
 
@@ -20,7 +21,7 @@ export class MapLayerHelper {
   // all annotation on the map
   private geoManLayer: any;
   // the value of the pixel (pixel group) in the raster layer
-  public lastBlockMean: number | null = null;
+  lastBlockMean = signal<number | null>(null);
 
   private inspectModeActive: boolean = false;
 
@@ -226,7 +227,7 @@ export class MapLayerHelper {
         `/tile/file/${option.id}/{z}/{x}/{y}.png`,
         { opacity: 0.7, zIndex: 500 }
       ).addTo(this.map);
-      this.onTileSelected(option.id!);
+      this.onTileSelected(option.id!, (v) => this.lastBlockMean.set(v));
     }
   }
 
@@ -236,7 +237,7 @@ export class MapLayerHelper {
    *
    * @param mapId - the id of the raster map currently displayed
    */
-  onTileSelected(mapId:number):void{
+  onTileSelected(mapId: number, setMean: (v: number | null) => void): void {
       this.map.on('click', async (e:any)=>{
         console.log("\n [onTileSelected] : " + e.latlng)
         const coordinates : any = e.latlng
@@ -248,7 +249,7 @@ export class MapLayerHelper {
 
         if (blockData){
           console.log(blockData.mean);
-          this.lastBlockMean = blockData.mean;
+          setMean(blockData.mean);
 
 
           const bounds = tileToPolygon(blockData.tileX, blockData.tileY, z, blockData.blockX, blockData.blockY);
@@ -305,7 +306,7 @@ export class MapLayerHelper {
       this.highlightLayer = null;
     }
     this.map.off('click');
-    this.lastBlockMean = null;
+    this.lastBlockMean.set(null);
   }
 
   getAnnotations(): any {
