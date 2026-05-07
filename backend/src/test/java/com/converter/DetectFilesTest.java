@@ -49,7 +49,7 @@ class DetectFilesTest {
         File result = DetectFiles.findShpFile(tempDir.toFile());
 
         assertNotNull(result);
-        assertEquals(result.getName(), "test.shp");
+        assertEquals("test.shp", result.getName());
     }
 
     @Test
