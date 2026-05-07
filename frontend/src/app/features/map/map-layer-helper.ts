@@ -19,6 +19,8 @@ export class MapLayerHelper {
   private highlightLayer: any = null;
   // all annotation on the map
   private geoManLayer: any;
+  // the value of the pixel (pixel group) in the raster layer
+  public lastBlockMean: number | null = null;
 
   private inspectModeActive: boolean = false;
 
@@ -246,6 +248,8 @@ export class MapLayerHelper {
 
         if (blockData){
           console.log(blockData.mean);
+          this.lastBlockMean = blockData.mean;
+
 
           const bounds = tileToPolygon(blockData.tileX, blockData.tileY, z, blockData.blockX, blockData.blockY);
 
@@ -301,6 +305,7 @@ export class MapLayerHelper {
       this.highlightLayer = null;
     }
     this.map.off('click');
+    this.lastBlockMean = null;
   }
 
   getAnnotations(): any {
