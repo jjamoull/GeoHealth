@@ -34,7 +34,7 @@ public class EvaluationForm {
     @Column
     private Integer certaintyLevel;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
