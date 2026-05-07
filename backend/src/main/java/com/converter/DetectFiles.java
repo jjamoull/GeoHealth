@@ -49,10 +49,13 @@ public class DetectFiles {
      * Detect if the file in byte array is a shp file or not
      *
      * @param byteOfFile : a byte array of the file we search to detect if it is a .shp file
-     * @return true  : if it is a .shp file
+     * @return true  : if it is a .shp file (with the right size which is more than 4 bytes)
      *         false : otherwise
      * */
     public static boolean detectShpFile(byte[] byteOfFile) {
+        if (byteOfFile.length < 4) {
+            return false;
+        }
         return byteOfFile[0] == (byte) 0x00 &&
                 byteOfFile[1] == (byte) 0x00 &&
                 byteOfFile[2] == (byte) 0x27 &&

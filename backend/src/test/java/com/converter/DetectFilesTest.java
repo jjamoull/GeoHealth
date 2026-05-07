@@ -49,7 +49,7 @@ class DetectFilesTest {
         File result = DetectFiles.findShpFile(tempDir.toFile());
 
         assertNotNull(result);
-        assertEquals(result.getName(), "test.shp");
+        assertEquals("test.shp", result.getName());
     }
 
     @Test
@@ -66,5 +66,19 @@ class DetectFilesTest {
         File result = DetectFiles.findShpFile(tempDir.toFile());
 
         assertNull(result);
+    }
+
+    @Test
+    void detectShpFileShouldReturnFalseWhenArrayTooShort() {
+        byte[] shortArray = new byte[]{0x00, 0x01};
+        boolean result = DetectFiles.detectShpFile(shortArray);
+        assertFalse(result);
+    }
+
+    @Test
+    void detectShpFileWithEmptyArray() {
+        byte[] shortArray = new byte[]{};
+        boolean result = DetectFiles.detectShpFile(shortArray);
+        assertFalse(result);
     }
 }
