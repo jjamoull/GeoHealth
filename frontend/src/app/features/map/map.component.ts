@@ -230,7 +230,7 @@ export class MapComponent implements AfterViewInit {
       return;
     }
 
-    if (this.selectedDivision() === event.properties) {
+    if (!this.mapHelper.isRasterActive() && this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
       this.existingForm.set(null);
       this.loadMeasurements('', '');
