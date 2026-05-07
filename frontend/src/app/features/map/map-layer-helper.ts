@@ -296,6 +296,11 @@ export class MapLayerHelper {
       this.tileLayer.remove();
       this.tileLayer = null;
     }
+    if (this.highlightLayer) {
+      this.map.removeLayer(this.highlightLayer);
+      this.highlightLayer = null;
+    }
+    this.map.off('click');
   }
 
   getAnnotations(): any {
