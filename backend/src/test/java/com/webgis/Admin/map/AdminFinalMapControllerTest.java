@@ -1,6 +1,7 @@
-package com.webgis.admin.map;
+package com.webgis.Admin.map;
 
 import com.webgis.MessageDto;
+import com.webgis.admin.map.AdminFinalMapController;
 import com.webgis.exception.NotFound;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapService;
