@@ -24,7 +24,7 @@ public class AnnotationController {
                                                 @PathVariable Long userId,
                                                 @PathVariable String division){
 
-        final Optional<Annotation> annotation = annotationService.findByAnnotationId(new AnnotationId(mapId, userId, division));
+        final Optional<Annotation> annotation = annotationService.findByAnnotationId(new AnnotationId(userId, mapId, division));
         if (annotation.isPresent()){
 
             return ResponseEntity.status(200).body(new AnnotationDTO( annotation.get().getGeoJson()));
