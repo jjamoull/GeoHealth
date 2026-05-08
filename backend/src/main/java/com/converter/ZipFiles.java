@@ -1,5 +1,7 @@
 package com.converter;
 
+import com.sun.jdi.ByteType;
+import com.webgis.exception.SecurityZipFile;
 import com.webgis.map.finalmap.FinalMap;
 
 import java.io.ByteArrayInputStream;
@@ -7,6 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -17,19 +20,36 @@ import java.util.zip.ZipInputStream;
  */
 public class ZipFiles {
 
+    // Maximal ratio about the decompressed file
+    static final int MAX_RATIO = 100;
+    static final int MAX_UNCOMPRESSED_SIZE = 100;
+
     /**
      * Extract zip archives stored in DB
      *
      * @param finalMap : Map entity that contains all information about the map
      * @param destFilePath : path where the extracted files should be placed
      * @throws IOException if there is an issue with extraction or folder creation
+     * @throws SecurityZipFile : if the zip file ratio is not valid
      */
-    public void unzip(FinalMap finalMap, File destFilePath) throws IOException {
+    public void unzip(FinalMap finalMap, File destFilePath) throws IOException, SecurityZipFile {
         final byte[] zipFile = finalMap.getZipFile();
 
         if (!destFilePath.exists() && !destFilePath.mkdirs()){throw new IOException("unzipped folder wasn't created");}
 
         final byte[] buffer = new byte[1024];
+
+
+        //checking for zip bombs
+        try(ZipInputStream zisSecurity = new ZipInputStream(new ByteArrayInputStream(zipFile))){
+            ZipEntry zipEntrySecurity = zisSecurity.getNextEntry();
+
+            while (zipEntrySecurity != null){
+                checkForZipBombs(zipEntrySecurity);
+                zipEntrySecurity = zisSecurity.getNextEntry();
+            }
+        }
+
 
         try(ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(zipFile))){
             ZipEntry zipEntry = zis.getNextEntry();
@@ -42,6 +62,30 @@ public class ZipFiles {
         }
         catch (IOException e) {
             throw new IOException(e);
+        }
+    }
+
+    /**
+     * Check the possibility to have a zip bomb and blocked it
+     *
+     * @param zipEntrySecurity : entry to check in the zip file
+     * @exception IOException : if the zip file size is too big
+     * @exception SecurityZipFile : if the ratio of the compressed and decompressed file is not respected
+     * */
+    private static void checkForZipBombs(ZipEntry zipEntrySecurity) throws IOException, SecurityZipFile {
+        long compressedSize = zipEntrySecurity.getCompressedSize();
+        long uncompressedSize = zipEntrySecurity.getSize();
+
+        double ratio = (double) uncompressedSize/compressedSize;
+
+        if (ratio >= MAX_RATIO){
+            throw new SecurityZipFile("Potential zip bomb detected");
+        }
+
+        if (uncompressedSize > MAX_UNCOMPRESSED_SIZE) {
+            throw new IOException(
+                    "Zipfile entry too big"
+            );
         }
     }
 
@@ -101,6 +145,8 @@ public class ZipFiles {
         }
         return destFile;
     }
+
+
 
 
 }
