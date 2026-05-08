@@ -9,7 +9,7 @@
         (click)="saveAnnotation()"
         [disabled]="isSaving"
         class="save-btn">
-        {{ isSaving ? 'Is Saving...' : 'Save ?' }}
+        {{ isSaving ? 'Is Saving...' : 'Save' }}
         @if (saveMessage) {
           <span class="save-message">{{ saveMessage }}</span>
         }

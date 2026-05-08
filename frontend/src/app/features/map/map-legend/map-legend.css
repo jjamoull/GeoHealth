@@ -19,3 +19,12 @@
   width: 12px;
   height: 12px;
 }
+/* phone portrait */
+@media (max-width: 768px){
+  .legend-item span{
+    font-size : 15px;
+  }
+  .legend-card {
+    right: 8px;
+  }
+}
