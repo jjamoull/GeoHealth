@@ -1,6 +1,5 @@
 package com.converter;
 
-import com.sun.jdi.ByteType;
 import com.webgis.exception.SecurityZipFile;
 import com.webgis.map.finalmap.FinalMap;
 
@@ -9,7 +8,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -73,10 +71,10 @@ public class ZipFiles {
      * @exception SecurityZipFile : if the ratio of the compressed and decompressed file is not respected
      * */
     private static void checkForZipBombs(ZipEntry zipEntrySecurity) throws IOException, SecurityZipFile {
-        long compressedSize = zipEntrySecurity.getCompressedSize();
-        long uncompressedSize = zipEntrySecurity.getSize();
+        final long compressedSize = zipEntrySecurity.getCompressedSize();
+        final long uncompressedSize = zipEntrySecurity.getSize();
 
-        double ratio = (double) uncompressedSize/compressedSize;
+        final double ratio = (double) uncompressedSize/compressedSize;
 
         if (ratio >= MAX_RATIO){
             throw new SecurityZipFile("Potential zip bomb detected");
