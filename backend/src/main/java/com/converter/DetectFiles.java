@@ -62,4 +62,21 @@ public class DetectFiles {
                 byteOfFile[3] == (byte) 0x0A;
     }
 
+    /**
+     * Detect if the byte array is a zip file or not
+     *
+     * @param byteOfFile : a byte array of the file we search to detect if it is a .zip file
+     * @return true  : if it is a .zip file (with the right format of its first 4 bytes)
+     *         false : otherwise
+     * */
+    public static boolean validZipFile(byte[] byteOfFile){
+        if (byteOfFile.length < 4) {
+            return false;
+        }
+        return byteOfFile[0] == (byte) 0x50 &&
+                byteOfFile[1] == (byte) 0x4B &&
+                byteOfFile[2] == (byte) 0x03 &&
+                byteOfFile[3] == (byte) 0x04;
+    }
+
 }

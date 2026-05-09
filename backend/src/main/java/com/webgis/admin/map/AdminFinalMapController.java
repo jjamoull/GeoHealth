@@ -2,6 +2,7 @@ package com.webgis.admin.map;
 
 import com.webgis.MessageDto;
 import com.webgis.exception.NotFound;
+import com.webgis.exception.SecurityZipFile;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapService;
 import com.webgis.map.finalmap.dto.FinalMapListDto;
@@ -23,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+
+import static com.converter.DetectFiles.validZipFile;
 
 @RestController
 @RequestMapping("/admin/finalMaps")
@@ -79,6 +82,9 @@ public class AdminFinalMapController {
                     zipFile.getBytes(),
                     null);
 
+            if (!(validZipFile(finalMap.getZipFile()))){
+                throw new SecurityZipFile("The format of the zip file is not detected as a zipFile");
+            }
 
             finalMapService.save(finalMap);
 

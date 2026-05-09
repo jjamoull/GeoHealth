@@ -1,6 +1,7 @@
-package com.webgis.admin.map;
+package com.webgis.Admin.map;
 
 import com.webgis.MessageDto;
+import com.webgis.admin.map.AdminFinalMapController;
 import com.webgis.exception.NotFound;
 import com.webgis.map.finalmap.FinalMap;
 import com.webgis.map.finalmap.FinalMapService;
@@ -43,7 +44,8 @@ class AdminFinalMapControllerTest {
     }
 
     private MockMultipartFile makeZip() {
-        return new MockMultipartFile("zipFile", "shapes.zip", "application/zip", "zip-data".getBytes());
+        byte[] zipMagicBytes = new byte[]{0x50, 0x4B, 0x03, 0x04, 0x00, 0x00};
+        return new MockMultipartFile("zipFile", "shapes.zip", "application/zip", zipMagicBytes);
     }
 
     private FinalMap stubFinalMap(Long id) {
