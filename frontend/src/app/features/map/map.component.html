@@ -42,7 +42,10 @@
       <datalist id="risk-factor-list">
         <option [value]="'map.dropdown' | transloco">{{ 'map.dropdown' | transloco }}</option>
         @if(rasterMap()) {
-          <option [value]="'map.dropdown2' | transloco">{{ 'map.dropdown2' | transloco }}</option>
+        <option [value]="'map.dropdown2' | transloco">{{ 'map.dropdown2' | transloco }}</option>
+        }
+        @for(map of riskFactorMaps(); track map.id) {
+        <option [value]="map.title">{{ map.title }}</option>
         }
       </datalist>
 
