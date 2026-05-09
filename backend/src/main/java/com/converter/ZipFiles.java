@@ -19,8 +19,8 @@ import java.util.zip.ZipInputStream;
 public class ZipFiles {
 
     // Maximal ratio about the decompressed file
-    static final int MAX_RATIO = 100;
-    static final int MAX_UNCOMPRESSED_SIZE = 100;
+    static final long MAX_RATIO = 100;
+    static final long MAX_UNCOMPRESSED_SIZE = 100*1024*1024L;
 
     /**
      * Extract zip archives stored in DB
