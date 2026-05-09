@@ -9,5 +9,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './map-legend.css',
 })
 export class MapLegendComponent {
-  @Input() riskLevels: { label: string; color: string }[] = [];
+  @Input() mapType: string | undefined = '';
+
+  get isEbola(): boolean {
+    return this.mapType === 'EBOLA';
+  }
 }

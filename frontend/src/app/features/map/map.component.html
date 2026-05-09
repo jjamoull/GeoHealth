@@ -79,10 +79,9 @@
       }
       </div>
 
-    @if(mapTag().at(1) !="EBOLA"){
-     <map-legend [riskLevels]="riskLevels"/>
+    @if(!mapHelper.isRasterActive()) {
+      <map-legend [mapType]="mapTag().at(1)"/>
     }
-
   </div> <!-- end map-container -->
 
   <!--side Panel -->
