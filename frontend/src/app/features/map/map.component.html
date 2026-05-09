@@ -80,8 +80,11 @@
       </div>
 
     @if(!mapHelper.isRasterActive()) {
-      <map-legend [mapType]="mapTag().at(1)"/>
+    <map-legend
+      [mapType]="mapTag().at(1)"
+      [season]="mapTag().at(0)"/>
     }
+
   </div> <!-- end map-container -->
 
   <!--side Panel -->

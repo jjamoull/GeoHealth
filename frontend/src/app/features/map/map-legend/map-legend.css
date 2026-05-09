@@ -21,7 +21,11 @@
   background: linear-gradient(to bottom, #e74c3c, #f39c12, #2ecc71);
 }
 
-.ebola {
+.ebola-dry {
+  background: linear-gradient(to bottom, rgb(139, 0, 0), rgb(255, 230, 230));
+}
+
+.ebola-wet {
   background: linear-gradient(to bottom, rgb(0, 0, 139), rgb(230, 230, 255));
 }
 
