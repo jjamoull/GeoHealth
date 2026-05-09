@@ -226,11 +226,15 @@ export class MapComponent implements AfterViewInit {
    */
   private onDivisionClicked(event: { properties: any, latlng: any }): void {
 
+    if ((this.mapHelper.getMap() as any).pm.globalDrawModeEnabled()) {
+      return;
+    }
+
     if (!event.properties || !event.properties.NAME_2) {
       return;
     }
 
-    if (this.selectedDivision() === event.properties) {
+    if (!this.mapHelper.isRasterActive() && this.selectedDivision() === event.properties) {
       this.selectedDivision.set(null);
       this.existingForm.set(null);
       this.loadMeasurements('', '');
@@ -246,8 +250,12 @@ export class MapComponent implements AfterViewInit {
     }
 
     this.selectedDivision.set(event.properties);
-    this.mapHelper.placeMarker(event.latlng);
-    this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({
+    if (!this.mapHelper.isRasterActive()) {
+        this.mapHelper.placeMarker(event.latlng);
+    }
+
+
+    this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.dvsn_nm ?? event.properties.NAME_2).subscribe({
       next: (form) => this.existingForm.set(form),
       error: () => this.existingForm.set(null)
     });
@@ -256,15 +264,16 @@ export class MapComponent implements AfterViewInit {
       next: userInfo => {
         this.currentUserId = userInfo.id
 
-        this.annotationService.getAnnotations(this.mapId,this.currentUserId, event.properties.dvsn_nm).subscribe({
+        this.annotationService.getAnnotations(this.mapId,this.currentUserId, event.properties.dvsn_nm ?? event.properties.NAME_2).subscribe({
           next: (data) => {
+
             if (data?.geoJson) {
               this.mapHelper.loadAnnotationsFromGeoJson(data.geoJson.toString());
               this.cdr.detectChanges();
             }
           },
           error: (err) => {
-            console.log("No annotation to display here");
+              console.error('Unexpected annotation error:', err);
           }
         });
       }
@@ -424,11 +433,10 @@ export class MapComponent implements AfterViewInit {
 
     this.usersServices.getUserForAnnotation().subscribe({
       next: userInfo => {
-
         const dto: AnnotationDTO = {
           mapId: this.mapId,
           userId: userInfo.id,
-          division: this.selectedDivision().dvsn_nm,
+          division: this.selectedDivision().dvsn_nm ?? this.selectedDivision().NAME_2,
           geoJson: geojsonData
         };
 

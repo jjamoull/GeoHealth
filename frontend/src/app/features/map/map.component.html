@@ -56,18 +56,28 @@
       @if(selectedDivision()) {
         <p>{{ 'map.info2' | transloco }} {{selectedDivision().NAME_1}}</p>
         <p>{{ 'map.info3' | transloco }} {{selectedDivision().NAME_2}}</p>
-        <p>{{ 'map.info4' | transloco }} {{ (selectedDivision().rsk_cmb ?? selectedDivision().cmbnd__).toFixed(2) }}</p>
-        @if(mapTag().at(1) !="EBOLA"){
-          <p class="risk-row">
-            {{ 'map.info5' | transloco }}
-            <span class="dot" [style.background]="getRiskColor(selectedDivision().rsk_cls)"></span>
-            {{selectedDivision().Risk_categ}}
-          </p>
+
+        @if(mapHelper.isRasterActive()) {
+          @if(mapHelper.lastBlockMean !== null) {
+      <p>Pixel value: {{ mapHelper.lastBlockMean()?.toFixed(4) }}</p>
+          } @else {
+            <p>Click a zone to inspect its value</p>
+          }
+        } @else {
+          <p>{{ 'map.info4' | transloco }} {{ (selectedDivision().rsk_cmb ?? selectedDivision().cmbnd__).toFixed(2) }}</p>
+          @if(mapTag().at(1) !="EBOLA"){
+            <p class="risk-row">
+              {{ 'map.info5' | transloco }}
+              <span class="dot" [style.background]="getRiskColor(selectedDivision().rsk_cls)"></span>
+              {{selectedDivision().Risk_categ}}
+            </p>
+          }
         }
+
       } @else {
         <p class="card-label">{{ 'map.label' | transloco }}</p>
       }
-    </div>
+      </div>
 
     @if(mapTag().at(1) !="EBOLA"){
      <map-legend [riskLevels]="riskLevels"/>

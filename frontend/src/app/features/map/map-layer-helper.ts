@@ -2,6 +2,7 @@ import {getColorFromCmbnd, getRiskColor} from './map-utils';
 import { MapOption } from './map-types';
 import { TileMeanAndXYdto } from '../../shared/models/MapModel/RasterMapModel/TileMeanAndXYdto';
 import { getTileMean, tileToPolygon } from './tile-utils';
+import { signal } from '@angular/core';
 
 export class MapLayerHelper {
 
@@ -19,6 +20,8 @@ export class MapLayerHelper {
   private highlightLayer: any = null;
   // all annotation on the map
   private geoManLayer: any;
+  // the value of the pixel (pixel group) in the raster layer
+  lastBlockMean = signal<number | null>(null);
 
   private inspectModeActive: boolean = false;
 
@@ -37,7 +40,7 @@ export class MapLayerHelper {
     if (enableGeoman) {
       await import('@geoman-io/leaflet-geoman-free');
     }
-    
+
     const L = (leafletModule as any).default ?? leafletModule;
     this.leaflet = L;
 
@@ -127,21 +130,34 @@ export class MapLayerHelper {
    *    null : otherwise
    * */
   getGeomanGeojson(): String | null {
-    if (this.geoManLayer == null){
-      return null;
-    }
+    if (this.geoManLayer == null) return null;
 
     try {
+      this.geoManLayer.eachLayer((layer: any) => {
+        const shape = layer.pm?.getShape?.();
+        if (!layer.feature) layer.feature = { type: 'Feature', properties: {} };
+        if (!layer.feature.properties) layer.feature.properties = {};
+
+        if (shape) layer.feature.properties.shape = shape;
+        if (shape === 'Circle' && layer.getRadius) {
+          layer.feature.properties.radius = layer.getRadius();
+        }
+        if (shape === 'CircleMarker' && layer.getRadius) {
+          layer.feature.properties.radius = layer.getRadius();
+        }
+        if (shape === 'Text') {
+          layer.feature.properties.text = layer.pm?.getText?.();
+        }
+      });
+
       const geomanInGeojson = this.geoManLayer.toGeoJSON();
 
-      if (geomanInGeojson.features.length === 0){
-        return null;
-      }else {
-        return JSON.stringify(geomanInGeojson);
-      }
+      if (geomanInGeojson.features.length === 0) return null;
+      return JSON.stringify(geomanInGeojson);
+
     } catch (e) {
-        console.log("Issue during transformation of annotations")
-        return null;
+      console.log("Issue during transformation of annotations");
+      return null;
     }
   }
 
@@ -152,14 +168,40 @@ export class MapLayerHelper {
    * @param geoJsonString : GeoJSON data in String format
    * */
   loadAnnotationsFromGeoJson(geoJsonString: string): void {
-    if (!this.leaflet || !this.geoManLayer) {
+    if (!this.leaflet || !this.geoManLayer){
       return;
     }
 
     this.geoManLayer.clearLayers();
     const geoJsonData = JSON.parse(geoJsonString);
 
-    this.leaflet.geoJSON(geoJsonData).eachLayer((layer: any) => {
+    this.leaflet.geoJSON(geoJsonData, {
+      pointToLayer: (feature: any, latlng: any) => {
+        const shape = feature.properties?.shape;
+
+        if (shape === 'Circle') {
+          return this.leaflet.circle(latlng, {
+            radius: feature.properties?.radius ?? 100
+          });
+        }
+
+        if (shape === 'CircleMarker') {
+          return this.leaflet.circleMarker(latlng, {
+            radius: feature.properties?.radius ?? 10
+          });
+        }
+
+        if (shape === 'Text') {
+          const text = feature.properties?.text ?? '';
+          const marker = this.leaflet.marker(latlng, {
+            textMarker: true,
+            text: text
+          });
+          return marker;
+        }
+        return this.leaflet.marker(latlng);
+      }
+    }).eachLayer((layer: any) => {
       this.geoManLayer.addLayer(layer);
     });
   }
@@ -224,7 +266,7 @@ export class MapLayerHelper {
         `/tile/file/${option.id}/{z}/{x}/{y}.png`,
         { opacity: 0.7, zIndex: 500 }
       ).addTo(this.map);
-      this.onTileSelected(option.id!);
+      this.onTileSelected(option.id!, (v) => this.lastBlockMean.set(v));
     }
   }
 
@@ -234,20 +276,21 @@ export class MapLayerHelper {
    *
    * @param mapId - the id of the raster map currently displayed
    */
-  onTileSelected(mapId:number):void{
+  onTileSelected(mapId: number, setMean: (v: number | null) => void): void {
       this.map.on('click', async (e:any)=>{
         console.log("\n [onTileSelected] : " + e.latlng)
         const coordinates : any = e.latlng
         const z : number = this.map.getZoom();
 
-
         console.log(mapId);
         console.log(coordinates.lat, coordinates.lng);
         const blockData : TileMeanAndXYdto | null = await getTileMean(mapId, z, coordinates.lat, coordinates.lng);
 
-
         if (blockData){
           console.log(blockData.mean);
+          setMean(blockData.mean);
+
+
           const bounds = tileToPolygon(blockData.tileX, blockData.tileY, z, blockData.blockX, blockData.blockY);
 
           if (this.highlightLayer) {
@@ -297,6 +340,12 @@ export class MapLayerHelper {
       this.tileLayer.remove();
       this.tileLayer = null;
     }
+    if (this.highlightLayer) {
+      this.map.removeLayer(this.highlightLayer);
+      this.highlightLayer = null;
+    }
+    this.map.off('click');
+    this.lastBlockMean.set(null);
   }
 
   getAnnotations(): any {
@@ -312,5 +361,14 @@ export class MapLayerHelper {
 
   getMap(): any {
     return this.map;
+  }
+
+  /**
+   * Checks if a raster tile layer is currently active
+   *
+   * @return true if a raster tile layer is active, false otherwise
+   */
+  isRasterActive(): boolean {
+      return this.tileLayer !== null;
   }
 }
