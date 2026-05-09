@@ -226,6 +226,10 @@ export class MapComponent implements AfterViewInit {
    */
   private onDivisionClicked(event: { properties: any, latlng: any }): void {
 
+    if ((this.mapHelper.getMap() as any).pm.globalDrawModeEnabled()) {
+      return;
+    }
+
     if (!event.properties || !event.properties.NAME_2) {
       return;
     }
