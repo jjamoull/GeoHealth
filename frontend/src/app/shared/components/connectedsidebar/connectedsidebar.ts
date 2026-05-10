@@ -1,17 +1,27 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../../../core/service/LoginService/loginService';
 import {UsersServices} from '../../../core/service/UserService/users-services';
+import {Language} from '../language/language';
 
 @Component({
   selector: 'app-connectedsidebar',
-  imports: [],
+  imports: [
+    Language
+  ],
   templateUrl: './connectedsidebar.html',
   styleUrl: './connectedsidebar.css',
 })
 export class Connectedsidebar {
   public isAdmin:boolean=false;
   public isOpen:boolean = false;
+
+  isDesktop = typeof window !== 'undefined' && window.innerWidth > 768;
+
+  @HostListener('window:resize')
+  onResize() {
+    this.isDesktop = window.innerWidth > 768;
+  }
 
   constructor(private router: Router,
               public loginService:LoginService,

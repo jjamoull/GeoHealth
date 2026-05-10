@@ -132,8 +132,4 @@
   #check:checked~ .exit-button  {
     display: block;
   }
-  .menu ul app-language{
-    position : relative;
-    display : block;
-  }
 }
