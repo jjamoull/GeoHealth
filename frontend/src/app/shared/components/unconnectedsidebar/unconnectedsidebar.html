@@ -20,19 +20,19 @@
       <li>
         <a (click)="goToHome()">
           <i class="fas fa-home"></i>
-          Home
+          {{ 'navbar.home' | transloco }}
         </a>
       </li>
       <li>
         <a (click)="goToLogin()">
           <i class="fas fa-right-to-bracket"></i>
-          Login
+          {{ 'navbar.login' | transloco }}
         </a>
       </li>
       <li>
         <a (click)="goToRegister()">
           <i class="fas fa-user-plus"></i>
-          Register
+          {{ 'navbar.register' | transloco }}
         </a>
       </li>
     </ul>

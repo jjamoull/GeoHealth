@@ -1,12 +1,14 @@
 import {Component, HostListener} from '@angular/core';
 import {Router} from '@angular/router';
 import {Language} from "../language/language";
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'app-unconnectedsidebar',
-    imports: [
-        Language
-    ],
+  imports: [
+    Language,
+    TranslocoPipe
+  ],
   templateUrl: './unconnectedsidebar.html',
   styleUrl: './unconnectedsidebar.css',
 })
