@@ -336,6 +336,10 @@
   color: #b80b0b;
 }
 
+.mobile-dropdown {
+  display: none;
+}
+
 /* phone portrait */
 @media (max-width: 768px){
   .map-selector{
@@ -363,4 +367,12 @@
   .info-card p {
     font-size: 13px;
   }
+
+  .mobile-dropdown {
+      display: block;
+    }
+
+  .search-wrapper {
+      display: none;
+    }
 }

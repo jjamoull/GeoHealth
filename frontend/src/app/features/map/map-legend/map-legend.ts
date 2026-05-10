@@ -12,11 +12,15 @@ export class MapLegendComponent {
   @Input() mapType: string | undefined = '';
   @Input() season: string | undefined = '';
 
-  get isDry(): boolean {
-    return this.season === 'DRY';
-  }
-
   get isEbola(): boolean {
     return this.mapType === 'EBOLA';
+  }
+
+  get isRiftValley(): boolean {
+    return this.mapType === 'RIFT_VALLEY_FEVER';
+  }
+
+  get isDry(): boolean {
+    return this.season === 'DRY';
   }
 }

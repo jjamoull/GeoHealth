@@ -100,7 +100,6 @@ export class MapComponent implements AfterViewInit {
         this.modelEvaluationMeasureService)
   }
 
-
   /**
    * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
    */
@@ -463,6 +462,4 @@ export class MapComponent implements AfterViewInit {
       }
     });
   }
-
-
 }

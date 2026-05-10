@@ -25,6 +25,18 @@
         <span *ngIf="!inspectModeActive">Drawing mode</span>
       </button>
 
+      <!-- Dropdown only to be shown on mobile -->
+      <select (change)="onMapSelected($event)" class="mobile-dropdown">
+        <option value="Division only">Division only</option>
+        @if(rasterMap()) {
+        <option value="Raster layer">Raster layer</option>
+        }
+        @for(map of riskFactorMaps(); track map.id) {
+        <option [value]="map.title">{{ map.title }}</option>
+        }
+      </select>
+      <!-- end of the mobile dropdown -->
+
       <!-- Search bar -->
       <div class="search-wrapper">
         <input
