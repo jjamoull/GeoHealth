@@ -7,8 +7,9 @@
 #check{
   display: none;
 }
+
 @media (max-width: 768px) and (orientation: portrait) {
-  * {
+   *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -130,5 +131,9 @@
   }
   #check:checked~ .exit-button  {
     display: block;
+  }
+  .menu ul app-language{
+    position : relative;
+    display : block;
   }
 }

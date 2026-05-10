@@ -1,3 +1,6 @@
+:host {
+  display: block;
+}
 .container {
   position: absolute;
   display: flex;
@@ -87,8 +90,4 @@ input:checked + label:before {
   width: 25px;
   height: 20px;
   object-fit: cover;
-}
-/* phone portrait */
-@media (max-width: 768px){
-
 }
