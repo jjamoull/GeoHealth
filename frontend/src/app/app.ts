@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, signal} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnInit, signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {AuthService} from './core/service/AuthService/auth-service';
 import {LoginService} from './core/service/LoginService/loginService';
@@ -18,6 +18,13 @@ import {Language} from './shared/components/language/language';
 })
 export class App implements OnInit{
   protected readonly title = signal('GeoHealth_Angular');
+
+  isDesktop = typeof window !== 'undefined' && window.innerWidth > 768;
+
+  @HostListener('window:resize')
+  onResize() {
+    this.isDesktop = window.innerWidth > 768;
+  }
 
   constructor(private authService:AuthService,
               private loginService:LoginService,
