@@ -105,7 +105,7 @@
   <!--side Panel -->
   <div class="side">
     <div class="title">
-      <p>{{mapTitle()}}</p>
+      <p class="map-title-text">{{mapTitle()}}</p>
     </div>
     <div class="description">
       <p>{{mapDescription()}}</p>
@@ -217,7 +217,9 @@
 
 <!-- List of evaluations -->
 <div class="evaluation-section">
-  <h2>Evaluations</h2>
+  <div class="evaluation-header">
+    <h2>Evaluations</h2>
+  </div>
   @if(selectedDivision()) {
   <div class="evaluation-list">
     @if(isAdmin){
@@ -254,5 +256,7 @@
       }
     }
   </div>
+  } @else {
+  <p class="evaluation-hint">Select a division to see its evaluations</p>
   }
 </div>
