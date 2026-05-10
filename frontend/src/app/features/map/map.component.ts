@@ -30,7 +30,6 @@ import {
 } from '../../core/service/MeasureService/ModelEvaluationMeasureService/modelEvaluationMeasureService';
 import {FormsModule} from '@angular/forms';
 import {ReportService} from '../../core/service/ReportService/reportService';
-import {map} from 'rxjs';
 
 
 @Component({
@@ -72,9 +71,7 @@ export class MapComponent implements AfterViewInit {
   inspectModeActive : boolean = false;
 
   // about annotations
-  currentMapId = -1;
   currentUserId = -1;
-  currentDivision = this.selectedDivision;
   saveMessage = '';
   isSaving = false;
   private lastDivisionName: string | null = null;
@@ -99,7 +96,6 @@ export class MapComponent implements AfterViewInit {
         this.meanMeasureService,
         this.modelEvaluationMeasureService)
   }
-
 
   /**
    * Display the map OSM thanks to Leaflet on Cameron and load the evaluation forms
@@ -278,8 +274,6 @@ export class MapComponent implements AfterViewInit {
         });
       }
     });
-
-  this.loadMeasurements(event.properties.NAME_2, event.properties.Risk_categ);
     this.loadMeasurements(event.properties.NAME_2, event.properties.rsk_cls);
   }
 
@@ -463,6 +457,4 @@ export class MapComponent implements AfterViewInit {
       }
     });
   }
-
-
 }

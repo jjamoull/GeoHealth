@@ -1,8 +1,17 @@
 <div class="legend-card">
-  @for (level of riskLevels; track level.label) {
-  <div class="legend-item">
-    <span class="dot" [style.background]="level.color"></span>
-    <span>{{ level.label }}</span>
+  @if(isEbola) {
+  <div class="gradient-bar" [class.ebola-dry]="isDry" [class.ebola-wet]="!isDry"></div>
+  <div class="gradient-labels">
+    <span>0.80</span>
+    <span>0.50</span>
+    <span>0.20</span>
+  </div>
+  } @else if(isRiftValley) {
+  <div class="gradient-bar rift"></div>
+  <div class="gradient-labels">
+    <span>High</span>
+    <span>Medium</span>
+    <span>Low</span>
   </div>
   }
 </div>

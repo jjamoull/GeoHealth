@@ -1,7 +1,8 @@
 :host {
-  display: block;
-  background-color: white;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  background-color: white;
 }
 
 .map-section {
@@ -26,6 +27,7 @@
   right: 10px;
   z-index: 999;
   display: flex;
+  gap: 6px;
 }
 
 .map-selector select {
@@ -36,7 +38,6 @@
   font-size: 14px;
   cursor: pointer;
   flex-direction: column;
-
 }
 
 .search-wrapper {
@@ -83,7 +84,7 @@
 
 .side {
   width: 30%;
-  border: 2px solid #e2e6ea;
+  border-left: 2px solid #4a7c28;
   background: white;
   display: flex;
   flex-direction: column;
@@ -93,27 +94,27 @@
   margin-top: 50px;
 }
 
-.evaluation-section {
-  padding: 12px 12px;
-}
-
-
 .title {
   text-align: center;
-  padding: 12px 12px;
-  font-weight: 600;
+  padding: 16px 12px;
+  font-weight: 700;
   font-size: 20px;
-  border-top: 5px solid #e2e6ea;
-  border-bottom: 2px solid #e2e6ea;
-  height: 8%;
+  background: linear-gradient(135deg, #6aab3a 0%, #90c97a 100%);
+  height: auto;
+}
+
+.map-title-text {
+  margin: 0;
+  color: white;
 }
 
 .description {
   padding: 12px 16px;
   font-size: 13px;
   border-bottom: 2px solid #e2e6ea;
-  display: flex;
-  align-items: center;
+  color: #555;
+  font-style: italic;
+  background: #fafbf9;
 }
 
 .description p {
@@ -213,7 +214,35 @@
   gap: 12px;
 }
 
+
+
+.evaluation-header {
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #6aab3a 0%, #90c97a 100%);
+}
+
+.evaluation-header h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+
+.evaluation-hint {
+  text-align: center;
+  color: #878787;
+  font-size: 13px;
+  margin-top: 20px;
+}
+
+.evaluation-section {
+  background: linear-gradient(135deg, #f0f4ed 0%, #f8faf6 100%);
+  flex: 1;
+}
+
 .evaluation-list {
+  padding: 12px;
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
@@ -234,7 +263,7 @@
   .side {
     width: 100%;
     height: auto;
-    border: 2px solid #e2e6ea;
+    border: 2px solid #4a7c28;
   }
 
   .title {
@@ -243,11 +272,6 @@
 
   .description {
     height: auto;
-  }
-
-  .evaluation-section {
-    margin-top: 0;
-    padding: 12px;
   }
 
   .evaluation-list {
@@ -336,6 +360,10 @@
   color: #b80b0b;
 }
 
+.mobile-dropdown {
+  display: none;
+}
+
 /* phone portrait */
 @media (max-width: 768px){
   .map-selector{
@@ -363,4 +391,12 @@
   .info-card p {
     font-size: 13px;
   }
+
+  .mobile-dropdown {
+      display: block;
+    }
+
+  .search-wrapper {
+      display: none;
+    }
 }

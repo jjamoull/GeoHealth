@@ -46,21 +46,17 @@ export class RiskFactorFormComponent implements OnInit {
   onSubmit(): void {
     if (!this.selectedTifFile) return;
 
-    this.isUploading = true;
     const formData = new FormData();
     formData.append('title', this.formGroup.value.title);
     formData.append('description', this.formGroup.value.description);
     formData.append('typeOfRaster', 'risk_factor');
     formData.append('tifFile', this.selectedTifFile);
 
+    this.dialog.close({ uploading: true });
     this.adminRasterMapService.uploadRasterMap(formData).subscribe({
-      next: () => {
-        this.isUploading = false;
-        this.dialog.close();
-      },
+      next: () => {},
       error: (err) => {
         console.error(err);
-        this.isUploading = false;
       }
     });
   }

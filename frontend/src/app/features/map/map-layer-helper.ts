@@ -348,10 +348,6 @@ export class MapLayerHelper {
     this.lastBlockMean.set(null);
   }
 
-  getAnnotations(): any {
-    console.log(this.geoManLayer.toGeoJSON());
-  }
-
   clearGeomanLayers(): void {
     if (!this.geoManLayer) {
       return;

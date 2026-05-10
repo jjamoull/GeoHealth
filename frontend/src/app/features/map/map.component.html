@@ -25,6 +25,18 @@
         <span *ngIf="!inspectModeActive">Drawing mode</span>
       </button>
 
+      <!-- Dropdown only to be shown on mobile -->
+      <select (change)="onMapSelected($event)" class="mobile-dropdown">
+        <option value="Division only">Division only</option>
+        @if(rasterMap()) {
+        <option value="Raster layer">Raster layer</option>
+        }
+        @for(map of riskFactorMaps(); track map.id) {
+        <option [value]="map.title">{{ map.title }}</option>
+        }
+      </select>
+      <!-- end of the mobile dropdown -->
+
       <!-- Search bar -->
       <div class="search-wrapper">
         <input
@@ -42,7 +54,10 @@
       <datalist id="risk-factor-list">
         <option [value]="'map.dropdown' | transloco">{{ 'map.dropdown' | transloco }}</option>
         @if(rasterMap()) {
-          <option [value]="'map.dropdown2' | transloco">{{ 'map.dropdown2' | transloco }}</option>
+        <option [value]="'map.dropdown2' | transloco">{{ 'map.dropdown2' | transloco }}</option>
+        }
+        @for(map of riskFactorMaps(); track map.id) {
+        <option [value]="map.title">{{ map.title }}</option>
         }
       </datalist>
 
@@ -79,8 +94,10 @@
       }
       </div>
 
-    @if(mapTag().at(1) !="EBOLA"){
-     <map-legend [riskLevels]="riskLevels"/>
+    @if(!mapHelper.isRasterActive()) {
+    <map-legend
+      [mapType]="mapTag().at(1)"
+      [season]="mapTag().at(0)"/>
     }
 
   </div> <!-- end map-container -->
@@ -88,7 +105,7 @@
   <!--side Panel -->
   <div class="side">
     <div class="title">
-      <p>{{mapTitle()}}</p>
+      <p class="map-title-text">{{mapTitle()}}</p>
     </div>
     <div class="description">
       <p>{{mapDescription()}}</p>
@@ -200,7 +217,9 @@
 
 <!-- List of evaluations -->
 <div class="evaluation-section">
-  <h2>Evaluations</h2>
+  <div class="evaluation-header">
+    <h2>Evaluations</h2>
+  </div>
   @if(selectedDivision()) {
   <div class="evaluation-list">
     @if(isAdmin){
@@ -237,5 +256,7 @@
       }
     }
   </div>
+  } @else {
+  <p class="evaluation-hint">Select a division to see its evaluations</p>
   }
 </div>

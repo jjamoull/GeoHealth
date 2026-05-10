@@ -186,7 +186,7 @@ export class NavigationPageComponent implements OnInit{
   openPopUp(paramTypeOfPopUp:string): void {
     const dialog = this.dialog.open(MapUploadModalComponent, {
       data: { typeOfPopUp: paramTypeOfPopUp },
-      disableClose: true
+      disableClose: false
     });
 
     dialog.afterClosed().subscribe(
