@@ -52,12 +52,14 @@ export class RiskFactorFormComponent implements OnInit {
     formData.append('typeOfRaster', 'risk_factor');
     formData.append('tifFile', this.selectedTifFile);
 
-    this.dialog.close({ uploading: true });
     this.adminRasterMapService.uploadRasterMap(formData).subscribe({
       next: () => {},
       error: (err) => {
         console.error(err);
       }
     });
+
+    this.dialog.close({ uploading: true });
+
   }
 }
