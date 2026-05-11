@@ -3,11 +3,13 @@ import {Router} from '@angular/router';
 import {LoginService} from '../../../core/service/LoginService/loginService';
 import {UsersServices} from '../../../core/service/UserService/users-services';
 import {Language} from '../language/language';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'app-connectedsidebar',
   imports: [
-    Language
+    Language,
+    TranslocoPipe
   ],
   templateUrl: './connectedsidebar.html',
   styleUrl: './connectedsidebar.css',

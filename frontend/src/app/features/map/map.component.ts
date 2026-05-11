@@ -250,8 +250,7 @@ export class MapComponent implements AfterViewInit {
         this.mapHelper.placeMarker(event.latlng);
     }
 
-
-    this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.dvsn_nm ?? event.properties.NAME_2).subscribe({
+    this.evaluationFormService.getMyFormForADiv(this.mapId, event.properties.NAME_2).subscribe({
       next: (form) => this.existingForm.set(form),
       error: () => this.existingForm.set(null)
     });

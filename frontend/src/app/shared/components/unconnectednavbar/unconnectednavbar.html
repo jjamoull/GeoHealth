@@ -1,8 +1,8 @@
 <nav class="navbar">
   <div class="navbar-container">
-    <a class="item" (click)="goToHome()">Home</a>
-    <a class="item" (click)="goToLogin()">Login</a>
-    <a class="item" (click)="goToRegister()">Register</a>
+    <a class="item" (click)="goToHome()">{{ 'navbar.home' | transloco }}</a>
+    <a class="item" (click)="goToLogin()">{{ 'navbar.login' | transloco }}</a>
+    <a class="item" (click)="goToRegister()">{{ 'navbar.register' | transloco }}</a>
   </div>
 </nav>
 

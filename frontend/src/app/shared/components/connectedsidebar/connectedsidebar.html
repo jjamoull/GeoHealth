@@ -21,27 +21,27 @@
       <li>
         <a (click)="goToNavigation()">
           <i class="fas fa-map"></i>
-          Navigation
+          {{ 'navbar.navigation' | transloco }}
         </a>
       </li>
       <li>
         <a (click)="goToProfile()">
           <i class="fas fa-user"></i>
-          Profile
+          {{ 'navbar.profile' | transloco }}
         </a>
       </li>
       @if(isAdmin){
       <li>
         <a (click)="goToUsersList()">
           <i class="fas fa-user-shield"></i>
-          Admin Panel
+          {{ 'navbar.admin' | transloco }}
         </a>
       </li>
       }
       <li>
         <a (click)="logout()">
           <i class="fas fa-right-from-bracket"></i>
-          Logout
+          {{ 'navbar.logout' | transloco }}
         </a>
       </li>
     </ul>

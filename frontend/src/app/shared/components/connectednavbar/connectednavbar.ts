@@ -2,10 +2,13 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../../../core/service/LoginService/loginService';
 import {UsersServices} from '../../../core/service/UserService/users-services';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'app-connectednavbar',
-  imports: [],
+  imports: [
+    TranslocoPipe
+  ],
   templateUrl: './connectednavbar.html',
   styleUrl: './connectednavbar.css',
 })

@@ -1,11 +1,11 @@
 <nav class="navbar">
   <div class="navbar-container">
-      <a class="item" (click)="goToNavigation()">Navigation</a>
-      <a class="item" (click)="goToProfile()">Profile</a>
+      <a class="item" (click)="goToNavigation()">{{ 'navbar.navigation' | transloco }}</a>
+      <a class="item" (click)="goToProfile()">{{ 'navbar.profile' | transloco }}</a>
     @if(isAdmin){
-      <a class="item" (click)="goToUsersList()">Admin Panel</a>
+      <a class="item" (click)="goToUsersList()">{{ 'navbar.admin' | transloco }}</a>
     }
-      <a class="item" (click)="logout()">Logout</a>
+      <a class="item" (click)="logout()">{{ 'navbar.logout' | transloco }}</a>
   </div>
 </nav>
 
