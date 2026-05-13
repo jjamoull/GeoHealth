@@ -1,7 +1,12 @@
 .navigation-page{
-  background-color: #EBEFFF;
+  background-color: #ffffff;
   overflow-x : hidden;
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
 }
+
+
 /* SIDEBAR */
 * {
   margin: 0;
@@ -22,6 +27,21 @@
   display: flex;
   flex-direction: column;
 }
+
+.sidebar {
+  width: 280px;           /* ajuste la largeur comme tu veux */
+  min-width: 240px;
+  max-width: 320px;
+
+  background-color: #f5f5f5;  /* adapte aux couleurs de ton thème */
+  border-right: 1px solid #ddd;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;     /* pas besoin de fixed, flex suffit ici */
+}
+
 .side-navbar .head{
   color: #fdfdce;
   font-size: 30px;
