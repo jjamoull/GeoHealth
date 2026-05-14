@@ -12,7 +12,7 @@
 .sidebar{
   width: 18vw;
   min-width: 220px;
-  height: 100vh;
+  height: 100%;
   border-right: 1px solid black;
   background: white;
   overflow: hidden;
@@ -158,19 +158,38 @@
 }
 
 .preview-meta-data {
-  max-height: 100px;
-  margin-top: 8px;
-  padding: 4px 12px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 90%;
+  height: 40px;
+  padding: 8px 12px;
+  left: 5%;
+
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0px 2px 4px 3px rgba(0, 0, 0, 0.15);
+
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  position: relative;
+  background-color: rgba(143,195,120,0.85);
+  transition: height 0.4s ease-out;
 }
+
+.map-card:hover .preview-meta-data {
+  height: 120px;
+}
+
+.preview-meta-data * {
+  color: var(--white);
+}
+
 
 .delete-map-button {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 8px;
+  right: 12px;
   background: none;
   border: none;
   cursor: pointer;
@@ -185,73 +204,79 @@
   background: buttonface;
 }
 
-.new-case:hover .delete-map-button {
+.map-card:hover .delete-map-button {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.map-card:hover .delete-map-button {
   opacity: 1;
   pointer-events: all;
 }
 
 .map-title {
   font-size: 1em;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 8px;
 }
 
 .map-description {
   font-size: .8em;
   font-weight: 200;
-  color: var(--dark-grey);
+  color: var(--white);
   max-height: 100px;
   overflow-y: auto;
   scroll-behavior: smooth;
   opacity: 0;
-  transition: opacity 0.2s ease;
   padding: 6px 4px;
+
+  transition:
+    opacity 0.25s ease;
 }
 
-.new-case:hover .map-description {
+.map-card:hover .map-description {
+  opacity: 0.7;
+  max-height: 80px;
+}
+
+.map-card:hover .map-description {
   opacity: 0.7;
 }
 
 .all-the-maps{
-  padding-bottom: 80px;
+  padding: 24px 12px 80px 12px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 12px;
   margin-top: 15px;
 }
 
-.new-case {
-  transition: transform 0.3s ease-in-out;
+.map-card {
+  position: relative;
+  clip-path: inset(0 round 4px);
+
   width: 18vw;
-  height: 18vw;
-  margin-bottom: 48px;
-  background: none;
-  border: 2px solid var(--light-green);
+  height: 15vw;
+
   border-radius: 4px;
-  box-shadow: var(--glass-shadow);
+  box-shadow: 2px 4px 6px 2px rgba(0, 0, 0, 0.3);
+
   cursor: pointer;
 }
 
-.new-case:hover {
-  transform: scale(1.02);
-}
-/*OTHER*/
-.rounded-card{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 12px;
-  padding: 12px 16px;
-  background: #f5f5f5;
-  margin-bottom: 10px;
+.nav-section-title {
 }
 
 .title{
   cursor: pointer;
 }
 
+.nav-section-title {
+  font-size: 16px;
+
+}
 
 .dropdown-arrow {
   position: relative;
@@ -395,14 +420,15 @@
 
 /* ================= MAP CARDS ================= */
 
-.new-case {
+.map-card {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-.new-case:hover {
-  transform: translateY(-3px);
+.map-card:hover {
+  /*transform: translateY(-3px);*/
+  /*transform: scale(1.02);*/
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 .arrow{
@@ -467,7 +493,7 @@
 
   }
   /* ARROW BUTTON */
-  .new-case{
+  .map-card{
     width: 35vw;
     height : 15vh;
   }

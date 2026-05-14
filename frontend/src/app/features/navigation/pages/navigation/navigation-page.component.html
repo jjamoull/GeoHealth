@@ -85,7 +85,6 @@
 
       <section class="final-risk-maps">
 
-        <div class="rounded-card">
           <h3
             class="title"
             (click)="toggleDropdown('finalRisks')">
@@ -106,7 +105,6 @@
             }
 
           </svg>
-        </div>
 
         <div class="dropdown-content" [class.open]="finalRisksOpen">
 
@@ -114,7 +112,7 @@
 
             @for (map of listOfAllMaps; track map.id){
 
-              <div class="new-case">
+              <div class="map-card">
 
                 <app-map-preview
                   [mapId]="map.id"
@@ -152,11 +150,9 @@
 
       <section class="all-available-maps">
 
-        <div class="rounded-card">
-          <h3 class="title">
-            {{ 'navigation.search-results' | transloco }}
-          </h3>
-        </div>
+        <h3 class="nav-section-title">
+          {{ 'navigation.search-results' | transloco }}
+        </h3>
 
         <div class="all-the-maps">
 
