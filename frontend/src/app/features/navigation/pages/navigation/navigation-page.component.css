@@ -386,7 +386,7 @@ h4 {
   justify-content: center;
   cursor: pointer;
 
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in;
 }
 
 .season-checkbox input[type="checkbox"] {
@@ -396,14 +396,16 @@ h4 {
 /* état coché — inner border blanche avec padding via outline */
 #dry-season.season-checkbox:has(input:checked) {
   border: 2px solid var(--red);   /* gap entre bord externe et outline */
-  outline: 2px solid white;                /* la border blanche visible */
+  outline: 2px solid var(--white);                /* la border blanche visible */
   outline-offset: -4px;                    /* rentre vers l'intérieur */
+  background-color: var(--dark-red);
 }
 
 #wet-season.season-checkbox:has(input:checked) {
   border: 2px solid var(--blue);   /* gap entre bord externe et outline */
-  outline: 2px solid white;                /* la border blanche visible */
+  outline: 2px solid var(--white);                /* la border blanche visible */
   outline-offset: -4px;                    /* rentre vers l'intérieur */
+  background-color: var(--dark-blue);
 }
 
 #dry-season.season-checkbox {
