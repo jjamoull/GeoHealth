@@ -284,6 +284,13 @@ h4 {
   cursor: pointer;
 }
 
+.nav-section-title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 20%;
+}
+
 .nav-section-title {
   color: var(--grey);
   cursor: pointer;
@@ -297,12 +304,13 @@ h4 {
 
 
 .dropdown-arrow {
-  position: relative;
   right: 5%;
   display: block;
   width: 48px;
   height: 48px;
-  margin-top: 12px;
+  stroke: var(--light-grey);
+
+  cursor: pointer;
 
   transition: all ease-in-out .2s;
 }
