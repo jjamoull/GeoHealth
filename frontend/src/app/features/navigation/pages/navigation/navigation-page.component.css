@@ -195,20 +195,26 @@ h4 {
   color: var(--white);
 }
 
+.trash-icon path {
+  stroke: var(--white);
+}
+
 
 .delete-map-button {
   position: absolute;
-  top: 8px;
+  top: 60%;
   right: 12px;
   height: 36px;
+  width: 36px;
 
-  background: none;
+  background-color: var(--light-grey);
   border: none;
   cursor: pointer;
   padding: 4px;
   border-radius: 6px;
   opacity: 0;
   pointer-events: none;
+  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.15);
   transition: opacity 0.2s ease, background 0.2s ease;
 }
 
@@ -259,7 +265,7 @@ h4 {
   padding: 24px 12px 80px 12px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 12px;
 }
