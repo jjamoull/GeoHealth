@@ -62,7 +62,7 @@
       </div>
 
       <div class="disease-selection-section">
-
+        <h4 class="disease-section-title">{{ 'navigation.disease-section-title' | transloco }}</h4>
         <div class="disease-dropdown">
           <button class="disease-dropdown-toggle" (click)="toggleDiseaseDropdown()">
             {{ selectedDiseases.length ? selectedDiseases.join(', ') : ('navigation.select-diseases' | transloco) }}
