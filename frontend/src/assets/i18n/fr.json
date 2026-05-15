@@ -98,6 +98,11 @@
     "changepassword-success": "Le mot de passe a été modifié avec succès !"
   },
   "navigation":{
+    "research-section-title": "Recherche",
+    "search-hint": "Recherchez une carte à partir de son titre",
+    "season-section-title": "Saison : ",
+    "wet-season-checkbox": "Humide",
+    "dry-season-checkbox": "Sèche",
     "add-map": "Ajouter une nouvelle carte :",
     "final-risk" : "Risque final",
     "risk-factor": "facteur de risque",

@@ -5,21 +5,65 @@
 
 <div class="navigation-page">
 
-  <!-- SIDEBAR TOGGLE -->
-  <input type="checkbox" id="check-nav" />
-
   <!-- ================= SIDEBAR ================= -->
   <aside class="sidebar">
 
     <div class="scrollbox">
 
       <!-- ACTION BUTTONS -->
-      <div class="navigation-button-container">
-        @if(isAdmin){
-          <div class="new-map-title">
-            {{ 'navigation.add-map' | transloco }}
+      <div class="search-bar-section">
+        <div class="research-section-title-container">
+          <img class="research-icon" src="assets/icons/research-icon.svg" alt="">
+          <h4 class="research-section-title">
+            {{ 'navigation.research-section-title' | transloco }}
+          </h4>
+        </div>
+
+        <div class="search-bar-container">
+
+          <div class="search-bar">
+            <svg class="search-icon"
+                 xmlns="http://www.w3.org/2000/svg"
+                 fill="currentColor"
+                 viewBox="0 0 24 24">
+              <path d="M18 10c0-4.41-3.59-8-8-8s-8 3.59-8 8 3.59 8 8 8c1.85 0 3.54-.63 4.9-1.69l5.1 5.1L21.41 20l-5.1-5.1A8 8 0 0 0 18 10M4 10c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6"/>
+            </svg>
+
+            <input
+              id="map-search"
+              name="map-search"
+              type="search"
+              class="search-field"
+              placeholder="{{ 'navigation.search-placeholder' | transloco }}"
+              autocomplete="off"
+              [(ngModel)]="searchText"
+              (input)="searchMaps()"
+            />
           </div>
 
+          <p class="search-hint">* {{ 'navigation.search-hint' | transloco}}</p>
+
+        </div>
+      </div>
+
+      <div class="season-section">
+        <h4 class="season-section-title">{{ 'navigation.season-section-title' | transloco }}</h4>
+        <div class="seasons-checkbox-container">
+          <label class="season-checkbox" id="dry-season" for="dry">
+            <input type="checkbox" id="dry" name="dry" />
+            {{ 'navigation.dry-season-checkbox' | transloco}}
+          </label>
+
+          <label class="season-checkbox" id="wet-season" for="wet">
+            <input type="checkbox" id="wet" name="wet" />
+            {{ 'navigation.wet-season-checkbox' | transloco}}
+          </label>
+        </div>
+      </div>
+
+
+      <div class="navigation-button-container">
+        @if(isAdmin){
           <button
             class="new-map-button"
             id="final-risk"
@@ -44,34 +88,6 @@
         {{ 'navigation.search' | transloco }}
       </div>
 
-      <div class="search-bar-container">
-        <div class="search-bar">
-
-          <input
-            id="map-search"
-            name="map-search"
-            type="search"
-            class="search-field"
-            placeholder="{{ 'navigation.search-placeholder' | transloco }}"
-            autocomplete="off"
-            [(ngModel)]="searchText"
-            (input)="searchMaps()"
-          />
-
-          @if(true){
-            <button class="search-button">
-              <svg class="search-icon"
-                   xmlns="http://www.w3.org/2000/svg"
-                   fill="currentColor"
-                   viewBox="0 0 24 24">
-                <path d="M18 10c0-4.41-3.59-8-8-8s-8 3.59-8 8 3.59 8 8 8c1.85 0 3.54-.63 4.9-1.69l5.1 5.1L21.41 20l-5.1-5.1A8 8 0 0 0 18 10M4 10c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6"/>
-              </svg>
-            </button>
-          }
-
-        </div>
-      </div>
-
     </div>
 
   </aside>
@@ -86,7 +102,7 @@
       <section class="final-risk-maps">
 
           <h3
-            class="title"
+            class="nav-section-title"
             (click)="toggleDropdown('finalRisks')">
             {{ 'navigation.final-map' | transloco }}
           </h3>
