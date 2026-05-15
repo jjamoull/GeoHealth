@@ -61,6 +61,35 @@
         </div>
       </div>
 
+      <div class="disease-selection-section">
+
+        <div class="disease-dropdown">
+          <button class="disease-dropdown-toggle" (click)="toggleDiseaseDropdown()">
+            {{ selectedDiseases.length ? selectedDiseases.join(', ') : ('navigation.select-diseases' | transloco) }}
+            @if (diseaseDropdownOpen) {
+              <i class="fas fa-chevron-down"></i>
+            } @else {
+              <i class="fas fa-chevron-up"></i>
+            }
+          </button>
+
+          <div class="disease-dropdown-menu" [class.open]="diseaseDropdownOpen">
+            @for (disease of diseases; track disease) {
+              <label class="disease-option">
+                <input
+                  type="checkbox"
+                  [value]="disease"
+                  (change)="toggleDisease(disease)"
+                  [checked]="selectedDiseases.includes(disease)"
+                />
+                {{ disease }}
+              </label>
+            }
+          </div>
+        </div>
+
+      </div>
+
 
       <div class="navigation-button-container">
         @if(isAdmin){

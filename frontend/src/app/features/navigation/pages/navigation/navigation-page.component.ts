@@ -221,4 +221,19 @@ export class NavigationPageComponent implements OnInit{
     });
   }
 
+  diseaseDropdownOpen = false;
+  diseases = ['Ebola', 'RVF (Rift Valley Fever)'];
+  selectedDiseases: string[] = [...this.diseases];
+
+  toggleDiseaseDropdown() {
+    this.diseaseDropdownOpen = !this.diseaseDropdownOpen;
+  }
+
+  toggleDisease(disease: string) {
+    const index = this.selectedDiseases.indexOf(disease);
+    index === -1
+      ? this.selectedDiseases.push(disease)
+      : this.selectedDiseases.splice(index, 1);
+  }
+
 }
