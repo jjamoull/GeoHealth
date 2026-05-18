@@ -50,11 +50,15 @@
             <h4 class="season-section-title">{{ 'navigation.season-section-title' | transloco }}</h4>
             <div class="seasons-checkbox-container">
               <label class="season-checkbox" id="dry-season" for="dry">
-                <input type="checkbox" id="dry" name="dry" />
+                <input type="checkbox" id="dry" name="dry"
+                       [checked]="dryChecked"
+                       (change)="toggleSeason('dry')" />
                 {{ 'navigation.dry-season-checkbox' | transloco }}
               </label>
               <label class="season-checkbox" id="wet-season" for="wet">
-                <input type="checkbox" id="wet" name="wet" />
+                <input type="checkbox" id="wet" name="wet"
+                       [checked]="wetChecked"
+                       (change)="toggleSeason('wet')" />
                 {{ 'navigation.wet-season-checkbox' | transloco }}
               </label>
             </div>

@@ -153,23 +153,34 @@ export class NavigationPageComponent implements OnInit{
    * - `noResults` to true when no map matches the search term.
    */
   searchMaps(): void {
-
     const search = this.normalize(this.searchText);
 
-    // ===== RESET =====
     if (!search) {
       this.isSearching = false;
       this.noResults = false;
       this.filteredMaps = [];
+      this.applyFilters();
       return;
     }
 
     this.isSearching = true;
 
-    this.filteredMaps = this.listOfAllMaps.filter(map =>
+    let result = this.listOfAllMaps.filter(map =>
       this.normalize(map.title).includes(search)
     );
 
+    // applique aussi le filtre saison pendant la recherche
+    if (this.dryChecked || this.wetChecked) {
+      result = result.filter(map => {
+        const tags = map.tags?.map((t: string) => t.toLowerCase()) ?? [];
+        return (
+          (this.dryChecked && tags.includes('dry')) ||
+          (this.wetChecked && tags.includes('wet'))
+        );
+      });
+    }
+
+    this.filteredMaps = result;
     this.noResults = this.filteredMaps.length === 0;
   }
 
@@ -235,6 +246,36 @@ export class NavigationPageComponent implements OnInit{
     index === -1
       ? this.selectedDiseases.push(disease)
       : this.selectedDiseases.splice(index, 1);
+  }
+
+
+  dryChecked = false;
+  wetChecked = false;
+
+  toggleSeason(season: 'dry' | 'wet') {
+    if (season === 'dry') this.dryChecked = !this.dryChecked;
+    if (season === 'wet') this.wetChecked = !this.wetChecked;
+    this.applyFilters();
+  }
+
+  private applyFilters() {
+    let result = this.listOfAllMaps;
+
+    if (this.dryChecked || this.wetChecked) {
+      result = result.filter(map => {
+        if (!map.tags) return false;
+        const tags = map.tags.map((t: string) => t.toLowerCase());
+        return (
+          (this.dryChecked && tags.some(t => t.includes('dry'))) ||
+          (this.wetChecked && tags.some(t => t.includes('wet')))
+        );
+      });
+    }
+
+    this.filteredMaps = result;
+    this.isSearching = this.dryChecked || this.wetChecked;
+    this.noResults = this.filteredMaps.length === 0;
+    this.cdr.detectChanges();
   }
 }
 
