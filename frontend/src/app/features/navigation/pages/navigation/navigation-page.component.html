@@ -180,8 +180,13 @@
                 </app-map-preview>
 
                 <div class="preview-meta-data">
-                  <h4 class="map-title">{{ map.title | truncate:20 }}</h4>
-                  <h6 class="map-description">{{map.description}}</h6>
+                  <h4 class="map-title">
+                    <span class="map-title-short">{{ map.title | truncate:20 }}</span>
+                    <span class="map-title-full">{{ map.title }}</span>
+                  </h4>
+                  <h6 class="map-description">
+                    {{ map.description }}
+                  </h6>
 
                   @if(isAdmin){
                     <button
@@ -224,8 +229,13 @@
               <app-map-preview [mapId]="map.id"></app-map-preview>
 
               <div class="preview-meta-data">
-                <h4 class="map-title">{{ map.title }}</h4>
-                <h6 class="map-description">{{ map.description }}</h6>
+                <h4 class="map-title">
+                  <span class="map-title-short">{{ map.title | truncate:20 }}</span>
+                  <span class="map-title-full">{{ map.title }}</span>
+                </h4>
+                <h6 class="map-description">
+                  {{ map.description }}
+                </h6>
               </div>
 
             </div>

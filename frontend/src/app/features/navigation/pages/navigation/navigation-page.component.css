@@ -242,6 +242,7 @@ h5 {
 }
 
 .map-title {
+  position: relative;
   font-size: 1em;
   font-weight: 500;
   margin-bottom: 8px;
@@ -279,6 +280,22 @@ h5 {
   gap: 12px;
 }
 
+/* Par défaut : on montre la version tronquée, on cache la complète */
+.map-title-full {
+  color: purple;
+  display: none;
+}
+
+/* Au hover sur la card : on montre la complète, on cache la tronquée */
+.map-card:hover .map-title-short {
+  display: none;
+}
+
+.map-card:hover .map-title-full {
+  display: inline;
+  white-space: normal;
+}
+
 .map-card {
   position: relative;
   clip-path: inset(0 round 4px);
@@ -291,6 +308,8 @@ h5 {
   filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
 
   cursor: pointer;
+
+  overflow: hidden;
 }
 
 .map-filters {
