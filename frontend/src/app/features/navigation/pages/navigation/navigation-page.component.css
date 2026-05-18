@@ -583,6 +583,13 @@ h5 {
   transform: translateY(1px);
 }
 
+.plus-icon {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  color: var(--dark-grey);
+}
+
 #plus-icon, #plus-icon2 {
   position: absolute;
   top: 6px;
