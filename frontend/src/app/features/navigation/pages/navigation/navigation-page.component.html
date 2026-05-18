@@ -103,15 +103,13 @@
 
             <h4 class="admin-actions-title">{{ 'navigation.admin-actions-title' | transloco }}</h4>
           </div>
-<!--
-          <h4 class="new-map-title">Add a new map: </h4>
--->
+          <h5 class="new-map-title">{{ 'navigation.new-map-title' | transloco }}</h5>
           <div class="new-map-buttons-container">
             <button
               class="new-map-button"
               id="final-risk"
               (click)="openPopUp('addMap')">
-              {{ 'navigation.final-risk' | transloco }}
+              {{ 'navigation.new-final-risk-map-button' | transloco }}
               <i class="fas fa-plus" id="plus-icon"></i>
             </button>
 
@@ -119,7 +117,7 @@
               class="new-map-button"
               id="risk-factor"
               (click)="openPopUp('addRiskFactor')">
-              {{ 'navigation.risk-factor' | transloco }}
+              {{ 'navigation.new-risk-factor-map-button' | transloco }}
               <i class="fas fa-plus" id="plus-icon2"></i>
             </button>
           </div>
@@ -178,7 +176,7 @@
                 </app-map-preview>
 
                 <div class="preview-meta-data">
-                  <h4 class="map-title">{{map.title}}</h4>
+                  <h4 class="map-title">{{ map.title | truncate:20 }}</h4>
                   <h6 class="map-description">{{map.description}}</h6>
 
                   @if(isAdmin){

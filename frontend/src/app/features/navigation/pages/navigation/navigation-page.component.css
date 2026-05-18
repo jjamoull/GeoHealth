@@ -17,6 +17,14 @@ h4 {
   text-transform: uppercase;
 }
 
+h5 {
+  font-size: 12px;
+  color: var(--grey);
+  font-weight: 300;
+}
+
+
+
 
 /* SIDEBAR */
 
@@ -60,6 +68,7 @@ h4 {
   gap: 4px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 8px;
 }
 
 .search-bar {
@@ -219,7 +228,7 @@ h4 {
 }
 
 .delete-map-button:hover {
-  background: buttonface;
+  background-color: var(--dark-grey);
 }
 
 .map-card:hover .delete-map-button {
@@ -540,9 +549,14 @@ h4 {
   align-items: flex-start;
 }
 
+.new-map-title {
+  color: var(--grey);
+  margin-bottom: 0;
+}
+
 .new-map-button {
   position: relative;
-  width: 60%;
+  width: 70%;
   height: 48px;
 
   background-color: var(--super-light-grey);
@@ -553,7 +567,8 @@ h4 {
 
   margin: 6px 0;
 
-  font-size: 14px;
+  font-size: .9em;
+  color: var(--dark-grey);
 
   transition: all ease-in-out .2s;
 }

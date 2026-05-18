@@ -13,11 +13,12 @@ import { AdminFinalMapService } from '../../../../core/service/AdminService/Admi
 import {TranslocoPipe} from '@jsverse/transloco';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
+import {TruncatePipe} from '../../../../shared/pipes/truncate.pipe';
 import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatDialogModule, MapPreviewComponent, FormsModule, TranslocoPipe, NgOptimizedImage],
+  imports: [MatDialogModule, MapPreviewComponent, FormsModule, TranslocoPipe, NgOptimizedImage, TruncatePipe],
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })
@@ -235,5 +236,5 @@ export class NavigationPageComponent implements OnInit{
       ? this.selectedDiseases.push(disease)
       : this.selectedDiseases.splice(index, 1);
   }
-
 }
+
