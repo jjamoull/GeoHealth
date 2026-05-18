@@ -166,6 +166,23 @@
     "metric8description": "Moyenne nationale des scores d’accord modèle-terrain. Plus il est élevé, plus le modèle correspond globalement au terrain. ",
     "editbutton": "Modifier l'évaluation",
     "addbutton": "Ajouter une évaluation",
-    "deletebutton": "Supprimer l'évaluation"
+    "deletebutton": "Supprimer l'évaluation",
+    "save": "Sauvegarder",
+    "saving": "Sauvegarde en cours...",
+    "viewDivision": "Voir le département",
+    "drawingMode": "Mode dessin",
+    "evaluationHint": "Sélectionnez un département pour voir ses évaluations",
+    "clickZone": "Cliquez sur une zone pour inspecter sa valeur",
+    "report":  "Créer un rapport",
+    "clickDivision" :  "Cliquez sur un département pour voir ses métriques"
+  },
+  "navbar": {
+    "navigation": "Navigation",
+    "profile": "Profil",
+    "admin": "Panneau Admin",
+    "logout": "Se déconnecter",
+    "home": "Accueil",
+    "login": "Se connecter",
+    "register": "S'inscrire"
   }
 }

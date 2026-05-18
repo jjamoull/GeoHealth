@@ -9,7 +9,7 @@
         (click)="saveAnnotation()"
         [disabled]="isSaving"
         class="save-btn">
-        {{ isSaving ? 'Is Saving...' : 'Save' }}
+        {{ isSaving ? ('map.saving' | transloco) : ('map.save' | transloco) }}
         @if (saveMessage) {
           <span class="save-message">{{ saveMessage }}</span>
         }
@@ -21,15 +21,15 @@
         [class.active]="inspectModeActive"
         class="inspect-mode-btn"
         title="Click on division">
-        <span *ngIf="inspectModeActive">View the division</span>
-        <span *ngIf="!inspectModeActive">Drawing mode</span>
+        <span *ngIf="inspectModeActive">{{ 'map.viewDivision' | transloco }}</span>
+        <span *ngIf="!inspectModeActive">{{ 'map.drawingMode' | transloco }}</span>
       </button>
 
       <!-- Dropdown only to be shown on mobile -->
       <select (change)="onMapSelected($event)" class="mobile-dropdown">
-        <option value="Division only">Division only</option>
+        <option value="Division only">{{ 'map.dropdown' | transloco }}</option>
         @if(rasterMap()) {
-        <option value="Raster layer">Raster layer</option>
+        <option value="Raster layer">{{ 'map.dropdown2' | transloco }}</option>
         }
         @for(map of riskFactorMaps(); track map.id) {
         <option [value]="map.title">{{ map.title }}</option>
@@ -76,7 +76,7 @@
           @if(mapHelper.lastBlockMean !== null) {
       <p>Pixel value: {{ mapHelper.lastBlockMean()?.toFixed(4) }}</p>
           } @else {
-            <p>Click a zone to inspect its value</p>
+            <p>{{ 'map.clickZone' | transloco }}</p>
           }
         } @else {
           <p>{{ 'map.info4' | transloco }} {{ (selectedDivision().rsk_cmb ?? selectedDivision().cmbnd__).toFixed(2) }}</p>
@@ -121,7 +121,7 @@
             <button
               class="report-btn"
               (click)="onReportButtonClicked()">
-              create report
+              {{ 'map.report' | transloco }}
             </button>
           }
         </div>
@@ -146,7 +146,7 @@
           }
 
           @if(!selectedDivision()) {
-            <p class="division-hint">Click on a division to see its metrics</p>
+            <p class="division-hint">{{ 'map.clickDivision' | transloco }}</p>
           }
 
           @if(selectedDivision()) {
@@ -257,6 +257,6 @@
     }
   </div>
   } @else {
-  <p class="evaluation-hint">Select a division to see its evaluations</p>
+  <p class="evaluation-hint">{{ 'map.evaluationHint' | transloco }}</p>
   }
 </div>

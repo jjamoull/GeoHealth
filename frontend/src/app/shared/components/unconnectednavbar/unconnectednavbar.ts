@@ -1,10 +1,13 @@
 import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../../../core/service/LoginService/loginService';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'app-unconnectednavbar',
-  imports: [],
+  imports: [
+    TranslocoPipe
+  ],
   templateUrl: './unconnectednavbar.html',
   styleUrl: './unconnectednavbar.css',
 })
