@@ -12,12 +12,12 @@ import { FormsModule } from '@angular/forms';
 import { AdminFinalMapService } from '../../../../core/service/AdminService/AdminMapService/AdminFinalMapService'
 import {TranslocoPipe} from '@jsverse/transloco';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import { isPlatformBrowser } from '@angular/common';
+import {isPlatformBrowser, NgOptimizedImage} from '@angular/common';
 import { PLATFORM_ID, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
-  imports: [MatDialogModule, MapPreviewComponent, FormsModule, TranslocoPipe],
+  imports: [MatDialogModule, MapPreviewComponent, FormsModule, TranslocoPipe, NgOptimizedImage],
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })
