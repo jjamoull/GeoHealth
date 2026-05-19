@@ -109,6 +109,7 @@
     "new-map-title": "Ajouter une nouvelle carte de…",
     "new-final-risk-map-button": "Risque final",
     "new-risk-factor-map-button": "Facteur de risque",
+    "bulk-delete-title": "Supprimer plusieurs cartes: ",
     "bulk-delete-button": "Sélectionner",
     "confirm-bulk-delete": "Confirmer",
     "cancel-selection": "Annuler",

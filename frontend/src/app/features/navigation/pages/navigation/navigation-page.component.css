@@ -422,7 +422,8 @@ h5 {
   height: 48px;
 
   border-radius: 12px;
-  border: 2px solid transparent; /* border toujours présente, transparente par défaut */
+  border: 2px solid transparent;
+  box-shadow: 0 2px 2px -0.5px rgba(0,0,0, .2);
 
   font-size: 12px;
   color: var(--white);
@@ -432,7 +433,7 @@ h5 {
   justify-content: center;
   cursor: pointer;
 
-  transition: all 0.2s ease-in;
+  transition: all 0.1s ease-in;
 }
 
 .season-checkbox input[type="checkbox"] {
@@ -492,8 +493,9 @@ h5 {
   background-color: var(--super-light-grey);
   border: none;
   border-radius: 12px;
-  box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.3);
   font-size: 12px;
+  color: var(--dark-grey);
   text-align: left;
   cursor: pointer;
   display: flex;
@@ -561,7 +563,7 @@ h5 {
 }
 
 .new-map-section {
-  height: 160px;
+  height: 140px;
 }
 
 .new-map-buttons-container {
@@ -579,30 +581,34 @@ h5 {
 .new-map-button {
   position: relative;
   width: 70%;
-  height: 48px;
+  height: 42px;
 
   background-color: var(--super-light-grey);
   border: none;
   border-radius: 12px;
   box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.3);
-  padding: 12px;
+  padding: 0 12px;
 
   margin: 6px 0;
 
-  font-size: .9em;
+  font-size: 12px;
   color: var(--dark-grey);
 
-  transition: all ease-in-out .2s;
+  transition: all ease-in-out .1s;
 }
 
 .new-map-button:hover {
   box-shadow: 0 2px 6px 1px rgba(0,0,0, .2);
+  /*
   transform: translateY(-1px);
+  */
 }
 
 .new-map-button:active {
   box-shadow: 0 2px 4px 0 rgba(0,0,0, .5);
+  /*
   transform: translateY(1px);
+  */
 }
 
 .plus-icon {
@@ -640,15 +646,15 @@ h5 {
 
 .bulk-delete-toggle-button {
   position: relative;
-  width: 60%;
-  height: 48px;
+  width: 70%;
+  height: 42px;
   background-color: var(--super-light-grey);
-  border: solid 1px var(--dark-grey);
+  border: none;
   border-radius: 12px;
-  padding: 10px 12px 8px 12px;
-  font-size: 14px;
-  box-shadow: 0 2px 4px 1px rgba(0,0,0,.1);
-  transition: all ease-in-out .2s;
+  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.3);
+  padding: 0 12px;
+  font-size: 12px;
+  transition: all ease-in-out .1s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -658,12 +664,15 @@ h5 {
 }
 
 .bulk-delete-toggle-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 6px 1px rgba(0,0,0,.1);
+  box-shadow: 0 2px 6px 1px rgba(0,0,0, .2);
+}
+
+.bulk-delete-toggle-button:active {
+  box-shadow: 0 2px 4px 0 rgba(0,0,0, .5);
 }
 
 .confirm-bulk-delete-button {
-  width: 60%;
+  width: 70%;
   height: 48px;
   background-color: #e05252;
   border: none;

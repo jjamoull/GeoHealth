@@ -110,6 +110,7 @@
     "new-map-title": "Add a new…",
     "new-final-risk-map-button" : "Final risk map",
     "new-risk-factor-map-button": "Risk factor map",
+    "bulk-delete-title": "Delete multiple maps: ",
     "bulk-delete-button": "Select",
     "confirm-bulk-delete": "Confirm",
     "cancel-selection": "Cancel",
