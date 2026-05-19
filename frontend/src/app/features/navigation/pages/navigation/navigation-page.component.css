@@ -246,6 +246,7 @@ h5 {
   font-size: 1em;
   font-weight: 500;
   margin-bottom: 8px;
+  text-transform: none;
 }
 
 .map-description {
@@ -282,7 +283,6 @@ h5 {
 
 /* Par défaut : on montre la version tronquée, on cache la complète */
 .map-title-full {
-  color: purple;
   display: none;
 }
 
@@ -298,13 +298,11 @@ h5 {
 
 .map-card {
   position: relative;
-  clip-path: inset(0 round 4px);
 
   width: 18vw;
   height: 15vw;
 
   border-radius: 4px;
-  box-shadow: 2px 4px 6px 2px rgba(0, 0, 0, 0.3);
   filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
 
   cursor: pointer;
@@ -322,7 +320,7 @@ h5 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 20%;
+  width: 100%;
 }
 
 .nav-section-title {
@@ -474,6 +472,7 @@ h5 {
 
 .disease-selection-section {
   height: 60px;
+  margin-bottom: 8px;
 }
 
 .disease-section-title {
@@ -561,6 +560,10 @@ h5 {
   color: var(--grey);
 }
 
+.new-map-section {
+  height: 160px;
+}
+
 .new-map-buttons-container {
   padding: 0;
   display: flex;
@@ -626,6 +629,80 @@ h5 {
 
   text-align: center;
   color: black;
+}
+
+.bulk-delete-section {
+  gap: 8px;
+  margin-top: 8px;
+  height: 120px;
+  width: 100%;
+}
+
+.bulk-delete-toggle-button {
+  position: relative;
+  width: 60%;
+  height: 48px;
+  background-color: var(--super-light-grey);
+  border: solid 1px var(--dark-grey);
+  border-radius: 12px;
+  padding: 10px 12px 8px 12px;
+  font-size: 14px;
+  box-shadow: 0 2px 4px 1px rgba(0,0,0,.1);
+  transition: all ease-in-out .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+.bulk-delete-toggle-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px 1px rgba(0,0,0,.1);
+}
+
+.confirm-bulk-delete-button {
+  width: 60%;
+  height: 48px;
+  background-color: #e05252;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 4px 1px rgba(224,82,82,.3);
+  transition: all ease-in-out .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.confirm-bulk-delete-button:hover {
+  transform: translateY(-1px);
+  background-color: #c94444;
+}
+
+.bulk-select-checkbox {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.bulk-select-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #e05252;
+  cursor: pointer;
+}
+
+.map-card.selected {
+  outline: 2px solid var(--red);
 }
 
 /* ================= HEADER ================= */
@@ -694,7 +771,7 @@ h5 {
 .map-card:hover {
   /*transform: translateY(-3px);*/
   /*transform: scale(1.02);*/
-  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 .arrow{
   display: none;

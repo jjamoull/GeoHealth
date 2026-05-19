@@ -22,7 +22,7 @@ import { PLATFORM_ID, Inject } from '@angular/core';
   templateUrl: './navigation-page.component.html',
   styleUrl: './navigation-page.component.css',
 })
-export class NavigationPageComponent implements OnInit{
+export class NavigationPageComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
@@ -32,9 +32,10 @@ export class NavigationPageComponent implements OnInit{
     private usersServices: UsersServices,
     private adminFinalService: AdminFinalMapService,
     private BottomSheet: MatBottomSheet
-  ){}
+  ) {
+  }
 
-  isAdmin:boolean =false;
+  isAdmin: boolean = false;
 
   searchText: string = '';
   filteredMaps: FinalMapListDto[] = [];
@@ -43,13 +44,13 @@ export class NavigationPageComponent implements OnInit{
   isSearching: boolean = false;
   noResults: boolean = false;
 
-  listOfAllMaps:FinalMapListDto[] = [];
-  listOfAllRecentMaps:FinalMapListDto[] = [];
+  listOfAllMaps: FinalMapListDto[] = [];
+  listOfAllRecentMaps: FinalMapListDto[] = [];
 
   finalRisksOpen = true;
   riskFactorsOpen = false;
 
-  openMenu(){
+  openMenu() {
     this.BottomSheet.open(Bottomsheet, {
       data: {
         openPopUp: (type: string) => this.openPopUp(type),
@@ -59,7 +60,7 @@ export class NavigationPageComponent implements OnInit{
   }
 
   toggleDropdown(section: string) {
-    switch(section) {
+    switch (section) {
       case 'finalRisks':
         this.finalRisksOpen = !this.finalRisksOpen;
         break;
@@ -74,8 +75,8 @@ export class NavigationPageComponent implements OnInit{
     this.getAllMaps();
 
     this.usersServices.isAdmin().subscribe(
-      bool=>{
-        this.isAdmin=bool
+      bool => {
+        this.isAdmin = bool
         this.cdr.detectChanges();
       }
     );
@@ -235,16 +236,17 @@ export class NavigationPageComponent implements OnInit{
   /**
    * Allow the user to open the pop-up on click event
    * */
-  openPopUp(paramTypeOfPopUp:string): void {
+  openPopUp(paramTypeOfPopUp: string): void {
     const dialog = this.dialog.open(MapUploadModalComponent, {
-      data: { typeOfPopUp: paramTypeOfPopUp },
+      data: {typeOfPopUp: paramTypeOfPopUp},
       disableClose: false
     });
 
     dialog.afterClosed().subscribe(
-      result=>{
+      result => {
         this.getAllMaps();
-        this.cdr.detectChanges();}
+        this.cdr.detectChanges();
+      }
     );
 
   }
@@ -332,5 +334,52 @@ export class NavigationPageComponent implements OnInit{
     this.noResults = this.filteredMaps.length === 0;
     this.cdr.detectChanges();
   }
-}
 
+  // Bulk delete feature
+  // ! only for admin
+
+  bulkDeleteMode = false;
+  selectedMapIds = new Set<number>();
+
+  toggleBulkDeleteMode() {
+    this.bulkDeleteMode = !this.bulkDeleteMode;
+    this.selectedMapIds.clear();
+    this.selectedMapIds = new Set(this.selectedMapIds);
+    this.cdr.detectChanges();
+  }
+
+  toggleMapSelection(id: number) {
+    if (this.selectedMapIds.has(id)) {
+      this.selectedMapIds.delete(id);
+    } else {
+      this.selectedMapIds.add(id);
+    }
+    this.selectedMapIds = new Set(this.selectedMapIds);
+    this.cdr.detectChanges();
+  }
+
+  confirmBulkDelete() {
+    if (this.selectedMapIds.size === 0) return;
+
+    const count = this.selectedMapIds.size;
+    if (!confirm(`Delete ${count} map${count > 1 ? 's' : ''}? This action cannot be undone.`)) return;
+
+    const ids = Array.from(this.selectedMapIds);
+    let completed = 0;
+
+    ids.forEach(id => {
+      this.adminFinalService.deleteFinalMap(id).subscribe({
+        next: () => {
+          completed++;
+          this.listOfAllMaps = this.listOfAllMaps.filter(m => m.id !== id);
+          if (completed === ids.length) {
+            this.selectedMapIds.clear();
+            this.bulkDeleteMode = false;
+            this.cdr.detectChanges();
+          }
+        },
+        error: (err: any) => console.error('Failed to delete map', err)
+      });
+    });
+  }
+}
