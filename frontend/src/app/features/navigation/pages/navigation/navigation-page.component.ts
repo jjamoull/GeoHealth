@@ -89,12 +89,52 @@ export class NavigationPageComponent implements OnInit{
       next: (maps: FinalMapListDto[]) => {
         this.listOfAllMaps = maps;
         this.filteredMaps = maps;
+        this.extractDiseases(maps);
         this.cdr.detectChanges();
       },
       error: (err: any) => {
         console.error('Error fetching maps', err);
       }
     });
+  }
+
+  private readonly MAX_DISEASES = 100;
+  private readonly SKIP_WORDS = new Set(['of', 'the', 'a', 'an', 'and', 'or', 'in', 'on', 'at', 'to', 'for', 'by', 'de', 'du', 'la', 'le', 'les', 'des', 'un', 'une']);
+  private readonly SEASON_TAGS = new Set(['dry', 'wet']);
+
+  private formatDiseaseTag(tag: string): string {
+    return tag
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .split(' ')
+      .map((word, index) =>
+        index === 0 || !this.SKIP_WORDS.has(word)
+          ? word.charAt(0).toUpperCase() + word.slice(1)
+          : word
+      )
+      .join(' ');
+  }
+
+  private extractDiseases(maps: FinalMapListDto[]) {
+    const seen = new Set<string>();
+    const result: string[] = [];
+
+    for (const map of maps) {
+      if (!map.tags) continue;
+      for (const tag of map.tags) {
+        const normalized = tag.toLowerCase().replace(/_/g, ' ').trim();
+        if (this.SEASON_TAGS.has(normalized)) continue; // ignoring dry/wet
+        if (!seen.has(normalized)) {
+          seen.add(normalized);
+          result.push(this.formatDiseaseTag(tag));
+          if (result.length >= this.MAX_DISEASES) break;
+        }
+      }
+      if (result.length >= this.MAX_DISEASES) break;
+    }
+
+    this.diseases = result;
+    this.selectedDiseases = [...result]; // all diseases are checked by default
   }
 
   /* Ignore caps and accents */
@@ -246,6 +286,7 @@ export class NavigationPageComponent implements OnInit{
     index === -1
       ? this.selectedDiseases.push(disease)
       : this.selectedDiseases.splice(index, 1);
+    this.applyFilters();
   }
 
 
@@ -261,7 +302,10 @@ export class NavigationPageComponent implements OnInit{
   private applyFilters() {
     let result = this.listOfAllMaps;
 
-    if (this.dryChecked || this.wetChecked) {
+    const seasonActive = this.dryChecked || this.wetChecked;
+    const diseaseActive = this.selectedDiseases.length > 0 && this.selectedDiseases.length < this.diseases.length;
+
+    if (seasonActive) {
       result = result.filter(map => {
         if (!map.tags) return false;
         const tags = map.tags.map((t: string) => t.toLowerCase());
@@ -272,8 +316,19 @@ export class NavigationPageComponent implements OnInit{
       });
     }
 
+    if (diseaseActive) {
+      const selectedNormalized = this.selectedDiseases.map(d =>
+        d.toLowerCase().replace(/ /g, '_')
+      );
+      result = result.filter(map => {
+        if (!map.tags) return false;
+        const tags = map.tags.map((t: string) => t.toLowerCase());
+        return selectedNormalized.some(d => tags.includes(d));
+      });
+    }
+
     this.filteredMaps = result;
-    this.isSearching = this.dryChecked || this.wetChecked;
+    this.isSearching = seasonActive || diseaseActive;
     this.noResults = this.filteredMaps.length === 0;
     this.cdr.detectChanges();
   }
