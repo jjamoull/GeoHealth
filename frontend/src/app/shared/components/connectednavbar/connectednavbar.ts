@@ -3,11 +3,13 @@ import {Router} from '@angular/router';
 import {LoginService} from '../../../core/service/LoginService/loginService';
 import {UsersServices} from '../../../core/service/UserService/users-services';
 import {TranslocoPipe} from '@jsverse/transloco';
+import {Language} from '../language/language';
 
 @Component({
   selector: 'app-connectednavbar',
   imports: [
-    TranslocoPipe
+    TranslocoPipe,
+    Language
   ],
   templateUrl: './connectednavbar.html',
   styleUrl: './connectednavbar.css',
@@ -59,5 +61,6 @@ export class Connectednavbar implements OnInit{
     });
   }
 
+  isDesktop = typeof window !== 'undefined' && window.innerWidth > 768;
 
 }
