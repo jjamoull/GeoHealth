@@ -2,33 +2,48 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import 'leaflet/dist/leaflet.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
   /*Colors: */
-  --blue : #007bff;
   --white: white;
   --black: black;
   --transparent-grey: rgba(210, 210, 210, 0.4);
   --super-light-grey: rgb(236, 236, 236);
+  --grey: #868B93;
   --light-grey: rgba(144, 144, 144, .3);
+  --lighter-grey: #ededed;
   --dark-grey: rgb(75, 75, 75);
-  --dark-blue: #143A51;
+  --dark-blue: #3E6FCC;
   --darker-blue: #0c2e41;
+  --blue : #588BE7;
+  --green: rgba(143,195,120,0.85);
   --light-green: #90ee90;
   --light-green2: #8FC378;
   --light-green3: #7ee87e ;
   --super-light-green: #E1FFE1FF;
   --orange: #FFC452;
   --red: #E44242;
+  --dark-red: #CA4040;
 
   --glass-shadow: 0 4.2px 6.2px hsl(0deg 0% 0% / 0.2);
 }
 
 html, body{
   background-color: #EBEFFF;
+  height: 100%;
+  margin: 0;
 }
+
 *{
-  font-family: 'Pacifico', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100%;
 }
 
 /* Override Angular Material's dialog container to give the modal rounded corners */

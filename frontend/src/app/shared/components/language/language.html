@@ -1,8 +1,24 @@
 <div class="container">
-<div class="select" tabindex="10000">
-  <input class="lang" (click)="switchLang('fr')" name="test" type="radio" id="opt1" checked [checked]="selectedLang === 'fr'">
-  <label for="opt1" class="option"> <img src="assets/icons/frFlag.webp" class="flag"></label>
-  <input class="lang" (click)="switchLang('en')" name="test" type="radio" id="opt2" [checked]="selectedLang === 'en'">
-  <label for="opt2" class="option"> <img src="assets/icons/enFlag.webp" class="flag"></label>
-</div>
+  <div class="select" [class.open]="isOpen">
+
+    <div class="selected-option" (click)="isOpen = !isOpen">
+      <img [src]="selectedLang === 'fr' ? 'assets/icons/frFlag.webp' : 'assets/icons/enFlag.webp'" class="flag">
+      <span>{{ selectedLang.toUpperCase() }}</span>
+      <i class="chevron"></i>
+    </div>
+
+    @if (isOpen) {
+      <div class="dropdown">
+        @for (lang of langs; track lang.code) {
+          @if (lang.code !== selectedLang) {
+            <div class="option" (click)="select(lang.code)">
+              <img [src]="lang.flag" class="flag">
+              <span>{{ lang.code.toUpperCase() }}</span>
+            </div>
+          }
+        }
+      </div>
+    }
+
+  </div>
 </div>

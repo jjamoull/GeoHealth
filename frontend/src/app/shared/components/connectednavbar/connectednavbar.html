@@ -7,5 +7,8 @@
     }
       <a class="item" (click)="logout()">{{ 'navbar.logout' | transloco }}</a>
   </div>
+  @if(isDesktop){
+    <app-language></app-language>
+  }
 </nav>
 

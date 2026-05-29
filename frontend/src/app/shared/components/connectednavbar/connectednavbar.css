@@ -14,6 +14,13 @@
   z-index: 10000;
 }
 
+.navbar container {
+  position: relative;
+  top: unset;
+  right: unset;
+  pointer-events: auto;
+}
+
 .navbar-container {
   display: flex;
   height: 100%;
