@@ -1,4 +1,4 @@
-package com.webgis.Admin.map;
+package com.webgis.admin.map;
 
 import com.webgis.MessageDto;
 import com.webgis.admin.map.AdminFinalMapController;

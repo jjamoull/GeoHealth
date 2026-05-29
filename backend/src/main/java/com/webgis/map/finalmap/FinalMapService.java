@@ -6,6 +6,7 @@ import com.webgis.evaluationform.EvaluationFormService;
 import com.webgis.map.raster.RasterMap;
 import com.webgis.map.tile.Tile;
 import com.webgis.map.tile.TileService;
+import jakarta.transaction.Transactional;
 import org.geotools.api.referencing.FactoryException;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +71,7 @@ public class FinalMapService {
      *
      * @param id The id of the map you want to delete
      */
+    @Transactional
     public void deleteMap(long id){
         final Optional<FinalMap> map = findById(id);
         if (map.isEmpty()) {
