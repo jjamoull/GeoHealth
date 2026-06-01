@@ -1,8 +1,9 @@
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Status](https://img.shields.io/badge/status-active-success)
+![Docker](https://img.shields.io/badge/Docker-containerized-2496ED?logo=docker)
 
 ![Java](https://img.shields.io/badge/Java-17-orange?logo=openjdk)
-![Java](https://img.shields.io/badge/Java-22-orange?logo=openjdk)
+![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk)
 ![Maven](https://img.shields.io/badge/Maven-3.9-C71A36?logo=apachemaven)
 ![Spring Boot](https://img.shields.io/badge/SpringBoot-3.x-6DB33F?logo=springboot)
 
@@ -13,7 +14,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)
 
 
-![Docker](https://img.shields.io/badge/Docker-containerized-2496ED?logo=docker)
+
 
 # GeoHealth
 GeoHealth is an interactive and scalable tool for viewing, validating, and updating infectious disease 
@@ -46,35 +47,37 @@ The service follows a layered architecture:
 | Frontend          |  TypeScript / Angular  |   User interface   | 
 | CI/CD|           GitHub Actions           |   Automated build, test and integration   |
 
-To obtain more information about the architecture : [GeoHealth - Technical Documentation](https://github.com/jjamoull/GeoHealth/tree/main/docs)
+To obtain more information about the architecture : [GeoHealth - Technical Documentation](https://github.com/jjamoull/GeoHealth/tree/main/docs/Technical_Documentation_GeoHealth_2025_2026.pdf)
 
 ## Getting Started
 
 ### Prerequisites to use it
 
 #### In general
-| Software |  Group Version |  Recommended Version| Documentation|
-|:----------|:--------------------:|:----:| :----:|
-|  Java | 22.0.2 | Stable versions between 17 and 22 |Link to docs|
-| Maven | 3.9.9 |3.9.x | Link to docs|
-|  Docker Desktop |  / |  Latest stable | Link to docs|
-|  IntelliJ IDEA |2025.3.2 |  Latest stable |  Link to docs|
-| GitHub Desktop (optional)|  / | Latest stable |Link to docs| 
+| Software |  Group Version |        Recommended Version        | Documentation|
+|:----------|:--------------------:|:---------------------------------:| :----:|
+|  Java | 22.0.2 | Stable versions between 17 and 21 |[Link to docs](https://docs.oracle.com/en/java/javase/26/install/overview-jdk-installation.html )|
+| Maven | 3.9.9 |               3.9.x               | [Link to docs](https://maven.apache.org/install.html )|
+| GDAL (Not requiered to launch) | GDAL 3.12.2 "Chicoutimi" |             Latest stable             | [Link to docs](https://gdal.org/en/stable/ )|
+| R with the irr package (Not required to launch) | 4.5.3  |           Latest stable           | [Link to docs]( https://cran.r-project.org/)|
+|  Docker Desktop |  / |           Latest stable           | [Link to docs](https://docs.docker.com/get-docker/ )|
+|  IntelliJ IDEA |2025.3.2 |           Latest stable           |  [Link to docs]( https://www.jetbrains.com/help/idea/installation-guide.html)|
+| GitHub Desktop (optional)|  / |           Latest stable           |[Link to docs]( https://docs.github.com/en/desktop/installing-and-configuring-github-desktop)| 
 
 #### Concerning angular 
 |       Group Version        |  Recommended Version| Documentation|
 |:--------------------------:|:----:| :----:|
-|        Core: 21.1.2        | 21.1.x|Link to docs|
-|      Node.js: 22.14.0      |Latest compatible | Link to docs|
-|              Git 2.46.2              |  Latest compatible | Link to docs|
+|        Core: 21.1.2        | 21.1.x|[Link to docs](https://angular.io/guide/setup-local )|
+|      Node.js: 22.14.0      |Latest compatible |[Link to docs](https://angular.io/guide/setup-local )|
+|              Git 2.46.2              |  Latest compatible | [Link to docs]( https://angular.io/guide/setup-local)|
 
-To obtain more information about the prerequisites : [GeoHealth - Technical Documentation](https://github.com/jjamoull/GeoHealth/tree/main/docs)
+To obtain more information about the prerequisites : [GeoHealth - Technical Documentation](https://github.com/jjamoull/GeoHealth/tree/main/docs/Technical_Documentation_GeoHealth_2025_2026.pdf)
 
 ## Configuration
 
 ### 1) Clone the repository
 You need to clone the repository by typing the following command line :\
-`git clone https://github.com/jjamoull/GeoHealth.git` in your **terminal**  <br>**or** 
+`git clone https://github.com/jjamoull/GeoHealth.git` in your **terminal**  <br>**or** <br>
 directly via Github CLI : `gh repo clone jjamoull/GeoHealth`
 
 ### 2) Create an environment file 
@@ -83,13 +86,16 @@ In this file you have to add all these variables (for example) : <br>
 `DB_USER= test `<br>
 `DB_PASSWORD= test`<br>
 `JWT_SECRET= test`<br>
-`SUPERADMIN_SECRET= test`
+`SUPERADMIN_SECRET= test`<br>
+`SCRIPT_PATH=/opt/homebrew/bin/Rscript`
+
+(**As for SCRIPT_PATH, it depends on where R is installed on your computer**)
 
 ### 3) Setting up docker 
 Execute this command in your terminal at the root of the project:<br>
 `docker compose up -d`
 
-To obtain more information about the configuration : [GeoHealth - Technical Documentation](https://github.com/jjamoull/GeoHealth/tree/main/docs)
+To obtain more information about the configuration : [GeoHealth - Technical Documentation](https://github.com/jjamoull/GeoHealth/tree/main/docs/Technical_Documentation_GeoHealth_2025_2026.pdf)
 
 ### 4) Launching your backend
 Thanks to intelliJ you can configure your backend, and you have to follow those steps : 
@@ -115,22 +121,22 @@ If you do have npm installed already, you can skip to the package installation
 To install npm you will need Node on your computer. For this you have those options depending on your OS.
 
 #### MacOS
-On your terminal : brew install node
-Or go on : https://nodejs.org/
+On your terminal : brew install node<br>
+Or <br>go on : https://nodejs.org/
 
 
 #### Linux
-On your terminal :  sudo apt update
-sudo apt install nodejs npm
-
+On your terminal :  <br>`sudo apt update`<br>
+`sudo apt install nodejs npm
+`
 
 #### Windows
 https://nodejs.org/
 
 #### After you have to verify if everything’s is correctly installed by using those commands on your terminal :
-node -v
-npm -v
-
+`node -v`<br>
+`npm -v
+`
 
 #### Package installation
 Next, all you have to do is install the needed packages using :<br>
@@ -175,7 +181,7 @@ Execute this command : <br> `npm test`<br>
 
 ## Documentation
 A complete pdf has been created to explain you every aspect of the project in more details. You can find it 
-in section /docs at the root of the project. You can follow this link : [GeoHealth - Technical Documentation](https://github.com/jjamoull/GeoHealth/tree/main/docs)
+in section /docs at the root of the project. You can follow this link : [GeoHealth - Technical Documentation](https://github.com/jjamoull/GeoHealth/tree/main/docs/Technical_Documentation_GeoHealth_2025_2026.pdf)
 
 ## Contributing
 Please read [CONTRIBUTING.md](https://github.com/jjamoull/GeoHealth/blob/main/docs/CONTRIBUTOR.md) 
